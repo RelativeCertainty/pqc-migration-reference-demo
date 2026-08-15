@@ -1,0 +1,55 @@
+{
+  "schema_version": "pqc-runtime-conformance.v1",
+  "adapters": ["cloudflare-worker", "portable"],
+  "common_routes": [
+    { "method": "GET", "path": "/", "expected_status": 200, "body_parity": "exact" },
+    { "method": "GET", "path": "/interview", "expected_status": 200, "body_parity": "exact" },
+    { "method": "GET", "path": "/api/posture", "expected_status": 200, "body_parity": "semantic" },
+    { "method": "HEAD", "path": "/api/posture", "expected_status": 200, "body_parity": "empty" },
+    { "method": "POST", "path": "/api/posture", "expected_status": 405, "body_parity": "semantic" },
+    { "method": "GET", "path": "/api/unknown", "expected_status": 404, "body_parity": "semantic" },
+    { "method": "GET", "path": "/assets/missing.js", "expected_status": 404, "body_parity": "status_only" }
+  ],
+  "portable_only_routes": [
+    { "method": "GET", "path": "/healthz", "expected_status": 200 },
+    { "method": "GET", "path": "/readyz", "expected_status": 200 }
+  ],
+  "required_api_headers": {
+    "cache-control": "no-store",
+    "content-security-policy": "default-src 'none'; frame-ancestors 'none'",
+    "cross-origin-resource-policy": "same-origin",
+    "permissions-policy": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), microphone=(), payment=(), usb=()",
+    "referrer-policy": "no-referrer",
+    "strict-transport-security": "max-age=31536000",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-robots-tag": "noindex, nofollow, noarchive"
+  },
+  "required_html_headers": {
+    "cache-control": "no-store",
+    "content-security-policy": "default-src 'self'; base-uri 'self'; connect-src 'self'; font-src 'self'; form-action 'none'; frame-ancestors 'none'; img-src 'self' data:; object-src 'none'; script-src 'self'; style-src 'self'; upgrade-insecure-requests",
+    "cross-origin-opener-policy": "same-origin",
+    "cross-origin-resource-policy": "same-origin",
+    "permissions-policy": "accelerometer=(), camera=(), geolocation=(), gyroscope=(), microphone=(), payment=(), usb=()",
+    "referrer-policy": "no-referrer",
+    "strict-transport-security": "max-age=31536000",
+    "x-content-type-options": "nosniff",
+    "x-frame-options": "DENY",
+    "x-robots-tag": "noindex, nofollow, noarchive"
+  },
+  "portable_transport_contract": {
+    "tls_version": { "state": "unavailable", "value": null },
+    "tls_cipher": { "state": "unavailable", "value": null },
+    "http_protocol": { "state": "unavailable", "value": null },
+    "exact_session_key_exchange_state": "not_observable",
+    "ignore_forwarded_headers": true
+  },
+  "allowed_runtime_differences": [
+    "observed_at",
+    "hostname",
+    "request_transport.*.state",
+    "request_transport.*.value",
+    "request_transport.exact_session_key_exchange.explanation",
+    "hostname_capability.explanation"
+  ]
+}

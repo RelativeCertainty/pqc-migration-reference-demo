@@ -1,0 +1,126 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RelativeCertainty/pqc-migration-reference-demo/contracts/posture.v1.schema.json",
+  "title": "PQC reference demo runtime posture",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_tier",
+    "observed_at",
+    "hostname",
+    "request_transport",
+    "hostname_capability",
+    "visitor_edge_post_quantum_signatures",
+    "access_control",
+    "evidence_separation",
+    "data_posture",
+    "approved_deployment_label"
+  ],
+  "properties": {
+    "schema_version": { "const": "pqc-posture.v1" },
+    "evidence_tier": { "const": "predeployment_observation" },
+    "observed_at": { "type": "string", "format": "date-time" },
+    "hostname": { "type": "string", "minLength": 1, "maxLength": 253 },
+    "request_transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["tls_version", "tls_cipher", "http_protocol", "exact_session_key_exchange"],
+      "properties": {
+        "tls_version": { "$ref": "#/$defs/boundedObservation" },
+        "tls_cipher": { "$ref": "#/$defs/boundedObservation" },
+        "http_protocol": { "$ref": "#/$defs/boundedObservation" },
+        "exact_session_key_exchange": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "explanation"],
+          "properties": {
+            "state": { "const": "not_observable" },
+            "explanation": { "type": "string", "minLength": 1, "maxLength": 512 }
+          }
+        }
+      }
+    },
+    "hostname_capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "explanation"],
+      "properties": {
+        "state": { "const": "not_validated_predeployment" },
+        "explanation": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "visitor_edge_post_quantum_signatures": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "explanation"],
+      "properties": {
+        "state": { "const": "not_deployed" },
+        "explanation": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "access_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["state", "target"],
+      "properties": {
+        "state": { "const": "not_validated_predeployment" },
+        "target": { "const": "Cloudflare Access" }
+      }
+    },
+    "evidence_separation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["algorithm_standards", "cryptographic_module"],
+      "properties": {
+        "algorithm_standards": { "type": "string", "minLength": 1, "maxLength": 512 },
+        "cryptographic_module": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    },
+    "data_posture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storage", "origin", "dataset", "request_logging"],
+      "properties": {
+        "storage": { "const": "none" },
+        "origin": { "const": "none" },
+        "dataset": { "const": "synthetic_only" },
+        "request_logging": { "const": "not_implemented_by_application" }
+      }
+    },
+    "approved_deployment_label": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "eligible", "reason"],
+      "properties": {
+        "label": { "const": "PQC migration reference package" },
+        "eligible": { "const": false },
+        "reason": { "type": "string", "minLength": 1, "maxLength": 512 }
+      }
+    }
+  },
+  "$defs": {
+    "boundedObservation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "value"],
+          "properties": {
+            "state": { "const": "observed" },
+            "value": { "type": "string", "minLength": 1, "maxLength": 128 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["state", "value"],
+          "properties": {
+            "state": { "const": "unavailable" },
+            "value": { "type": "null" }
+          }
+        }
+      ]
+    }
+  }
+}

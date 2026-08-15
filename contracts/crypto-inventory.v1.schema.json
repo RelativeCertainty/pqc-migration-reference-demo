@@ -1,0 +1,196 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "pqc.reference_demo.crypto_inventory.v1.schema.json",
+  "title": "PQC reference demo curated cryptographic inventory",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema",
+    "product",
+    "boundaries",
+    "assets"
+  ],
+  "properties": {
+    "schema": {
+      "const": "pqc.reference_demo.crypto_inventory.v1"
+    },
+    "product": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "const": "pqc-reference-demo"
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    },
+    "boundaries": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/boundary"
+      }
+    },
+    "assets": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/asset"
+      }
+    }
+  },
+  "$defs": {
+    "evidenceQuality": {
+      "type": "string",
+      "enum": [
+        "verified",
+        "partially_verified",
+        "probable",
+        "assumption",
+        "unresolved"
+      ]
+    },
+    "boundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id",
+        "evidence_quality",
+        "observation_state",
+        "limitation"
+      ],
+      "properties": {
+        "id": {
+          "type": "string",
+          "enum": [
+            "source",
+            "runtime",
+            "edge"
+          ]
+        },
+        "evidence_quality": {
+          "$ref": "#/$defs/evidenceQuality"
+        },
+        "observation_state": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "limitation": {
+          "type": "string",
+          "minLength": 20
+        }
+      }
+    },
+    "asset": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "bom_ref",
+        "name",
+        "version",
+        "boundary",
+        "evidence_quality",
+        "evidence_kind",
+        "observation_state",
+        "crypto_properties",
+        "evidence_locators",
+        "limitation"
+      ],
+      "properties": {
+        "bom_ref": {
+          "type": "string",
+          "pattern": "^urn:pqc-demo:crypto:pqc-demo:[a-z0-9-]+$"
+        },
+        "name": {
+          "type": "string",
+          "minLength": 1
+        },
+        "version": {
+          "type": "string",
+          "minLength": 1
+        },
+        "boundary": {
+          "type": "string",
+          "enum": [
+            "source",
+            "runtime",
+            "edge"
+          ]
+        },
+        "evidence_quality": {
+          "$ref": "#/$defs/evidenceQuality"
+        },
+        "evidence_kind": {
+          "type": "string",
+          "enum": [
+            "source_detected",
+            "binary_dependency",
+            "runtime_observed",
+            "provider_documented",
+            "declared_unverified"
+          ]
+        },
+        "observation_state": {
+          "type": "string",
+          "pattern": "^[a-z0-9_]+$"
+        },
+        "crypto_properties": {
+          "type": "object",
+          "required": [
+            "assetType"
+          ],
+          "properties": {
+            "assetType": {
+              "type": "string",
+              "enum": [
+                "algorithm",
+                "protocol"
+              ]
+            }
+          }
+        },
+        "evidence_locators": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "path",
+              "line",
+              "needle"
+            ],
+            "properties": {
+              "path": {
+                "type": "string",
+                "pattern": "^[A-Za-z0-9_./-]+$"
+              },
+              "line": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "needle": {
+                "type": "string",
+                "minLength": 1
+              }
+            }
+          }
+        },
+        "limitation": {
+          "type": "string",
+          "minLength": 20
+        }
+      }
+    }
+  }
+}

@@ -1,0 +1,501 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RelativeCertainty/pqc-migration-reference-demo/contracts/canonical-crypto-record.v1.schema.json",
+  "title": "PQC Canonical Crypto Record v1",
+  "description": "Versioned outbound port contract produced by the evidence-fusion domain. It preserves contributing observation references, duplicates, conflicts, freshness, and review disposition instead of claiming automatic source-of-truth completeness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "recordId",
+    "canonicalAssetKey",
+    "displayName",
+    "estateClass",
+    "issueTypes",
+    "evidenceRefs",
+    "correlation",
+    "freshness",
+    "review",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pqc.canonical-crypto-record.v1"
+    },
+    "recordId": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 167,
+      "pattern": "^record:(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "canonicalAssetKey": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "displayName": {
+      "oneOf": [
+        {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+        },
+        { "type": "null" }
+      ]
+    },
+    "estateClass": {
+      "oneOf": [
+        { "$ref": "#/$defs/estateClass" },
+        { "type": "null" }
+      ]
+    },
+    "issueTypes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 7,
+      "uniqueItems": true,
+      "items": {
+        "$ref": "#/$defs/issueType"
+      }
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "observationId",
+          "feedId",
+          "assessment"
+        ],
+        "properties": {
+          "observationId": {
+            "$ref": "#/$defs/safeIdentifier"
+          },
+          "feedId": {
+            "$ref": "#/$defs/feedId"
+          },
+          "assessment": {
+            "enum": [
+              "verified",
+              "partially-verified",
+              "probable",
+              "assumption",
+              "unresolved"
+            ]
+          }
+        }
+      }
+    },
+    "correlation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "status",
+        "duplicateCount",
+        "conflictFields"
+      ],
+      "properties": {
+        "status": {
+          "enum": [
+            "correlated",
+            "conflict",
+            "unmatched"
+          ]
+        },
+        "duplicateCount": {
+          "type": "integer",
+          "minimum": 0,
+          "maximum": 10000
+        },
+        "conflictFields": {
+          "type": "array",
+          "maxItems": 50,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 80,
+            "pattern": "^[a-z][a-zA-Z0-9]*$"
+          }
+        }
+      }
+    },
+    "freshness": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "newestObservedAt",
+        "stale"
+      ],
+      "properties": {
+        "newestObservedAt": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "maxLength": 30,
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "stale": {
+          "type": [
+            "boolean",
+            "null"
+          ]
+        }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "required",
+        "reasons"
+      ],
+      "properties": {
+        "required": {
+          "type": "boolean"
+        },
+        "reasons": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 200,
+            "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "synthetic",
+        "evidenceComposition",
+        "containsSecret",
+        "rawPayloadRetained"
+      ],
+      "properties": {
+        "synthetic": {
+          "type": "boolean"
+        },
+        "evidenceComposition": {
+          "enum": ["synthetic_only", "mixed", "non_synthetic"]
+        },
+        "containsSecret": {
+          "const": false
+        },
+        "rawPayloadRetained": {
+          "const": false
+        }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "displayName": { "type": "null" } },
+        "required": ["displayName"]
+      },
+      "then": {
+        "properties": {
+          "review": {
+            "properties": {
+              "required": { "const": true },
+              "reasons": { "minItems": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "estateClass": { "type": "null" } },
+        "required": ["estateClass"]
+      },
+      "then": {
+        "properties": {
+          "review": {
+            "properties": {
+              "required": { "const": true },
+              "reasons": { "minItems": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "displayName": { "type": "null" },
+          "correlation": {
+            "properties": { "status": { "const": "conflict" } },
+            "required": ["status"]
+          }
+        },
+        "required": ["displayName", "correlation"]
+      },
+      "then": {
+        "properties": {
+          "correlation": {
+            "properties": {
+              "conflictFields": { "contains": { "const": "displayName" } }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "estateClass": { "type": "null" },
+          "correlation": {
+            "properties": { "status": { "const": "conflict" } },
+            "required": ["status"]
+          }
+        },
+        "required": ["estateClass", "correlation"]
+      },
+      "then": {
+        "properties": {
+          "correlation": {
+            "properties": {
+              "conflictFields": { "contains": { "const": "estateClass" } }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "safety": {
+            "properties": { "evidenceComposition": { "const": "non_synthetic" } },
+            "required": ["evidenceComposition"]
+          }
+        },
+        "required": ["safety"]
+      },
+      "then": {
+        "properties": {
+          "safety": { "properties": { "synthetic": { "const": false } } }
+        }
+      },
+      "else": {
+        "properties": {
+          "safety": { "properties": { "synthetic": { "const": true } } }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "freshness": {
+            "properties": { "newestObservedAt": { "type": "null" } },
+            "required": ["newestObservedAt"]
+          }
+        },
+        "required": ["freshness"]
+      },
+      "then": {
+        "properties": {
+          "review": {
+            "properties": {
+              "required": { "const": true },
+              "reasons": { "minItems": 1 }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "correlation": {
+            "properties": {
+              "status": {
+                "const": "conflict"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          }
+        },
+        "required": [
+          "correlation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "correlation": {
+            "properties": {
+              "conflictFields": {
+                "minItems": 1
+              }
+            }
+          },
+          "review": {
+            "properties": {
+              "required": {
+                "const": true
+              },
+              "reasons": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "correlation": {
+            "properties": {
+              "status": {
+                "const": "unmatched"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          }
+        },
+        "required": [
+          "correlation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "correlation": {
+            "properties": {
+              "conflictFields": {
+                "maxItems": 0
+              }
+            }
+          },
+          "review": {
+            "properties": {
+              "required": {
+                "const": true
+              },
+              "reasons": {
+                "minItems": 1
+              }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "correlation": {
+            "properties": {
+              "status": {
+                "const": "correlated"
+              }
+            },
+            "required": [
+              "status"
+            ]
+          }
+        },
+        "required": [
+          "correlation"
+        ]
+      },
+      "then": {
+        "properties": {
+          "evidenceRefs": {
+            "allOf": [
+              {
+                "contains": {
+                  "properties": {
+                    "feedId": {
+                      "const": "initial-inventory"
+                    }
+                  },
+                  "required": [
+                    "feedId"
+                  ]
+                },
+                "minContains": 1
+              },
+              {
+                "contains": {
+                  "properties": {
+                    "feedId": {
+                      "not": {
+                        "const": "initial-inventory"
+                      }
+                    }
+                  },
+                  "required": [
+                    "feedId"
+                  ]
+                },
+                "minContains": 1
+              }
+            ]
+          },
+          "correlation": {
+            "properties": {
+              "conflictFields": {
+                "maxItems": 0
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "safeIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._:-]{2,127}$"
+    },
+    "feedId": {
+      "enum": [
+        "initial-inventory",
+        "extrahop-internet-tls",
+        "vulnerability-manager",
+        "pki-inventory",
+        "sast",
+        "cmdb"
+      ]
+    },
+    "estateClass": {
+      "enum": [
+        "source-code",
+        "ots-cots",
+        "third-party-saas"
+      ]
+    },
+    "issueType": {
+      "enum": [
+        "tls-protocol",
+        "algorithm-key-strength",
+        "certificate-trust",
+        "implementation-configuration",
+        "source-code-crypto-use",
+        "cryptographic-dependency",
+        "vendor-control"
+      ]
+    }
+  }
+}

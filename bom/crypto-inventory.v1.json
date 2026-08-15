@@ -1,0 +1,121 @@
+{
+  "schema": "pqc.reference_demo.crypto_inventory.v1",
+  "product": {
+    "name": "pqc-reference-demo",
+    "version": "0.1.0"
+  },
+  "boundaries": [
+    {
+      "id": "source",
+      "evidence_quality": "verified",
+      "observation_state": "source_reviewed",
+      "limitation": "Static source evidence establishes declared calls and contracts only; it does not establish runtime execution, algorithm validation, or network negotiation."
+    },
+    {
+      "id": "runtime",
+      "evidence_quality": "partially_verified",
+      "observation_state": "artifact_bound_not_dynamically_observed",
+      "limitation": "A binary or image digest binds the inspected artifact, but no dynamic cryptographic execution or upstream TLS termination is inferred."
+    },
+    {
+      "id": "edge",
+      "evidence_quality": "unresolved",
+      "observation_state": "exact_host_evidence_required",
+      "limitation": "Edge protocol and key-exchange assets remain unresolved until bounded evidence for the final hostname is supplied; this inventory does not describe the current browser session."
+    }
+  ],
+  "assets": [
+    {
+      "bom_ref": "urn:pqc-demo:crypto:pqc-demo:build-ui-sha-256",
+      "name": "SHA-256 for portable UI staging",
+      "version": "256-bit digest",
+      "boundary": "source",
+      "evidence_quality": "verified",
+      "evidence_kind": "source_detected",
+      "observation_state": "build_source_detected",
+      "crypto_properties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "256",
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic",
+          "cryptoFunctions": [
+            "digest"
+          ],
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence_locators": [
+        {
+          "path": "scripts/stage-portable-assets.mjs",
+          "line": 70,
+          "needle": "createHash(\"sha256\").update(bytes).digest(\"hex\")"
+        }
+      ],
+      "limitation": "This build-time digest protects the staged static-asset manifest. It is not a post-quantum primitive or a module-validation claim."
+    },
+    {
+      "bom_ref": "urn:pqc-demo:crypto:pqc-demo:runtime-ui-sha-256",
+      "name": "SHA-256 for embedded UI integrity",
+      "version": "256-bit digest",
+      "boundary": "runtime",
+      "evidence_quality": "verified",
+      "evidence_kind": "source_detected",
+      "observation_state": "runtime_source_detected_not_executed",
+      "crypto_properties": {
+        "assetType": "algorithm",
+        "algorithmProperties": {
+          "primitive": "hash",
+          "parameterSetIdentifier": "256",
+          "executionEnvironment": "software-plain-ram",
+          "implementationPlatform": "generic",
+          "cryptoFunctions": [
+            "digest"
+          ],
+          "classicalSecurityLevel": 128,
+          "nistQuantumSecurityLevel": 0
+        }
+      },
+      "evidence_locators": [
+        {
+          "path": "portable/assets.go",
+          "line": 38,
+          "needle": "actualDigest := sha256.Sum256(body)"
+        },
+        {
+          "path": "portable/assets.go",
+          "line": 75,
+          "needle": "manifestDigest := sha256.Sum256(manifest)"
+        }
+      ],
+      "limitation": "Source review confirms the compiled adapter is intended to verify embedded assets with SHA-256. It does not prove that a particular runtime path executed."
+    },
+    {
+      "bom_ref": "urn:pqc-demo:crypto:pqc-demo:edge-transport-unresolved",
+      "name": "Visitor-to-edge cryptographic transport boundary",
+      "version": "unobserved",
+      "boundary": "edge",
+      "evidence_quality": "unresolved",
+      "evidence_kind": "declared_unverified",
+      "observation_state": "no_exact_host_observation_supplied",
+      "crypto_properties": {
+        "assetType": "protocol"
+      },
+      "evidence_locators": [
+        {
+          "path": "portable/posture.go",
+          "line": 63,
+          "needle": "ExactSessionKeyExchange.State = \"not_observable\""
+        },
+        {
+          "path": "portable/posture.go",
+          "line": 66,
+          "needle": "HostnameCapability.State = \"not_observable_by_handler\""
+        }
+      ],
+      "limitation": "This component records an unresolved boundary, not an observed TLS version, cipher, certificate, classical key agreement, hybrid key agreement, or post-quantum signature."
+    }
+  ]
+}

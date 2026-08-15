@@ -1,0 +1,48 @@
+{
+  "schemaVersion": "pqc.evidence-fusion-result.v1",
+  "records": [
+    {
+      "schemaVersion": "pqc.canonical-crypto-record.v1",
+      "recordId": "record:orphan-service-77",
+      "canonicalAssetKey": "orphan-service-77",
+      "displayName": null,
+      "estateClass": "ots-cots",
+      "issueTypes": [
+        "cryptographic-dependency"
+      ],
+      "evidenceRefs": [
+        {
+          "observationId": "obs:cmdb:ci-503",
+          "feedId": "cmdb",
+          "assessment": "assumption"
+        }
+      ],
+      "correlation": {
+        "status": "unmatched",
+        "duplicateCount": 0,
+        "conflictFields": []
+      },
+      "freshness": {
+        "newestObservedAt": null,
+        "stale": null
+      },
+      "review": {
+        "required": true,
+        "reasons": [
+          "Contributing observations do not establish one governed display name",
+          "Enrichment observation has no matching synthetic seed-inventory record",
+          "No retained observation has a runtime collection timestamp; freshness is unknown",
+          "One or more retained observations are assumptions or unresolved",
+          "One or more retained observations have low or illustrative confidence"
+        ]
+      },
+      "safety": {
+        "synthetic": true,
+        "evidenceComposition": "synthetic_only",
+        "containsSecret": false,
+        "rawPayloadRetained": false
+      }
+    }
+  ],
+  "sourceReconciliationQueue": []
+}

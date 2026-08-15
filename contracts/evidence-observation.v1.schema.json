@@ -1,0 +1,274 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RelativeCertainty/pqc-migration-reference-demo/contracts/evidence-observation.v1.schema.json",
+  "title": "PQC Evidence Observation v1",
+  "description": "Versioned inbound port contract for one normalized cryptographic-evidence observation. Feed adapters emit this contract; the domain core never consumes feed-native payloads. Raw payloads and secret values are outside the contract.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "observationId",
+    "feedId",
+    "adapter",
+    "source",
+    "subject",
+    "classification",
+    "finding",
+    "provenance",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": {
+      "const": "pqc.evidence-observation.v1"
+    },
+    "observationId": {
+      "$ref": "#/$defs/safeIdentifier"
+    },
+    "feedId": {
+      "$ref": "#/$defs/feedId"
+    },
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "name",
+        "version"
+      ],
+      "properties": {
+        "name": {
+          "$ref": "#/$defs/safeIdentifier"
+        },
+        "version": {
+          "type": "string",
+          "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$",
+          "maxLength": 32
+        }
+      }
+    },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "recordRef",
+        "collectedAt"
+      ],
+      "properties": {
+        "recordRef": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 256,
+          "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+        },
+        "collectedAt": {
+          "oneOf": [
+            {
+              "type": "string",
+              "format": "date-time",
+              "maxLength": 30,
+              "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        }
+      }
+    },
+    "subject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "candidateKey",
+        "assetHint",
+        "estateClass"
+      ],
+      "properties": {
+        "candidateKey": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 160,
+          "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+        },
+        "assetHint": {
+          "oneOf": [
+            {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 160,
+              "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "estateClass": {
+          "$ref": "#/$defs/estateClass"
+        }
+      }
+    },
+    "classification": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "issueType"
+      ],
+      "properties": {
+        "issueType": {
+          "$ref": "#/$defs/issueType"
+        }
+      }
+    },
+    "finding": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "fact"
+      ],
+      "properties": {
+        "fact": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+        }
+      }
+    },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assessment",
+        "confidence",
+        "sourceLocator"
+      ],
+      "properties": {
+        "assessment": {
+          "enum": [
+            "verified",
+            "partially-verified",
+            "probable",
+            "assumption",
+            "unresolved"
+          ]
+        },
+        "confidence": {
+          "enum": [
+            "high",
+            "moderate",
+            "low",
+            "illustrative"
+          ]
+        },
+        "sourceLocator": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 300,
+          "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+        }
+      }
+    },
+    "safety": {
+      "$ref": "#/$defs/safety"
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "safety": {
+            "properties": {
+              "synthetic": {
+                "const": true
+              }
+            },
+            "required": [
+              "synthetic"
+            ]
+          }
+        },
+        "required": [
+          "safety"
+        ]
+      },
+      "then": {
+        "properties": {
+          "source": {
+            "properties": {
+              "collectedAt": {
+                "type": "null"
+              }
+            }
+          },
+          "provenance": {
+            "properties": {
+              "assessment": {
+                "enum": [
+                  "assumption",
+                  "unresolved"
+                ]
+              },
+              "confidence": {
+                "const": "illustrative"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "safeIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._:-]{2,127}$"
+    },
+    "feedId": {
+      "enum": [
+        "initial-inventory",
+        "extrahop-internet-tls",
+        "vulnerability-manager",
+        "pki-inventory",
+        "sast",
+        "cmdb"
+      ]
+    },
+    "estateClass": {
+      "enum": [
+        "source-code",
+        "ots-cots",
+        "third-party-saas"
+      ]
+    },
+    "issueType": {
+      "enum": [
+        "tls-protocol",
+        "algorithm-key-strength",
+        "certificate-trust",
+        "implementation-configuration",
+        "source-code-crypto-use",
+        "cryptographic-dependency",
+        "vendor-control"
+      ]
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "synthetic",
+        "containsSecret",
+        "rawPayloadRetained"
+      ],
+      "properties": {
+        "synthetic": {
+          "type": "boolean"
+        },
+        "containsSecret": {
+          "const": false
+        },
+        "rawPayloadRetained": {
+          "const": false
+        }
+      }
+    }
+  }
+}
