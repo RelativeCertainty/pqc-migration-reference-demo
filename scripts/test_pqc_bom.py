@@ -212,6 +212,12 @@ def test_clean_bundle_manifest_requires_matching_bound_artifacts(
 ) -> None:
     repo, source_sha = _clean_repo(tmp_path)
     monkeypatch.setattr(MODULE, "REPO_ROOT", repo)
+    tool_versions = {
+        "syft": "test-syft",
+        "cyclonedx-npm": "test-cyclonedx-npm",
+        "cbomkit-theia": "test-cbomkit-theia",
+    }
+    monkeypatch.setattr(MODULE, "_tool_version", tool_versions.__getitem__)
     output = repo / "evidence" / "bom"
     _write_bound_bundle(
         output,
@@ -230,6 +236,7 @@ def test_clean_bundle_manifest_requires_matching_bound_artifacts(
     manifest = json.loads((output / "manifest.json").read_text(encoding="utf-8"))
     assert manifest["source_commit"] == source_sha
     assert manifest["release_state"] == MODULE.CLEAN_RELEASE_STATE
+    assert manifest["tools"] == tool_versions
 
     node_cdx = json.loads((output / "node-source-build.cdx.json").read_text(encoding="utf-8"))
     node_cdx["metadata"]["properties"][1]["value"] = MODULE.DIRTY_RELEASE_STATE

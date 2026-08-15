@@ -464,7 +464,23 @@ def _semantic_validate_spdx(path: Path) -> dict[str, int | str]:
 
 
 def _cyclonedx_schema_dir() -> Path:
-    executable = Path(_required_tool("cyclonedx-npm")).resolve()
+    repository_schema = (
+        APP_ROOT
+        / "node_modules"
+        / "@cyclonedx"
+        / "cyclonedx-library"
+        / "res"
+        / "schema"
+    )
+    if repository_schema.is_dir():
+        return repository_schema
+
+    repository_executable = APP_ROOT / "node_modules" / ".bin" / "cyclonedx-npm"
+    executable = (
+        repository_executable.resolve()
+        if repository_executable.is_file()
+        else Path(_required_tool("cyclonedx-npm")).resolve()
+    )
     for parent in executable.parents:
         candidate = parent / "@cyclonedx" / "cyclonedx-library" / "res" / "schema"
         if candidate.is_dir():
