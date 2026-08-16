@@ -3,6 +3,7 @@ export type SectionId =
   | "architecture"
   | "tvm-mapping"
   | "inventory"
+  | "lab"
   | "prioritization"
   | "workflow"
   | "scenarios"

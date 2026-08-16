@@ -1,0 +1,27 @@
+{
+  "schema": "venafi.certificate-search.synthetic.v1",
+  "certificates": [
+    {
+      "id": "cert-synthetic-api-edge-001",
+      "certificateName": "api-edge.example.invalid",
+      "subject": "CN=api-edge.example.invalid",
+      "issuer": "CN=Synthetic Enterprise Issuing CA",
+      "keyAlgorithm": "RSA",
+      "keySize": 2048,
+      "signatureAlgorithm": "SHA256withRSA",
+      "instanceCount": 3,
+      "managed": true
+    },
+    {
+      "id": "cert-synthetic-service-mtls-002",
+      "certificateName": "service-mtls.example.invalid",
+      "subject": "CN=service-mtls.example.invalid",
+      "issuer": "CN=Synthetic Enterprise Issuing CA",
+      "keyAlgorithm": "EC",
+      "keySize": 256,
+      "signatureAlgorithm": "SHA256withECDSA",
+      "instanceCount": 8,
+      "managed": true
+    }
+  ]
+}

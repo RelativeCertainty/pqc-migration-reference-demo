@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RelativeCertainty/pqc-migration-reference-demo/contracts/migration-evidence-package.v1.schema.json",
+  "title": "PQC Migration Evidence Package v1",
+  "description": "Deterministically identified, exportable result of the local evidence-to-proposed-work slice.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "packageId",
+    "generatedAt",
+    "outcome",
+    "summary",
+    "importRuns",
+    "fusion",
+    "workItems",
+    "assurance"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "pqc.migration-evidence-package.v1" },
+    "packageId": {
+      "type": "string",
+      "pattern": "^migration-package:[a-f0-9]{16}$"
+    },
+    "generatedAt": {
+      "oneOf": [
+        {
+          "type": "string",
+          "format": "date-time",
+          "maxLength": 30,
+          "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+        },
+        { "type": "null" }
+      ]
+    },
+    "outcome": { "const": "bounded-migration-assessment" },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapterRuns", "acceptedObservations", "skippedNativeRecords", "canonicalCandidates", "proposedWorkItems", "reviewRequired"],
+      "properties": {
+        "adapterRuns": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "acceptedObservations": { "type": "integer", "minimum": 0, "maximum": 900 },
+        "skippedNativeRecords": { "type": "integer", "minimum": 0, "maximum": 50000 },
+        "canonicalCandidates": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "proposedWorkItems": { "type": "integer", "minimum": 0, "maximum": 100 },
+        "reviewRequired": { "type": "integer", "minimum": 0, "maximum": 200 }
+      }
+    },
+    "importRuns": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "items": { "$ref": "evidence-import-run.v1.schema.json" }
+    },
+    "fusion": { "$ref": "evidence-fusion-result.v1.schema.json" },
+    "workItems": {
+      "type": "array",
+      "maxItems": 100,
+      "items": { "$ref": "migration-work-item.v1.schema.json" }
+    },
+    "assurance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["rawPayloadRetained", "containsSecret", "automaticChangeAuthorized", "limitation"],
+      "properties": {
+        "rawPayloadRetained": { "const": false },
+        "containsSecret": { "const": false },
+        "automaticChangeAuthorized": { "const": false },
+        "limitation": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 500,
+          "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+        }
+      }
+    }
+  }
+}

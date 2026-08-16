@@ -1,0 +1,90 @@
+{
+  "$schema": "https://json.schemastore.org/sarif-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "SnykCode",
+          "version": "synthetic-demo",
+          "rules": [
+            {
+              "id": "java/DirectRSAUse",
+              "shortDescription": { "text": "Direct RSA signing API use" },
+              "properties": { "tags": ["security", "cryptography", "rsa"] }
+            },
+            {
+              "id": "java/InsecureCipherMode",
+              "shortDescription": { "text": "Insecure ECB cipher mode" },
+              "properties": { "tags": ["security", "cryptography", "cipher"] }
+            },
+            {
+              "id": "java/CryptoLibraryDependency",
+              "shortDescription": { "text": "Cryptographic library dependency" },
+              "properties": { "tags": ["security", "cryptography", "dependency"] }
+            },
+            {
+              "id": "java/SqlInjection",
+              "shortDescription": { "text": "SQL query includes untrusted input" },
+              "properties": { "tags": ["security", "injection"] }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "java/DirectRSAUse",
+          "level": "warning",
+          "message": { "text": "RSA signing is constructed directly instead of through a crypto-agility boundary." },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "src/main/java/example/PaymentSigner.java" },
+                "region": { "startLine": 48 }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "java/InsecureCipherMode",
+          "level": "error",
+          "message": { "text": "AES/ECB mode is selected in a legacy encryption helper." },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "src/main/java/example/LegacyCipher.java" },
+                "region": { "startLine": 27 }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "java/CryptoLibraryDependency",
+          "level": "warning",
+          "message": { "text": "A cryptographic provider library is pinned directly by the application." },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "build.gradle.kts" },
+                "region": { "startLine": 19 }
+              }
+            }
+          ]
+        },
+        {
+          "ruleId": "java/SqlInjection",
+          "level": "error",
+          "message": { "text": "Untrusted input reaches a SQL query." },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "src/main/java/example/Lookup.java" },
+                "region": { "startLine": 31 }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}
