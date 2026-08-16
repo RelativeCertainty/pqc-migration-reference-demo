@@ -64,7 +64,7 @@ describe("evidence fusion ports and adapters", () => {
     }
   });
 
-  it("models exactly five read-only enrichment feeds with distinct issue types and authority boundaries", () => {
+  it("keeps five read-only enrichment feeds while exposing two local import adapters", () => {
     expect(EVIDENCE_FUSION_FEEDS).toHaveLength(5);
     expect(EVIDENCE_FUSION_FEEDS.map((feed) => feed.id)).toEqual([
       "extrahop-internet-tls",
@@ -73,7 +73,11 @@ describe("evidence fusion ports and adapters", () => {
       "sast",
       "cmdb",
     ]);
-    expect(EVIDENCE_FUSION_FEEDS.every((feed) => feed.status === "MODELED · NOT CONNECTED")).toBe(true);
+    expect(EVIDENCE_FUSION_FEEDS.filter((feed) => feed.status === "LOCAL IMPORT ADAPTER").map((feed) => feed.id)).toEqual([
+      "pki-inventory",
+      "sast",
+    ]);
+    expect(EVIDENCE_FUSION_FEEDS.filter((feed) => feed.status === "MODELED · NOT CONNECTED")).toHaveLength(3);
     expect(EVIDENCE_FUSION_FEEDS.every((feed) => feed.authorityBoundary.length > 20)).toBe(true);
     expect(EVIDENCE_FUSION_FEEDS.find((feed) => feed.id === "vulnerability-manager")?.signals).toEqual(
       expect.arrayContaining(["SSL plugin findings", "Crypto-relevant CVEs"]),

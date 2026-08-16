@@ -21,6 +21,15 @@ reference evidence-fusion slice:
   conformance vector. Python validates it against Draft 2020-12, and the
   TypeScript core must emit equivalent structured content from the same
   bounded fixture.
+- `evidence-import-run.v1.schema.json` is the output port for one bounded
+  local adapter invocation. It carries normalized observations and redacted
+  diagnostics, never the native Snyk or Venafi payload.
+- `migration-work-item.v1.schema.json` is a proposal-only planning contract.
+  Its closed state model requires human review and cannot represent approval
+  or execution authority.
+- `migration-evidence-package.v1.schema.json` composes adapter runs, the
+  canonical fusion result, proposed work, and the explicit no-actuation
+  assurance boundary into one deterministically identified export.
 
 The contracts deliberately separate three concerns:
 
@@ -38,6 +47,13 @@ classification and retention controls; these interface records are not a safe
 place to copy credentials, keys, full certificates, source code, scanner
 payloads, or customer data.
 
+The local-file adapters satisfy that contract by emitting fixed categorical
+facts and opaque local record references. They do not export user file names,
+SARIF messages, rule identifiers, source paths, certificate identifiers,
+subjects, issuers, or unrestricted algorithm strings. Non-synthetic imports
+remain `unresolved` with `low` confidence because selecting a file does not
+authenticate its producer, integrity, recency, or completeness.
+
 Closed-schema compatibility is exact: after v1 is published, adding even an
 optional emitted field or enum value requires a new version and an explicit
 adapter migration. Producers and consumers must never rely on unknown-property
@@ -50,10 +66,12 @@ contiguous, or that quarantined observation IDs are absent from canonical
 records. Those cross-record invariants are enforced by the result-port runtime
 validator before a result is returned.
 
-The current application uses deterministic synthetic fixtures only. These
-schemas and adapters demonstrate interface behavior; they do not establish a
-live connector, production inventory, complete coverage, or an authoritative
-client record.
+The runnable lab includes deterministic synthetic fixtures plus local-file
+import adapters for Snyk Code SARIF and Venafi certificate-search JSON. A file
+selected in the browser is processed in memory and is not sent to an
+application server. These adapters establish local interface behavior; they do
+not establish an authenticated remote connector, production inventory,
+complete coverage, or an authoritative client record.
 
 `EvidenceObservation v1` is deliberately finding-shaped. Its CMDB example
 provides only a bounded correlation hint; typed ownership, service,

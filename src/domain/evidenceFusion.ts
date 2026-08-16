@@ -98,7 +98,7 @@ export interface EvidenceFusionFeed {
   readonly issueTypes: readonly CryptoIssueType[];
   readonly contribution: string;
   readonly authorityBoundary: string;
-  readonly status: "MODELED · NOT CONNECTED";
+  readonly status: "MODELED · NOT CONNECTED" | "LOCAL IMPORT ADAPTER";
 }
 
 export interface InboundEvidenceAdapter<TNative> {
@@ -246,23 +246,23 @@ export const EVIDENCE_FUSION_FEEDS: readonly EvidenceFusionFeed[] = [
   },
   {
     id: "pki-inventory",
-    label: "PKI inventory",
+    label: "PKI inventory / Venafi",
     family: "Trust evidence",
     signals: ["Certificates and profiles", "Issuer hierarchy", "Validity and relying-party hints"],
     issueTypes: ["certificate-trust", "cryptographic-dependency"],
-    contribution: "Supplies governed certificate and trust metadata within the PKI scope.",
+    contribution: "The local Venafi certificate-search adapter supplies bounded certificate, algorithm, trust, and instance metadata.",
     authorityBoundary: "PKI inventory is authoritative only for its governed PKI scope, not all crypto use.",
-    status: "MODELED · NOT CONNECTED",
+    status: "LOCAL IMPORT ADAPTER",
   },
   {
     id: "sast",
-    label: "SAST",
+    label: "SAST / Snyk Code",
     family: "Source evidence",
     signals: ["Crypto API calls", "Embedded algorithms", "Library and dependency references"],
     issueTypes: ["source-code-crypto-use", "implementation-configuration", "cryptographic-dependency"],
-    contribution: "Locates source-visible crypto use for application-owner review.",
+    contribution: "The local Snyk Code SARIF adapter locates crypto-relevant source findings for application-owner review.",
     authorityBoundary: "SAST sees analyzed source; it does not prove deployed runtime behavior or opaque products.",
-    status: "MODELED · NOT CONNECTED",
+    status: "LOCAL IMPORT ADAPTER",
   },
   {
     id: "cmdb",

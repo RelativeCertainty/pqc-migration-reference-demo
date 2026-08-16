@@ -6,6 +6,7 @@ import {
   TvmMappingSection,
 } from "./components/OverviewArchitecture";
 import { InventorySection, PrioritizationSection } from "./components/InventoryRisk";
+import { MigrationLabSection } from "./components/MigrationLab";
 import {
   DecisionsSection,
   PatternsSection,
@@ -26,6 +27,7 @@ const SECTION_COMPONENTS: Record<SectionId, () => React.JSX.Element> = {
   architecture: ArchitectureSection,
   "tvm-mapping": TvmMappingSection,
   inventory: InventorySection,
+  lab: MigrationLabSection,
   prioritization: PrioritizationSection,
   workflow: WorkflowSection,
   scenarios: ScenariosSection,
@@ -113,8 +115,8 @@ export default function App() {
         </nav>
 
         <div className="rail-footer">
-          <span className="rail-status"><i aria-hidden="true" />EVIDENCE BOUNDED · OWNER REVIEW DUE</span>
-          <small>Synthetic data · no write path</small>
+          <span className="rail-status"><i aria-hidden="true" />EVIDENCE BOUNDED · HUMAN REVIEW REQUIRED</span>
+          <small>Local processing · no server write path</small>
         </div>
       </aside>
 

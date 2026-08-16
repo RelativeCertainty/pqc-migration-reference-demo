@@ -1,0 +1,84 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RelativeCertainty/pqc-migration-reference-demo/contracts/evidence-import-run.v1.schema.json",
+  "title": "PQC Evidence Import Run v1",
+  "description": "Closed output contract for one bounded local adapter run. Native source payloads are intentionally excluded.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "adapterId",
+    "adapterName",
+    "adapterVersion",
+    "feedId",
+    "sourceName",
+    "acceptedCount",
+    "skippedCount",
+    "observations",
+    "diagnostics",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "pqc.evidence-import-run.v1" },
+    "adapterId": { "enum": ["snyk-code-sarif", "venafi-certificate-search"] },
+    "adapterName": { "$ref": "#/$defs/safeIdentifier" },
+    "adapterVersion": { "const": "1.0.0" },
+    "feedId": { "enum": ["sast", "pki-inventory"] },
+    "sourceName": { "$ref": "#/$defs/boundedText" },
+    "acceptedCount": { "type": "integer", "minimum": 0, "maximum": 15000 },
+    "skippedCount": { "type": "integer", "minimum": 0, "maximum": 5000 },
+    "observations": {
+      "type": "array",
+      "maxItems": 15000,
+      "items": { "$ref": "evidence-observation.v1.schema.json" }
+    },
+    "diagnostics": {
+      "type": "array",
+      "maxItems": 5000,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["level", "code", "message", "sourceRef"],
+        "properties": {
+          "level": { "enum": ["warning", "information"] },
+          "code": { "$ref": "#/$defs/safeIdentifier" },
+          "message": { "$ref": "#/$defs/boundedMessage" },
+          "sourceRef": {
+            "oneOf": [
+              { "$ref": "#/$defs/boundedText" },
+              { "type": "null" }
+            ]
+          }
+        }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "containsSecret", "rawPayloadRetained"],
+      "properties": {
+        "synthetic": { "type": "boolean" },
+        "containsSecret": { "const": false },
+        "rawPayloadRetained": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "safeIdentifier": {
+      "type": "string",
+      "pattern": "^[a-z0-9][a-z0-9._:-]{2,127}$"
+    },
+    "boundedText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "boundedMessage": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    }
+  }
+}

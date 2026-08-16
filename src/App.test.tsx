@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 
 import App from "./App";
 import { InventorySection, PrioritizationSection } from "./components/InventoryRisk";
+import { MigrationLabSection } from "./components/MigrationLab";
 import { ArchitectureSection } from "./components/OverviewArchitecture";
 import { DashboardSection, PostureSection } from "./components/PostureDashboard";
 import { parseRuntimePosture } from "./hooks/usePosture";
@@ -49,10 +50,10 @@ describe("reference demo navigation and interactions", () => {
     expect(() => parseRuntimePosture({ ...posturePayload(), extra: true })).toThrow("unexpected posture contract");
   });
 
-  it("renders 12 navigable primary sections", () => {
+  it("renders 13 navigable primary sections", () => {
     render(<App />);
     const navigation = screen.getByRole("navigation", { name: "Reference architecture sections" });
-    expect(within(navigation).getAllByRole("link")).toHaveLength(12);
+    expect(within(navigation).getAllByRole("link")).toHaveLength(13);
     expect(screen.getByRole("link", { name: /PQ\s*MIGRATION\s*REFERENCE LAB/i })).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1, name: "Executive overview" })).toBeInTheDocument();
   });
@@ -62,13 +63,13 @@ describe("reference demo navigation and interactions", () => {
     render(<App />);
     await user.click(screen.getByRole("button", { name: "Interview mode" }));
     expect(screen.getByRole("region", { name: "Interview mode controls" })).toBeInTheDocument();
-    expect(screen.getByRole("progressbar", { name: "Interview mode progress: 1 / 10" })).toBeInTheDocument();
-    expect(screen.getByText(/Step 1 \/ 10/)).toBeInTheDocument();
+    expect(screen.getByRole("progressbar", { name: "Interview mode progress: 1 / 11" })).toBeInTheDocument();
+    expect(screen.getByText(/Step 1 \/ 11/)).toBeInTheDocument();
     expect(screen.getByRole("button", { name: /Previous/ })).toBeDisabled();
 
     await user.click(screen.getByRole("button", { name: /Next/ }));
     await waitFor(() => expect(screen.getByRole("heading", { level: 1, name: "Enterprise reference architecture" })).toBeInTheDocument());
-    expect(screen.getByText(/Step 2 \/ 10/)).toBeInTheDocument();
+    expect(screen.getByText(/Step 2 \/ 11/)).toBeInTheDocument();
   });
 
   it("always starts interview mode at Step 1 and exits on non-interview navigation", async () => {
@@ -79,7 +80,7 @@ describe("reference demo navigation and interactions", () => {
 
     await user.click(screen.getByRole("button", { name: "Interview mode" }));
     await waitFor(() => expect(screen.getByRole("heading", { level: 1, name: "Executive overview" })).toBeInTheDocument());
-    expect(screen.getByText(/Step 1 \/ 10/)).toBeInTheDocument();
+    expect(screen.getByText(/Step 1 \/ 11/)).toBeInTheDocument();
     expect(screen.getByRole("heading", { level: 1, name: "Executive overview" })).toHaveFocus();
 
     const navigation = screen.getByRole("navigation", { name: "Reference architecture sections" });
@@ -117,7 +118,7 @@ describe("reference demo navigation and interactions", () => {
     expect(screen.getByText("No synthetic systems match the current filters.")).toBeInTheDocument();
   });
 
-  it("shows the ports-and-adapters evidence-fusion path and all five modeled feeds", () => {
+  it("shows the ports-and-adapters evidence-fusion path and all five evidence feeds", () => {
     render(<ArchitectureSection />);
 
     expect(screen.getByRole("heading", { name: "Adapters isolate feeds. A neutral contract protects the core." })).toBeInTheDocument();
@@ -126,10 +127,23 @@ describe("reference demo navigation and interactions", () => {
     expect(screen.getByText("Expanded seed observations").parentElement).toHaveTextContent("36");
     expect(screen.getByText("Enrichment submissions").parentElement).toHaveTextContent("12");
     expect(screen.getByText("Retained enrichment").parentElement).toHaveTextContent("11");
-    for (const feed of ["ExtraHop Internet TLS + certificates", "Vulnerability manager", "PKI inventory", "SAST", "CMDB"]) {
+    for (const feed of ["ExtraHop Internet TLS + certificates", "Vulnerability manager", "PKI inventory / Venafi", "SAST / Snyk Code", "CMDB"]) {
       expect(screen.getByRole("heading", { name: feed })).toBeInTheDocument();
     }
-    expect(screen.getAllByText("MODELED · NOT CONNECTED")).toHaveLength(5);
+    expect(screen.getAllByText("MODELED · NOT CONNECTED")).toHaveLength(3);
+    expect(screen.getAllByText("LOCAL IMPORT ADAPTER")).toHaveLength(2);
+  });
+
+  it("executes the bundled Snyk and Venafi slice without a server", () => {
+    render(<MigrationLabSection />);
+
+    expect(screen.getByRole("heading", { level: 1, name: "Runnable migration lab" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Snyk Code SARIF" })).toBeInTheDocument();
+    expect(screen.getByRole("heading", { level: 2, name: "Venafi certificate search" })).toBeInTheDocument();
+    expect(screen.getByText("Normalized evidence").parentElement).toHaveTextContent("9");
+    expect(screen.getByText("Proposed work").parentElement).toHaveTextContent("2");
+    expect(screen.getByRole("button", { name: "Export evidence package" })).toBeEnabled();
+    expect(screen.getAllByText("Not authorized")).toHaveLength(2);
   });
 
   it("projects canonical correlation state and a review queue into inventory", async () => {

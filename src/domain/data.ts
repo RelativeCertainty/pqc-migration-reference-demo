@@ -13,14 +13,15 @@ export const NAVIGATION_SECTIONS: readonly NavigationSection[] = [
   { id: "architecture", shortLabel: "Architecture", title: "Enterprise reference architecture", eyebrow: "02 / Map", interviewStep: 2 },
   { id: "tvm-mapping", shortLabel: "TVM analogy", title: "TVM to PQC mapping", eyebrow: "03 / Transfer", interviewStep: 3 },
   { id: "inventory", shortLabel: "Inventory", title: "Seed inventory + evidence fusion", eyebrow: "04 / Discover", interviewStep: 4 },
-  { id: "prioritization", shortLabel: "Prioritize", title: "Risk and migration prioritization", eyebrow: "05 / Explain", interviewStep: 5 },
-  { id: "workflow", shortLabel: "Workflow", title: "Migration workflow", eyebrow: "06 / Orchestrate", interviewStep: 6 },
-  { id: "scenarios", shortLabel: "Scenarios", title: "Environment maturity scenarios", eyebrow: "07 / Adapt", interviewStep: 7 },
-  { id: "decisions", shortLabel: "Decide", title: "Capability gaps and build-vs-buy", eyebrow: "08 / Decide", interviewStep: 8 },
-  { id: "patterns", shortLabel: "Patterns", title: "Migration patterns", eyebrow: "09 / Execute" },
-  { id: "posture", shortLabel: "This demo", title: "The demo’s own PQC posture", eyebrow: "10 / Verify", interviewStep: 9 },
-  { id: "dashboard", shortLabel: "Measure", title: "Migration dashboard", eyebrow: "11 / Measure" },
-  { id: "questions", shortLabel: "Questions", title: "Convert architecture into a program", eyebrow: "12 / Discover", interviewStep: 10 },
+  { id: "lab", shortLabel: "Run slice", title: "Runnable migration lab", eyebrow: "05 / Execute locally", interviewStep: 5 },
+  { id: "prioritization", shortLabel: "Prioritize", title: "Risk and migration prioritization", eyebrow: "06 / Explain", interviewStep: 6 },
+  { id: "workflow", shortLabel: "Workflow", title: "Migration workflow", eyebrow: "07 / Orchestrate", interviewStep: 7 },
+  { id: "scenarios", shortLabel: "Scenarios", title: "Environment maturity scenarios", eyebrow: "08 / Adapt", interviewStep: 8 },
+  { id: "decisions", shortLabel: "Decide", title: "Capability gaps and build-vs-buy", eyebrow: "09 / Decide", interviewStep: 9 },
+  { id: "patterns", shortLabel: "Patterns", title: "Migration patterns", eyebrow: "10 / Execute" },
+  { id: "posture", shortLabel: "This demo", title: "The demo’s own PQC posture", eyebrow: "11 / Verify", interviewStep: 10 },
+  { id: "dashboard", shortLabel: "Measure", title: "Migration dashboard", eyebrow: "12 / Measure" },
+  { id: "questions", shortLabel: "Questions", title: "Convert architecture into a program", eyebrow: "13 / Discover", interviewStep: 11 },
 ] as const;
 
 export const INTERVIEW_SECTION_IDS: readonly SectionId[] = NAVIGATION_SECTIONS.filter(

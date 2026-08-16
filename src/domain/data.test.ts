@@ -16,10 +16,10 @@ import {
 import { SYNTHETIC_EVIDENCE_ARTIFACT } from "./syntheticEvidence.v1";
 
 describe("reference demo data contracts", () => {
-  it("defines exactly 12 unique navigable sections and a 10-step interview path", () => {
-    expect(NAVIGATION_SECTIONS).toHaveLength(12);
-    expect(new Set(NAVIGATION_SECTIONS.map((section) => section.id)).size).toBe(12);
-    expect(INTERVIEW_SECTION_IDS).toHaveLength(10);
+  it("defines exactly 13 unique navigable sections and an 11-step interview path", () => {
+    expect(NAVIGATION_SECTIONS).toHaveLength(13);
+    expect(new Set(NAVIGATION_SECTIONS.map((section) => section.id)).size).toBe(13);
+    expect(INTERVIEW_SECTION_IDS).toHaveLength(11);
     expect(INTERVIEW_SECTION_IDS[0]).toBe("overview");
     expect(INTERVIEW_SECTION_IDS.at(-1)).toBe("questions");
   });

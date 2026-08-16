@@ -1,0 +1,128 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RelativeCertainty/pqc-migration-reference-demo/contracts/migration-work-item.v1.schema.json",
+  "title": "PQC Migration Work Item v1",
+  "description": "Proposal-only migration-planning output. The contract cannot represent approval or automatic execution.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "workItemId",
+    "canonicalRecordId",
+    "assetKey",
+    "displayName",
+    "stage",
+    "state",
+    "priority",
+    "issueTypes",
+    "decision",
+    "recommendedPattern",
+    "rationale",
+    "evidenceRefs",
+    "authorityGates",
+    "validationRequirements",
+    "review"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "pqc.migration-work-item.v1" },
+    "workItemId": { "$ref": "#/$defs/safeText" },
+    "canonicalRecordId": { "$ref": "#/$defs/safeText" },
+    "assetKey": { "$ref": "#/$defs/boundedText" },
+    "displayName": {
+      "oneOf": [
+        { "$ref": "#/$defs/boundedText" },
+        { "type": "null" }
+      ]
+    },
+    "stage": { "const": "Risk Assessment & Planning" },
+    "state": { "const": "proposed" },
+    "priority": { "enum": ["Urgent", "High", "Moderate", "Low"] },
+    "issueTypes": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 7,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/issueType" }
+    },
+    "decision": { "enum": ["migration-plan-required", "evidence-review-required"] },
+    "recommendedPattern": { "$ref": "#/$defs/boundedMessage" },
+    "rationale": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 7,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/boundedMessage" }
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["observationId", "feedId", "assessment"],
+        "properties": {
+          "observationId": { "$ref": "#/$defs/safeText" },
+          "feedId": { "enum": ["initial-inventory", "extrahop-internet-tls", "vulnerability-manager", "pki-inventory", "sast", "cmdb"] },
+          "assessment": { "enum": ["verified", "partially-verified", "probable", "assumption", "unresolved"] }
+        }
+      }
+    },
+    "authorityGates": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/boundedMessage" }
+    },
+    "validationRequirements": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/boundedMessage" }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "owner", "approvalRecorded"],
+      "properties": {
+        "required": { "const": true },
+        "owner": { "const": "Application and cryptographic-service owners" },
+        "approvalRecorded": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "safeText": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 200,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "boundedText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "boundedMessage": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "issueType": {
+      "enum": [
+        "tls-protocol",
+        "algorithm-key-strength",
+        "certificate-trust",
+        "implementation-configuration",
+        "source-code-crypto-use",
+        "cryptographic-dependency",
+        "vendor-control"
+      ]
+    }
+  }
+}
