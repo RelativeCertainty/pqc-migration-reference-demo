@@ -39,7 +39,7 @@ After reviewing and committing changes, run the sequential suite once:
 ```sh
 .venv/bin/python scripts/validate_reference.py
 ```
-It records the exact commit and per-check results under ignored `artifacts/reference-validation/`. It runs the publication boundary, C# build, React build/typecheck, Python domain/API suites, React tests and recorder tests. Optional historical/browser-dependent proofs are explicitly skipped when their prerequisites are unavailable. Tests do not establish owner acceptance.
+It records the exact commit and per-check results under ignored `artifacts/reference-validation/`. It runs the publication boundary, C# build, React build/typecheck, Python domain/API suites, React tests, offline repository-scanner tests and recorder tests. Optional historical/browser-dependent proofs are explicitly skipped when their prerequisites are unavailable. Tests do not establish owner acceptance.
 
 ## Public/private boundary
 Only employer-neutral code, contracts, explanatory material and synthetic fixtures belong here. No employer contacts, project reports, SOWs, real returned forms, state databases, credentials, recordings or private Git history belong in this repository.

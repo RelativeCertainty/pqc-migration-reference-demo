@@ -17,7 +17,7 @@ async function fixture(): Promise<string> {
   const root = await mkdtemp(path.join(os.tmpdir(), "pqc-scan-fixture-"));
   await writeFile(
     path.join(root, "package.json"),
-    JSON.stringify({ dependencies: { "node-forge": "1.3.1" } }),
+    JSON.stringify({ dependencies: { "node-forge": "1.4.0" } }),
   );
   await mkdir(path.join(root, "src"));
   await writeFile(path.join(root, "src", "crypto.ts"), "const algorithm = 'RSA';\n");

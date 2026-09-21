@@ -31,6 +31,7 @@ def main():
         ("react-build", ["npm", "--prefix", str(APP / "frontend"), "run", "build"]),
         ("python", [sys.executable, "-m", "pytest", "tests", "scripts/test_pqc_bom.py", "-q", "-ra", "--tb=short"]),
         ("react-tests", ["npm", "--prefix", str(APP / "frontend"), "test"]),
+        ("repository-scanner", ["node", str(APP / "frontend/node_modules/vitest/vitest.mjs"), "run", "--config", "tools/vitest.config.mjs"]),
         ("recorder", ["node", "--test", "tests/test_pqc_browser_video_recorder.mjs"]),
     ]
     results = []
