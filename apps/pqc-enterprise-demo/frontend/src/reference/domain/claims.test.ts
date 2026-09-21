@@ -1,6 +1,10 @@
 import postureSource from "../components/PostureDashboard.tsx?raw";
 import overviewSource from "../components/OverviewArchitecture.tsx?raw";
-import workerSource from "../../../../Api/ReferenceEndpoints.cs?raw";
+import { readFileSync } from "node:fs";
+import { dirname, resolve } from "node:path";
+import { fileURLToPath } from "node:url";
+// Test-only source inspection: do not expose backend source through Vite's asset server.
+const backendSource = readFileSync(resolve(dirname(fileURLToPath(import.meta.url)), "../../../../Api/ReferenceEndpoints.cs"), "utf8");
 import {
   APPROVED_PQC_BASELINE,
   CLAIM_BOUNDARIES,
@@ -26,8 +30,8 @@ describe("PQC claim boundaries", () => {
     });
   });
 
-  it("does not use prohibited blanket claims in the posture UI or Worker", () => {
-    const implementation = `${postureSource}\n${workerSource}`.toLowerCase();
+  it("does not use prohibited blanket claims in the posture UI or C# host", () => {
+    const implementation = `${postureSource}\n${backendSource}`.toLowerCase();
     for (const claim of PROHIBITED_BLANKET_CLAIMS) {
       expect(implementation).not.toContain(claim.toLowerCase());
     }

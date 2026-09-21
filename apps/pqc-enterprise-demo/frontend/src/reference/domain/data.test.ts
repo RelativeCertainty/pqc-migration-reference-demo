@@ -1,4 +1,4 @@
-import appSource from "../App.tsx?raw";
+import appSource from "../../App.tsx?raw";
 import inventoryRiskSource from "../components/InventoryRisk.tsx?raw";
 import overviewSource from "../components/OverviewArchitecture.tsx?raw";
 import postureSource from "../components/PostureDashboard.tsx?raw";
