@@ -135,6 +135,12 @@ public static class Program
                             await DemoHttp.Error(context, 403, "csrf_required");
                             return;
                         }
+                        if (path == "/api/posture" && mutating)
+                        {
+                            context.Response.Headers.Allow = "GET, HEAD";
+                            await DemoHttp.Error(context, 405, "method_not_allowed");
+                            return;
+                        }
                         // Contributor sessions have only assignment-scoped intake surfaces.
                         // Legacy global graph/report/state APIs cannot disclose other responses.
                         if(IntakeWorkflow.Contributor(session.PrincipalId) && path!="/api/logout" &&

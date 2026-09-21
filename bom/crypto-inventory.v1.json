@@ -2,7 +2,7 @@
   "schema": "pqc.reference_demo.crypto_inventory.v1",
   "product": {
     "name": "pqc-reference-demo",
-    "version": "0.1.0"
+    "version": "0.2.0"
   },
   "boundaries": [
     {
@@ -27,7 +27,7 @@
   "assets": [
     {
       "bom_ref": "urn:pqc-demo:crypto:pqc-demo:build-ui-sha-256",
-      "name": "SHA-256 for portable UI staging",
+      "name": "SHA-256 for unified UI staging",
       "version": "256-bit digest",
       "boundary": "source",
       "evidence_quality": "verified",
@@ -49,16 +49,16 @@
       },
       "evidence_locators": [
         {
-          "path": "scripts/stage-portable-assets.mjs",
-          "line": 70,
-          "needle": "createHash(\"sha256\").update(bytes).digest(\"hex\")"
+          "path": "scripts/build_ui_manifest.mjs",
+          "line": 19,
+          "needle": "createHash('sha256').update(await readFile(path)).digest('hex')"
         }
       ],
       "limitation": "This build-time digest protects the staged static-asset manifest. It is not a post-quantum primitive or a module-validation claim."
     },
     {
       "bom_ref": "urn:pqc-demo:crypto:pqc-demo:runtime-ui-sha-256",
-      "name": "SHA-256 for embedded UI integrity",
+      "name": "SHA-256 for the C# static UI snapshot",
       "version": "256-bit digest",
       "boundary": "runtime",
       "evidence_quality": "verified",
@@ -80,17 +80,17 @@
       },
       "evidence_locators": [
         {
-          "path": "portable/assets.go",
-          "line": 38,
-          "needle": "actualDigest := sha256.Sum256(body)"
+          "path": "apps/pqc-enterprise-demo/Api/StaticAssets.cs",
+          "line": 53,
+          "needle": "Convert.ToHexStringLower(SHA256.HashData(content))"
         },
         {
-          "path": "portable/assets.go",
-          "line": 75,
-          "needle": "manifestDigest := sha256.Sum256(manifest)"
+          "path": "apps/pqc-enterprise-demo/Api/StaticAssets.cs",
+          "line": 58,
+          "needle": "Convert.ToHexStringLower(SHA256.HashData(manifest))"
         }
       ],
-      "limitation": "Source review confirms the compiled adapter is intended to verify embedded assets with SHA-256. It does not prove that a particular runtime path executed."
+      "limitation": "Source review confirms the C# adapter verifies manifest-bound static assets with SHA-256. This scoped inventory is not a complete inventory of every framework cryptographic use, nor proof of a particular runtime execution."
     },
     {
       "bom_ref": "urn:pqc-demo:crypto:pqc-demo:edge-transport-unresolved",
@@ -105,14 +105,14 @@
       },
       "evidence_locators": [
         {
-          "path": "portable/posture.go",
-          "line": 63,
-          "needle": "ExactSessionKeyExchange.State = \"not_observable\""
+          "path": "apps/pqc-enterprise-demo/Api/ReferenceEndpoints.cs",
+          "line": 25,
+          "needle": "exact_session_key_exchange = new { state = \"not_observable\""
         },
         {
-          "path": "portable/posture.go",
-          "line": 66,
-          "needle": "HostnameCapability.State = \"not_observable_by_handler\""
+          "path": "apps/pqc-enterprise-demo/Api/ReferenceEndpoints.cs",
+          "line": 27,
+          "needle": "hostname_capability = new { state = \"not_observable_by_handler\""
         }
       ],
       "limitation": "This component records an unresolved boundary, not an observed TLS version, cipher, certificate, classical key agreement, hybrid key agreement, or post-quantum signature."

@@ -1,5 +1,6 @@
 """Launcher registry isolation without starting a service or reading credentials."""
 from pathlib import Path
+import hashlib
 import sys
 
 import pytest
@@ -14,6 +15,8 @@ def prepared(monkeypatch, tmp_path):
     (release / "wwwroot").mkdir(parents=True)
     (release / "PqcEnterpriseDemo.dll").write_bytes(b"test-only-not-executable")
     (release / "wwwroot/index.html").write_text("<title>Test fixture</title>")
+    (release / "wwwroot/asset-manifest.sha256").write_text(
+        hashlib.sha256((release / "wwwroot/index.html").read_bytes()).hexdigest() + "  index.html\n")
     fixture = root / "fixture.json"
     fixture.write_text("{}")
     data = root / "test-state"
@@ -36,6 +39,14 @@ def test_launcher_does_not_inherit_another_registry(monkeypatch, tmp_path):
     assert "--property=MemoryMax=1G" in command
     assert "--property=CPUQuota=100%" in command
     assert environment["PQC_DEMO_DATABASE_MAX_MIB"] == "128"
+
+
+def test_launcher_refuses_a_release_without_a_ui_manifest(monkeypatch, tmp_path):
+    root, args, calls = prepared(monkeypatch, tmp_path)
+    (root / "release/wwwroot/asset-manifest.sha256").unlink()
+    monkeypatch.setattr(sys, "argv", args)
+    assert launcher.main() == 1
+    assert calls == []
 
 
 @pytest.mark.parametrize("limit", [128, 256, 512])

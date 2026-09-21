@@ -19,8 +19,8 @@ describe('one application modules', () => {
     const nav = screen.getByRole('navigation', {name:'Reference topics'});
     expect(nav.querySelectorAll('button')).toHaveLength(12);
     for (const topic of NAVIGATION_SECTIONS) {
-      fireEvent.click(screen.getByRole('button', {name:topic.shortLabel,exact:true}));
-      expect(screen.getByRole('button',{name:topic.shortLabel,exact:true})).toHaveAttribute('aria-pressed','true');
+      fireEvent.click(screen.getByRole('button', {name:topic.shortLabel}));
+      expect(screen.getByRole('button',{name:topic.shortLabel})).toHaveAttribute('aria-pressed','true');
     }
     fireEvent.click(screen.getByRole('button',{name:'Guided explanation'}));
     expect(screen.getByRole('button',{name:'Next explanation'})).toBeEnabled();

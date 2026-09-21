@@ -4,5 +4,5 @@ import { defineConfig } from 'vitest/config';
 export default defineConfig({
   plugins: [react()],
   build: { outDir: '../wwwroot', emptyOutDir: true, sourcemap: false },
-  test: { environment: 'jsdom', setupFiles: './src/test-setup.ts', maxWorkers: 1 },
+  test: { environment: 'jsdom', globals: true, setupFiles: './src/test-setup.ts', maxWorkers: 1 },
 });

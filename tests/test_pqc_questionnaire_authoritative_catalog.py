@@ -1,4 +1,4 @@
-"""Opt-in source-definition parity against a private compiled catalog.
+"""Source-definition parity against an explicitly selected compiled catalog.
 
 Reads explicitly selected questionnaire definitions only. All assignments and
 application data are synthetic, in a test-owned disposable SQLite store.

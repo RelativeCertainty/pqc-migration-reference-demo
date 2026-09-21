@@ -23,6 +23,7 @@ def main():
     for key in ("PQC_SYNTHETIC_BUNDLE_REGISTRY_FILE", "PQC_BROWSER_PROOF_FILE", "PBA_OBSERVABILITY_URL"):
         env.pop(key, None)
     env["PQC_QUESTIONNAIRE_CATALOG_FILE"] = str(APP / "ReferenceData/questionnaire-catalog.json")
+    env["PQC_AUTHORITATIVE_QUESTIONNAIRE_CATALOG"] = env["PQC_QUESTIONNAIRE_CATALOG_FILE"]
     env["PQC_ENTERPRISE_DEMO_DLL"] = str(APP / "bin/Release/net10.0/PqcEnterpriseDemo.dll")
     steps = [
         ("public-boundary", [sys.executable, "scripts/verify_public_reference.py"]),
