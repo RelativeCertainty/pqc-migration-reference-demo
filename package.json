@@ -1,58 +1,18 @@
 {
   "name": "pqc-migration-reference-demo",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "private": true,
   "type": "module",
-  "packageManager": "npm@10.9.7",
   "engines": {
     "node": ">=22.12.0"
   },
   "scripts": {
-    "dev": "vite --host 127.0.0.1",
-    "build": "vite build",
-    "preview": "vite preview --host 127.0.0.1",
-    "lint": "eslint . --max-warnings 0",
-    "typecheck": "tsc -b && tsc -p tsconfig.node.json",
-    "test": "vitest run",
-    "test:watch": "vitest",
-    "check": "npm run lint && npm run cf:types:check && npm run typecheck && npm test && npm run test:package && npm run verify:source-maps && npm run portable:check",
-    "cf:types": "wrangler types worker-configuration.d.ts --env-interface CloudflareBindings --include-runtime=false",
-    "cf:types:check": "wrangler types worker-configuration.d.ts --env-interface CloudflareBindings --include-runtime=false --check",
-    "test:package": "npm run build && vitest run --config vitest.worker.config.ts",
-    "verify:source-maps": "node ./scripts/verify-source-map-policy.mjs",
-    "deploy:dry-run": "npm run build && npm run verify:source-maps && wrangler deploy --dry-run --outdir .wrangler-dry-run",
-    "portable:stage": "node ./scripts/stage-portable-assets.mjs",
-    "portable:test": "node ./scripts/run-portable-go.mjs test",
-    "portable:vet": "node ./scripts/run-portable-go.mjs vet",
-    "portable:build": "npm run build && npm run portable:stage && node ./scripts/run-portable-go.mjs build",
-    "portable:parity": "npm run portable:build && node ./scripts/test-runtime-parity.mjs",
-    "portable:check": "npm run portable:test && npm run portable:vet && npm run portable:parity",
-    "bom:test": "python3 -m pytest -q ./scripts/test_pqc_bom.py"
-  },
-  "dependencies": {
-    "react": "19.2.8",
-    "react-dom": "19.2.8"
-  },
-  "devDependencies": {
-    "@cyclonedx/cyclonedx-npm": "6.0.1",
-    "@cloudflare/workers-types": "5.20260813.1",
-    "@eslint/js": "10.0.1",
-    "@testing-library/jest-dom": "7.0.1",
-    "@testing-library/react": "16.3.2",
-    "@testing-library/user-event": "14.6.4",
-    "@types/node": "26.2.0",
-    "@types/react": "19.2.18",
-    "@types/react-dom": "19.2.4",
-    "@vitejs/plugin-react": "6.0.5",
-    "eslint": "10.0.0",
-    "eslint-plugin-react-hooks": "7.1.1",
-    "eslint-plugin-react-refresh": "0.5.4",
-    "globals": "17.11.0",
-    "jsdom": "30.0.1",
-    "typescript": "6.0.3",
-    "typescript-eslint": "8.67.0",
-    "vite": "8.2.1",
-    "vitest": "4.1.10",
-    "wrangler": "4.122.0"
+    "build": "dotnet build apps/pqc-enterprise-demo/PqcEnterpriseDemo.csproj --no-restore -c Release -m:1 && npm --prefix apps/pqc-enterprise-demo/frontend run build",
+    "typecheck": "npm --prefix apps/pqc-enterprise-demo/frontend run typecheck",
+    "test": "npm --prefix apps/pqc-enterprise-demo/frontend test",
+    "check": "python3 scripts/validate_reference.py",
+    "start": "python3 scripts/start_reference.py",
+    "dev": "python3 scripts/start_reference.py",
+    "verify:public": "python3 scripts/verify_public_reference.py"
   }
 }

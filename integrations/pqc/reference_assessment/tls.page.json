@@ -1,0 +1,10 @@
+{
+  "schema_version": "pba.pqc.reference-source-page.v1",
+  "kind": "tls", "synthetic": true,
+  "records": [{
+    "id": "endpoint-001", "evidence_basis": "observed", "application_id": "app-001",
+    "application_source": "synthetic-cmdb", "certificate_id": "cert-001", "certificate_source": "synthetic-pki",
+    "hostname": "records.example", "port": 443, "protocol": "TLSv1.3",
+    "key_exchange_group": "X25519", "certificate_signature_algorithm": "sha256WithRSAEncryption"
+  }]
+}

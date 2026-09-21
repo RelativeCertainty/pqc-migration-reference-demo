@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "pqc.response-to-report.reference.v1",
+  "synthetic": true,
+  "familyId": "certificate-lifecycle",
+  "sourceInstanceId": "synthetic-pki",
+  "collectedAt": "2026-09-14T12:00:00Z",
+  "records": [
+    {
+      "nativeId": "portal-cert-001",
+      "applicationId": "portal-app-001",
+      "signatureAlgorithm": "ecdsa-with-SHA256",
+      "publicKeyAlgorithm": "EC",
+      "publicKeyBits": 256,
+      "sourceUpdatedAt": "2026-09-13T12:00:00Z",
+      "basis": "documentation"
+    }
+  ],
+  "kind": "certificate",
+  "sourceLabel": "Synthetic certificate metadata"
+}

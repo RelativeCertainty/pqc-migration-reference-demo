@@ -1,0 +1,790 @@
+{
+  "domains": [
+    {
+      "id": "area-01",
+      "name": "Enterprise context",
+      "families": [
+        {
+          "id": "application-portfolio",
+          "name": "Application portfolio",
+          "examples": [
+            {
+              "name": "SAP LeanIX Application Portfolio Management",
+              "kind": "SaaS",
+              "url": "https://www.leanix.net/en/products/application-portfolio-management",
+              "note": "Application inventory and portfolio analysis."
+            },
+            {
+              "name": "ServiceNow Enterprise Architecture",
+              "kind": "SaaS",
+              "url": "https://www.servicenow.com/products/enterprise-architecture.html",
+              "note": "Enterprise architecture and application portfolio context."
+            },
+            {
+              "name": "Bizzdesign Alfabet",
+              "kind": "SaaS",
+              "url": "https://bizzdesign.com/transformation-suite/alfabet",
+              "note": "IT portfolio planning and application relationships."
+            },
+            {
+              "name": "Bizzdesign Horizzon",
+              "kind": "SaaS",
+              "url": "https://bizzdesign.com/transformation-suite/horizzon",
+              "note": "Enterprise architecture models and relationships."
+            },
+            {
+              "name": "Bizzdesign Hopex",
+              "kind": "SaaS",
+              "url": "https://bizzdesign.com/transformation-suite/hopex",
+              "note": "Architecture and application portfolio context."
+            },
+            {
+              "name": "OrbusInfinity",
+              "kind": "SaaS",
+              "url": "https://www.orbussoftware.com/product/orbusinfinity",
+              "note": "Orbus Software enterprise architecture platform."
+            },
+            {
+              "name": "Ardoq",
+              "kind": "SaaS",
+              "url": "https://www.ardoq.com/",
+              "note": "Application portfolios and architecture relationships."
+            },
+            {
+              "name": "Essential Open Source",
+              "kind": "Open source",
+              "url": "https://enterprise-architecture.org/products/essential-open-source/",
+              "note": "The Essential Project; application and architecture repository."
+            }
+          ]
+        },
+        {
+          "id": "cmdb",
+          "name": "CMDB and asset inventory",
+          "examples": [
+            {
+              "name": "ServiceNow Configuration Management Database",
+              "kind": "SaaS",
+              "url": "https://www.servicenow.com/products/servicenow-platform/configuration-management-database.html",
+              "note": "ServiceNow CMDB; configuration items and relationships."
+            },
+            {
+              "name": "BMC Helix CMDB",
+              "kind": "COTS",
+              "url": "https://www.helixops.ai/products/bmc-helix-cmdb.html",
+              "note": "Configuration data and service relationships."
+            },
+            {
+              "name": "Jira Service Management Assets",
+              "kind": "SaaS",
+              "url": "https://www.atlassian.com/software/jira/service-management/features/asset-and-configuration-management",
+              "note": "Atlassian asset and configuration management."
+            },
+            {
+              "name": "Device42",
+              "kind": "COTS",
+              "url": "https://www.device42.com/",
+              "note": "Discovery, asset inventory, and dependency mapping."
+            },
+            {
+              "name": "OpenText Universal Discovery and CMDB",
+              "kind": "COTS",
+              "url": "https://www.opentext.com/products/universal-discovery-and-cmdb",
+              "note": "Universal CMDB / UCMDB recognition context."
+            },
+            {
+              "name": "iTop",
+              "kind": "Open source",
+              "url": "https://combodo.com/",
+              "note": "Combodo service management and CMDB."
+            },
+            {
+              "name": "CMDBuild",
+              "kind": "Open source",
+              "url": "https://www.cmdbuild.org/en",
+              "note": "Configurable asset and configuration database."
+            },
+            {
+              "name": "GLPI",
+              "kind": "Open source",
+              "url": "https://www.glpi-project.org/en/",
+              "note": "IT inventory, assets, and service management."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "area-02",
+      "name": "PKI and trust",
+      "families": [
+        {
+          "id": "certificate-authorities",
+          "name": "Certificate authorities",
+          "examples": [
+            {
+              "name": "Microsoft Active Directory Certificate Services",
+              "kind": "COTS",
+              "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/active-directory-certificate-services-overview",
+              "note": "AD CS; Windows Server certificate authority roles."
+            },
+            {
+              "name": "EJBCA Community",
+              "kind": "Open source",
+              "url": "https://www.ejbca.org/",
+              "note": "Certificate authority software; EJBCA Enterprise is a separate edition."
+            },
+            {
+              "name": "Dogtag Certificate System",
+              "kind": "Open source",
+              "url": "https://www.dogtagpki.org/",
+              "note": "Dogtag PKI; certificate authority software."
+            },
+            {
+              "name": "Smallstep step-ca",
+              "kind": "Open source",
+              "url": "https://smallstep.com/docs/step-ca/",
+              "note": "Step CA; private certificate authority server."
+            },
+            {
+              "name": "OpenXPKI",
+              "kind": "Open source",
+              "url": "https://www.openxpki.org/",
+              "note": "PKI and trust-center software."
+            },
+            {
+              "name": "AWS Private Certificate Authority",
+              "kind": "SaaS",
+              "url": "https://aws.amazon.com/private-ca/",
+              "note": "AWS Private CA; managed private certificate issuance."
+            },
+            {
+              "name": "Google Cloud Certificate Authority Service",
+              "kind": "SaaS",
+              "url": "https://cloud.google.com/security/products/certificate-authority-service",
+              "note": "Managed private certificate authority service."
+            },
+            {
+              "name": "HashiCorp Vault PKI secrets engine",
+              "kind": "COTS",
+              "url": "https://developer.hashicorp.com/vault/docs/secrets/pki",
+              "note": "Vault component for issuing and managing certificates."
+            }
+          ]
+        },
+        {
+          "id": "certificate-lifecycle",
+          "name": "Certificate lifecycle management",
+          "examples": [
+            {
+              "name": "Keyfactor Command",
+              "kind": "COTS",
+              "url": "https://www.keyfactor.com/products/command/",
+              "note": "Certificate inventory and lifecycle automation."
+            },
+            {
+              "name": "CyberArk Certificate Manager, Self-Hosted",
+              "kind": "COTS",
+              "url": "https://www.cyberark.com/resources/product-datasheets/cyberark-certificate-manager-self-hosted",
+              "note": "Recognition alias: Venafi TLS Protect."
+            },
+            {
+              "name": "DigiCert Trust Lifecycle Manager",
+              "kind": "SaaS",
+              "url": "https://www.digicert.com/trust-lifecycle-manager",
+              "note": "Certificate discovery, inventory, and lifecycle management."
+            },
+            {
+              "name": "AppViewX CERT+",
+              "kind": "COTS",
+              "url": "https://www.appviewx.com/solutions/certificate-lifecycle-management/",
+              "note": "Certificate lifecycle management; also labeled CLM."
+            },
+            {
+              "name": "Sectigo Certificate Manager",
+              "kind": "SaaS",
+              "url": "https://www.sectigo.com/enterprise-solutions/certificate-manager",
+              "note": "SCM; certificate lifecycle management."
+            },
+            {
+              "name": "cert-manager",
+              "kind": "Open source",
+              "url": "https://cert-manager.io/",
+              "note": "Kubernetes certificate issuance and renewal controller."
+            },
+            {
+              "name": "Certbot",
+              "kind": "Open source",
+              "url": "https://certbot.eff.org/",
+              "note": "ACME client for certificate issuance and renewal."
+            },
+            {
+              "name": "AWS Certificate Manager",
+              "kind": "SaaS",
+              "url": "https://aws.amazon.com/certificate-manager/",
+              "note": "ACM; managed certificate provisioning and renewal."
+            },
+            {
+              "name": "Azure Key Vault certificates",
+              "kind": "SaaS",
+              "url": "https://learn.microsoft.com/en-us/azure/key-vault/certificates/about-certificates",
+              "note": "Certificate objects, policies, and lifecycle management."
+            }
+          ]
+        },
+        {
+          "id": "hsm",
+          "name": "Hardware security modules and services",
+          "examples": [
+            {
+              "name": "Thales Luna Network HSM",
+              "kind": "Hardware/platform",
+              "url": "https://cpl.thalesgroup.com/encryption/hardware-security-modules/network-hsms",
+              "note": "Physical network HSM appliance; not application software."
+            },
+            {
+              "name": "Entrust nShield Connect",
+              "kind": "Hardware/platform",
+              "url": "https://www.entrust.com/products/hsm/nshield-connect",
+              "note": "Physical network HSM appliance; not application software."
+            },
+            {
+              "name": "Utimaco u.trust General Purpose HSM Se-Series",
+              "kind": "Hardware/platform",
+              "url": "https://utimaco.com/products/categories/hsms-general-purpose-use-cases/securityserver",
+              "note": "Hardware HSM family; SecurityServer / CryptoServer recognition context."
+            },
+            {
+              "name": "IBM 4769 Cryptographic Coprocessor",
+              "kind": "Hardware/platform",
+              "url": "https://www.ibm.com/docs/en/cryptocards?topic=4769-overview",
+              "note": "PCIe hardware HSM; CEX7S / 4769."
+            },
+            {
+              "name": "Marvell LiquidSecurity 2 HSM Adapter",
+              "kind": "Hardware/platform",
+              "url": "https://www.marvell.com/products/security-solutions/liquidsecurity2.html",
+              "note": "LS2; hardware HSM adapter card."
+            },
+            {
+              "name": "Yubico YubiHSM 2",
+              "kind": "Hardware/platform",
+              "url": "https://www.yubico.com/products/hardware-security-module/",
+              "note": "USB hardware HSM; distinct from YubiKey authenticators."
+            },
+            {
+              "name": "AWS CloudHSM",
+              "kind": "Hardware/platform",
+              "url": "https://aws.amazon.com/cloudhsm/",
+              "note": "Managed cloud HSM service backed by hardware."
+            },
+            {
+              "name": "Azure Key Vault Managed HSM",
+              "kind": "Hardware/platform",
+              "url": "https://learn.microsoft.com/en-us/azure/key-vault/managed-hsm/overview",
+              "note": "Managed cloud HSM service backed by hardware."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "area-03",
+      "name": "Encrypted traffic",
+      "families": [
+        {
+          "id": "api-and-mesh",
+          "name": "API gateways and service mesh",
+          "examples": [
+            {
+              "name": "Istio",
+              "kind": "Open source",
+              "url": "https://istio.io/",
+              "note": "Service mesh for service-to-service communication."
+            },
+            {
+              "name": "Linkerd",
+              "kind": "Open source",
+              "url": "https://linkerd.io/",
+              "note": "Kubernetes service mesh."
+            },
+            {
+              "name": "HashiCorp Consul",
+              "kind": "COTS",
+              "url": "https://developer.hashicorp.com/consul/docs",
+              "note": "Service discovery and service mesh."
+            },
+            {
+              "name": "Envoy Proxy",
+              "kind": "Open source",
+              "url": "https://www.envoyproxy.io/",
+              "note": "Edge and service proxy."
+            },
+            {
+              "name": "Kong Gateway",
+              "kind": "COTS",
+              "url": "https://developer.konghq.com/gateway/",
+              "note": "API gateway; open-source edition also exists."
+            },
+            {
+              "name": "Apache APISIX",
+              "kind": "Open source",
+              "url": "https://apisix.apache.org/",
+              "note": "API gateway."
+            },
+            {
+              "name": "Tyk Gateway OSS",
+              "kind": "Open source",
+              "url": "https://tyk.io/docs/tyk-oss-gateway",
+              "note": "Open-source API gateway edition."
+            },
+            {
+              "name": "WSO2 API Manager",
+              "kind": "Open source",
+              "url": "https://apim.docs.wso2.com/en/latest/",
+              "note": "API management and gateway software."
+            }
+          ]
+        },
+        {
+          "id": "network-telemetry",
+          "name": "Network telemetry and analysis",
+          "examples": [
+            {
+              "name": "Wireshark",
+              "kind": "Open source",
+              "url": "https://www.wireshark.org/",
+              "note": "Packet capture and protocol analysis."
+            },
+            {
+              "name": "Zeek",
+              "kind": "Open source",
+              "url": "https://zeek.org/",
+              "note": "Network security monitor; recognition alias: Bro."
+            },
+            {
+              "name": "Suricata",
+              "kind": "Open source",
+              "url": "https://suricata.io/",
+              "note": "Network traffic analysis and threat detection."
+            },
+            {
+              "name": "ntopng",
+              "kind": "Open source",
+              "url": "https://www.ntop.org/products/traffic-analysis/ntopng/",
+              "note": "Community traffic-analysis software; commercial editions also exist."
+            },
+            {
+              "name": "Arkime",
+              "kind": "Open source",
+              "url": "https://arkime.com/",
+              "note": "Packet capture indexing and session analysis."
+            },
+            {
+              "name": "Corelight Software Sensor",
+              "kind": "COTS",
+              "url": "https://corelight.com/platform/sensors",
+              "note": "Software sensor for Linux and Kubernetes environments."
+            },
+            {
+              "name": "ExtraHop RevealX",
+              "kind": "COTS",
+              "url": "https://www.extrahop.com/platform",
+              "note": "Network detection and response platform."
+            },
+            {
+              "name": "Cisco Secure Network Analytics",
+              "kind": "COTS",
+              "url": "https://www.cisco.com/c/en/us/products/collateral/security/stealthwatch/datasheet-c78-739398.html",
+              "note": "Stealthwatch; virtual software deployment is one form."
+            }
+          ]
+        },
+        {
+          "id": "traffic-termination",
+          "name": "Traffic termination and reverse proxies",
+          "examples": [
+            {
+              "name": "NGINX Open Source",
+              "kind": "Open source",
+              "url": "https://nginx.org/",
+              "note": "Web server and reverse proxy."
+            },
+            {
+              "name": "HAProxy",
+              "kind": "Open source",
+              "url": "https://www.haproxy.org/",
+              "note": "TCP/HTTP load balancer and proxy."
+            },
+            {
+              "name": "Apache HTTP Server",
+              "kind": "Open source",
+              "url": "https://httpd.apache.org/",
+              "note": "httpd; web server with TLS modules."
+            },
+            {
+              "name": "Caddy",
+              "kind": "Open source",
+              "url": "https://caddyserver.com/",
+              "note": "Web server and reverse proxy with automatic HTTPS."
+            },
+            {
+              "name": "Traefik Proxy",
+              "kind": "Open source",
+              "url": "https://traefik.io/traefik",
+              "note": "Application proxy and ingress routing."
+            },
+            {
+              "name": "F5 BIG-IP Local Traffic Manager Virtual Edition",
+              "kind": "COTS",
+              "url": "https://www.f5.com/trials/big-ip-virtual-edition",
+              "note": "BIG-IP LTM VE; virtual traffic-management software."
+            },
+            {
+              "name": "NetScaler VPX",
+              "kind": "COTS",
+              "url": "https://www.netscaler.com/platform/vpx-virtual-machine",
+              "note": "Virtual application delivery controller software."
+            },
+            {
+              "name": "AWS Application Load Balancer",
+              "kind": "SaaS",
+              "url": "https://aws.amazon.com/elasticloadbalancing/application-load-balancer/",
+              "note": "ALB; managed application traffic termination."
+            },
+            {
+              "name": "Azure Application Gateway",
+              "kind": "SaaS",
+              "url": "https://learn.microsoft.com/en-us/azure/application-gateway/overview",
+              "note": "Managed application load balancing and TLS termination."
+            },
+            {
+              "name": "Google Cloud Load Balancing",
+              "kind": "SaaS",
+              "url": "https://docs.cloud.google.com/load-balancing/docs/load-balancing-overview",
+              "note": "Managed load balancer family; termination depends on type."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "area-04",
+      "name": "Machine access",
+      "families": [
+        {
+          "id": "ssh",
+          "name": "SSH and secure machine access",
+          "examples": [
+            {
+              "name": "OpenSSH",
+              "kind": "Open source",
+              "url": "https://www.openssh.org/",
+              "note": "SSH clients and servers; ssh, sshd, scp, and sftp."
+            },
+            {
+              "name": "PuTTY",
+              "kind": "Open source",
+              "url": "https://www.chiark.greenend.org.uk/~sgtatham/putty/",
+              "note": "SSH client suite for Windows and other systems."
+            },
+            {
+              "name": "Dropbear SSH",
+              "kind": "Open source",
+              "url": "https://matt.ucc.asn.au/dropbear/dropbear.html",
+              "note": "Small SSH server and client, including embedded systems."
+            },
+            {
+              "name": "Bitvise SSH Server",
+              "kind": "COTS",
+              "url": "https://bitvise.com/ssh-server",
+              "note": "SSH and SFTP server for Windows."
+            },
+            {
+              "name": "VanDyke VShell",
+              "kind": "COTS",
+              "url": "https://www.vandyke.com/products/vshell/",
+              "note": "SSH-based secure file-transfer server."
+            },
+            {
+              "name": "VanDyke SecureCRT",
+              "kind": "COTS",
+              "url": "https://www.vandyke.com/products/securecrt/",
+              "note": "SSH terminal client."
+            },
+            {
+              "name": "Teleport",
+              "kind": "COTS",
+              "url": "https://goteleport.com/docs/enroll-resources/server-access/",
+              "note": "Server access through SSH and certificate-based identity."
+            },
+            {
+              "name": "WinSCP",
+              "kind": "Open source",
+              "url": "https://winscp.net/eng/index.php",
+              "note": "Windows SFTP/SCP client using SSH."
+            },
+            {
+              "name": "Tectia SSH",
+              "kind": "COTS",
+              "url": "https://www.ssh.com/products/tectia-ssh/",
+              "note": "SSH Communications Security client/server software."
+            },
+            {
+              "name": "CyberArk SSH Manager for Machines",
+              "kind": "COTS",
+              "url": "https://docs.venafi.com/Docs/current/TopNav/Content/Release-Documents/important_considerations.php?TocPath=Platform%7CRelease+Documents%7C_____2",
+              "note": "Recognition alias: Venafi SSH Protect."
+            }
+          ]
+        },
+        {
+          "id": "vpn",
+          "name": "VPN and remote network access",
+          "examples": [
+            {
+              "name": "OpenVPN Community Edition",
+              "kind": "Open source",
+              "url": "https://openvpn.net/community/",
+              "note": "OpenVPN open-source VPN software."
+            },
+            {
+              "name": "WireGuard",
+              "kind": "Open source",
+              "url": "https://www.wireguard.com/",
+              "note": "VPN tunnel software."
+            },
+            {
+              "name": "strongSwan",
+              "kind": "Open source",
+              "url": "https://www.strongswan.org/",
+              "note": "IPsec and IKE VPN implementation."
+            },
+            {
+              "name": "SoftEther VPN",
+              "kind": "Open source",
+              "url": "https://www.softether.org/",
+              "note": "Multi-protocol VPN client and server."
+            },
+            {
+              "name": "OpenConnect",
+              "kind": "Open source",
+              "url": "https://www.infradead.org/openconnect/",
+              "note": "Multi-protocol VPN client."
+            },
+            {
+              "name": "Cisco Secure Client",
+              "kind": "COTS",
+              "url": "https://www.cisco.com/site/us/en/products/security/secure-client/index.html",
+              "note": "Includes the AnyConnect VPN client."
+            },
+            {
+              "name": "Palo Alto Networks GlobalProtect",
+              "kind": "COTS",
+              "url": "https://www.paloaltonetworks.com/sase/globalprotect",
+              "note": "Remote access client and gateway ecosystem."
+            },
+            {
+              "name": "Fortinet FortiClient",
+              "kind": "COTS",
+              "url": "https://www.fortinet.com/products/endpoint-security/forticlient",
+              "note": "Endpoint agent including VPN and remote-access functions."
+            },
+            {
+              "name": "Ivanti Secure Access Client",
+              "kind": "COTS",
+              "url": "https://www.ivanti.com/products/secure-access-client",
+              "note": "Endpoint client for secure remote access."
+            },
+            {
+              "name": "Tailscale",
+              "kind": "SaaS",
+              "url": "https://tailscale.com/",
+              "note": "Managed connectivity service with device clients."
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "area-05",
+      "name": "Software delivery",
+      "families": [
+        {
+          "id": "dependency-analysis",
+          "name": "Dependency and component analysis",
+          "examples": [
+            {
+              "name": "Syft",
+              "kind": "Open source",
+              "url": "https://github.com/anchore/syft",
+              "note": "Anchore tool for software bill of materials generation."
+            },
+            {
+              "name": "Trivy",
+              "kind": "Open source",
+              "url": "https://trivy.dev/",
+              "note": "Artifact, dependency, and container security scanner."
+            },
+            {
+              "name": "OWASP Dependency-Check",
+              "kind": "Open source",
+              "url": "https://dependency-check.github.io/DependencyCheck/",
+              "note": "Dependency analysis for known vulnerable components."
+            },
+            {
+              "name": "OWASP Dependency-Track",
+              "kind": "Open source",
+              "url": "https://dependencytrack.org/",
+              "note": "SBOM-based component inventory and analysis."
+            },
+            {
+              "name": "Snyk Open Source",
+              "kind": "SaaS",
+              "url": "https://snyk.io/product/open-source-security-management/",
+              "note": "Commercial software composition analysis service."
+            },
+            {
+              "name": "Mend SCA",
+              "kind": "SaaS",
+              "url": "https://www.mend.io/sca/",
+              "note": "Software composition analysis."
+            },
+            {
+              "name": "Sonatype Lifecycle",
+              "kind": "COTS",
+              "url": "https://www.sonatype.com/products/open-source-security-dependency-management",
+              "note": "Dependency and software composition analysis."
+            },
+            {
+              "name": "Black Duck SCA",
+              "kind": "COTS",
+              "url": "https://www.blackduck.com/software-composition-analysis-tools.html",
+              "note": "Software composition analysis and component identification."
+            }
+          ]
+        },
+        {
+          "id": "software-signing",
+          "name": "Software and artifact signing",
+          "examples": [
+            {
+              "name": "Sigstore Cosign",
+              "kind": "Open source",
+              "url": "https://docs.sigstore.dev/cosign/signing/overview/",
+              "note": "Artifact signing and signature verification."
+            },
+            {
+              "name": "SignServer Community",
+              "kind": "Open source",
+              "url": "https://www.signserver.org/",
+              "note": "Server-side code and artifact signing."
+            },
+            {
+              "name": "GnuPG",
+              "kind": "Open source",
+              "url": "https://gnupg.org/",
+              "note": "GNU Privacy Guard; OpenPGP signatures."
+            },
+            {
+              "name": "Microsoft SignTool",
+              "kind": "COTS",
+              "url": "https://learn.microsoft.com/en-us/windows/win32/seccrypto/signtool",
+              "note": "Windows SDK command-line signing and verification tool."
+            },
+            {
+              "name": "DigiCert Software Trust Manager",
+              "kind": "SaaS",
+              "url": "https://www.digicert.com/software-trust-manager",
+              "note": "Software signing and signing-key management."
+            },
+            {
+              "name": "Microsoft Artifact Signing",
+              "kind": "SaaS",
+              "url": "https://learn.microsoft.com/en-us/azure/artifact-signing/overview",
+              "note": "Managed code-signing service in Azure."
+            },
+            {
+              "name": "AWS Signer",
+              "kind": "SaaS",
+              "url": "https://docs.aws.amazon.com/signer/",
+              "note": "Managed code-signing service."
+            },
+            {
+              "name": "Jsign",
+              "kind": "Open source",
+              "url": "https://ebourg.github.io/jsign/",
+              "note": "Authenticode signing tool for Windows artifacts."
+            },
+            {
+              "name": "osslsigncode",
+              "kind": "Open source",
+              "url": "https://github.com/mtrojnar/osslsigncode",
+              "note": "OpenSSL-based Authenticode signing utility."
+            },
+            {
+              "name": "CyberArk Code Sign Manager",
+              "kind": "COTS",
+              "url": "https://docs.venafi.com/Docs/current/TopNav/Content/Release-Documents/important_considerations.php?TocPath=Platform%7CRelease+Documents%7C_____2",
+              "note": "Recognition alias: Venafi CodeSign Protect."
+            }
+          ]
+        },
+        {
+          "id": "source-build",
+          "name": "Source control and build systems",
+          "examples": [
+            {
+              "name": "GitHub Enterprise Cloud",
+              "kind": "SaaS",
+              "url": "https://docs.github.com/en/enterprise-cloud@latest/admin/overview/about-github-enterprise-cloud",
+              "note": "Hosted source control and developer platform."
+            },
+            {
+              "name": "GitLab Self-Managed",
+              "kind": "COTS",
+              "url": "https://docs.gitlab.com/user/project/repository/",
+              "note": "Source repositories and CI/CD; self-managed distribution."
+            },
+            {
+              "name": "Jenkins",
+              "kind": "Open source",
+              "url": "https://www.jenkins.io/",
+              "note": "Automation server for build and delivery jobs."
+            },
+            {
+              "name": "JetBrains TeamCity",
+              "kind": "COTS",
+              "url": "https://www.jetbrains.com/teamcity/",
+              "note": "Continuous integration and delivery server."
+            },
+            {
+              "name": "Azure DevOps Services",
+              "kind": "SaaS",
+              "url": "https://learn.microsoft.com/en-us/azure/devops/user-guide/what-is-azure-devops?view=azure-devops",
+              "note": "Includes Azure Repos and Azure Pipelines."
+            },
+            {
+              "name": "Atlassian Bamboo",
+              "kind": "COTS",
+              "url": "https://www.atlassian.com/software/bamboo",
+              "note": "Continuous integration and deployment server."
+            },
+            {
+              "name": "CircleCI",
+              "kind": "SaaS",
+              "url": "https://circleci.com/",
+              "note": "Continuous integration and delivery service."
+            },
+            {
+              "name": "Buildkite Pipelines",
+              "kind": "SaaS",
+              "url": "https://buildkite.com/home/",
+              "note": "Pipeline orchestration with hosted or self-hosted agents."
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

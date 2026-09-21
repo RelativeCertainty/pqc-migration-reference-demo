@@ -1,0 +1,678 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/briefing-scenario.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "BriefingScenario.v1",
+  "description": "A deterministic, presentation-safe briefing contract that keeps verified public-reference implementation state separate from synthetic estate state and preserves read-only assessment boundaries.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "scenarioId",
+    "title",
+    "purpose",
+    "intendedDurationMinutes",
+    "syntheticBoundary",
+    "presentationClaims",
+    "briefingSteps",
+    "estateDomains",
+    "initialSourceTracks",
+    "mapFlow",
+    "stateSeparation",
+    "demonstration",
+    "leadershipRoles",
+    "leadershipActions",
+    "authorityBoundary",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "BriefingScenario.v1" },
+    "scenarioId": { "$ref": "#/$defs/identifier" },
+    "title": { "$ref": "#/$defs/plainText" },
+    "purpose": { "$ref": "#/$defs/narrativeText" },
+    "intendedDurationMinutes": { "const": 6 },
+    "syntheticBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["boundaryId", "label", "statement", "display"],
+      "properties": {
+        "boundaryId": { "$ref": "#/$defs/identifier" },
+        "label": { "const": "Synthetic reference demonstration" },
+        "statement": { "$ref": "#/$defs/narrativeText" },
+        "display": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "mode",
+            "persistEveryStep",
+            "visibleInFullScreen",
+            "visibleInScreenshots",
+            "cannotBeDismissed"
+          ],
+          "properties": {
+            "mode": { "const": "persistent_banner" },
+            "persistEveryStep": { "const": true },
+            "visibleInFullScreen": { "const": true },
+            "visibleInScreenshots": { "const": true },
+            "cannotBeDismissed": { "const": true }
+          }
+        }
+      }
+    },
+    "presentationClaims": { "$ref": "#/$defs/claimBoundary" },
+    "briefingSteps": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        {
+          "allOf": [
+            { "$ref": "#/$defs/briefingStep" },
+            {
+              "properties": {
+                "stepId": { "const": "briefing:mission" },
+                "order": { "const": 1 },
+                "name": { "const": "Mission" },
+                "contentNature": { "const": "explanatory" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/briefingStep" },
+            {
+              "properties": {
+                "stepId": { "const": "briefing:estate" },
+                "order": { "const": 2 },
+                "name": { "const": "Estate" },
+                "contentNature": { "const": "explanatory" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/briefingStep" },
+            {
+              "properties": {
+                "stepId": { "const": "briefing:method" },
+                "order": { "const": 3 },
+                "name": { "const": "Method" },
+                "contentNature": { "const": "explanatory" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/briefingStep" },
+            {
+              "properties": {
+                "stepId": { "const": "briefing:position" },
+                "order": { "const": 4 },
+                "name": { "const": "Position" },
+                "contentNature": { "const": "actual_and_synthetic_separated" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/briefingStep" },
+            {
+              "properties": {
+                "stepId": { "const": "briefing:demonstration" },
+                "order": { "const": 5 },
+                "name": { "const": "Demonstration" },
+                "contentNature": { "const": "synthetic_reference" }
+              }
+            }
+          ]
+        },
+        {
+          "allOf": [
+            { "$ref": "#/$defs/briefingStep" },
+            {
+              "properties": {
+                "stepId": { "const": "briefing:action" },
+                "order": { "const": 6 },
+                "name": { "const": "Action" },
+                "contentNature": { "const": "leadership_action" }
+              }
+            }
+          ]
+        }
+      ],
+      "items": false
+    },
+    "estateDomains": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": { "$ref": "#/$defs/estateDomain" }
+    },
+    "initialSourceTracks": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "items": { "$ref": "#/$defs/sourceTrack" }
+    },
+    "mapFlow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["flowId", "title", "scopeStatement", "nodes", "edges"],
+      "properties": {
+        "flowId": { "$ref": "#/$defs/identifier" },
+        "title": { "$ref": "#/$defs/plainText" },
+        "scopeStatement": { "$ref": "#/$defs/narrativeText" },
+        "nodes": {
+          "type": "array",
+          "minItems": 8,
+          "maxItems": 8,
+          "items": { "$ref": "#/$defs/flowNode" }
+        },
+        "edges": {
+          "type": "array",
+          "minItems": 7,
+          "maxItems": 7,
+          "items": { "$ref": "#/$defs/flowEdge" }
+        }
+      }
+    },
+    "stateSeparation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "rule",
+        "actualReferenceImplementation",
+        "syntheticDemonstration",
+        "combinedProgressPercentageProhibited"
+      ],
+      "properties": {
+        "rule": {
+          "const": "Verified public-reference implementation state and synthetic estate state must remain in separately labeled panels and must not be represented as one progress measure."
+        },
+        "actualReferenceImplementation": { "$ref": "#/$defs/actualReferenceState" },
+        "syntheticDemonstration": { "$ref": "#/$defs/syntheticState" },
+        "combinedProgressPercentageProhibited": { "const": true }
+      }
+    },
+    "demonstration": { "$ref": "#/$defs/demonstration" },
+    "leadershipRoles": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/leadershipRole" }
+    },
+    "leadershipActions": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": { "$ref": "#/$defs/leadershipAction" }
+    },
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "assessmentMode",
+        "productionMutationAllowed",
+        "remediationAuthorized",
+        "writeCapableControlDisplayed",
+        "dashboardIsAuthority",
+        "presentationCanRecordApproval",
+        "futureRemediationRequiresSeparateAuthorization"
+      ],
+      "properties": {
+        "assessmentMode": { "const": "read_only" },
+        "productionMutationAllowed": { "const": false },
+        "remediationAuthorized": { "const": false },
+        "writeCapableControlDisplayed": { "const": false },
+        "dashboardIsAuthority": { "const": false },
+        "presentationCanRecordApproval": { "const": false },
+        "futureRemediationRequiresSeparateAuthorization": { "const": true }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "publicSafe",
+        "containsEmployerIdentifiers",
+        "containsCustomerData",
+        "containsCredentials",
+        "containsKeyMaterial",
+        "containsRawPayloads",
+        "liveIntegrationClaimed",
+        "syntheticScenario",
+        "allDatesSynthetic",
+        "productNamesAreRecognitionHintsOnly",
+        "externalCommunicationPerformed"
+      ],
+      "properties": {
+        "publicSafe": { "const": true },
+        "containsEmployerIdentifiers": { "const": false },
+        "containsCustomerData": { "const": false },
+        "containsCredentials": { "const": false },
+        "containsKeyMaterial": { "const": false },
+        "containsRawPayloads": { "const": false },
+        "liveIntegrationClaimed": { "const": false },
+        "syntheticScenario": { "const": true },
+        "allDatesSynthetic": { "const": true },
+        "productNamesAreRecognitionHintsOnly": { "const": true },
+        "externalCommunicationPerformed": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 180,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "plainText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "narrativeText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1500,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "relativeJsonPath": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 260,
+      "pattern": "^(?!/)(?!.*\\.\\.)[a-zA-Z0-9_./-]+\\.json$"
+    },
+    "briefingStep": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stepId",
+        "order",
+        "name",
+        "headline",
+        "primaryMessage",
+        "contentNature",
+        "contentRefs",
+        "syntheticBoundaryRef",
+        "navigationTarget"
+      ],
+      "properties": {
+        "stepId": { "$ref": "#/$defs/identifier" },
+        "order": { "type": "integer", "minimum": 1, "maximum": 6 },
+        "name": { "$ref": "#/$defs/plainText" },
+        "headline": { "$ref": "#/$defs/plainText" },
+        "primaryMessage": { "$ref": "#/$defs/narrativeText" },
+        "contentNature": {
+          "enum": [
+            "explanatory",
+            "actual_and_synthetic_separated",
+            "synthetic_reference",
+            "leadership_action"
+          ]
+        },
+        "contentRefs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "syntheticBoundaryRef": { "$ref": "#/$defs/identifier" },
+        "navigationTarget": {
+          "type": "string",
+          "pattern": "^/briefing/(mission|estate|method|position|demonstration|action)$",
+          "maxLength": 80
+        }
+      }
+    },
+    "estateDomain": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["domainId", "order", "name", "plainLanguageScope"],
+      "properties": {
+        "domainId": { "$ref": "#/$defs/identifier" },
+        "order": { "type": "integer", "minimum": 1, "maximum": 10 },
+        "name": { "$ref": "#/$defs/plainText" },
+        "plainLanguageScope": { "$ref": "#/$defs/narrativeText" },
+        "recognitionAid": { "$ref": "#/$defs/recognitionAid" }
+      }
+    },
+    "recognitionAid": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "disclaimer", "examples"],
+      "properties": {
+        "status": { "const": "examples_only_not_asserted" },
+        "disclaimer": {
+          "const": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope."
+        },
+        "examples": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "uniqueItems": true,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["productName", "recognitionCategory"],
+            "properties": {
+              "productName": { "$ref": "#/$defs/plainText" },
+              "recognitionCategory": { "$ref": "#/$defs/plainText" }
+            }
+          }
+        }
+      }
+    },
+    "sourceTrack": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "trackId",
+        "order",
+        "name",
+        "purpose",
+        "waveStatus",
+        "completeEstateRepresentation",
+        "scopeStatement",
+        "estateDomainRefs",
+        "contractPackRef",
+        "contractPackManifestRef",
+        "evidenceStatus",
+        "liveSourceConnected"
+      ],
+      "properties": {
+        "trackId": { "$ref": "#/$defs/identifier" },
+        "order": { "type": "integer", "minimum": 1, "maximum": 5 },
+        "name": { "$ref": "#/$defs/plainText" },
+        "purpose": { "$ref": "#/$defs/narrativeText" },
+        "waveStatus": { "const": "initial_implementation_wave" },
+        "completeEstateRepresentation": { "const": false },
+        "scopeStatement": {
+          "const": "This is an initial source track and does not represent the complete enterprise estate."
+        },
+        "estateDomainRefs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 3,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "contractPackRef": { "$ref": "#/$defs/identifier" },
+        "contractPackManifestRef": { "$ref": "#/$defs/relativeJsonPath" },
+        "evidenceStatus": { "const": "synthetic_contract_tested" },
+        "liveSourceConnected": { "const": false }
+      }
+    },
+    "flowNode": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["nodeId", "order", "name", "plainLanguageMeaning"],
+      "properties": {
+        "nodeId": { "$ref": "#/$defs/identifier" },
+        "order": { "type": "integer", "minimum": 1, "maximum": 8 },
+        "name": { "$ref": "#/$defs/plainText" },
+        "plainLanguageMeaning": { "$ref": "#/$defs/narrativeText" }
+      }
+    },
+    "flowEdge": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["edgeId", "order", "fromRef", "toRef", "label"],
+      "properties": {
+        "edgeId": { "$ref": "#/$defs/identifier" },
+        "order": { "type": "integer", "minimum": 1, "maximum": 7 },
+        "fromRef": { "$ref": "#/$defs/identifier" },
+        "toRef": { "$ref": "#/$defs/identifier" },
+        "label": { "$ref": "#/$defs/plainText" }
+      }
+    },
+    "claimBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "liveEnterpriseStateClaimed",
+        "enterpriseCompletenessClaimed",
+        "productionReadinessClaimed",
+        "customerApprovalClaimed",
+        "riskConclusionClaimed",
+        "productSelectionClaimed"
+      ],
+      "properties": {
+        "liveEnterpriseStateClaimed": { "const": false },
+        "enterpriseCompletenessClaimed": { "const": false },
+        "productionReadinessClaimed": { "const": false },
+        "customerApprovalClaimed": { "const": false },
+        "riskConclusionClaimed": { "const": false },
+        "productSelectionClaimed": { "const": false }
+      }
+    },
+    "actualReferenceState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stateId",
+        "label",
+        "dataNature",
+        "scopeStatement",
+        "enterpriseEstateStateRepresented",
+        "enterpriseProgressClaimed",
+        "statusFacts"
+      ],
+      "properties": {
+        "stateId": { "$ref": "#/$defs/identifier" },
+        "label": { "const": "Verified public-reference implementation state" },
+        "dataNature": { "const": "verified_public_reference_implementation" },
+        "scopeStatement": { "$ref": "#/$defs/narrativeText" },
+        "enterpriseEstateStateRepresented": { "const": false },
+        "enterpriseProgressClaimed": { "const": false },
+        "statusFacts": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 12,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["factId", "statement", "status", "evidenceRefs"],
+            "properties": {
+              "factId": { "$ref": "#/$defs/identifier" },
+              "statement": { "$ref": "#/$defs/narrativeText" },
+              "status": { "const": "verified_in_public_repository" },
+              "evidenceRefs": {
+                "type": "array",
+                "minItems": 1,
+                "maxItems": 12,
+                "uniqueItems": true,
+                "items": { "$ref": "#/$defs/relativeJsonPath" }
+              }
+            }
+          }
+        }
+      }
+    },
+    "syntheticState": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "stateId",
+        "label",
+        "dataNature",
+        "scopeStatement",
+        "scenarioState",
+        "enterpriseEstateStateRepresented",
+        "metricsAreSynthetic",
+        "boundaryRef",
+        "fixtureRefs"
+      ],
+      "properties": {
+        "stateId": { "$ref": "#/$defs/identifier" },
+        "label": { "const": "Synthetic estate demonstration state" },
+        "dataNature": { "const": "synthetic_reference_scenario" },
+        "scopeStatement": { "$ref": "#/$defs/narrativeText" },
+        "scenarioState": {
+          "enum": [
+            "outline_established",
+            "sources_routed",
+            "evidence_arriving",
+            "phase1_assessment_ready"
+          ]
+        },
+        "enterpriseEstateStateRepresented": { "const": false },
+        "metricsAreSynthetic": { "const": true },
+        "boundaryRef": { "$ref": "#/$defs/identifier" },
+        "fixtureRefs": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/relativeJsonPath" }
+        }
+      }
+    },
+    "demonstration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "demonstrationId",
+        "lineageId",
+        "title",
+        "explanation",
+        "stateRef",
+        "phase1FlowRef",
+        "dashboardProjectionRef",
+        "sourceTrackRefs",
+        "lineageExample",
+        "expectedCounts"
+      ],
+      "properties": {
+        "demonstrationId": { "$ref": "#/$defs/identifier" },
+        "lineageId": { "$ref": "#/$defs/identifier" },
+        "title": { "$ref": "#/$defs/plainText" },
+        "explanation": { "$ref": "#/$defs/narrativeText" },
+        "stateRef": { "$ref": "#/$defs/identifier" },
+        "phase1FlowRef": { "$ref": "#/$defs/relativeJsonPath" },
+        "dashboardProjectionRef": { "$ref": "#/$defs/relativeJsonPath" },
+        "sourceTrackRefs": {
+          "type": "array",
+          "minItems": 5,
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "lineageExample": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "explanation",
+            "sourceTrackRefs",
+            "observationRefs",
+            "assetRefs",
+            "dependencyRefs",
+            "limitationRefs"
+          ],
+          "properties": {
+            "explanation": { "$ref": "#/$defs/narrativeText" },
+            "sourceTrackRefs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 5,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/identifier" }
+            },
+            "observationRefs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/identifier" }
+            },
+            "assetRefs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/identifier" }
+            },
+            "dependencyRefs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/identifier" }
+            },
+            "limitationRefs": {
+              "type": "array",
+              "minItems": 1,
+              "maxItems": 20,
+              "uniqueItems": true,
+              "items": { "$ref": "#/$defs/identifier" }
+            }
+          }
+        },
+        "expectedCounts": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["sourceContractPacks", "observations", "canonicalAssets", "dependencies", "evidenceLimitations"],
+          "properties": {
+            "sourceContractPacks": { "const": 5 },
+            "observations": { "const": 10 },
+            "canonicalAssets": { "const": 8 },
+            "dependencies": { "const": 8 },
+            "evidenceLimitations": { "const": 1 }
+          }
+        }
+      }
+    },
+    "leadershipRole": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["roleId", "name", "purpose"],
+      "properties": {
+        "roleId": { "$ref": "#/$defs/identifier" },
+        "name": { "$ref": "#/$defs/plainText" },
+        "purpose": { "$ref": "#/$defs/narrativeText" }
+      }
+    },
+    "leadershipAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "actionId",
+        "title",
+        "context",
+        "requestedOutcome",
+        "ownerRoleRef",
+        "requiredByDate",
+        "dateNature",
+        "consequenceIfUnresolved",
+        "sourceTrackRefs",
+        "recordNature",
+        "decisionStatus"
+      ],
+      "properties": {
+        "actionId": { "$ref": "#/$defs/identifier" },
+        "title": { "$ref": "#/$defs/plainText" },
+        "context": { "$ref": "#/$defs/narrativeText" },
+        "requestedOutcome": { "$ref": "#/$defs/narrativeText" },
+        "ownerRoleRef": { "$ref": "#/$defs/identifier" },
+        "requiredByDate": { "type": "string", "format": "date" },
+        "dateNature": { "const": "synthetic_example" },
+        "consequenceIfUnresolved": { "$ref": "#/$defs/narrativeText" },
+        "sourceTrackRefs": {
+          "type": "array",
+          "maxItems": 5,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "recordNature": { "const": "synthetic_example_action" },
+        "decisionStatus": { "const": "requested_not_received" }
+      }
+    }
+  }
+}

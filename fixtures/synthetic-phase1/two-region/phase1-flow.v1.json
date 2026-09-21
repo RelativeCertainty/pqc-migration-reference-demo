@@ -1,0 +1,290 @@
+{
+  "schemaVersion": "Phase1SyntheticFlow.v1",
+  "flowId": "flow:synthetic:phase1:two-region:v1",
+  "title": "Deterministic two-region Phase 1 read-only evidence flow",
+  "testClock": "2030-01-07T12:10:00Z",
+  "scope": {
+    "scopeRef": "scope:synthetic:two-region-tls",
+    "regionRefs": ["region:synthetic:alpha", "region:synthetic:beta"],
+    "authorizedAssetTypes": ["TLS deployment"],
+    "coverageDenominatorSourceRef": "denominator:synthetic:authorized-tls-deployments"
+  },
+  "contractPackRefs": [
+    "contract:source-pack:application-cmdb:v1",
+    "contract:source-pack:pki-certificate-lifecycle:v1",
+    "contract:source-pack:tls-traffic-management:v1",
+    "contract:source-pack:source-repositories:v1",
+    "contract:source-pack:software-analysis:v1"
+  ],
+  "sourcePageRefs": [
+    "contract-packs/source-families/application-cmdb/fixtures/page-001.v1.json",
+    "contract-packs/source-families/application-cmdb/fixtures/page-002.v1.json",
+    "contract-packs/source-families/pki-certificate-lifecycle/fixtures/page-001.v1.json",
+    "contract-packs/source-families/pki-certificate-lifecycle/fixtures/page-002.v1.json",
+    "contract-packs/source-families/tls-traffic-management/fixtures/page-001.v1.json",
+    "contract-packs/source-families/tls-traffic-management/fixtures/page-002.v1.json",
+    "contract-packs/source-families/source-repositories/fixtures/page-001.v1.json",
+    "contract-packs/source-families/source-repositories/fixtures/page-002.v1.json",
+    "contract-packs/source-families/software-analysis/fixtures/page-001.v1.json",
+    "contract-packs/source-families/software-analysis/fixtures/page-002.v1.json"
+  ],
+  "normalizedObservations": [
+    {
+      "observationId": "observation:synthetic:application-cmdb:alpha",
+      "sourceRecordRef": "record:synthetic:application-cmdb:alpha",
+      "sourceFamily": "application_cmdb",
+      "assetRef": "asset:synthetic:application:edge-service",
+      "regionRef": "region:synthetic:alpha",
+      "observedAt": "2030-01-07T12:00:00Z",
+      "factType": "application deployment context",
+      "confidence": "high",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:application-cmdb:beta",
+      "sourceRecordRef": "record:synthetic:application-cmdb:beta",
+      "sourceFamily": "application_cmdb",
+      "assetRef": "asset:synthetic:application:edge-service",
+      "regionRef": "region:synthetic:beta",
+      "observedAt": "2030-01-07T12:00:15Z",
+      "factType": "application deployment context",
+      "confidence": "high",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:pki:alpha",
+      "sourceRecordRef": "record:synthetic:pki-certificate-lifecycle:alpha",
+      "sourceFamily": "pki_certificate_lifecycle",
+      "assetRef": "asset:synthetic:certificate:shared-edge",
+      "regionRef": "region:synthetic:alpha",
+      "observedAt": "2030-01-07T12:01:00Z",
+      "factType": "certificate deployment metadata",
+      "confidence": "high",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:pki:beta",
+      "sourceRecordRef": "record:synthetic:pki-certificate-lifecycle:beta",
+      "sourceFamily": "pki_certificate_lifecycle",
+      "assetRef": "asset:synthetic:certificate:shared-edge",
+      "regionRef": "region:synthetic:beta",
+      "observedAt": "2030-01-07T12:01:15Z",
+      "factType": "certificate deployment metadata",
+      "confidence": "high",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:tls:alpha",
+      "sourceRecordRef": "record:synthetic:tls-traffic-management:alpha",
+      "sourceFamily": "tls_traffic_management",
+      "assetRef": "asset:synthetic:tls-deployment:alpha",
+      "regionRef": "region:synthetic:alpha",
+      "observedAt": "2030-01-07T12:02:00Z",
+      "factType": "TLS endpoint configuration",
+      "confidence": "high",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:tls:beta",
+      "sourceRecordRef": "record:synthetic:tls-traffic-management:beta",
+      "sourceFamily": "tls_traffic_management",
+      "assetRef": "asset:synthetic:tls-deployment:beta",
+      "regionRef": "region:synthetic:beta",
+      "observedAt": "2030-01-07T12:02:15Z",
+      "factType": "TLS endpoint configuration",
+      "confidence": "high",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:repository:edge",
+      "sourceRecordRef": "record:synthetic:source-repositories:edge",
+      "sourceFamily": "source_repositories",
+      "assetRef": "asset:synthetic:repository:edge-service",
+      "regionRef": null,
+      "observedAt": "2030-01-07T12:03:00Z",
+      "factType": "repository application mapping",
+      "confidence": "moderate",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:repository:shared-crypto",
+      "sourceRecordRef": "record:synthetic:source-repositories:shared-crypto",
+      "sourceFamily": "source_repositories",
+      "assetRef": "asset:synthetic:repository:shared-crypto-library",
+      "regionRef": null,
+      "observedAt": "2030-01-07T12:03:15Z",
+      "factType": "repository application mapping",
+      "confidence": "moderate",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:software-analysis:edge",
+      "sourceRecordRef": "record:synthetic:software-analysis:edge",
+      "sourceFamily": "software_analysis",
+      "assetRef": "asset:synthetic:component:edge-service",
+      "regionRef": null,
+      "observedAt": "2030-01-07T12:04:00Z",
+      "factType": "sanitized cryptographic-use signal",
+      "confidence": "moderate",
+      "evidenceStatus": "synthetic_contract_tested"
+    },
+    {
+      "observationId": "observation:synthetic:software-analysis:shared-crypto",
+      "sourceRecordRef": "record:synthetic:software-analysis:shared-crypto",
+      "sourceFamily": "software_analysis",
+      "assetRef": "asset:synthetic:component:shared-crypto-library",
+      "regionRef": null,
+      "observedAt": "2030-01-07T12:04:15Z",
+      "factType": "sanitized cryptographic-use signal",
+      "confidence": "moderate",
+      "evidenceStatus": "synthetic_contract_tested"
+    }
+  ],
+  "canonicalAssets": [
+    {
+      "assetId": "asset:synthetic:application:edge-service",
+      "assetType": "application",
+      "regionRef": null,
+      "observationRefs": ["observation:synthetic:application-cmdb:alpha", "observation:synthetic:application-cmdb:beta"]
+    },
+    {
+      "assetId": "asset:synthetic:certificate:shared-edge",
+      "assetType": "certificate metadata",
+      "regionRef": null,
+      "observationRefs": ["observation:synthetic:pki:alpha", "observation:synthetic:pki:beta"]
+    },
+    {
+      "assetId": "asset:synthetic:tls-deployment:alpha",
+      "assetType": "TLS deployment",
+      "regionRef": "region:synthetic:alpha",
+      "observationRefs": ["observation:synthetic:tls:alpha", "observation:synthetic:pki:alpha"]
+    },
+    {
+      "assetId": "asset:synthetic:tls-deployment:beta",
+      "assetType": "TLS deployment",
+      "regionRef": "region:synthetic:beta",
+      "observationRefs": ["observation:synthetic:tls:beta", "observation:synthetic:pki:beta"]
+    },
+    {
+      "assetId": "asset:synthetic:repository:edge-service",
+      "assetType": "source repository",
+      "regionRef": null,
+      "observationRefs": ["observation:synthetic:repository:edge"]
+    },
+    {
+      "assetId": "asset:synthetic:repository:shared-crypto-library",
+      "assetType": "source repository",
+      "regionRef": null,
+      "observationRefs": ["observation:synthetic:repository:shared-crypto"]
+    },
+    {
+      "assetId": "asset:synthetic:component:edge-service",
+      "assetType": "software component",
+      "regionRef": null,
+      "observationRefs": ["observation:synthetic:software-analysis:edge"]
+    },
+    {
+      "assetId": "asset:synthetic:component:shared-crypto-library",
+      "assetType": "software component",
+      "regionRef": null,
+      "observationRefs": ["observation:synthetic:software-analysis:shared-crypto"]
+    }
+  ],
+  "dependencies": [
+    {
+      "dependencyId": "dependency:synthetic:tls-alpha-serves-application",
+      "sourceAssetRef": "asset:synthetic:tls-deployment:alpha",
+      "targetAssetRef": "asset:synthetic:application:edge-service",
+      "relationshipType": "serves_application",
+      "observationRefs": ["observation:synthetic:application-cmdb:alpha", "observation:synthetic:tls:alpha"],
+      "confidence": "high"
+    },
+    {
+      "dependencyId": "dependency:synthetic:tls-beta-serves-application",
+      "sourceAssetRef": "asset:synthetic:tls-deployment:beta",
+      "targetAssetRef": "asset:synthetic:application:edge-service",
+      "relationshipType": "serves_application",
+      "observationRefs": ["observation:synthetic:application-cmdb:beta", "observation:synthetic:tls:beta"],
+      "confidence": "high"
+    },
+    {
+      "dependencyId": "dependency:synthetic:tls-alpha-uses-certificate",
+      "sourceAssetRef": "asset:synthetic:tls-deployment:alpha",
+      "targetAssetRef": "asset:synthetic:certificate:shared-edge",
+      "relationshipType": "uses_certificate",
+      "observationRefs": ["observation:synthetic:pki:alpha", "observation:synthetic:tls:alpha"],
+      "confidence": "high"
+    },
+    {
+      "dependencyId": "dependency:synthetic:tls-beta-uses-certificate",
+      "sourceAssetRef": "asset:synthetic:tls-deployment:beta",
+      "targetAssetRef": "asset:synthetic:certificate:shared-edge",
+      "relationshipType": "uses_certificate",
+      "observationRefs": ["observation:synthetic:pki:beta", "observation:synthetic:tls:beta"],
+      "confidence": "high"
+    },
+    {
+      "dependencyId": "dependency:synthetic:application-implemented-by-edge-repo",
+      "sourceAssetRef": "asset:synthetic:application:edge-service",
+      "targetAssetRef": "asset:synthetic:repository:edge-service",
+      "relationshipType": "implemented_by",
+      "observationRefs": ["observation:synthetic:application-cmdb:alpha", "observation:synthetic:repository:edge"],
+      "confidence": "moderate"
+    },
+    {
+      "dependencyId": "dependency:synthetic:application-implemented-by-shared-repo",
+      "sourceAssetRef": "asset:synthetic:application:edge-service",
+      "targetAssetRef": "asset:synthetic:repository:shared-crypto-library",
+      "relationshipType": "implemented_by",
+      "observationRefs": ["observation:synthetic:application-cmdb:beta", "observation:synthetic:repository:shared-crypto"],
+      "confidence": "moderate"
+    },
+    {
+      "dependencyId": "dependency:synthetic:edge-repo-analyzed-component",
+      "sourceAssetRef": "asset:synthetic:repository:edge-service",
+      "targetAssetRef": "asset:synthetic:component:edge-service",
+      "relationshipType": "analyzed_by",
+      "observationRefs": ["observation:synthetic:repository:edge", "observation:synthetic:software-analysis:edge"],
+      "confidence": "moderate"
+    },
+    {
+      "dependencyId": "dependency:synthetic:shared-repo-analyzed-component",
+      "sourceAssetRef": "asset:synthetic:repository:shared-crypto-library",
+      "targetAssetRef": "asset:synthetic:component:shared-crypto-library",
+      "relationshipType": "analyzed_by",
+      "observationRefs": ["observation:synthetic:repository:shared-crypto", "observation:synthetic:software-analysis:shared-crypto"],
+      "confidence": "moderate"
+    }
+  ],
+  "evidenceLimitations": [
+    {
+      "limitationId": "limitation:synthetic:ownership-not-validated",
+      "severity": "informational",
+      "description": "The synthetic service association demonstrates correlation shape only and does not establish a real accountable application or data owner.",
+      "blocking": false,
+      "scopeRef": "scope:synthetic:two-region-tls"
+    }
+  ],
+  "dashboardProjectionRef": "fixtures/synthetic-phase1/two-region/dashboard-projection.v1.json",
+  "expectedInvariants": {
+    "regionCount": 2,
+    "contractPackCount": 5,
+    "sourcePageCount": 10,
+    "authorizedDeploymentDenominator": 2,
+    "observedDeploymentNumerator": 2,
+    "projectionLagSeconds": 90
+  },
+  "authorityBoundary": {
+    "readOnlyAssessment": true,
+    "productionMutationAllowed": false,
+    "remediationAuthorized": false,
+    "dashboardIsAuthority": false
+  },
+  "safety": {
+    "synthetic": true,
+    "containsCredentials": false,
+    "containsKeyMaterial": false,
+    "containsEnterpriseIdentifiers": false,
+    "claimsLiveReadback": false
+  }
+}

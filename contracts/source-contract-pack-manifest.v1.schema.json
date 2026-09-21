@@ -1,0 +1,174 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/source-contract-pack-manifest.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "SourceContractPackManifest.v1",
+  "description": "Versioned, independently authored contract-pack manifest for one product-neutral enterprise source family. It records synthetic pagination, mapping, failure behavior, and safety without representing a live vendor integration.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "contractPackId",
+    "packVersion",
+    "sourceFamily",
+    "title",
+    "purpose",
+    "provenance",
+    "access",
+    "pagination",
+    "responseContractRef",
+    "fixturePageRefs",
+    "canonicalMappings",
+    "conformanceBehaviors",
+    "limitations",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "SourceContractPackManifest.v1" },
+    "contractPackId": { "$ref": "#/$defs/identifier" },
+    "packVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$", "maxLength": 32 },
+    "sourceFamily": { "$ref": "#/$defs/sourceFamily" },
+    "title": { "$ref": "#/$defs/plainText" },
+    "purpose": { "$ref": "#/$defs/plainText" },
+    "provenance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["origin", "contractEvidenceStatus", "retrievalRequired", "redistributionStatus"],
+      "properties": {
+        "origin": { "const": "independently_authored_synthetic" },
+        "contractEvidenceStatus": { "const": "synthetic_contract_tested" },
+        "retrievalRequired": { "const": false },
+        "redistributionStatus": { "const": "independently_authored_public_fixture" }
+      }
+    },
+    "access": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "authenticationMode", "credentialReferenceOnly", "readOnly"],
+      "properties": {
+        "classification": { "const": "synthetic_local" },
+        "authenticationMode": { "const": "simulated_reference" },
+        "credentialReferenceOnly": { "const": true },
+        "readOnly": { "const": true }
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode", "pageSizeLimit", "cursorIsOpaqueReference", "rawCursorStored", "terminalCondition"],
+      "properties": {
+        "mode": { "const": "opaque_cursor" },
+        "pageSizeLimit": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "cursorIsOpaqueReference": { "const": true },
+        "rawCursorStored": { "const": false },
+        "terminalCondition": { "const": "next_cursor_ref_is_null" }
+      }
+    },
+    "responseContractRef": { "const": "contract:synthetic-source-page.v1" },
+    "fixturePageRefs": {
+      "type": "array",
+      "minItems": 2,
+      "maxItems": 20,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/relativeJsonPath" }
+    },
+    "canonicalMappings": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 40,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceField", "canonicalTarget", "required", "semanticNote"],
+        "properties": {
+          "sourceField": { "$ref": "#/$defs/fieldName" },
+          "canonicalTarget": { "$ref": "#/$defs/fieldName" },
+          "required": { "type": "boolean" },
+          "semanticNote": { "$ref": "#/$defs/plainText" }
+        }
+      }
+    },
+    "conformanceBehaviors": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 12,
+      "uniqueItems": true,
+      "items": {
+        "enum": [
+          "pagination",
+          "rate_limit_retry",
+          "timeout_retry",
+          "duplicate_delivery",
+          "authorization_failure",
+          "malformed_record_quarantine",
+          "schema_drift_quarantine",
+          "cursor_resume"
+        ]
+      },
+      "allOf": [
+        { "contains": { "const": "pagination" } },
+        { "contains": { "const": "rate_limit_retry" } },
+        { "contains": { "const": "timeout_retry" } },
+        { "contains": { "const": "duplicate_delivery" } },
+        { "contains": { "const": "authorization_failure" } },
+        { "contains": { "const": "malformed_record_quarantine" } },
+        { "contains": { "const": "schema_drift_quarantine" } }
+      ]
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 20,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/plainText" }
+    },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 180,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "sourceFamily": {
+      "enum": [
+        "application_cmdb",
+        "pki_certificate_lifecycle",
+        "tls_traffic_management",
+        "source_repositories",
+        "software_analysis"
+      ]
+    },
+    "plainText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "fieldName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 120,
+      "pattern": "^[a-z][a-zA-Z0-9.]*$"
+    },
+    "relativeJsonPath": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 240,
+      "pattern": "^(?!/)(?!.*\\.\\.)[a-zA-Z0-9_./-]+\\.json$"
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "vendorClaimed", "liveIntegrationClaimed", "containsCredentials", "containsRawEnterprisePayload"],
+      "properties": {
+        "synthetic": { "const": true },
+        "vendorClaimed": { "const": false },
+        "liveIntegrationClaimed": { "const": false },
+        "containsCredentials": { "const": false },
+        "containsRawEnterprisePayload": { "const": false }
+      }
+    }
+  }
+}

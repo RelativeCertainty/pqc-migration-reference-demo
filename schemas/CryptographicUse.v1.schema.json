@@ -1,0 +1,87 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://upm.pba.io/schemas/CryptographicUse.v1.schema.json",
+  "title": "CryptographicUse.v1",
+  "description": "A particular cryptographic purpose at one deployment, with evidence by reference. It does not assert an asset-wide PQC-ready state.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["contract_version", "synthetic", "tenant_id", "crypto_use_id", "asset_ref", "context", "purpose", "protocol_role", "algorithm", "implementation", "protected_information", "evidence", "relying_party_refs", "limitations"],
+  "properties": {
+    "contract_version": {"const": "pba.contract/CryptographicUse.v1"},
+    "synthetic": {"type": "boolean"},
+    "tenant_id": {"$ref": "#/$defs/tenant"},
+    "crypto_use_id": {"$ref": "#/$defs/ref"},
+    "asset_ref": {"$ref": "#/$defs/ref"},
+    "context": {
+      "type": "object", "additionalProperties": false,
+      "required": ["business_service_ref", "application_ref", "workload_ref", "deployment_ref", "environment", "owner_ref", "criticality"],
+      "properties": {
+        "business_service_ref": {"$ref": "#/$defs/ref"},
+        "application_ref": {"$ref": "#/$defs/ref"},
+        "workload_ref": {"$ref": "#/$defs/ref"},
+        "deployment_ref": {"$ref": "#/$defs/ref"},
+        "environment": {"enum": ["lab", "development", "test", "staging", "production", "unknown"]},
+        "owner_ref": {"$ref": "#/$defs/ref"},
+        "criticality": {"enum": ["critical", "high", "normal", "low", "unknown"]}
+      }
+    },
+    "purpose": {"enum": ["key_establishment", "authentication", "digital_signature", "data_encryption", "key_wrapping"]},
+    "protocol_role": {"enum": ["tls_key_exchange", "tls_certificate_signature", "ssh_key_exchange", "ssh_host_signature", "ssh_user_signature", "application_signature", "code_signature", "data_at_rest", "key_wrap", "other"]},
+    "algorithm": {
+      "type": "object", "additionalProperties": false, "required": ["name", "parameters"],
+      "properties": {
+        "name": {"$ref": "#/$defs/label"},
+        "parameters": {
+          "type": "object", "additionalProperties": false,
+          "properties": {
+            "security_category": {"type": "integer", "minimum": 1, "maximum": 5},
+            "curve": {"$ref": "#/$defs/label"},
+            "key_bits": {"type": "integer", "minimum": 1, "maximum": 65536},
+            "parameter_set": {"$ref": "#/$defs/label"}
+          }
+        }
+      }
+    },
+    "implementation": {
+      "type": "object", "additionalProperties": false, "required": ["name", "version"],
+      "properties": {"name": {"$ref": "#/$defs/label"}, "version": {"$ref": "#/$defs/label"}}
+    },
+    "certificate_ref": {"$ref": "#/$defs/ref"},
+    "key_ref": {"$ref": "#/$defs/ref"},
+    "protected_information": {
+      "type": "object", "additionalProperties": false,
+      "required": ["information_ref", "confidentiality_until", "trust_until"],
+      "properties": {
+        "information_ref": {"$ref": "#/$defs/ref"},
+        "confidentiality_until": {"anyOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+        "trust_until": {"anyOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]}
+      }
+    },
+    "evidence": {
+      "type": "array", "minItems": 0, "maxItems": 256, "uniqueItems": true,
+      "items": {
+        "type": "object", "additionalProperties": false,
+        "required": ["basis", "source_instance_ref", "observation_ref", "custody_ref", "observed_at"],
+        "properties": {
+          "basis": {"enum": ["vendor_reported", "configured", "observed", "independently_verified"]},
+          "source_instance_ref": {"$ref": "#/$defs/ref"},
+          "observation_ref": {"$ref": "#/$defs/ref"},
+          "custody_ref": {"$ref": "#/$defs/ref"},
+          "observed_at": {"$ref": "#/$defs/timestamp"}
+        }
+      }
+    },
+    "relying_party_refs": {"$ref": "#/$defs/refs"},
+    "limitations": {
+      "type": "array", "maxItems": 64, "uniqueItems": true,
+      "items": {"enum": ["missing_evidence", "unknown_owner", "unknown_criticality", "unknown_information_lifetime", "stale_evidence", "conflicting_sources", "incomplete_collection", "unverified_vendor_claim", "unsupported_product", "unknown_relying_parties"]}
+    }
+  },
+  "$defs": {
+    "ref": {"type": "string", "minLength": 2, "maxLength": 256, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"},
+    "tenant": {"type": "string", "maxLength": 64, "pattern": "^[a-z][a-z0-9-]{1,62}[a-z0-9]$"},
+    "label": {"type": "string", "minLength": 1, "maxLength": 96, "pattern": "^[A-Za-z0-9][A-Za-z0-9 ._()+-]*$"},
+    "timestamp": {"type": "string", "format": "date-time", "pattern": "Z$"},
+    "refs": {"type": "array", "maxItems": 4096, "uniqueItems": true, "items": {"$ref": "#/$defs/ref"}}
+  }
+}

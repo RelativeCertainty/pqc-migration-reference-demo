@@ -1,0 +1,22 @@
+{
+  "schema_version": "pba.pqc.servicenow-table-fixture.v1",
+  "synthetic": true,
+  "responses": [
+    {
+      "status_code": 200,
+      "body": {"result": [
+        {"sys_id": "00000000000000000000000000000001", "name": "Synthetic Records Application", "owned_by": "10000000000000000000000000000001"},
+        {"sys_id": "00000000000000000000000000000002", "name": "Synthetic Archive Application", "owned_by": {"value": "10000000000000000000000000000002"}}
+      ]},
+      "headers": {"Link": "<https://synthetic-instance.invalid/api/now/table/cmdb_ci_appl?sysparm_offset=2&sysparm_limit=2>; rel=\"next\""}
+    },
+    {
+      "status_code": 200,
+      "body": {"result": [
+        {"sys_id": "00000000000000000000000000000001", "name": "Synthetic Records Application", "owned_by": "10000000000000000000000000000001"},
+        {"sys_id": "00000000000000000000000000000002", "name": "Synthetic Archive Application", "owned_by": {"value": "10000000000000000000000000000003"}}
+      ]},
+      "headers": {}
+    }
+  ]
+}

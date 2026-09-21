@@ -1,0 +1,21 @@
+PQC Migration Reference Demo
+Copyright (c) 2026 RelativeCertainty
+
+LICENSE BOUNDARIES
+
+- Code, JSON Schemas, tests, and executable examples: root LICENSE unless a file carries an explicit separate license.
+- Authored methodology and project-management documents in docs/ and planning/: CC BY 4.0.
+- Project branding: all rights reserved except nominative use permitted by law.
+
+PROVENANCE
+
+The repository is an independently authored, employer-neutral reference
+implementation. It contains synthetic examples only and excludes customer
+material, employment material, credentials, account identifiers, private
+infrastructure, and private repository history.
+
+REFERENCES
+
+NIST, CISA, and FS-ISAC publications are cited as external sources. Those
+organizations do not sponsor or endorse this project, and their publications
+retain their respective terms and attribution.

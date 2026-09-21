@@ -1,0 +1,1431 @@
+{
+  "schema_version": "pba.pqc.reference-qualification-catalog.v1",
+  "status": "development_reference_not_enterprise_selection",
+  "taxonomy_note": "Employer-neutral engineering crosswalk. Counts describe this reference catalog, not enterprise coverage, deployed adapters or a claim that every migration is currently supported.",
+  "examples_status": "recognition_examples_not_installed_or_selected",
+  "estate_areas": [
+    {
+      "id": "area-01",
+      "name": "Enterprise context"
+    },
+    {
+      "id": "area-02",
+      "name": "PKI and trust"
+    },
+    {
+      "id": "area-03",
+      "name": "Encrypted traffic"
+    },
+    {
+      "id": "area-04",
+      "name": "Machine access"
+    },
+    {
+      "id": "area-05",
+      "name": "Software delivery"
+    },
+    {
+      "id": "area-06",
+      "name": "Cloud, keys and identity"
+    },
+    {
+      "id": "area-07",
+      "name": "Protected data"
+    },
+    {
+      "id": "area-08",
+      "name": "Distributed endpoints"
+    },
+    {
+      "id": "area-09",
+      "name": "Specialized and regulated cryptography"
+    },
+    {
+      "id": "area-10",
+      "name": "Governance and assurance"
+    }
+  ],
+  "source_families": [
+    {
+      "id": "cmdb",
+      "area_ref": "area-01",
+      "name": "Configuration and service records",
+      "recognition_examples": [
+        "ServiceNow CMDB",
+        "BMC Helix CMDB"
+      ],
+      "discovery_question": "Which system of record identifies configuration and service records and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "application identities",
+        "service relationships",
+        "accountable owners",
+        "criticality"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "ssh-hybrid-key-exchange"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "application-portfolio",
+      "area_ref": "area-01",
+      "name": "Application portfolio",
+      "recognition_examples": [
+        "SAP LeanIX",
+        "ServiceNow APM"
+      ],
+      "discovery_question": "Which system of record identifies application portfolio and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "application lifecycle",
+        "business services",
+        "owner routes"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "application-library-migration",
+        "vendor-product-transition"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "certificate-lifecycle",
+      "area_ref": "area-02",
+      "name": "Certificate lifecycle platforms",
+      "recognition_examples": [
+        "Venafi",
+        "DigiCert Trust Lifecycle Manager"
+      ],
+      "discovery_question": "Which system of record identifies certificate lifecycle platforms and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "certificate metadata",
+        "deployment associations",
+        "renewal policies"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "certificate-signature-migration",
+        "message-protection"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "certificate-authorities",
+      "area_ref": "area-02",
+      "name": "Certificate authorities and trust stores",
+      "recognition_examples": [
+        "Microsoft AD CS",
+        "EJBCA",
+        "OpenSSL"
+      ],
+      "discovery_question": "Which system of record identifies certificate authorities and trust stores and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "issuance profiles",
+        "trust anchors",
+        "relying-party configuration"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "certificate-signature-migration",
+        "trust-distribution"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "hsm",
+      "area_ref": "area-02",
+      "name": "Hardware cryptographic modules",
+      "recognition_examples": [
+        "Thales Luna",
+        "Entrust nShield"
+      ],
+      "discovery_question": "Which system of record identifies hardware cryptographic modules and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "module versions",
+        "supported mechanisms",
+        "key custody references"
+      ],
+      "pattern_refs": [
+        "certificate-signature-migration",
+        "code-signing",
+        "hsm-capability-upgrade",
+        "specialist-ceremony"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "traffic-termination",
+      "area_ref": "area-03",
+      "name": "Load balancers and TLS proxies",
+      "recognition_examples": [
+        "F5 BIG-IP",
+        "HAProxy",
+        "NGINX"
+      ],
+      "discovery_question": "Which system of record identifies load balancers and tls proxies and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "listeners",
+        "protocol configuration",
+        "client compatibility"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "api-and-mesh",
+      "area_ref": "area-03",
+      "name": "API gateways and service meshes",
+      "recognition_examples": [
+        "Kong",
+        "Apigee",
+        "Istio"
+      ],
+      "discovery_question": "Which system of record identifies api gateways and service meshes and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "service routes",
+        "workload certificates",
+        "transport policy"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "certificate-signature-migration",
+        "identity-token-signing",
+        "workload-credential"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "network-telemetry",
+      "area_ref": "area-03",
+      "name": "Network observation platforms",
+      "recognition_examples": [
+        "Zeek",
+        "Wireshark"
+      ],
+      "discovery_question": "Which system of record identifies network observation platforms and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "observed handshakes",
+        "observation boundaries",
+        "traffic coverage"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "vpn-key-exchange",
+        "dnssec"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "ssh",
+      "area_ref": "area-04",
+      "name": "SSH and machine administration",
+      "recognition_examples": [
+        "OpenSSH"
+      ],
+      "discovery_question": "Which system of record identifies ssh and machine administration and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "host versions",
+        "key exchange configuration",
+        "client cohorts"
+      ],
+      "pattern_refs": [
+        "ssh-hybrid-key-exchange"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "vpn",
+      "area_ref": "area-04",
+      "name": "VPN and encrypted network access",
+      "recognition_examples": [
+        "Cisco Secure Client",
+        "Palo Alto GlobalProtect",
+        "strongSwan"
+      ],
+      "discovery_question": "Which system of record identifies vpn and encrypted network access and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "gateway versions",
+        "peer capability",
+        "remote access dependencies"
+      ],
+      "pattern_refs": [
+        "vpn-key-exchange"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "source-build",
+      "area_ref": "area-05",
+      "name": "Source repositories and build pipelines",
+      "recognition_examples": [
+        "GitHub",
+        "GitLab",
+        "Jenkins"
+      ],
+      "discovery_question": "Which system of record identifies source repositories and build pipelines and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "source revision",
+        "build inputs",
+        "runtime dependencies"
+      ],
+      "pattern_refs": [
+        "application-library-migration",
+        "code-signing",
+        "identity-token-signing"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "dependency-analysis",
+      "area_ref": "area-05",
+      "name": "Software component and code analysis",
+      "recognition_examples": [
+        "Snyk",
+        "Black Duck",
+        "SonarQube",
+        "Syft"
+      ],
+      "discovery_question": "Which system of record identifies software component and code analysis and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "package versions",
+        "cryptographic call sites",
+        "software bills of materials"
+      ],
+      "pattern_refs": [
+        "application-library-migration",
+        "vendor-product-transition"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "software-signing",
+      "area_ref": "area-05",
+      "name": "Artifact signing and distribution",
+      "recognition_examples": [
+        "Sigstore",
+        "JFrog Artifactory"
+      ],
+      "discovery_question": "Which system of record identifies artifact signing and distribution and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "signature formats",
+        "verification consumers",
+        "update paths"
+      ],
+      "pattern_refs": [
+        "code-signing",
+        "artifact-verifier-rollout",
+        "firmware-trust"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "cloud-inventory",
+      "area_ref": "area-06",
+      "name": "Cloud workloads and runtime inventory",
+      "recognition_examples": [
+        "AWS Config",
+        "Azure Resource Graph",
+        "Cloud Foundry"
+      ],
+      "discovery_question": "Which system of record identifies cloud workloads and runtime inventory and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "resource identity",
+        "deployment versions",
+        "managed service dependencies"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "application-library-migration",
+        "key-service-consumer",
+        "workload-credential",
+        "managed-service-upgrade"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "kms",
+      "area_ref": "area-06",
+      "name": "Key management services",
+      "recognition_examples": [
+        "AWS KMS",
+        "Azure Key Vault",
+        "Google Cloud KMS"
+      ],
+      "discovery_question": "Which system of record identifies key management services and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "key references",
+        "supported algorithms",
+        "key consumers"
+      ],
+      "pattern_refs": [
+        "key-service-consumer",
+        "envelope-key-rewrap",
+        "managed-service-upgrade"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "secrets",
+      "area_ref": "area-06",
+      "name": "Secrets and credential management",
+      "recognition_examples": [
+        "HashiCorp Vault",
+        "CyberArk"
+      ],
+      "discovery_question": "Which system of record identifies secrets and credential management and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "credential references",
+        "consumers",
+        "rotation policy"
+      ],
+      "pattern_refs": [
+        "ssh-hybrid-key-exchange",
+        "workload-credential"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "iam",
+      "area_ref": "area-06",
+      "name": "Identity and federation",
+      "recognition_examples": [
+        "Microsoft Entra ID",
+        "Okta",
+        "Keycloak"
+      ],
+      "discovery_question": "Which system of record identifies identity and federation and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "issuer metadata",
+        "trust configuration",
+        "token and credential consumers"
+      ],
+      "pattern_refs": [
+        "identity-token-signing",
+        "workload-credential",
+        "message-protection"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "databases",
+      "area_ref": "area-07",
+      "name": "Databases and data platforms",
+      "recognition_examples": [
+        "SQL Server",
+        "Oracle Database",
+        "PostgreSQL",
+        "IBM Db2"
+      ],
+      "discovery_question": "Which system of record identifies databases and data platforms and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "encryption settings",
+        "client dependencies",
+        "key references"
+      ],
+      "pattern_refs": [
+        "key-service-consumer",
+        "data-reencryption",
+        "managed-service-upgrade"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "storage-backup",
+      "area_ref": "area-07",
+      "name": "Storage, archives and backup",
+      "recognition_examples": [
+        "Amazon S3",
+        "Veeam",
+        "Commvault"
+      ],
+      "discovery_question": "Which system of record identifies storage, archives and backup and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "encryption metadata",
+        "retention",
+        "restore dependencies"
+      ],
+      "pattern_refs": [
+        "envelope-key-rewrap",
+        "data-reencryption",
+        "archive-restoration",
+        "document-signature"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "data-governance",
+      "area_ref": "area-07",
+      "name": "Data classification and lifecycle",
+      "recognition_examples": [
+        "Microsoft Purview",
+        "Collibra"
+      ],
+      "discovery_question": "Which system of record identifies data classification and lifecycle and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "information classification",
+        "confidentiality lifetime",
+        "system associations"
+      ],
+      "pattern_refs": [
+        "envelope-key-rewrap",
+        "data-reencryption",
+        "archive-restoration",
+        "document-signature"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "communications",
+      "area_ref": "area-08",
+      "name": "DNS, email and document platforms",
+      "recognition_examples": [
+        "BIND",
+        "Infoblox",
+        "Exchange",
+        "SharePoint"
+      ],
+      "discovery_question": "Which system of record identifies dns, email and document platforms and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "signature validation",
+        "trust consumers",
+        "retention"
+      ],
+      "pattern_refs": [
+        "trust-distribution",
+        "archive-restoration",
+        "message-protection",
+        "document-signature",
+        "dnssec"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "endpoints",
+      "area_ref": "area-08",
+      "name": "Endpoint and mobile fleet management",
+      "recognition_examples": [
+        "Microsoft Intune",
+        "Jamf"
+      ],
+      "discovery_question": "Which system of record identifies endpoint and mobile fleet management and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "device versions",
+        "update channels",
+        "trust configuration"
+      ],
+      "pattern_refs": [
+        "ssh-hybrid-key-exchange",
+        "trust-distribution",
+        "vpn-key-exchange",
+        "artifact-verifier-rollout",
+        "firmware-trust"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "embedded-ot",
+      "area_ref": "area-08",
+      "name": "Embedded, firmware and operational systems",
+      "recognition_examples": [
+        "Eclipse hawkBit",
+        "Mender"
+      ],
+      "discovery_question": "Which system of record identifies embedded, firmware and operational systems and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "firmware identity",
+        "verification chain",
+        "update constraints"
+      ],
+      "pattern_refs": [
+        "artifact-verifier-rollout",
+        "firmware-trust"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "specialized-transactions",
+      "area_ref": "area-09",
+      "name": "Payment and transaction cryptography",
+      "recognition_examples": [
+        "Payment HSM platforms",
+        "FIX engines"
+      ],
+      "discovery_question": "Which system of record identifies payment and transaction cryptography and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "protocol dependencies",
+        "key ceremonies",
+        "specialist controls"
+      ],
+      "pattern_refs": [
+        "hsm-capability-upgrade",
+        "specialist-ceremony"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "mainframe",
+      "area_ref": "area-09",
+      "name": "Mainframe cryptographic services",
+      "recognition_examples": [
+        "IBM z/OS ICSF"
+      ],
+      "discovery_question": "Which system of record identifies mainframe cryptographic services and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "service mechanisms",
+        "module versions",
+        "application consumers"
+      ],
+      "pattern_refs": [
+        "hsm-capability-upgrade",
+        "specialist-ceremony"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "policy-exceptions",
+      "area_ref": "area-10",
+      "name": "Policy, exceptions and work coordination",
+      "recognition_examples": [
+        "ServiceNow GRC",
+        "ServiceNow ITSM",
+        "Jira"
+      ],
+      "discovery_question": "Which system of record identifies policy, exceptions and work coordination and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "policy authority",
+        "approval records",
+        "exceptions",
+        "work item bindings"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "ssh-hybrid-key-exchange",
+        "application-library-migration",
+        "specialist-ceremony",
+        "vendor-product-transition"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    },
+    {
+      "id": "vendor-assurance",
+      "area_ref": "area-10",
+      "name": "Vendor assurance and detection",
+      "recognition_examples": [
+        "ServiceNow VRM",
+        "Splunk",
+        "Microsoft Sentinel"
+      ],
+      "discovery_question": "Which system of record identifies vendor assurance and detection and its accountable owner? These are recognition examples, not selections.",
+      "evidence_targets": [
+        "vendor support statements",
+        "assurance evidence",
+        "drift observations"
+      ],
+      "pattern_refs": [
+        "tls-hybrid-key-exchange",
+        "vendor-product-transition"
+      ],
+      "product_profile": {
+        "status": "unknown_requires_owner_and_vendor_confirmation",
+        "product": null,
+        "edition": null,
+        "version": null,
+        "instance": null,
+        "approved_interface": null,
+        "authentication": null,
+        "minimum_permissions": null,
+        "licensing": null,
+        "pagination": null,
+        "deletion_semantics": null,
+        "rate_limits": null,
+        "write_idempotency": null
+      }
+    }
+  ],
+  "migration_archetypes": [
+    {
+      "id": "tls-hybrid-key-exchange",
+      "name": "Hybrid TLS key exchange",
+      "source_family_refs": [
+        "cmdb",
+        "application-portfolio",
+        "certificate-lifecycle",
+        "certificate-authorities",
+        "traffic-termination",
+        "api-and-mesh",
+        "network-telemetry",
+        "cloud-inventory",
+        "policy-exceptions",
+        "vendor-assurance"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "ssh-hybrid-key-exchange",
+      "name": "Hybrid SSH key exchange",
+      "source_family_refs": [
+        "cmdb",
+        "ssh",
+        "secrets",
+        "endpoints",
+        "policy-exceptions"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "application-library-migration",
+      "name": "Application and library migration",
+      "source_family_refs": [
+        "application-portfolio",
+        "source-build",
+        "dependency-analysis",
+        "cloud-inventory",
+        "policy-exceptions"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "certificate-signature-migration",
+      "name": "Certificate signature migration",
+      "source_family_refs": [
+        "certificate-lifecycle",
+        "certificate-authorities",
+        "hsm",
+        "api-and-mesh"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "trust-distribution",
+      "name": "Trust anchor distribution",
+      "source_family_refs": [
+        "certificate-authorities",
+        "endpoints",
+        "communications"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "vpn-key-exchange",
+      "name": "VPN and network peer migration",
+      "source_family_refs": [
+        "vpn",
+        "network-telemetry",
+        "endpoints"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "code-signing",
+      "name": "Code-signing migration",
+      "source_family_refs": [
+        "software-signing",
+        "source-build",
+        "hsm"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "artifact-verifier-rollout",
+      "name": "Artifact verification rollout",
+      "source_family_refs": [
+        "software-signing",
+        "embedded-ot",
+        "endpoints"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "key-service-consumer",
+      "name": "Key-service consumer migration",
+      "source_family_refs": [
+        "kms",
+        "databases",
+        "cloud-inventory"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "envelope-key-rewrap",
+      "name": "Envelope-key rewrapping",
+      "source_family_refs": [
+        "kms",
+        "storage-backup",
+        "data-governance"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "data-reencryption",
+      "name": "Protected-data re-encryption",
+      "source_family_refs": [
+        "databases",
+        "storage-backup",
+        "data-governance"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "archive-restoration",
+      "name": "Archive verification and restoration",
+      "source_family_refs": [
+        "storage-backup",
+        "data-governance",
+        "communications"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "identity-token-signing",
+      "name": "Identity-token signature migration",
+      "source_family_refs": [
+        "iam",
+        "source-build",
+        "api-and-mesh"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "workload-credential",
+      "name": "Workload credential lifecycle",
+      "source_family_refs": [
+        "iam",
+        "secrets",
+        "api-and-mesh",
+        "cloud-inventory"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "hsm-capability-upgrade",
+      "name": "Hardware-module capability upgrade",
+      "source_family_refs": [
+        "hsm",
+        "specialized-transactions",
+        "mainframe"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "managed-service-upgrade",
+      "name": "Managed-service cryptographic upgrade",
+      "source_family_refs": [
+        "cloud-inventory",
+        "kms",
+        "databases"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "message-protection",
+      "name": "Email and message protection",
+      "source_family_refs": [
+        "communications",
+        "certificate-lifecycle",
+        "iam"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "document-signature",
+      "name": "Document signature longevity",
+      "source_family_refs": [
+        "communications",
+        "data-governance",
+        "storage-backup"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "dnssec",
+      "name": "DNS signature and validation migration",
+      "source_family_refs": [
+        "communications",
+        "network-telemetry"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "firmware-trust",
+      "name": "Firmware trust-chain migration",
+      "source_family_refs": [
+        "embedded-ot",
+        "software-signing",
+        "endpoints"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "specialist-ceremony",
+      "name": "Specialized key ceremony or protocol transition",
+      "source_family_refs": [
+        "specialized-transactions",
+        "mainframe",
+        "hsm",
+        "policy-exceptions"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    },
+    {
+      "id": "vendor-product-transition",
+      "name": "Vendor product upgrade or replacement",
+      "source_family_refs": [
+        "vendor-assurance",
+        "application-portfolio",
+        "dependency-analysis",
+        "policy-exceptions"
+      ],
+      "status": "candidate_requires_product_qualification",
+      "execution_authorized": false
+    }
+  ],
+  "qualification_ladder": [
+    {
+      "id": "owner_profile",
+      "requires": [
+        "owner-confirmed product, edition, version and instance",
+        "scope and read-only evidence route"
+      ],
+      "permits": "documentation_research_only"
+    },
+    {
+      "id": "official_contract",
+      "requires": [
+        "official versioned interface documentation",
+        "minimum permissions and licensing",
+        "native IDs, pagination, deletion and error semantics"
+      ],
+      "permits": "offline_contract_design_only"
+    },
+    {
+      "id": "fixture_simulator",
+      "requires": [
+        "raw synthetic records",
+        "closed schemas",
+        "deterministic mapping",
+        "negative and replay tests"
+      ],
+      "permits": "synthetic_contract_proof_only"
+    },
+    {
+      "id": "isolated_product",
+      "requires": [
+        "separately authorized disposable product environment",
+        "resource containment",
+        "completeness and compatibility checks"
+      ],
+      "permits": "bounded_lab_operations_only"
+    },
+    {
+      "id": "read_only_collection",
+      "requires": [
+        "approved source route and credential references",
+        "information handling and retained evidence rules",
+        "human acceptance of coverage limitations"
+      ],
+      "permits": "authorized_read_only_collection"
+    },
+    {
+      "id": "migration_action",
+      "requires": [
+        "immutable exact plan and target scope",
+        "current approval and maintenance window",
+        "independent verification and recovery",
+        "operation-specific execution authorization"
+      ],
+      "permits": "approved_plan_operations_only"
+    }
+  ],
+  "dossier_requirements": [
+    "exact product identity and official source revision",
+    "required and unsupported operations",
+    "native IDs and relationship mapping",
+    "pagination, deleted records and completeness denominator",
+    "authentication and least privilege",
+    "licensing and approved data handling",
+    "deterministic normalization and information loss",
+    "timeout, conflict, retry and ambiguous-write reconciliation",
+    "independent verification, recovery and evidence custody"
+  ],
+  "reference_dialects": {
+    "cmdb": {
+      "fixture": "cmdb.page.json",
+      "source_instance_id": "synthetic-cmdb"
+    },
+    "pki": {
+      "fixture": "pki.page.json",
+      "source_instance_id": "synthetic-pki"
+    },
+    "tls": {
+      "fixture": "tls.page.json",
+      "source_instance_id": "synthetic-tls"
+    }
+  },
+  "priority_patterns": [
+    {
+      "pattern_ref": "tls-hybrid-key-exchange",
+      "read_operations": [
+        "read approved synthetic endpoint configuration",
+        "record negotiated protocol and key-exchange group"
+      ],
+      "proof_targets": [
+        "classical baseline",
+        "hybrid negotiated group",
+        "trust and hostname verification",
+        "application response",
+        "forbidden fallback rejected",
+        "restored baseline"
+      ],
+      "limitations": [
+        "Hybrid key establishment does not establish post-quantum certificate signatures.",
+        "An OpenSSL reference proof does not qualify a commercial load balancer."
+      ],
+      "official_sources": [
+        {
+          "title": "OpenSSL 3.5 SSL_CONF_cmd",
+          "url": "https://docs.openssl.org/3.5/man3/SSL_CONF_cmd/",
+          "checked_on": "2026-09-05"
+        }
+      ]
+    },
+    {
+      "pattern_ref": "ssh-hybrid-key-exchange",
+      "read_operations": [
+        "read approved synthetic host and client versions",
+        "record negotiated key exchange"
+      ],
+      "proof_targets": [
+        "classical baseline",
+        "hybrid key exchange",
+        "strict host-key validation",
+        "authenticated command",
+        "incompatible peer rejected",
+        "access-preserving recovery"
+      ],
+      "limitations": [
+        "Hybrid key exchange does not establish post-quantum host or user signatures.",
+        "A disposable process must not modify the host SSH service or accounts."
+      ],
+      "official_sources": [
+        {
+          "title": "OpenSSH Post-Quantum Cryptography",
+          "url": "https://www.openssh.org/pq.html",
+          "checked_on": "2026-09-05"
+        }
+      ]
+    },
+    {
+      "pattern_ref": "application-library-migration",
+      "read_operations": [
+        "read owned synthetic repository revision",
+        "inspect declared application and dependency versions"
+      ],
+      "proof_targets": [
+        "before and after build",
+        "changed application behavior",
+        "valid signature accepted",
+        "tampered message rejected",
+        "wrong key rejected",
+        "legacy verification policy"
+      ],
+      "limitations": [
+        "A dependency upgrade alone does not prove changed deployed behavior.",
+        "Hosted pull-request and production rollout adapters are separate qualification boundaries."
+      ],
+      "official_sources": [
+        {
+          "title": "OpenSSL 3.5 EVP_SIGNATURE-ML-DSA",
+          "url": "https://docs.openssl.org/3.5/man7/EVP_SIGNATURE-ML-DSA/",
+          "checked_on": "2026-09-05"
+        }
+      ]
+    }
+  ]
+}

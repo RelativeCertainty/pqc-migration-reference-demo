@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "SourceContractPackManifest.v1",
+  "contractPackId": "contract:source-pack:software-analysis:v1",
+  "packVersion": "1.0.0",
+  "sourceFamily": "software_analysis",
+  "title": "SAST, SCA, SBOM, and software-analysis synthetic contract pack",
+  "purpose": "Prove product-neutral pagination and mapping for sanitized analysis artifacts and cryptographic-use signals without messages, code paths, source excerpts, or vendor-native payloads.",
+  "provenance": {
+    "origin": "independently_authored_synthetic",
+    "contractEvidenceStatus": "synthetic_contract_tested",
+    "retrievalRequired": false,
+    "redistributionStatus": "independently_authored_public_fixture"
+  },
+  "access": {
+    "classification": "synthetic_local",
+    "authenticationMode": "simulated_reference",
+    "credentialReferenceOnly": true,
+    "readOnly": true
+  },
+  "pagination": {
+    "mode": "opaque_cursor",
+    "pageSizeLimit": 100,
+    "cursorIsOpaqueReference": true,
+    "rawCursorStored": false,
+    "terminalCondition": "next_cursor_ref_is_null"
+  },
+  "responseContractRef": "contract:synthetic-source-page.v1",
+  "fixturePageRefs": ["fixtures/page-001.v1.json", "fixtures/page-002.v1.json"],
+  "canonicalMappings": [
+    {
+      "sourceField": "attributes.analysisArtifactRef",
+      "canonicalTarget": "evidence.analysisArtifactRef",
+      "required": true,
+      "semanticNote": "Opaque reference to a synthetic sanitized analysis artifact."
+    },
+    {
+      "sourceField": "attributes.repositoryRef",
+      "canonicalTarget": "dependency.repositoryRef",
+      "required": true,
+      "semanticNote": "Correlates the analysis result with a synthetic repository record."
+    },
+    {
+      "sourceField": "attributes.cryptoPrimitiveClass",
+      "canonicalTarget": "observation.cryptoPrimitiveClass",
+      "required": true,
+      "semanticNote": "Normalizes a cryptographic-use category without a source excerpt or vulnerability claim."
+    },
+    {
+      "sourceField": "attributes.findingDisposition",
+      "canonicalTarget": "observation.reviewDisposition",
+      "required": true,
+      "semanticNote": "Preserves that a synthetic signal requires review rather than declaring a vulnerability."
+    }
+  ],
+  "conformanceBehaviors": [
+    "pagination",
+    "rate_limit_retry",
+    "timeout_retry",
+    "duplicate_delivery",
+    "authorization_failure",
+    "malformed_record_quarantine",
+    "schema_drift_quarantine",
+    "cursor_resume"
+  ],
+  "limitations": [
+    "The fixture is not a vendor SARIF payload, SBOM, source-code finding, dependency vulnerability, or software bill of materials.",
+    "A normalized cryptographic-use signal is an assessment candidate and not a confirmed defect."
+  ],
+  "safety": {
+    "synthetic": true,
+    "vendorClaimed": false,
+    "liveIntegrationClaimed": false,
+    "containsCredentials": false,
+    "containsRawEnterprisePayload": false
+  }
+}

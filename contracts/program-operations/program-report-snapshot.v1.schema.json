@@ -1,0 +1,36 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/program-report-snapshot.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "ProgramReportSnapshot.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "reportId", "programId", "name", "periodStart", "periodEnd", "asOf", "recordStatus", "evidenceStatus", "summary", "recordRefs"],
+  "properties": {
+    "schemaVersion": {"const": "ProgramReportSnapshot.v1"},
+    "reportId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "name": {"$ref": "program-operations-common.v1.schema.json#/$defs/plainLanguageName"},
+    "periodStart": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+    "periodEnd": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+    "asOf": {"$ref": "program-operations-common.v1.schema.json#/$defs/timestamp"},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"},
+    "evidenceStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/evidenceStatus"},
+    "summary": {"type": "string", "minLength": 10, "maxLength": 3000},
+    "recordRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "digestAlgorithm": {"const": "sha256"},
+    "digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "supersedesReportId": {
+      "oneOf": [
+        {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+        {"type": "null"}
+      ]
+    }
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"recordStatus": {"const": "finalized"}}},
+      "then": {"required": ["digestAlgorithm", "digest"]}
+    }
+  ]
+}

@@ -1,0 +1,53 @@
+apiVersion: upm.pba.io/v1
+kind: Pipeline
+metadata:
+  name: pqc_reference_source_probe
+  version: 0.1.0
+  domain: pqc_migration
+  description: Disabled fixed-source normalization candidate; one manifest-backed attempt with controller-only commit.
+  labels:
+    pba.io/activation-state: disabled
+    pba.io/catalog-authority: repo-candidate
+    pba.io/default-enabled: "false"
+    pba.io/molecular-worker-contract: "v1"
+    pba.io/observability-contract: metadata-only-v1
+    pba.io/step-authority: manifest-backed-worker-runs-only
+spec:
+  domain: pqc_migration
+  classification: {data_class: internal, data_sensitivity: none, regulatory_scope: none}
+  substrate_profile:
+    dominant: [event]
+    supporting: [entity]
+    governance: [policy, capability]
+    evidence: [artifact, observation, relationship]
+    event_types: [transform, verify, audit]
+    observation_types: [assessment, readiness, outcome]
+    artifact_types: [evidence, receipt]
+    relationship_families: [provenance, authority, execution, boundary]
+    policy_families: [private_artifact_policy, external_effect_policy, authority_policy]
+    capability_refs: [pqc.contract_fixture.probe, artifact.read, governance.read]
+    scope_required: true
+  primitive_profile:
+    dominant: [sequence]
+    supporting: [event, state]
+    governance: [category, relation]
+    evidence: [signal, quantity]
+  security:
+    mtls: {required: true}
+  tenancy:
+    mode: tenant-aware
+    allowedTenants: [internal]
+  parameters:
+    maximum_attempts: 1
+    blind_provider_retry_allowed: false
+    controller_commit_required: true
+    activation_state: disabled
+  steps:
+    - name: normalize-fixed-source-page
+      uses: pqc_reference_source_probe@0.1.0
+      with:
+        fixture_kind: "{{ context.fixture_kind }}"
+        tenant_id: "{{ context.tenant_id }}"
+        observed_at: "{{ context.observed_at }}"
+        synthetic: true
+      saveAs: pqc_reference_source_probe_result

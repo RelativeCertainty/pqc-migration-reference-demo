@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "SyntheticSourcePage.v1",
+  "pageId": "page:synthetic:tls-traffic-management:002",
+  "contractPackRef": "contract:source-pack:tls-traffic-management:v1",
+  "sourceFamily": "tls_traffic_management",
+  "pageNumber": 2,
+  "totalPageCount": 2,
+  "currentCursorRef": "cursor:synthetic:tls-traffic-management:after-page-1",
+  "nextCursorRef": null,
+  "records": [
+    {
+      "sourceRecordId": "record:synthetic:tls-traffic-management:beta",
+      "recordType": "tls_endpoint",
+      "observedAt": "2030-01-07T12:02:15Z",
+      "attributes": {
+        "endpointRef": "endpoint:synthetic:beta:443",
+        "deploymentRef": "deployment:synthetic:tls:beta",
+        "applicationRef": "asset:synthetic:application:edge-service",
+        "regionRef": "region:synthetic:beta",
+        "port": 443,
+        "minimumProtocol": "tls1.2",
+        "certificateRef": "certificate:synthetic:shared-edge"
+      }
+    }
+  ],
+  "safety": {
+    "synthetic": true,
+    "independentlyAuthored": true,
+    "rawProviderPayload": false,
+    "containsCredentials": false,
+    "containsPersonalData": false,
+    "containsKeyMaterial": false
+  }
+}

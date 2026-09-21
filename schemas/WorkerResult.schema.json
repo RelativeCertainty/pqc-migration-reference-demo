@@ -1,0 +1,42 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pba.io/schemas/WorkerResult.schema.json",
+  "title": "WorkerResult",
+  "description": "Worker result contract for the UPM worker archetype.",
+  "type": "object",
+  "required": ["success", "retryable"],
+  "additionalProperties": false,
+  "properties": {
+    "success": { "type": "boolean" },
+    "retryable": { "type": "boolean" },
+    "status": { "type": "string", "enum": ["completed", "failed"] },
+    "message": { "type": "string" },
+    "output": { "type": "object", "additionalProperties": true },
+    "error": {
+      "$ref": "#/$defs/Error"
+    },
+    "errors": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/Error" }
+    },
+    "trace": {
+      "type": "object",
+      "properties": {
+        "traceparent": { "type": "string" }
+      },
+      "additionalProperties": true
+    }
+  },
+  "$defs": {
+    "Error": {
+      "type": "object",
+      "required": ["message"],
+      "properties": {
+        "message": { "type": "string" },
+        "code": { "type": "string" },
+        "details": { "type": "object", "additionalProperties": true }
+      },
+      "additionalProperties": true
+    }
+  }
+}

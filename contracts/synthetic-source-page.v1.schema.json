@@ -1,0 +1,123 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/synthetic-source-page.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "SyntheticSourcePage.v1",
+  "description": "One deterministic, independently authored source page used to prove pagination and mapping behavior. It cannot represent a captured vendor or enterprise payload.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "pageId",
+    "contractPackRef",
+    "sourceFamily",
+    "pageNumber",
+    "totalPageCount",
+    "currentCursorRef",
+    "nextCursorRef",
+    "records",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "SyntheticSourcePage.v1" },
+    "pageId": { "$ref": "#/$defs/syntheticIdentifier" },
+    "contractPackRef": { "$ref": "#/$defs/syntheticIdentifier" },
+    "sourceFamily": { "$ref": "#/$defs/sourceFamily" },
+    "pageNumber": { "type": "integer", "minimum": 1, "maximum": 10000 },
+    "totalPageCount": { "type": "integer", "minimum": 1, "maximum": 10000 },
+    "currentCursorRef": { "$ref": "#/$defs/syntheticIdentifier" },
+    "nextCursorRef": {
+      "oneOf": [{ "$ref": "#/$defs/syntheticIdentifier" }, { "type": "null" }]
+    },
+    "records": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["sourceRecordId", "recordType", "observedAt", "attributes"],
+        "properties": {
+          "sourceRecordId": { "$ref": "#/$defs/syntheticIdentifier" },
+          "recordType": { "type": "string", "minLength": 2, "maxLength": 80, "pattern": "^[a-z][a-z0-9_]+$" },
+          "observedAt": { "$ref": "#/$defs/timestamp" },
+          "attributes": {
+            "type": "object",
+            "minProperties": 2,
+            "maxProperties": 30,
+            "propertyNames": {
+              "pattern": "^(?!(?:password|secret|token|credential|privateKey|private_key|rawPayload|raw_payload|subject|issuer)$)[a-z][a-zA-Z0-9]*$"
+            },
+            "additionalProperties": { "$ref": "#/$defs/safeScalarOrList" }
+          }
+        }
+      }
+    },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "pageNumber": { "const": 1 } },
+        "required": ["pageNumber"]
+      },
+      "then": { "properties": { "nextCursorRef": { "$ref": "#/$defs/syntheticIdentifier" } } }
+    }
+  ],
+  "$defs": {
+    "syntheticIdentifier": {
+      "type": "string",
+      "minLength": 8,
+      "maxLength": 180,
+      "pattern": "^(?:synthetic|contract|page|cursor|record|region|asset|scope|repo|service|deployment|endpoint|artifact|analysis|certificate):[a-z0-9][a-z0-9._:-]+$"
+    },
+    "sourceFamily": {
+      "enum": [
+        "application_cmdb",
+        "pki_certificate_lifecycle",
+        "tls_traffic_management",
+        "source_repositories",
+        "software_analysis"
+      ]
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 30,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "safeScalar": {
+      "anyOf": [
+        { "type": "string", "minLength": 1, "maxLength": 240, "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$" },
+        { "type": "integer", "minimum": 0, "maximum": 1000000000 },
+        { "type": "number", "minimum": 0, "maximum": 1000000000 },
+        { "type": "boolean" },
+        { "type": "null" }
+      ]
+    },
+    "safeScalarOrList": {
+      "oneOf": [
+        { "$ref": "#/$defs/safeScalar" },
+        {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/safeScalar" }
+        }
+      ]
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "independentlyAuthored", "rawProviderPayload", "containsCredentials", "containsPersonalData", "containsKeyMaterial"],
+      "properties": {
+        "synthetic": { "const": true },
+        "independentlyAuthored": { "const": true },
+        "rawProviderPayload": { "const": false },
+        "containsCredentials": { "const": false },
+        "containsPersonalData": { "const": false },
+        "containsKeyMaterial": { "const": false }
+      }
+    }
+  }
+}

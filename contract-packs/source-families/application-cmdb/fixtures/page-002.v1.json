@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "SyntheticSourcePage.v1",
+  "pageId": "page:synthetic:application-cmdb:002",
+  "contractPackRef": "contract:source-pack:application-cmdb:v1",
+  "sourceFamily": "application_cmdb",
+  "pageNumber": 2,
+  "totalPageCount": 2,
+  "currentCursorRef": "cursor:synthetic:application-cmdb:after-page-1",
+  "nextCursorRef": null,
+  "records": [
+    {
+      "sourceRecordId": "record:synthetic:application-cmdb:beta",
+      "recordType": "application_deployment",
+      "observedAt": "2030-01-07T12:00:15Z",
+      "attributes": {
+        "applicationRef": "asset:synthetic:application:edge-service",
+        "serviceRef": "service:synthetic:customer-channel",
+        "deploymentRef": "deployment:synthetic:edge-service:beta",
+        "regionRef": "region:synthetic:beta",
+        "environment": "synthetic_production_shape",
+        "lifecycleStatus": "active"
+      }
+    }
+  ],
+  "safety": {
+    "synthetic": true,
+    "independentlyAuthored": true,
+    "rawProviderPayload": false,
+    "containsCredentials": false,
+    "containsPersonalData": false,
+    "containsKeyMaterial": false
+  }
+}

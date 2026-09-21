@@ -1,0 +1,139 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/crypto-dependency.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "CryptoDependency.v1",
+  "description": "Evidence-linked relationship between two canonical estate records. Relationship confidence and review needs are explicit; the record does not claim enterprise completeness.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "cryptoDependencyId",
+    "tenantId",
+    "sourceAssetRef",
+    "targetAssetRef",
+    "relationshipType",
+    "evidenceRefs",
+    "confidence",
+    "validity",
+    "review",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "CryptoDependency.v1" },
+    "cryptoDependencyId": { "$ref": "#/$defs/identifier" },
+    "tenantId": { "$ref": "#/$defs/identifier" },
+    "sourceAssetRef": { "$ref": "#/$defs/identifier" },
+    "targetAssetRef": { "$ref": "#/$defs/identifier" },
+    "relationshipType": {
+      "enum": [
+        "consumes",
+        "issued_by",
+        "deployed_to",
+        "trusts",
+        "owned_by",
+        "supports_business_service",
+        "mapped_to_cmdb_ci",
+        "depends_on",
+        "rollback_depends_on",
+        "encrypts_data_for",
+        "signs_artifact_for"
+      ]
+    },
+    "evidenceRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "confidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["level", "basis", "score"],
+      "properties": {
+        "level": { "enum": ["high", "moderate", "low", "unresolved"] },
+        "basis": { "enum": ["provider_native_id", "cryptographic_fingerprint", "endpoint_identity", "cmdb_reference", "explicit_mapping", "inferred"] },
+        "score": { "type": "number", "minimum": 0, "maximum": 1 }
+      }
+    },
+    "validity": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["firstObservedAt", "lastObservedAt", "active"],
+      "properties": {
+        "firstObservedAt": { "$ref": "#/$defs/timestamp" },
+        "lastObservedAt": { "$ref": "#/$defs/timestamp" },
+        "active": { "type": "boolean" }
+      }
+    },
+    "review": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "reasonCodes"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "reasonCodes": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/reasonCode" }
+        }
+      }
+    },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "confidence": {
+            "properties": { "level": { "enum": ["low", "unresolved"] } },
+            "required": ["level"]
+          }
+        },
+        "required": ["confidence"]
+      },
+      "then": {
+        "properties": {
+          "review": {
+            "properties": {
+              "required": { "const": true },
+              "reasonCodes": { "minItems": 1 }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 30,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "reasonCode": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80,
+      "pattern": "^[a-z][a-z0-9_]+$"
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "rawPayloadEmbedded", "secretMaterialEmbedded"],
+      "properties": {
+        "synthetic": { "type": "boolean" },
+        "rawPayloadEmbedded": { "const": false },
+        "secretMaterialEmbedded": { "const": false }
+      }
+    }
+  }
+}

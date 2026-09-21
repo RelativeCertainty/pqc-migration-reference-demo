@@ -1,0 +1,7 @@
+.capacity-controls {display:grid;grid-template-columns:repeat(auto-fit,minmax(min(270px,100%),1fr));gap:20px;margin:20px 0;}
+.capacity-controls small {display:block;color:var(--muted);margin-top:6px;}
+.capacity-workspace details {padding:16px;border:1px solid var(--line);margin:10px 0;background:var(--surface);font-size:14px;}
+.capacity-workspace .table-scroll {overflow-x:auto;}
+.capacity-workspace table {border-collapse:collapse;width:100%;}
+.capacity-workspace th,.capacity-workspace td {padding:12px;text-align:left;border-bottom:1px solid var(--line);}
+.capacity-workspace input,.capacity-workspace select {background:var(--control);color:var(--ink);}

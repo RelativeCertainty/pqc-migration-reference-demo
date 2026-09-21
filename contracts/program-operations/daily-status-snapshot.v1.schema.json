@@ -1,0 +1,24 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/daily-status-snapshot.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "DailyStatusSnapshot.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "snapshotId", "programId", "projectDayRef", "asOf", "recordStatus", "outcomeSummary", "openActionRefs", "blockingDependencyRefs", "evidenceRefs", "digestAlgorithm", "digest"],
+  "properties": {
+    "schemaVersion": {"const": "DailyStatusSnapshot.v1"},
+    "snapshotId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "projectDayRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "asOf": {"$ref": "program-operations-common.v1.schema.json#/$defs/timestamp"},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"},
+    "outcomeSummary": {"type": "string", "minLength": 3, "maxLength": 2000},
+    "openActionRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "blockingDependencyRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "evidenceRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "digestAlgorithm": {"const": "sha256"},
+    "digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+    "supersedesRecordId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"}
+  }
+}

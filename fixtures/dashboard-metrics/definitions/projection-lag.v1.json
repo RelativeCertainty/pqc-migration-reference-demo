@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "DashboardMetricDefinition.v1",
+  "metricDefinitionId": "metric:projection-lag:v1",
+  "name": "Projection lag",
+  "questionAnswered": "How many seconds elapsed between the newest committed authoritative state represented and generation of this rebuildable dashboard projection?",
+  "valueKind": "duration_seconds",
+  "unit": "seconds",
+  "calculation": {
+    "formula": "projection generated time minus newest represented authoritative commit time",
+    "numeratorDefinition": null,
+    "denominatorDefinition": null,
+    "missingDenominatorResult": "unavailable",
+    "zeroDenominatorResult": "unavailable",
+    "rounding": "Round down only after computing the exact nonnegative duration; this fixture uses whole-second timestamps."
+  },
+  "scopeSemantics": {
+    "scopeReferenceRequired": true,
+    "denominatorSourceRequired": false,
+    "asOfTimestampRequired": true,
+    "unknownsExcludedFromSuccess": true,
+    "qualification": "Lag measures projection currency relative to represented committed state, not the age of the underlying source observation."
+  },
+  "interpretation": {
+    "doesMean": "The dashboard projection was generated the stated duration after the newest authoritative commit it represents.",
+    "doesNotMean": [
+      "The source evidence itself is fresh.",
+      "Every authoritative record has been projected.",
+      "A low-lag dashboard is complete or accurate.",
+      "The dashboard is the system of record."
+    ],
+    "whenUnavailable": "Show unavailable when either timestamp is absent or the generated time precedes the represented commit time."
+  },
+  "safety": {
+    "syntheticDefinition": true,
+    "enterpriseCompletenessClaimAllowed": false,
+    "riskConclusionAllowed": false,
+    "migrationCompletionClaimAllowed": false
+  }
+}

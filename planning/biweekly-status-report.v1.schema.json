@@ -1,0 +1,247 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/pqc-migration-reference-demo/planning/biweekly-status-report.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "PQC Biweekly Status Report v1",
+  "description": "Immutable-snapshot contract for one two-week PQC assessment status report. Accepted reports are replaced, never edited, by a new report carrying supersedesReportId.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "reportId",
+    "classification",
+    "synthetic",
+    "containsConfidentialData",
+    "initiativeRef",
+    "phaseRefs",
+    "cadenceRef",
+    "iterationRef",
+    "reportingPeriod",
+    "statusAsOf",
+    "backlogSnapshot",
+    "overallHealth",
+    "executiveSummary",
+    "epicProgress",
+    "completedWork",
+    "activeWork",
+    "blockedWork",
+    "nextPeriodWork",
+    "raidRefs",
+    "decisionRefs",
+    "scopeChangeRefs",
+    "metrics",
+    "evidenceLimitations",
+    "preparedByRole",
+    "reviewerRoles",
+    "state"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "pqc.biweekly-status-report.v1" },
+    "reportId": { "type": "string", "pattern": "^PQC-RPT-[A-Z0-9-]+$" },
+    "classification": { "enum": ["public_synthetic", "employer_confidential"] },
+    "synthetic": { "type": "boolean" },
+    "containsConfidentialData": { "type": "boolean" },
+    "initiativeRef": { "type": "string", "pattern": "^PQC-INIT-[0-9]{2}$" },
+    "phaseRefs": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "enum": ["P1", "P2"] }
+    },
+    "cadenceRef": { "type": "string", "pattern": "^RC-[A-Z0-9-]+$" },
+    "iterationRef": { "type": "string", "pattern": "^C(?:0[1-9]|[1-9][0-9])$" },
+    "reportingPeriod": { "$ref": "#/$defs/period" },
+    "statusAsOf": { "$ref": "#/$defs/asOf" },
+    "backlogSnapshot": { "$ref": "#/$defs/backlogSnapshot" },
+    "overallHealth": { "enum": ["on_track", "at_risk", "blocked", "complete"] },
+    "executiveSummary": { "$ref": "#/$defs/text" },
+    "epicProgress": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/epicProgress" }
+    },
+    "completedWork": { "$ref": "#/$defs/workItems" },
+    "activeWork": { "$ref": "#/$defs/workItems" },
+    "blockedWork": { "$ref": "#/$defs/workItems" },
+    "nextPeriodWork": { "$ref": "#/$defs/workItems" },
+    "raidRefs": { "$ref": "#/$defs/refList" },
+    "decisionRefs": { "$ref": "#/$defs/refList" },
+    "scopeChangeRefs": { "$ref": "#/$defs/refList" },
+    "metrics": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/metric" }
+    },
+    "evidenceLimitations": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/evidenceLimitation" }
+    },
+    "preparedByRole": { "$ref": "#/$defs/shortText" },
+    "reviewerRoles": { "$ref": "#/$defs/textList" },
+    "state": { "enum": ["draft", "submitted", "reviewed", "accepted", "superseded"] },
+    "submittedAt": { "type": "string", "format": "date-time" },
+    "reviewedAt": { "type": "string", "format": "date-time" },
+    "acceptedAt": { "type": "string", "format": "date-time" },
+    "supersedesReportId": { "type": "string", "pattern": "^PQC-RPT-[A-Z0-9-]+$" },
+    "supersededByReportId": { "type": "string", "pattern": "^PQC-RPT-[A-Z0-9-]+$" }
+  },
+  "allOf": [
+    {
+      "if": { "properties": { "classification": { "const": "public_synthetic" } }, "required": ["classification"] },
+      "then": {
+        "properties": {
+          "synthetic": { "const": true },
+          "containsConfidentialData": { "const": false }
+        }
+      }
+    },
+    {
+      "if": { "properties": { "state": { "enum": ["submitted", "reviewed", "accepted"] } }, "required": ["state"] },
+      "then": { "required": ["submittedAt"] }
+    },
+    {
+      "if": { "properties": { "state": { "enum": ["reviewed", "accepted"] } }, "required": ["state"] },
+      "then": { "required": ["reviewedAt"] }
+    },
+    {
+      "if": { "properties": { "state": { "const": "accepted" } }, "required": ["state"] },
+      "then": { "required": ["acceptedAt"] }
+    },
+    {
+      "if": { "properties": { "state": { "const": "superseded" } }, "required": ["state"] },
+      "then": { "required": ["supersededByReportId"] }
+    }
+  ],
+  "$defs": {
+    "text": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 4000,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "shortText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 300,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "textList": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/text" }
+    },
+    "refList": {
+      "type": "array",
+      "uniqueItems": true,
+      "items": { "type": "string", "minLength": 1, "maxLength": 200 }
+    },
+    "deliveryEvidenceStatus": {
+      "enum": ["planned", "available", "collected", "validated", "accepted", "blocked", "unresolved"]
+    },
+    "period": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "startWeek", "endWeek"],
+          "properties": {
+            "mode": { "const": "relative" },
+            "startWeek": { "type": "integer", "minimum": 1, "maximum": 52 },
+            "endWeek": { "type": "integer", "minimum": 1, "maximum": 52 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "startDate", "endDate"],
+          "properties": {
+            "mode": { "const": "calendar" },
+            "startDate": { "type": "string", "format": "date" },
+            "endDate": { "type": "string", "format": "date" }
+          }
+        }
+      ]
+    },
+    "asOf": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "week"],
+          "properties": {
+            "mode": { "const": "relative" },
+            "week": { "type": "integer", "minimum": 1, "maximum": 52 }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["mode", "date"],
+          "properties": {
+            "mode": { "const": "calendar" },
+            "date": { "type": "string", "format": "date" }
+          }
+        }
+      ]
+    },
+    "backlogSnapshot": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["schemaVersion", "sha256", "sourceRef"],
+      "properties": {
+        "schemaVersion": { "const": "pqc.project-backlog.v2" },
+        "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+        "sourceRef": { "$ref": "#/$defs/shortText" }
+      }
+    },
+    "workItem": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storyRef", "summary", "evidenceStatus"],
+      "properties": {
+        "storyRef": { "type": "string", "pattern": "^PQC-(?:E00|P[12]-E[0-9]{2})-S0[1-3]$" },
+        "summary": { "$ref": "#/$defs/text" },
+        "evidenceStatus": { "$ref": "#/$defs/deliveryEvidenceStatus" }
+      }
+    },
+    "workItems": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/workItem" }
+    },
+    "epicProgress": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["epicRef", "status", "percentComplete", "forecast", "evidenceStatus"],
+      "properties": {
+        "epicRef": { "type": "string", "pattern": "^PQC-(?:E00|P[12]-E[0-9]{2})$" },
+        "status": { "enum": ["proposed", "ready", "in_progress", "blocked", "done", "accepted"] },
+        "percentComplete": { "type": "number", "minimum": 0, "maximum": 100 },
+        "forecast": { "$ref": "#/$defs/text" },
+        "evidenceStatus": { "$ref": "#/$defs/deliveryEvidenceStatus" }
+      }
+    },
+    "metric": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "value", "unit", "evidenceStatus", "note"],
+      "properties": {
+        "name": { "$ref": "#/$defs/shortText" },
+        "value": { "type": "number" },
+        "unit": { "$ref": "#/$defs/shortText" },
+        "evidenceStatus": { "$ref": "#/$defs/deliveryEvidenceStatus" },
+        "note": { "$ref": "#/$defs/text" }
+      }
+    },
+    "evidenceLimitation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "summary", "ownerRole", "status"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^EL-[A-Z0-9-]+$" },
+        "summary": { "$ref": "#/$defs/text" },
+        "ownerRole": { "$ref": "#/$defs/shortText" },
+        "status": { "enum": ["open", "monitoring", "resolved", "deferred"] }
+      }
+    }
+  }
+}

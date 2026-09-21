@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://upm.pba.io/schemas/PQCMigrationCase.v1.schema.json",
+  "title": "PQCMigrationCase.v1",
+  "description": "Canonical migration case and immutable plan projection, distinct from an external ticket and any execution authority.",
+  "type": "object", "additionalProperties": false,
+  "required": ["contract_version", "synthetic", "tenant_id", "case_id", "work_item_id", "phase", "pattern", "state", "revision", "plan", "plan_sha256"],
+  "properties": {
+    "contract_version": {"const": "pba.contract/PQCMigrationCase.v1"},
+    "synthetic": {"type": "boolean"},
+    "tenant_id": {"$ref": "#/$defs/tenant"},
+    "case_id": {"$ref": "#/$defs/ref"},
+    "work_item_id": {"$ref": "#/$defs/ref"},
+    "phase": {"type": "integer", "minimum": 1, "maximum": 4},
+    "pattern": {"enum": ["tls", "ssh", "software"]},
+    "state": {"enum": ["proposed", "plan_ready", "awaiting_approval", "executing", "verifying", "resolved", "blocked", "failed", "rollback_pending", "rolled_back"]},
+    "revision": {"type": "integer", "minimum": 1, "maximum": 2147483647},
+    "plan": {
+      "type": "object", "additionalProperties": false,
+      "required": ["plan_id", "revision", "scope", "action_refs", "prerequisite_refs", "acceptance_criteria_refs", "recovery_strategy", "recovery_ref"],
+      "properties": {
+        "plan_id": {"$ref": "#/$defs/ref"},
+        "revision": {"type": "integer", "minimum": 1, "maximum": 2147483647},
+        "scope": {
+          "type": "object", "additionalProperties": false, "required": ["asset_refs", "environment"],
+          "properties": {
+            "asset_refs": {"$ref": "#/$defs/nonempty_refs"},
+            "environment": {"enum": ["lab", "development", "test", "staging", "production"]}
+          }
+        },
+        "action_refs": {"$ref": "#/$defs/nonempty_refs"},
+        "prerequisite_refs": {"$ref": "#/$defs/nonempty_refs"},
+        "acceptance_criteria_refs": {"$ref": "#/$defs/nonempty_refs"},
+        "recovery_strategy": {"enum": ["rollback", "forward_remediation"]},
+        "recovery_ref": {"$ref": "#/$defs/ref"}
+      }
+    },
+    "plan_sha256": {"$ref": "#/$defs/sha256"}
+  },
+  "allOf": [{
+    "if": {"properties": {"phase": {"enum": [1, 2]}}, "required": ["phase"]},
+    "then": {"properties": {"state": {"enum": ["proposed", "plan_ready", "awaiting_approval", "blocked"]}}}
+  }],
+  "$defs": {
+    "ref": {"type": "string", "minLength": 2, "maxLength": 256, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"},
+    "tenant": {"type": "string", "maxLength": 64, "pattern": "^[a-z][a-z0-9-]{1,62}[a-z0-9]$"},
+    "sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "nonempty_refs": {"type": "array", "minItems": 1, "maxItems": 4096, "uniqueItems": true, "items": {"$ref": "#/$defs/ref"}}
+  }
+}

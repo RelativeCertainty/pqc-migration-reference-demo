@@ -1,0 +1,152 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/dashboard-metric-definition.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "DashboardMetricDefinition.v1",
+  "description": "Product-neutral definition of one assessment dashboard metric. The contract makes the scope, denominator, unknown handling, and prohibited interpretations explicit so a projection cannot imply enterprise completeness, accuracy, risk acceptance, or migration completion.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "metricDefinitionId",
+    "name",
+    "questionAnswered",
+    "valueKind",
+    "unit",
+    "calculation",
+    "scopeSemantics",
+    "interpretation",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "DashboardMetricDefinition.v1" },
+    "metricDefinitionId": { "$ref": "#/$defs/identifier" },
+    "name": { "$ref": "#/$defs/plainText" },
+    "questionAnswered": { "$ref": "#/$defs/plainText" },
+    "valueKind": {
+      "enum": ["ratio", "count", "duration_seconds", "categorical_distribution"]
+    },
+    "unit": {
+      "enum": ["fraction", "items", "seconds", "items_by_category"]
+    },
+    "calculation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "formula",
+        "numeratorDefinition",
+        "denominatorDefinition",
+        "missingDenominatorResult",
+        "zeroDenominatorResult",
+        "rounding"
+      ],
+      "properties": {
+        "formula": { "$ref": "#/$defs/plainText" },
+        "numeratorDefinition": {
+          "oneOf": [{ "$ref": "#/$defs/plainText" }, { "type": "null" }]
+        },
+        "denominatorDefinition": {
+          "oneOf": [{ "$ref": "#/$defs/plainText" }, { "type": "null" }]
+        },
+        "missingDenominatorResult": { "const": "unavailable" },
+        "zeroDenominatorResult": { "const": "unavailable" },
+        "rounding": { "$ref": "#/$defs/plainText" }
+      }
+    },
+    "scopeSemantics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "scopeReferenceRequired",
+        "denominatorSourceRequired",
+        "asOfTimestampRequired",
+        "unknownsExcludedFromSuccess",
+        "qualification"
+      ],
+      "properties": {
+        "scopeReferenceRequired": { "const": true },
+        "denominatorSourceRequired": { "type": "boolean" },
+        "asOfTimestampRequired": { "const": true },
+        "unknownsExcludedFromSuccess": { "const": true },
+        "qualification": { "$ref": "#/$defs/plainText" }
+      }
+    },
+    "interpretation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["doesMean", "doesNotMean", "whenUnavailable"],
+      "properties": {
+        "doesMean": { "$ref": "#/$defs/plainText" },
+        "doesNotMean": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 8,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/plainText" }
+        },
+        "whenUnavailable": { "$ref": "#/$defs/plainText" }
+      }
+    },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "valueKind": { "const": "ratio" } },
+        "required": ["valueKind"]
+      },
+      "then": {
+        "properties": {
+          "unit": { "const": "fraction" },
+          "calculation": {
+            "properties": {
+              "numeratorDefinition": { "$ref": "#/$defs/plainText" },
+              "denominatorDefinition": { "$ref": "#/$defs/plainText" }
+            }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": { "valueKind": { "enum": ["count", "duration_seconds", "categorical_distribution"] } },
+        "required": ["valueKind"]
+      },
+      "then": {
+        "properties": {
+          "calculation": {
+            "properties": {
+              "numeratorDefinition": { "type": "null" },
+              "denominatorDefinition": { "type": "null" }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "plainText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["syntheticDefinition", "enterpriseCompletenessClaimAllowed", "riskConclusionAllowed", "migrationCompletionClaimAllowed"],
+      "properties": {
+        "syntheticDefinition": { "const": true },
+        "enterpriseCompletenessClaimAllowed": { "const": false },
+        "riskConclusionAllowed": { "const": false },
+        "migrationCompletionClaimAllowed": { "const": false }
+      }
+    }
+  }
+}

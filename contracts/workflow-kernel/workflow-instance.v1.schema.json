@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/workflow-kernel/workflow-instance.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "WorkflowInstance.v1",
+  "description": "Current durable state of one bounded domain workflow. Historical transitions are separate immutable ExecutionEvent records.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "workflowInstanceId", "tenantId", "workflowType", "status", "revision", "currentStepRef", "stateDigest", "createdAt", "updatedAt", "completedAt", "safety"],
+  "properties": {
+    "schemaVersion": {"const": "WorkflowInstance.v1"},
+    "workflowInstanceId": {"$ref": "#/$defs/identifier"},
+    "tenantId": {"$ref": "#/$defs/identifier"},
+    "workflowType": {"enum": ["collection", "reconciliation", "verification", "projection_rebuild", "synthetic_reference"]},
+    "status": {"enum": ["requested", "running", "waiting", "reconciliation_required", "succeeded", "failed", "cancelled"]},
+    "revision": {"type": "integer", "minimum": 1, "maximum": 9223372036854775807},
+    "currentStepRef": {"oneOf": [{"$ref": "#/$defs/identifier"}, {"type": "null"}]},
+    "stateDigest": {"$ref": "#/$defs/digest"},
+    "createdAt": {"$ref": "#/$defs/timestamp"},
+    "updatedAt": {"$ref": "#/$defs/timestamp"},
+    "completedAt": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+    "safety": {"$ref": "#/$defs/safety"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"enum": ["succeeded", "failed", "cancelled"]}}, "required": ["status"]},
+      "then": {"properties": {"completedAt": {"$ref": "#/$defs/timestamp"}}},
+      "else": {"properties": {"completedAt": {"type": "null"}}}
+    }
+  ],
+  "$defs": {
+    "identifier": {"type": "string", "minLength": 3, "maxLength": 160, "pattern": "^[a-z0-9][a-z0-9._:-]+$"},
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "timestamp": {"type": "string", "format": "date-time", "maxLength": 30, "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"},
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "payloadEmbedded", "credentialValueEmbedded", "privateKeyEmbedded"],
+      "properties": {
+        "synthetic": {"type": "boolean"},
+        "payloadEmbedded": {"const": false},
+        "credentialValueEmbedded": {"const": false},
+        "privateKeyEmbedded": {"const": false}
+      }
+    }
+  }
+}

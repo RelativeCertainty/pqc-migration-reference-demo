@@ -1,0 +1,110 @@
+{
+  "schema_version": "pba.pqc.reference-qualification-catalog-expansion.v2",
+  "status": "development_reference_addition_not_enterprise_selection",
+  "examples_status": "recognition_examples_not_installed_or_selected",
+  "addition_status": "recognition_only_no_qualified_adapter_or_execution_authority",
+  "base_catalog": {
+    "path": "catalog.v1.json",
+    "schema_version": "pba.pqc.reference-qualification-catalog.v1",
+    "sha256": "f73b7a93562ed7490f83fa8b8b68afe4e753b745641923740fc87bea72ff1cb4",
+    "source_family_count": 27
+  },
+  "current_catalog": {
+    "schema_version": "pba.pqc.reference-qualification-catalog.v2",
+    "source_family_count": 28
+  },
+  "historical_questionnaire_boundary": {
+    "crosswalk_path": "intake-crosswalk.v1.json",
+    "crosswalk_schema_version": "pba.pqc.intake-catalog-crosswalk.v1",
+    "profile_count": 27,
+    "dispatch_state": "historical_questionnaires_and_distribution_unchanged",
+    "new_family_match": "no_legacy_questionnaire_match"
+  },
+  "source_family_additions": [
+    {
+      "family": {
+        "id": "virtualization-hypervisors",
+        "area_ref": "area-06",
+        "name": "Virtualization and hypervisor platforms",
+        "recognition_examples": [
+          "VMware vSphere (ESXi and vCenter)",
+          "Microsoft Hyper-V and System Center Virtual Machine Manager"
+        ],
+        "discovery_question": "Which approved source identifies virtualization hosts, clusters, virtual-machine relationships, platform versions and accountable owners, management-plane certificate and authentication configuration, VM encryption and key-provider dependencies, and backup, restore or recovery dependencies? These are recognition examples, not selections or evidence of installation.",
+        "evidence_targets": [
+          "virtualization hosts and clusters",
+          "virtual-machine placement and relationships",
+          "platform versions and accountable owners",
+          "management-plane certificate and authentication configuration",
+          "VM encryption and key-provider dependencies",
+          "backup, restore and recovery dependencies"
+        ],
+        "pattern_refs": [
+          "tls-hybrid-key-exchange",
+          "certificate-signature-migration",
+          "key-service-consumer",
+          "envelope-key-rewrap",
+          "data-reencryption",
+          "archive-restoration",
+          "workload-credential",
+          "vendor-product-transition"
+        ],
+        "product_profile": {
+          "status": "unknown_requires_owner_and_vendor_confirmation",
+          "product": null,
+          "edition": null,
+          "version": null,
+          "instance": null,
+          "approved_interface": null,
+          "authentication": null,
+          "minimum_permissions": null,
+          "licensing": null,
+          "pagination": null,
+          "deletion_semantics": null,
+          "rate_limits": null,
+          "write_idempotency": null
+        }
+      },
+      "lineage": {
+        "legacy_questionnaire_match": "none",
+        "legacy_profile_id": null,
+        "adapter_qualification": "not_qualified",
+        "execution_authorized": false
+      }
+    }
+  ],
+  "migration_archetype_ref_additions": [
+    {
+      "archetype_id": "tls-hybrid-key-exchange",
+      "source_family_refs": ["virtualization-hypervisors"]
+    },
+    {
+      "archetype_id": "certificate-signature-migration",
+      "source_family_refs": ["virtualization-hypervisors"]
+    },
+    {
+      "archetype_id": "key-service-consumer",
+      "source_family_refs": ["virtualization-hypervisors"]
+    },
+    {
+      "archetype_id": "envelope-key-rewrap",
+      "source_family_refs": ["virtualization-hypervisors"]
+    },
+    {
+      "archetype_id": "data-reencryption",
+      "source_family_refs": ["virtualization-hypervisors"]
+    },
+    {
+      "archetype_id": "archive-restoration",
+      "source_family_refs": ["virtualization-hypervisors"]
+    },
+    {
+      "archetype_id": "workload-credential",
+      "source_family_refs": ["virtualization-hypervisors"]
+    },
+    {
+      "archetype_id": "vendor-product-transition",
+      "source_family_refs": ["virtualization-hypervisors"]
+    }
+  ]
+}

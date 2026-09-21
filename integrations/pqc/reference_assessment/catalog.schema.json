@@ -1,0 +1,550 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/pqc/reference-qualification-catalog.v1.schema.json",
+  "title": "PQC reference qualification catalog",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "status",
+    "taxonomy_note",
+    "examples_status",
+    "estate_areas",
+    "source_families",
+    "migration_archetypes",
+    "qualification_ladder",
+    "dossier_requirements",
+    "reference_dialects",
+    "priority_patterns"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "pba.pqc.reference-qualification-catalog.v1"
+    },
+    "status": {
+      "const": "development_reference_not_enterprise_selection"
+    },
+    "taxonomy_note": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 1000
+    },
+    "examples_status": {
+      "const": "recognition_examples_not_installed_or_selected"
+    },
+    "estate_areas": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{1,79}$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          }
+        }
+      }
+    },
+    "source_families": {
+      "type": "array",
+      "minItems": 27,
+      "maxItems": 27,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "area_ref",
+          "name",
+          "recognition_examples",
+          "discovery_question",
+          "evidence_targets",
+          "pattern_refs",
+          "product_profile"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{1,79}$"
+          },
+          "area_ref": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{1,79}$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "recognition_examples": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            }
+          },
+          "discovery_question": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "evidence_targets": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            }
+          },
+          "pattern_refs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,79}$"
+            }
+          },
+          "product_profile": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": [
+              "status",
+              "product",
+              "edition",
+              "version",
+              "instance",
+              "approved_interface",
+              "authentication",
+              "minimum_permissions",
+              "licensing",
+              "pagination",
+              "deletion_semantics",
+              "rate_limits",
+              "write_idempotency"
+            ],
+            "properties": {
+              "status": {
+                "const": "unknown_requires_owner_and_vendor_confirmation"
+              },
+              "product": {
+                "type": "null"
+              },
+              "edition": {
+                "type": "null"
+              },
+              "version": {
+                "type": "null"
+              },
+              "instance": {
+                "type": "null"
+              },
+              "approved_interface": {
+                "type": "null"
+              },
+              "authentication": {
+                "type": "null"
+              },
+              "minimum_permissions": {
+                "type": "null"
+              },
+              "licensing": {
+                "type": "null"
+              },
+              "pagination": {
+                "type": "null"
+              },
+              "deletion_semantics": {
+                "type": "null"
+              },
+              "rate_limits": {
+                "type": "null"
+              },
+              "write_idempotency": {
+                "type": "null"
+              }
+            }
+          }
+        }
+      }
+    },
+    "migration_archetypes": {
+      "type": "array",
+      "minItems": 22,
+      "maxItems": 22,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id",
+          "name",
+          "source_family_refs",
+          "status",
+          "execution_authorized"
+        ],
+        "properties": {
+          "id": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{1,79}$"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 1000
+          },
+          "source_family_refs": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "pattern": "^[a-z][a-z0-9-]{1,79}$"
+            }
+          },
+          "status": {
+            "const": "candidate_requires_product_qualification"
+          },
+          "execution_authorized": {
+            "const": false
+          }
+        }
+      }
+    },
+    "qualification_ladder": {
+      "type": "array",
+      "minItems": 6,
+      "maxItems": 6,
+      "prefixItems": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "requires",
+            "permits"
+          ],
+          "properties": {
+            "id": {
+              "const": "owner_profile"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            },
+            "permits": {
+              "const": "documentation_research_only"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "requires",
+            "permits"
+          ],
+          "properties": {
+            "id": {
+              "const": "official_contract"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            },
+            "permits": {
+              "const": "offline_contract_design_only"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "requires",
+            "permits"
+          ],
+          "properties": {
+            "id": {
+              "const": "fixture_simulator"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            },
+            "permits": {
+              "const": "synthetic_contract_proof_only"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "requires",
+            "permits"
+          ],
+          "properties": {
+            "id": {
+              "const": "isolated_product"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            },
+            "permits": {
+              "const": "bounded_lab_operations_only"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "requires",
+            "permits"
+          ],
+          "properties": {
+            "id": {
+              "const": "read_only_collection"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            },
+            "permits": {
+              "const": "authorized_read_only_collection"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "id",
+            "requires",
+            "permits"
+          ],
+          "properties": {
+            "id": {
+              "const": "migration_action"
+            },
+            "requires": {
+              "type": "array",
+              "minItems": 1,
+              "uniqueItems": true,
+              "items": {
+                "type": "string",
+                "minLength": 1,
+                "maxLength": 1000
+              }
+            },
+            "permits": {
+              "const": "approved_plan_operations_only"
+            }
+          }
+        }
+      ],
+      "items": false
+    },
+    "dossier_requirements": {
+      "type": "array",
+      "minItems": 1,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 1000
+      }
+    },
+    "reference_dialects": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "cmdb",
+        "pki",
+        "tls"
+      ],
+      "properties": {
+        "cmdb": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fixture",
+            "source_instance_id"
+          ],
+          "properties": {
+            "fixture": {
+              "const": "cmdb.page.json"
+            },
+            "source_instance_id": {
+              "const": "synthetic-cmdb"
+            }
+          }
+        },
+        "pki": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fixture",
+            "source_instance_id"
+          ],
+          "properties": {
+            "fixture": {
+              "const": "pki.page.json"
+            },
+            "source_instance_id": {
+              "const": "synthetic-pki"
+            }
+          }
+        },
+        "tls": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "fixture",
+            "source_instance_id"
+          ],
+          "properties": {
+            "fixture": {
+              "const": "tls.page.json"
+            },
+            "source_instance_id": {
+              "const": "synthetic-tls"
+            }
+          }
+        }
+      }
+    },
+    "priority_patterns": {
+      "type": "array",
+      "minItems": 3,
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "pattern_ref",
+          "read_operations",
+          "proof_targets",
+          "limitations",
+          "official_sources"
+        ],
+        "properties": {
+          "pattern_ref": {
+            "type": "string",
+            "pattern": "^[a-z][a-z0-9-]{1,79}$"
+          },
+          "read_operations": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            }
+          },
+          "proof_targets": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            }
+          },
+          "limitations": {
+            "type": "array",
+            "minItems": 1,
+            "uniqueItems": true,
+            "items": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 1000
+            }
+          },
+          "official_sources": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "title",
+                "url",
+                "checked_on"
+              ],
+              "properties": {
+                "title": {
+                  "type": "string",
+                  "minLength": 1,
+                  "maxLength": 1000
+                },
+                "url": {
+                  "type": "string",
+                  "format": "uri",
+                  "pattern": "^https://(?:docs\\.openssl\\.org|www\\.openssh\\.org)/"
+                },
+                "checked_on": {
+                  "type": "string",
+                  "format": "date"
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

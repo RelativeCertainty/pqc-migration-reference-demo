@@ -1,0 +1,9 @@
+{
+  "schema_version": "pba.pqc.reference-source-page.v1",
+  "kind": "cmdb", "synthetic": true,
+  "records": [{
+    "id": "app-001", "evidence_basis": "observed", "name": "Synthetic Records Service",
+    "business_service_id": "service-001", "owner_id": "platform-team",
+    "criticality": "high", "environment": "synthetic_lab", "confidentiality_until": "2041-09-05"
+  }]
+}

@@ -1,0 +1,1751 @@
+# SPDX-License-Identifier: CC-BY-4.0
+schemaVersion: pqc.project-backlog.v2
+classification: public_template
+sourceOfTruth: yaml
+
+initiative:
+  id: PQC-INIT-01
+  name: PQC Current-State Assessment and Risk Analysis
+  purpose: Establish a defensible current-state view of the cryptographic estate, evaluate resulting risk and business impact, and produce decision-ready assessment deliverables without authorizing remediation.
+  boundaries:
+    - This public template contains only employer-neutral planning content and synthetic examples.
+    - Assessment and recommendation work does not authorize provider actions, configuration changes, deployment, revocation, or ticket execution.
+    - Confidential engagement evidence belongs only in an approved private system of record.
+  status: proposed
+
+planningBasis:
+  - id: SRC-ASSESSMENT-OUTLINE
+    title: Two-phase PQC assessment engagement outline
+    authority: engagement_source
+    versionOrDate: Approved reference revision
+    locatorPolicy: opaque
+    evidenceStatus: verified
+  - id: SRC-REPORTING-DECISION
+    title: Effective two-week project reporting decision
+    authority: confirmed_project_decision
+    versionOrDate: Confirmed operating decision
+    locatorPolicy: opaque
+    evidenceStatus: verified
+    supersedesSourceRefs: [SRC-ASSESSMENT-OUTLINE]
+  - id: SRC-PQC-METHOD
+    title: Employer-neutral PQC assessment method
+    authority: internal_method
+    versionOrDate: Reference method revision 1
+    locatorPolicy: opaque
+    evidenceStatus: verified
+  - id: SRC-LEGACY-BACKLOG
+    title: Employer-neutral twelve-week migration backlog
+    authority: legacy_template
+    versionOrDate: Version 1
+    locatorPolicy: opaque
+    evidenceStatus: verified
+
+reportingCadences:
+  - id: RC-BIWEEKLY
+    name: Formal two-week status report
+    cadence: every_two_weeks
+    intervalWeeks: 2
+    phaseRefs: [P1, P2]
+    ownerRole: Project manager
+    audienceRoles: [Engagement sponsor, Assessment lead, Risk lead]
+    requiredSections:
+      - Executive summary and overall health
+      - Epic progress and forecast
+      - Completed, active, blocked, and next-period work
+      - Risks, assumptions, issues, dependencies, decisions, and scope changes
+      - Metrics and evidence limitations
+    dueRule: preceding_business_day_if_closed
+    projection: recurring_work_item
+    sourceRefs: [SRC-REPORTING-DECISION]
+    supersedesSourceRefs: [SRC-ASSESSMENT-OUTLINE]
+  - id: RC-PHASE-REVIEW
+    name: Phase findings and deliverable review
+    cadence: per_phase
+    phaseRefs: [P1, P2]
+    ownerRole: Assessment lead
+    audienceRoles: [Engagement sponsor, Technical reviewers, Business and risk reviewers]
+    requiredSections:
+      - Scope, method, and evidence limitations
+      - Findings or risks requiring factual review
+      - Decisions, exceptions, and unresolved questions
+      - Deliverable acceptance or formal disposition
+    dueRule: phase_review_date
+    projection: deliverable
+    sourceRefs: [SRC-ASSESSMENT-OUTLINE, SRC-PQC-METHOD]
+
+phases:
+  - id: P1
+    name: PQC Current-State Assessment
+    objective: Produce a validated and evidence-linked view of the authorized cryptographic estate, its dependencies, material exposure conditions, coverage, and known limitations.
+    planningLevel: detailed
+    targetWindow: {mode: relative, startWeek: 1, endWeek: 8}
+    deliverables: [PQC Current-State Assessment Report, Phase 2 input package]
+    entryCriteria:
+      - Engagement authority, scope process, and information-handling boundaries are confirmed.
+      - Required stakeholders and source owners are identified for initiation.
+    completionCriteria:
+      - Current-state findings are supported by traceable evidence and explicit confidence.
+      - Coverage and limitations are reported without asserting unsupported completeness.
+      - The report and Phase 2 input package are accepted or formally dispositioned.
+    status: proposed
+  - id: P2
+    name: PQC Risk and Business Impact Analysis
+    objective: Evaluate the technical and business significance of the Phase 1 baseline and deliver an evidence-linked, prioritized PQC risk register.
+    planningLevel: detailed
+    targetWindow: {mode: relative, startWeek: 9, endWeek: 18}
+    deliverables: [PQC Risk Register, Decision-ready recommendations and exception record]
+    entryCriteria:
+      - The Phase 1 baseline and limitations are accepted for risk-analysis use.
+      - Risk scales, business-impact criteria, and review authorities are confirmed.
+    completionCriteria:
+      - Material risks include technical rationale, business impact, evidence confidence, and affected scope.
+      - Priorities, recommendations, exceptions, and unresolved decisions are transparent.
+      - The risk register is accepted or formally dispositioned.
+    status: proposed
+
+gates:
+  - id: PQC-G00
+    name: Governance and information-handling readiness
+    purpose: Confirm the authority, roles, reporting model, and evidence-handling boundary needed to begin controlled assessment work.
+    phaseRefs: [P1, P2]
+    completionCriteria: [Governance and escalation paths are recorded, Reporting and evidence-handling practices are confirmed]
+    requiredEvidence: [Approved governance record, Information-handling decision record]
+    decisionOwnerRoles: [Engagement sponsor, Information owner]
+    status: proposed
+  - id: PQC-P1-G01
+    name: Phase 1 scope and source readiness
+    purpose: Confirm that scope, method, source ownership, access approach, and evidence-quality rules are ready for authorized discovery.
+    phaseRefs: [P1]
+    completionCriteria: [Scope and exclusions are reviewable, Source readiness and access limitations are recorded]
+    requiredEvidence: [Scope matrix, Source and access register, Assessment method]
+    decisionOwnerRoles: [Assessment lead, Engagement sponsor]
+    status: proposed
+  - id: PQC-P1-G02
+    name: Phase 1 baseline validation
+    purpose: Confirm that observations have been normalized and correlated with visible provenance, confidence, coverage, conflicts, and unknowns.
+    phaseRefs: [P1]
+    completionCriteria: [The current-state baseline is traceable, Material limitations and unknowns are explicit]
+    requiredEvidence: [Canonical inventory summary, Coverage and reconciliation record, Draft finding register]
+    decisionOwnerRoles: [Assessment lead, Technical review lead]
+    status: proposed
+  - id: PQC-P1-G03
+    name: Phase 1 deliverable acceptance
+    purpose: Review and disposition the Current-State Assessment Report and its Phase 2 input package.
+    phaseRefs: [P1]
+    completionCriteria: [Factual review comments are reconciled, The report and handoff package are accepted or dispositioned]
+    requiredEvidence: [Final Phase 1 report, Findings review record, Phase 2 input package]
+    decisionOwnerRoles: [Engagement sponsor, Assessment lead]
+    status: proposed
+  - id: PQC-P2-G01
+    name: Phase 2 method and input readiness
+    purpose: Confirm that the Phase 1 baseline is fit for analysis and that risk, confidence, exception, and prioritization rules are approved.
+    phaseRefs: [P2]
+    completionCriteria: [Phase 1 inputs are dispositioned, The risk-analysis method is approved]
+    requiredEvidence: [Phase 2 readiness record, Approved risk method]
+    decisionOwnerRoles: [Risk lead, Engagement sponsor]
+    status: proposed
+  - id: PQC-P2-G02
+    name: Phase 2 analysis validation
+    purpose: Confirm that technical exposure, vendor lifecycle, business impact, and prioritization analyses are complete enough for risk-register assembly.
+    phaseRefs: [P2]
+    completionCriteria: [Material risks have traceable analysis, Priorities and exceptions have documented rationale]
+    requiredEvidence: [Risk-analysis working papers, Prioritization and exception record]
+    decisionOwnerRoles: [Risk lead, Business review lead]
+    status: proposed
+  - id: PQC-P2-G03
+    name: Phase 2 deliverable acceptance
+    purpose: Review and disposition the final PQC Risk Register and engagement recommendations.
+    phaseRefs: [P2]
+    completionCriteria: [Stakeholder challenge is reconciled, The risk register and handoff are accepted or dispositioned]
+    requiredEvidence: [Final risk register, Phase 2 review record, Engagement handoff package]
+    decisionOwnerRoles: [Engagement sponsor, Risk lead]
+    status: proposed
+
+epics:
+  - id: PQC-E00
+    phaseRef: CROSS
+    name: Engagement Governance, Reporting, and Stakeholder Alignment
+    purpose: Maintain decision authority, schedule control, stakeholder alignment, reporting, RAID management, and deliverable acceptance across both assessment phases.
+    includedWork:
+      - Governance, role, forum, escalation, and decision-authority definition
+      - Risks, assumptions, issues, dependencies, decisions, actions, and scope-change control
+      - Formal two-week reporting and phase review coordination
+    boundaries:
+      excludedWork: &governance_excluded [Effectful remediation or client-system changes, Acceptance decisions made without the designated human authority]
+      authorityLimits: &authority_limits [Planning and assessment outputs do not authorize external effects or production changes, Named human decision owners retain acceptance and exception authority]
+      dataHandlingConstraints: &data_constraints [Confidential evidence must remain in an approved private system of record, Credentials and cryptographic key material must never enter planning artifacts]
+      evidenceConstraints: &evidence_constraints [Claims must preserve source provenance and confidence, Missing evidence must remain visible rather than inferred as complete]
+    completion:
+      description: Governance records, formal reporting cycles, phase reviews, and acceptance activities are complete or formally dispositioned.
+      acceptanceCriteria: [Every material decision and blocker has an accountable role and path to disposition, Formal status and phase-review obligations are satisfied]
+      requiredEvidence: [Governance record, Biweekly status reports, RAID and decision records, Phase acceptance records]
+      decisionOwnerRoles: [Engagement sponsor, Project manager]
+    targetWindow: {mode: relative, startWeek: 1, endWeek: 18}
+    dependencies: []
+    gateRefs: [PQC-G00]
+    ownerRole: Project manager
+    reviewerRoles: &governance_reviewers [Engagement sponsor, Assessment lead, Risk lead]
+    frameworkCrosswalk:
+      - frameworkId: FW-GOVERNANCE
+        authority: internal_method
+        referenceIds: [GovernanceDecision, WorkItem]
+        relationship: supports
+        note: Governance and reporting provide the decision and evidence boundary around assessment work; the framework does not replace human authority.
+    stories:
+      - id: PQC-E00-S01
+        summary: Establish engagement governance, roles, forums, and escalation
+        outcome: Stakeholders can identify decision owners, reviewers, working forums, communication paths, and escalation routes for both phases.
+        description: Define the engagement governance model and record role-based accountability without inserting personal or customer identifiers into the public template.
+        includedScope: [Governance model, role matrix, meeting forums, escalation path]
+        excludedScope: *governance_excluded
+        acceptanceCriteria: [Every material decision class and escalation has an accountable role and forum]
+        deliverables: &e00s01_artifacts [Governance and role record]
+        dependencies: []
+        gateRefs: [PQC-G00]
+        ownerRole: Project manager
+        reviewerRoles: *governance_reviewers
+        targetWindow: {mode: relative, startWeek: 1, endWeek: 2}
+        sourceRefs: &cross_sources [SRC-ASSESSMENT-OUTLINE, SRC-REPORTING-DECISION, SRC-PQC-METHOD]
+        status: ready
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *e00s01_artifacts
+          basisRefs: *cross_sources
+        jiraProjection: &jira_e00
+          issueType: Story
+          parentPlanningId: PQC-E00
+          fixVersion: Cross-phase
+          labels: [pqc-assessment, cross-phase]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Charter and authority
+        legacyRefs: [S1.1.1, S1.1.2, S6.2.1, S7.2.1]
+      - id: PQC-E00-S02
+        summary: Maintain RAID, decisions, dependencies, actions, and scope changes
+        outcome: Project control records remain current, attributable, and usable for timely escalation and decisions.
+        description: Maintain the project control registers and make the impact of unresolved items and scope changes visible in each reporting cycle.
+        includedScope: [RAID register, decision log, action register, scope-change log]
+        excludedScope: *governance_excluded
+        acceptanceCriteria: ["Each material item records an owner role, state, due or review point, and disposition"]
+        deliverables: &e00s02_artifacts [Current project control registers]
+        dependencies: [PQC-E00-S01]
+        gateRefs: [PQC-G00]
+        ownerRole: Project manager
+        reviewerRoles: *governance_reviewers
+        targetWindow: {mode: relative, startWeek: 1, endWeek: 18}
+        sourceRefs: *cross_sources
+        status: ready
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *e00s02_artifacts
+          basisRefs: *cross_sources
+        jiraProjection: *jira_e00
+        legacyGroup: Engagement controls
+        legacyRefs: [S1.1.1, S1.1.2, S6.2.1]
+      - id: PQC-E00-S03
+        summary: Deliver biweekly status reporting, findings reviews, and acceptance coordination
+        outcome: Decision-makers receive a formal status report every two weeks and each phase deliverable receives an accountable review and disposition.
+        description: Operate the effective two-week reporting cadence and coordinate findings-review and deliverable-acceptance events for both phases.
+        includedScope: [Nine relative two-week reporting cycles, Phase findings reviews, Acceptance coordination]
+        excludedScope: *governance_excluded
+        acceptanceCriteria: ["Each reporting period and phase review is delivered, reviewed, and dispositioned through the agreed governance path"]
+        deliverables: &e00s03_artifacts [Biweekly status-report series, Phase findings-review records, Acceptance records]
+        dependencies: [PQC-E00-S01, PQC-E00-S02]
+        gateRefs: [PQC-G00, PQC-P1-G03, PQC-P2-G03]
+        ownerRole: Project manager
+        reviewerRoles: *governance_reviewers
+        targetWindow: {mode: relative, startWeek: 1, endWeek: 18}
+        sourceRefs: *cross_sources
+        status: ready
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *e00s03_artifacts
+          basisRefs: *cross_sources
+        jiraProjection: *jira_e00
+        legacyGroup: Reporting and phase review
+        legacyRefs: [S1.1.1, S1.1.2, S6.2.1, S6.3.1]
+    status: ready
+    legacyRefs: [E1, E6, E7, F1.1, F6.2, F6.3, F7.2]
+
+  - id: PQC-P1-E01
+    phaseRef: P1
+    name: Confirm Scope, Assessment Method, and Standards
+    purpose: Define what will be assessed, how evidence will be evaluated, and what constitutes a defensible Phase 1 result.
+    includedWork: [Scope and exclusion definition, Assessment taxonomy and method, Standards and evidence-quality criteria]
+    boundaries:
+      excludedWork: &phase1_excluded [Remediation design or execution, Final Phase 2 risk scoring, Unsupported claims of complete estate coverage]
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Stakeholders can identify what is in scope, what is excluded, which evidence is required, and how Phase 1 results will be evaluated.
+      acceptanceCriteria: [Scope and method are reviewable and versioned, Coverage and confidence rules prevent unsupported completeness claims]
+      requiredEvidence: [Scope matrix, Assessment method, Standards register, Evidence-quality criteria]
+      decisionOwnerRoles: [Assessment lead, Engagement sponsor]
+    targetWindow: {mode: relative, startWeek: 1, endWeek: 2}
+    dependencies: [PQC-E00]
+    gateRefs: [PQC-P1-G01]
+    ownerRole: Assessment lead
+    reviewerRoles: &phase1_reviewers [Technical review lead, Information owner, Engagement sponsor]
+    frameworkCrosswalk:
+      - frameworkId: FW-SCOPE-METHOD
+        authority: internal_method
+        referenceIds: [KnowledgeSource, CapabilityProbe]
+        relationship: prerequisite
+        note: Scope and evidence criteria define which sources and capabilities may contribute observations; they do not assert that discovery has occurred.
+    stories:
+      - id: PQC-P1-E01-S01
+        summary: Confirm scope, exclusions, authority, and success criteria
+        outcome: The assessment has explicit organizational, technology, data, dependency, and authority boundaries.
+        description: Build a versioned scope matrix that distinguishes in-scope, excluded, deferred, and unresolved domains and defines measurable Phase 1 success.
+        includedScope: [Scope matrix, exclusions, authority boundaries, success criteria]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: [Each assessed domain has a recorded scope disposition and decision owner role]
+        deliverables: &p1e01s01_artifacts [Approved scope and exclusion matrix]
+        dependencies: [PQC-E00-S01]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 1, endWeek: 1}
+        sourceRefs: &phase1_sources [SRC-ASSESSMENT-OUTLINE, SRC-PQC-METHOD]
+        status: ready
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e01s01_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: &jira_p1e01
+          issueType: Story
+          parentPlanningId: PQC-P1-E01
+          fixVersion: Phase 1
+          labels: [pqc-assessment, phase-1]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Charter and authority
+        legacyRefs: [S1.1.1, S2.2.2]
+      - id: PQC-P1-E01-S02
+        summary: Establish the assessment method, taxonomy, and standards register
+        outcome: Assessment participants use consistent terms, asset categories, analysis steps, and authoritative guidance.
+        description: Define the assessment workflow and taxonomy and establish a provenance-aware register that separates authoritative standards from guidance and claims.
+        includedScope: [Assessment workflow, Crypto-asset taxonomy, Standards and guidance register]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["The method and register distinguish authority, version, applicability, and unresolved interpretation"]
+        deliverables: &p1e01s02_artifacts [Assessment method and taxonomy, Standards register]
+        dependencies: [PQC-P1-E01-S01]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 1, endWeek: 2}
+        sourceRefs: *phase1_sources
+        status: ready
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e01s02_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e01
+        legacyGroup: Standards and policy baseline
+        legacyRefs: [S1.2.1, S1.2.2, S6.2.2]
+      - id: PQC-P1-E01-S03
+        summary: Approve evidence-quality, coverage, confidence, and completion rules
+        outcome: Reviewers can distinguish observed absence from unassessed scope and can evaluate the strength of each conclusion.
+        description: Define evidence sufficiency, provenance, confidence, coverage denominator, conflict, unknown, and phase-completion rules.
+        includedScope: [Evidence-quality rubric, Confidence scale, Coverage rules, Completion checks]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["The rules require visible provenance, denominators, conflicts, unknowns, and limitations"]
+        deliverables: &p1e01s03_artifacts [Approved evidence and completion criteria]
+        dependencies: [PQC-P1-E01-S02]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Technical review lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 2, endWeek: 2}
+        sourceRefs: *phase1_sources
+        status: ready
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e01s03_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e01
+        legacyGroup: Canonical inventory contract
+        legacyRefs: [S1.2.2, S2.1.1, S2.1.2, S6.1.1, S6.1.2]
+    status: ready
+    legacyRefs: [E1, E2, E6, F1.1, F1.2, F2.1, F6.1, F6.2]
+
+  - id: PQC-P1-E02
+    phaseRef: P1
+    name: Establish Source Access and Evidence-Handling Controls
+    purpose: Establish safe, approved, read-only access to assessment sources without beginning uncontrolled collection.
+    includedWork: [Authoritative source and owner register, Approved access and handling requirements, Source readiness and contingency assessment]
+    boundaries:
+      excludedWork: *phase1_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Every planned source has an owner role, approved collection method, access state, handling classification, and contingency for unavailable access.
+      acceptanceCriteria: [No collection begins without recorded authority and handling boundaries, Unavailable access remains an explicit limitation]
+      requiredEvidence: [Source register, Access decision record, Evidence-handling matrix, Readiness assessment]
+      decisionOwnerRoles: [Information owner, Assessment lead]
+    targetWindow: {mode: relative, startWeek: 1, endWeek: 3}
+    dependencies: [PQC-P1-E01]
+    gateRefs: [PQC-P1-G01]
+    ownerRole: Discovery lead
+    reviewerRoles: *phase1_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-SOURCE-PROFILE
+        authority: internal_method
+        referenceIds: [KnowledgeSource, CapabilityProbe]
+        relationship: direct
+        note: Source profiles and capability probes provide a neutral structure for recording authority, access, limitations, and supported collection behavior.
+    stories:
+      - id: PQC-P1-E02-S01
+        summary: Establish the authoritative source and source-owner register
+        outcome: Every proposed assessment source has a clear purpose, authority class, owner role, and expected contribution.
+        description: Inventory source classes and record their ownership, authority, expected evidence, access path, freshness, and known constraints.
+        includedScope: [Source register, Source ownership, Authority and freshness metadata]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Each source entry identifies an owner role, authority, expected evidence, and limitation state"]
+        deliverables: &p1e02s01_artifacts [Authoritative source and owner register]
+        dependencies: [PQC-P1-E01-S01]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Discovery lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 1, endWeek: 2}
+        sourceRefs: *phase1_sources
+        status: ready
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e02s01_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: &jira_p1e02
+          issueType: Story
+          parentPlanningId: PQC-P1-E02
+          fixVersion: Phase 1
+          labels: [pqc-assessment, phase-1]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Discovery-source mobilization
+        legacyRefs: [S2.1.2, S2.2.1, S2.2.2]
+      - id: PQC-P1-E02-S02
+        summary: Confirm access, classification, retention, and handling requirements
+        outcome: Collection plans respect information ownership, least privilege, classification, retention, and approved storage constraints.
+        description: Record read-only access decisions, handling classifications, retention expectations, custody responsibilities, and prohibited data classes.
+        includedScope: [Access decisions, Classification and retention matrix, Evidence-custody rules]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: [Each source has a documented access and handling disposition before collection]
+        deliverables: &p1e02s02_artifacts [Access and evidence-handling matrix]
+        dependencies: [PQC-P1-E02-S01]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Information owner
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 2, endWeek: 2}
+        sourceRefs: *phase1_sources
+        status: ready
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e02s02_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e02
+        legacyGroup: Discovery-source mobilization
+        legacyRefs: [S2.2.2]
+      - id: PQC-P1-E02-S03
+        summary: Validate source readiness and document unavailable-access contingencies
+        outcome: The project knows which sources are ready, constrained, blocked, or unavailable and how each limitation affects coverage.
+        description: Perform safe readiness checks and record supported behavior, access failures, fallback evidence, escalation, and coverage consequences.
+        includedScope: [Capability and access readiness, Contingency paths, Coverage-impact record]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: [Every planned source has a readiness state and a documented contingency or limitation]
+        deliverables: &p1e02s03_artifacts [Source readiness and contingency record]
+        dependencies: [PQC-P1-E02-S02]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Discovery lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 2, endWeek: 3}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e02s03_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e02
+        legacyGroup: Discovery-source mobilization
+        legacyRefs: [S2.2.2]
+    status: ready
+    legacyRefs: [E2, F2.2]
+
+  - id: PQC-P1-E03
+    phaseRef: P1
+    name: Validate Existing Inventories and Assessment Artifacts
+    purpose: Determine which existing inventory, architecture, security, and vendor artifacts can be trusted and reused before initiating new discovery.
+    includedWork: [Existing-artifact register, Authority and quality evaluation, Reuse and conflict disposition]
+    boundaries:
+      excludedWork: *phase1_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Existing artifacts are classified as usable, conditionally usable, superseded, conflicting, or insufficient with a recorded rationale.
+      acceptanceCriteria: [No existing artifact is treated as authoritative solely because it already exists, Conflicts and stale evidence remain visible]
+      requiredEvidence: [Existing-artifact register, Quality assessment, Artifact disposition record]
+      decisionOwnerRoles: [Assessment lead, Source owner roles]
+    targetWindow: {mode: relative, startWeek: 2, endWeek: 4}
+    dependencies: [PQC-P1-E01, PQC-P1-E02]
+    gateRefs: [PQC-P1-G01]
+    ownerRole: Assessment lead
+    reviewerRoles: *phase1_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-EVIDENCE-ADMISSION
+        authority: internal_method
+        referenceIds: [KnowledgeSource, SourceEvent]
+        relationship: supports
+        note: Evidence-admission records preserve source authority, freshness, conflicts, and reuse limitations before observations enter the canonical assessment view.
+    stories:
+      - id: PQC-P1-E03-S01
+        summary: Inventory existing assessment sources and artifacts
+        outcome: Existing inventory, documentation, and prior analysis inputs are visible in one controlled register.
+        description: Record existing artifacts by type, owner role, source reference, coverage claim, freshness, and handling classification.
+        includedScope: [Artifact register, Ownership and provenance metadata, Claimed coverage]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Each artifact has a stable reference, owner role, provenance, freshness, and claimed scope"]
+        deliverables: &p1e03s01_artifacts [Existing-artifact register]
+        dependencies: [PQC-P1-E02-S01]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 2, endWeek: 3}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e03s01_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: &jira_p1e03
+          issueType: Story
+          parentPlanningId: PQC-P1-E03
+          fixVersion: Phase 1
+          labels: [pqc-assessment, phase-1]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Discovery-source mobilization
+        legacyRefs: [S2.2.1]
+      - id: PQC-P1-E03-S02
+        summary: Evaluate authority, completeness, freshness, conflicts, and ownership
+        outcome: Reviewers understand the quality and limitations of each existing artifact before reuse.
+        description: Apply the approved evidence rules to authority, scope, denominators, recency, ownership, duplication, and conflicting records.
+        includedScope: [Artifact-quality evaluation, Conflict and staleness analysis, Coverage-claim review]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: [Each quality conclusion is traceable to the approved rubric and source evidence]
+        deliverables: &p1e03s02_artifacts [Existing-artifact quality assessment]
+        dependencies: [PQC-P1-E01-S03, PQC-P1-E03-S01]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Technical review lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 3, endWeek: 4}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e03s02_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e03
+        legacyGroup: Canonical inventory contract
+        legacyRefs: [S2.1.2]
+      - id: PQC-P1-E03-S03
+        summary: Disposition each artifact as usable, conditional, superseded, conflicting, or insufficient
+        outcome: Every reviewed artifact has an explicit reuse status and rationale, including how conflicts and insufficiency affect discovery.
+        description: Classify artifacts as usable, conditional, superseded, conflicting, or insufficient and connect each disposition to follow-up collection or limitation handling.
+        includedScope: [Reuse disposition, Conflict escalation, Discovery impact]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Every artifact has one disposition, rationale, and follow-up or limitation state"]
+        deliverables: &p1e03s03_artifacts [Artifact disposition and follow-up record]
+        dependencies: [PQC-P1-E03-S02]
+        gateRefs: [PQC-P1-G01]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 4, endWeek: 4}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e03s03_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e03
+        legacyGroup: Canonical inventory contract
+        legacyRefs: [S2.1.2]
+    status: proposed
+    legacyRefs: [E2, F2.1, F2.2]
+
+  - id: PQC-P1-E04
+    phaseRef: P1
+    name: Discover the Authorized Cryptographic Estate
+    purpose: Collect provenance-preserving observations from authorized sources without claiming completeness or risk.
+    includedWork: [Authorized discovery plan, Controlled observation collection, Collection failure and limitation ledger]
+    boundaries:
+      excludedWork: *phase1_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Authorized sources have been assessed or collected, observations retain provenance, and failed or unavailable paths are explicitly recorded.
+      acceptanceCriteria: [Collection remains within approved source and handling boundaries, Every observation or failure has traceable provenance]
+      requiredEvidence: [Authorized discovery plan, Observation packages or references, Collection run and limitation ledger]
+      decisionOwnerRoles: [Discovery lead, Information owner]
+    targetWindow: {mode: relative, startWeek: 2, endWeek: 5}
+    dependencies: [PQC-P1-E02, PQC-P1-E03]
+    gateRefs: [PQC-P1-G02]
+    ownerRole: Discovery lead
+    reviewerRoles: *phase1_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-OBSERVATION-LEDGER
+        authority: internal_method
+        referenceIds: [SourceEvent, CryptoObservation]
+        relationship: direct
+        note: Ledgered source events and normalized observations preserve what was collected, when it was observed, and which limitations or failures occurred.
+    stories:
+      - id: PQC-P1-E04-S01
+        summary: Prepare the authorized discovery and collection plan
+        outcome: Each approved source has a bounded collection method, expected evidence, sequence, owner role, and stop condition.
+        description: Translate the scope, source-readiness, and artifact dispositions into an authorized collection plan with safe handling and resource boundaries.
+        includedScope: [Collection sequencing, Source-specific method, Evidence and failure expectations]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Every collection step references approved scope, access, handling, and expected evidence"]
+        deliverables: &p1e04s01_artifacts [Authorized discovery and collection plan]
+        dependencies: [PQC-P1-E02-S03, PQC-P1-E03-S03]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Discovery lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 2, endWeek: 3}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e04s01_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: &jira_p1e04
+          issueType: Story
+          parentPlanningId: PQC-P1-E04
+          fixVersion: Phase 1
+          labels: [pqc-assessment, phase-1]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Discovery-source mobilization
+        legacyRefs: [S2.2.1, S2.2.2]
+      - id: PQC-P1-E04-S02
+        summary: Collect cryptographic observations across approved estate domains
+        outcome: The assessment holds evidence-linked observations for approved asset, protocol, software, service, identity, and data-protection domains.
+        description: Use approved read-only methods to collect source-native evidence and record observation metadata without collecting key material or exceeding authority.
+        includedScope: [Approved source observations, Cryptographic metadata, Collection provenance]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Every observation records source, collection context, confidence basis, and handling classification"]
+        deliverables: &p1e04s02_artifacts [Provenance-preserving observation set]
+        dependencies: [PQC-P1-E04-S01]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Discovery lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 3, endWeek: 5}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e04s02_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e04
+        legacyGroup: Baseline assessment
+        legacyRefs: [S2.3.1, S5.1.1, S5.2.1, S5.3.1]
+      - id: PQC-P1-E04-S03
+        summary: Record provenance, collection failures, unavailable sources, and limitations
+        outcome: Reviewers can distinguish observed estate conditions from missing, failed, or prohibited collection paths.
+        description: Maintain a collection ledger that records successful scope, partial results, failures, unavailability, and resulting coverage effects.
+        includedScope: [Collection ledger, Failure classification, Unavailable-source record, Coverage effects]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["No failed, partial, unavailable, or prohibited collection path is silently treated as an empty result"]
+        deliverables: &p1e04s03_artifacts [Collection and evidence-limitation ledger]
+        dependencies: [PQC-P1-E04-S02]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Discovery lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 3, endWeek: 5}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e04s03_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e04
+        legacyGroup: Baseline assessment
+        legacyRefs: [S2.3.1, S5.1.1, S6.1.2]
+    status: proposed
+    legacyRefs: [E2, E5, F2.2, F2.3, F5.1, F5.2, F5.3]
+
+  - id: PQC-P1-E05
+    phaseRef: P1
+    name: Normalize, Correlate, and Measure Inventory Coverage
+    purpose: Convert disconnected source records into a traceable canonical estate with visible conflicts and uncertainty.
+    includedWork: [Canonical observation normalization, Evidence-preserving correlation, Coverage and data-quality measurement]
+    boundaries:
+      excludedWork: *phase1_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: The inventory has stable planning identities, traceable evidence, documented correlation confidence, and quantified coverage and unknowns.
+      acceptanceCriteria: [Conflicting evidence remains visible, Coverage uses explicit denominators and unknown categories]
+      requiredEvidence: [Canonical estate view, Correlation record, Coverage and data-quality report]
+      decisionOwnerRoles: [Inventory lead, Technical review lead]
+    targetWindow: {mode: relative, startWeek: 3, endWeek: 6}
+    dependencies: [PQC-P1-E04]
+    gateRefs: [PQC-P1-G02]
+    ownerRole: Inventory lead
+    reviewerRoles: *phase1_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-CANONICAL-ESTATE
+        authority: internal_method
+        referenceIds: [CryptoAsset, CryptoDependency, CryptoObservation]
+        relationship: direct
+        note: Canonical assets and dependencies reconcile observations while retaining provider-native references, provenance, confidence, and conflicts.
+    stories:
+      - id: PQC-P1-E05-S01
+        summary: Normalize observations into the canonical cryptographic asset model
+        outcome: Heterogeneous observations can be compared through consistent asset and relationship semantics without losing source-native provenance.
+        description: Map admitted observations into stable canonical profiles while preserving provider references, collection timestamps, confidence, and evidence custody.
+        includedScope: [Canonical field mapping, Stable identities, Source provenance]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: [Normalized records preserve source references and reject unsupported or empty observations]
+        deliverables: &p1e05s01_artifacts [Normalized cryptographic estate dataset]
+        dependencies: [PQC-P1-E04-S02]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Inventory lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 3, endWeek: 4}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e05s01_artifacts
+          basisRefs: *phase1_sources
+        frameworkProof:
+          currentLevel: concept
+          targetLevel: contract_tested
+          basisRefs: [SRC-PQC-METHOD]
+        jiraProjection: &jira_p1e05
+          issueType: Story
+          parentPlanningId: PQC-P1-E05
+          fixVersion: Phase 1
+          labels: [pqc-assessment, phase-1]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Canonical inventory contract
+        legacyRefs: [S2.1.1, S2.3.1, S5.1.1]
+      - id: PQC-P1-E05-S02
+        summary: Correlate assets, services, endpoints, CIs, owners, and dependencies
+        outcome: Related observations form a traceable estate graph with confirmed and inferred relationships clearly distinguished.
+        description: Correlate records through stable source identifiers, cryptographic fingerprints, endpoint identity, configuration-item references, and reviewed inference rules.
+        includedScope: [Identity resolution, Dependency correlation, Confidence and conflict tracking]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Each relationship records provenance, confidence, and whether it is observed, asserted, or inferred"]
+        deliverables: &p1e05s02_artifacts [Correlated cryptographic asset and dependency graph]
+        dependencies: [PQC-P1-E05-S01]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Inventory lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 4, endWeek: 5}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e05s02_artifacts
+          basisRefs: *phase1_sources
+        frameworkProof:
+          currentLevel: concept
+          targetLevel: contract_tested
+          basisRefs: [SRC-PQC-METHOD]
+        jiraProjection: *jira_p1e05
+        legacyGroup: Canonical inventory contract
+        legacyRefs: [S2.1.1, S3.1.1, S5.1.1, S5.3.1]
+      - id: PQC-P1-E05-S03
+        summary: Measure coverage, duplication, staleness, conflicts, confidence, and unknowns
+        outcome: Stakeholders can see what was assessed, how well it was assessed, and where evidence is missing or contradictory.
+        description: Calculate source and domain coverage using declared denominators and report unmatched records, duplicates, stale evidence, conflicts, low-confidence links, and unknown ownership.
+        includedScope: [Coverage measures, Data-quality measures, Unknown and conflict register]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Every coverage claim states its denominator, evidence basis, and limitation"]
+        deliverables: &p1e05s03_artifacts [Coverage and inventory-quality report]
+        dependencies: [PQC-P1-E04-S03, PQC-P1-E05-S02]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Inventory lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 5, endWeek: 6}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e05s03_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e05
+        legacyGroup: Baseline assessment
+        legacyRefs: [S2.1.2, S2.3.2, S5.1.1, S6.3.1]
+    status: proposed
+    legacyRefs: [E2, E3, E6, F2.1, F2.3, F3.1, F5.1, F6.3]
+
+  - id: PQC-P1-E06
+    phaseRef: P1
+    name: Map Business, Data, Regulatory, and Technical Dependencies
+    purpose: Attach the enterprise context needed to understand where cryptographic assets matter and to support later risk analysis.
+    includedWork: [Business-service and ownership mapping, Data and obligation context, "Regional, third-party, and technical dependency validation"]
+    boundaries:
+      excludedWork: *phase1_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Material assets and findings can be traced to relevant services, data, owners, dependencies, and obligations or are explicitly marked as missing that context.
+      acceptanceCriteria: [Context relationships preserve provenance and confidence, Missing ownership or impact context remains explicit]
+      requiredEvidence: [Business and data context map, Dependency map, Context-gap register]
+      decisionOwnerRoles: [Business analysis lead, Assessment lead]
+    targetWindow: {mode: relative, startWeek: 4, endWeek: 7}
+    dependencies: [PQC-P1-E05]
+    gateRefs: [PQC-P1-G02]
+    ownerRole: Business analysis lead
+    reviewerRoles: *phase1_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-DEPENDENCY-GRAPH
+        authority: internal_method
+        referenceIds: [CryptoDependency, CryptoAsset]
+        relationship: direct
+        note: The dependency graph relates cryptographic assets to consumers, owners, business services, data, external parties, and infrastructure without turning context into a risk score.
+    stories:
+      - id: PQC-P1-E06-S01
+        summary: Map assets to business services, owners, and critical processes
+        outcome: Material cryptographic assets have accountable ownership and business-service context or an explicit unresolved-owner state.
+        description: Connect canonical assets to service and process records, owner roles, criticality context, and recovery expectations where authorized evidence exists.
+        includedScope: [Business-service relationships, Owner roles, Critical-process context]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Each material mapping records source, confidence, and unresolved ownership where applicable"]
+        deliverables: &p1e06s01_artifacts [Business-service and ownership map]
+        dependencies: [PQC-P1-E05-S02]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Business analysis lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 4, endWeek: 5}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e06s01_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: &jira_p1e06
+          issueType: Story
+          parentPlanningId: PQC-P1-E06
+          fixVersion: Phase 1
+          labels: [pqc-assessment, phase-1]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Context and prioritization
+        legacyRefs: [S2.1.1, S3.1.1, S7.2.1]
+      - id: PQC-P1-E06-S02
+        summary: Map data classifications, confidentiality lifetimes, and obligations
+        outcome: Material assets have traceable data-protection context needed for later quantum-exposure and impact analysis.
+        description: Relate assets and services to authorized data classifications, expected confidentiality periods, retention context, and regulatory or contractual obligations.
+        includedScope: [Data classification, Confidentiality lifetime, Retention and obligation context]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: [Each material context record is sourced and distinguishes confirmed values from unknown or assumed values]
+        deliverables: &p1e06s02_artifacts [Data-lifetime and obligation context map]
+        dependencies: [PQC-P1-E06-S01]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Data and compliance liaison
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 5, endWeek: 6}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e06s02_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e06
+        legacyGroup: Context and prioritization
+        legacyRefs: [S2.1.1, S3.1.1, S6.2.2]
+      - id: PQC-P1-E06-S03
+        summary: Validate technical, regional, third-party, and service dependencies
+        outcome: The assessment exposes shared dependencies, external constraints, regional placement, and unknown relationship paths that may affect risk.
+        description: Validate technical and organizational dependency paths and record confidence, blast-radius context, third-party reliance, and missing relationship evidence.
+        includedScope: [Technical dependencies, Regional placement, Third-party relationships, Context gaps]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: [Material dependencies and missing relationships are visible with source and confidence]
+        deliverables: &p1e06s03_artifacts [Validated dependency and context-gap map]
+        dependencies: [PQC-P1-E05-S03, PQC-P1-E06-S01, PQC-P1-E06-S02]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Business analysis lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 5, endWeek: 7}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e06s03_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e06
+        legacyGroup: Context and prioritization
+        legacyRefs: [S2.1.1, S3.1.1, S5.3.1, S7.2.1]
+    status: proposed
+    legacyRefs: [E3, E7, F3.1, F5.3, F7.2]
+
+  - id: PQC-P1-E07
+    phaseRef: P1
+    name: Identify Exposure, Legacy Implementations, and Evidence Gaps
+    purpose: Form evidence-backed findings about technical exposure and assessment limitations without prematurely assigning final risk.
+    includedWork: [Cryptographic exposure findings, Legacy and configurability constraints, Evidence-gap and Phase 2 candidate record]
+    boundaries:
+      excludedWork: *phase1_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Findings have evidence, affected scope, confidence, ownership state, and an explanation of uncertainty without presenting Phase 2 risk conclusions.
+      acceptanceCriteria: [Findings distinguish observation from interpretation, Evidence gaps are not mislabeled as technical findings]
+      requiredEvidence: [Phase 1 finding register, Legacy constraint register, Evidence-gap and Phase 2 candidate list]
+      decisionOwnerRoles: [Assessment lead, Technical review lead]
+    targetWindow: {mode: relative, startWeek: 5, endWeek: 7}
+    dependencies: [PQC-P1-E05, PQC-P1-E06]
+    gateRefs: [PQC-P1-G02]
+    ownerRole: Assessment lead
+    reviewerRoles: *phase1_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-FINDING
+        authority: internal_method
+        referenceIds: [Finding, CryptoAsset, CryptoDependency]
+        relationship: direct
+        note: Findings bind an observed condition to affected scope, evidence, confidence, and limitations; they remain distinct from Phase 2 risk ratings and remediation authority.
+    stories:
+      - id: PQC-P1-E07-S01
+        summary: Identify relevant algorithm, protocol, key-length, and exposure conditions
+        outcome: Material cryptographic conditions are expressed as evidence-linked findings with clear affected scope and confidence.
+        description: Evaluate observed cryptographic metadata against the approved assessment criteria and document relevant conditions without final risk scoring.
+        includedScope: [Algorithm and protocol conditions, Key-strength conditions, Exposure context]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Each finding cites observations, affected scope, criteria, confidence, and uncertainty"]
+        deliverables: &p1e07s01_artifacts [Cryptographic exposure finding set]
+        dependencies: [PQC-P1-E05-S02, PQC-P1-E06-S02]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 5, endWeek: 6}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e07s01_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: &jira_p1e07
+          issueType: Story
+          parentPlanningId: PQC-P1-E07
+          fixVersion: Phase 1
+          labels: [pqc-assessment, phase-1]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Baseline assessment
+        legacyRefs: [S3.1.1, S5.2.1, S5.3.1]
+      - id: PQC-P1-E07-S02
+        summary: Identify legacy, unsupported, fixed, or non-configurable implementations
+        outcome: The assessment exposes crypto-agility constraints and technology states that may limit future migration choices.
+        description: Record unsupported, obsolete, embedded, fixed-profile, or non-configurable implementations with evidence, ownership, dependency, and uncertainty.
+        includedScope: [Legacy technology, Support state, Configurability and agility constraints]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Each constraint records affected scope, evidence, owner state, and whether additional validation is required"]
+        deliverables: &p1e07s02_artifacts [Legacy and configurability constraint register]
+        dependencies: [PQC-P1-E07-S01]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Technical review lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 6, endWeek: 7}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e07s02_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e07
+        legacyGroup: Vertical proof slices
+        legacyRefs: [S5.3.1]
+      - id: PQC-P1-E07-S03
+        summary: Document evidence gaps, unknowns, and Phase 2 analysis candidates
+        outcome: Phase 2 receives a transparent record of missing evidence, unresolved context, and findings requiring deeper analysis.
+        description: Consolidate evidence gaps and unknowns separately from technical findings and state their coverage, confidence, escalation, and Phase 2 impact.
+        includedScope: [Evidence-gap register, Unknowns, Phase 2 analysis candidates]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Every gap states affected scope, consequence, owner or escalation role, and intended treatment"]
+        deliverables: &p1e07s03_artifacts [Evidence-gap and Phase 2 candidate register]
+        dependencies: [PQC-P1-E04-S03, PQC-P1-E05-S03, PQC-P1-E06-S03, PQC-P1-E07-S02]
+        gateRefs: [PQC-P1-G02]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 7, endWeek: 7}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e07s03_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e07
+        legacyGroup: Program measures
+        legacyRefs: [S6.3.1]
+    status: proposed
+    legacyRefs: [E3, E5, F3.1, F5.1, F5.2, F5.3, F6.3]
+
+  - id: PQC-P1-E08
+    phaseRef: P1
+    name: Produce and Review the Current-State Assessment Report
+    purpose: Consolidate Phase 1 evidence into the accepted PQC Current-State Assessment Report and a controlled Phase 2 input package.
+    includedWork: [Executive and technical report drafting, Findings review and factual reconciliation, Final report and Phase 2 handoff]
+    boundaries:
+      excludedWork: *phase1_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: The Current-State Assessment Report is delivered, reviewed, revised as appropriate, and accepted or dispositioned through governance.
+      acceptanceCriteria: ["The report separates observations, findings, limitations, and Phase 2 inputs", Review comments and acceptance state are recorded]
+      requiredEvidence: [Draft and final Phase 1 report, Findings review record, Phase 2 input package]
+      decisionOwnerRoles: [Engagement sponsor, Assessment lead]
+    targetWindow: {mode: relative, startWeek: 6, endWeek: 8}
+    dependencies: [PQC-P1-E07]
+    gateRefs: [PQC-P1-G03]
+    ownerRole: Assessment lead
+    reviewerRoles: *phase1_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-ASSESSMENT-REPORT
+        authority: internal_method
+        referenceIds: [Finding, KnowledgeSource, CryptoAsset, CryptoDependency]
+        relationship: supports
+        note: The report projects evidence-linked inventory, dependency, coverage, and finding records into a stakeholder deliverable without becoming a parallel evidence authority.
+    stories:
+      - id: PQC-P1-E08-S01
+        summary: Draft the executive, technical, scope, method, inventory, and findings sections
+        outcome: Reviewers receive a coherent draft that traces material conclusions to evidence and states coverage and limitations.
+        description: Assemble the Phase 1 report from governed assessment outputs, separating confirmed observations, interpretations, findings, unknowns, and limitations.
+        includedScope: [Executive summary, Scope and method, Inventory and coverage, Findings and limitations]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: [Every material conclusion is traceable and every completeness limitation is explicit]
+        deliverables: &p1e08s01_artifacts [Draft PQC Current-State Assessment Report]
+        dependencies: [PQC-P1-E05-S03, PQC-P1-E06-S03, PQC-P1-E07-S03]
+        gateRefs: [PQC-P1-G03]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 6, endWeek: 7}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e08s01_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: &jira_p1e08
+          issueType: Story
+          parentPlanningId: PQC-P1-E08
+          fixVersion: Phase 1
+          labels: [pqc-assessment, phase-1]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Program measures
+        legacyRefs: [S6.3.1]
+      - id: PQC-P1-E08-S02
+        summary: Conduct the Phase 1 findings-review session and reconcile factual feedback
+        outcome: Source owners and reviewers can challenge factual accuracy, provenance, confidence, scope, and limitations before finalization.
+        description: Facilitate a governed findings review, capture comments and decisions, and correct facts without rewriting unsupported stakeholder preferences as evidence.
+        includedScope: [Findings review, Comment and decision log, Factual corrections]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["Every material review comment is accepted, rejected, deferred, or escalated with rationale"]
+        deliverables: &p1e08s02_artifacts [Phase 1 findings-review and reconciliation record]
+        dependencies: [PQC-P1-E08-S01]
+        gateRefs: [PQC-P1-G03]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 7, endWeek: 8}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e08s02_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e08
+        legacyGroup: Test and benchmark framework
+        legacyRefs: [S6.1.1, S6.1.2, S6.2.2]
+      - id: PQC-P1-E08-S03
+        summary: Issue the final report and approved Phase 2 input package
+        outcome: Phase 1 concludes with a dispositioned assessment report and a controlled baseline for Phase 2.
+        description: Incorporate accepted factual corrections, issue the final deliverable, record acceptance or non-acceptance, and pin the Phase 2 input snapshot.
+        includedScope: [Final report, Acceptance disposition, Phase 2 baseline snapshot]
+        excludedScope: *phase1_excluded
+        acceptanceCriteria: ["The final report and Phase 2 package have stable references, evidence limitations, and recorded disposition"]
+        deliverables: &p1e08s03_artifacts [Final PQC Current-State Assessment Report, Phase 2 input package]
+        dependencies: [PQC-P1-E08-S02]
+        gateRefs: [PQC-P1-G03]
+        ownerRole: Assessment lead
+        reviewerRoles: *phase1_reviewers
+        targetWindow: {mode: relative, startWeek: 8, endWeek: 8}
+        sourceRefs: *phase1_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p1e08s03_artifacts
+          basisRefs: *phase1_sources
+        jiraProjection: *jira_p1e08
+        legacyGroup: Enablement and handoff
+        legacyRefs: [S7.2.1]
+    status: proposed
+    legacyRefs: [E6, E7, F6.1, F6.3, F7.2]
+
+  - id: PQC-P2-E01
+    phaseRef: P2
+    name: Confirm Risk Method and Phase 2 Readiness
+    purpose: Confirm that Phase 1 evidence is fit for risk analysis and establish transparent risk, confidence, prioritization, and exception rules.
+    includedWork: [Phase 2 entry assessment, Risk-rating and confidence method, Exception and incomplete-evidence governance]
+    boundaries:
+      excludedWork: &phase2_excluded [Production remediation planning or execution, Acceptance of risk or exceptions by unauthorized roles, Claims that recommendations are approved implementation commitments]
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: The risk method is accepted, required Phase 1 inputs are available, and material evidence gaps have an agreed treatment.
+      acceptanceCriteria: [Risk dimensions and confidence rules are reproducible, Incomplete evidence and exceptions have explicit governance]
+      requiredEvidence: [Phase 2 readiness record, Approved risk method, Exception and review rules]
+      decisionOwnerRoles: [Risk lead, Engagement sponsor]
+    targetWindow: {mode: relative, startWeek: 9, endWeek: 10}
+    dependencies: [PQC-P1-E08]
+    gateRefs: [PQC-P2-G01]
+    ownerRole: Risk lead
+    reviewerRoles: &phase2_reviewers [Assessment lead, Business review lead, Engagement sponsor]
+    frameworkCrosswalk:
+      - frameworkId: FW-RISK-METHOD
+        authority: internal_method
+        referenceIds: [Finding, WorkItem]
+        relationship: prerequisite
+        note: The risk method evaluates admitted findings and may identify candidate work items; it does not authorize remediation or external effects.
+    stories:
+      - id: PQC-P2-E01-S01
+        summary: Validate the Phase 1 baseline and Phase 2 entry conditions
+        outcome: Risk analysis begins from a pinned, dispositioned baseline with known limitations and explicit unresolved inputs.
+        description: Review the Phase 1 inventory, findings, context, evidence gaps, and acceptance state against Phase 2 entry criteria.
+        includedScope: [Baseline fitness review, Evidence-gap treatment, Phase 2 entry disposition]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Every material Phase 1 limitation is accepted, supplemented, deferred, or marked as a risk-analysis constraint"]
+        deliverables: &p2e01s01_artifacts [Phase 2 readiness and baseline disposition record]
+        dependencies: [PQC-P1-E08-S03]
+        gateRefs: [PQC-P2-G01]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 9, endWeek: 9}
+        sourceRefs: &phase2_sources [SRC-ASSESSMENT-OUTLINE, SRC-PQC-METHOD]
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e01s01_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: &jira_p2e01
+          issueType: Story
+          parentPlanningId: PQC-P2-E01
+          fixVersion: Phase 2
+          labels: [pqc-assessment, phase-2]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Context and prioritization
+        legacyRefs: [S3.1.2]
+      - id: PQC-P2-E01-S02
+        summary: Establish the risk dimensions, ratings, confidence, and prioritization method
+        outcome: Material findings can be analyzed through transparent and repeatable technical, impact, confidence, and priority rules.
+        description: Define risk dimensions, scales, aggregation or decision logic, confidence treatment, prioritization criteria, and required evidence.
+        includedScope: [Risk dimensions, Rating scales, Confidence treatment, Priority rules]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["The method is versioned, explainable, and testable against representative synthetic cases"]
+        deliverables: &p2e01s02_artifacts [Approved PQC risk-analysis and prioritization method]
+        dependencies: [PQC-P2-E01-S01]
+        gateRefs: [PQC-P2-G01]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 9, endWeek: 10}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e01s02_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e01
+        legacyGroup: Context and prioritization
+        legacyRefs: [S1.2.2, S3.1.2]
+      - id: PQC-P2-E01-S03
+        summary: Establish exception, incomplete-evidence, and review governance
+        outcome: Exceptions, missing evidence, disagreements, and rating changes receive accountable review and explicit disposition.
+        description: Define exception categories, expiry and review expectations, incomplete-evidence handling, separation of duties, and escalation paths.
+        includedScope: [Exception rules, Missing-evidence treatment, Review and escalation authority]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: [No exception or unresolved evidence state can silently reduce or close a risk]
+        deliverables: &p2e01s03_artifacts [Risk exception and review governance record]
+        dependencies: [PQC-P2-E01-S02]
+        gateRefs: [PQC-P2-G01]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 10, endWeek: 10}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e01s03_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e01
+        legacyGroup: Operational controls
+        legacyRefs: [S1.2.2, S6.2.1]
+    status: proposed
+    legacyRefs: [E3, E6, F1.2, F3.1, F6.2]
+
+  - id: PQC-P2-E02
+    phaseRef: P2
+    name: Analyze Cryptographic Exposure and Decryption Scenarios
+    purpose: Evaluate the technical significance of observed cryptographic conditions, data lifetime, adversary opportunity, and migration constraints.
+    includedWork: [Algorithm and protocol exposure analysis, Store-now/decrypt-later scenarios, Crypto-agility and concentration analysis]
+    boundaries:
+      excludedWork: *phase2_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Each material exposure has a documented technical rationale, affected scope, uncertainty, and relationship to future migration concerns.
+      acceptanceCriteria: [Exposure scenarios are evidence-linked and avoid unsupported threat certainty, Migration constraints remain analysis rather than commitments]
+      requiredEvidence: [Technical exposure analysis, Data-lifetime scenario analysis, Crypto-agility and concentration assessment]
+      decisionOwnerRoles: [Risk lead, Technical review lead]
+    targetWindow: {mode: relative, startWeek: 10, endWeek: 13}
+    dependencies: [PQC-P2-E01]
+    gateRefs: [PQC-P2-G02]
+    ownerRole: Cryptographic risk analyst
+    reviewerRoles: *phase2_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-EXPOSURE-ANALYSIS
+        authority: internal_method
+        referenceIds: [Finding, CryptoAsset, CryptoDependency]
+        relationship: direct
+        note: Technical scenarios enrich evidence-linked findings with exposure and dependency analysis while preserving uncertainty and provenance.
+    stories:
+      - id: PQC-P2-E02-S01
+        summary: Analyze algorithm, protocol, key-strength, and configuration exposure
+        outcome: Material current-state findings have a documented technical exposure rationale and affected scope.
+        description: Analyze observed algorithms, modes, protocols, key strengths, configurations, protection roles, and exposure duration under the approved method.
+        includedScope: [Technical exposure analysis, Protection-role context, Affected-scope rationale]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: [Each analysis traces to findings and observations and records uncertainty and confidence]
+        deliverables: &p2e02s01_artifacts [Cryptographic technical exposure analysis]
+        dependencies: [PQC-P2-E01-S02]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Cryptographic risk analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 10, endWeek: 12}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e02s01_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: &jira_p2e02
+          issueType: Story
+          parentPlanningId: PQC-P2-E02
+          fixVersion: Phase 2
+          labels: [pqc-assessment, phase-2]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Context and prioritization
+        legacyRefs: [S3.1.2, S4.1.2, S5.2.1, S5.3.1]
+      - id: PQC-P2-E02-S02
+        summary: Analyze data lifetime and store-now/decrypt-later scenarios
+        outcome: Long-lived protected data is evaluated against exposure timing, expected confidentiality duration, and evidence-backed adversary scenarios.
+        description: Relate protection mechanisms, data lifetime, exposure paths, and uncertainty to documented store-now/decrypt-later scenarios.
+        includedScope: [Data-lifetime analysis, Exposure timing, Scenario rationale and uncertainty]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Every scenario states assumptions, affected data context, technical basis, confidence, and limitations"]
+        deliverables: &p2e02s02_artifacts [Store-now/decrypt-later scenario analysis]
+        dependencies: [PQC-P1-E06-S02, PQC-P2-E02-S01]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Cryptographic risk analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 11, endWeek: 13}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e02s02_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e02
+        legacyGroup: Context and prioritization
+        legacyRefs: [S3.1.2]
+      - id: PQC-P2-E02-S03
+        summary: Analyze crypto-agility, concentration, and migration constraints
+        outcome: Risk analysis identifies shared dependencies, fixed profiles, technology constraints, and concentration factors that influence feasibility and urgency.
+        description: Analyze configurability, dependency concentration, shared trust or service relationships, compatibility, and change constraints without designing execution plans.
+        includedScope: [Crypto-agility analysis, Concentration analysis, Migration constraints]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Each constraint and concentration factor has traceable scope, evidence, confidence, and consequence"]
+        deliverables: &p2e02s03_artifacts [Crypto-agility and migration-constraint assessment]
+        dependencies: [PQC-P1-E07-S02, PQC-P2-E02-S01]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Cryptographic risk analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 11, endWeek: 13}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e02s03_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e02
+        legacyGroup: Target architecture
+        legacyRefs: [S1.2.2, S3.1.2, S4.1.1, S4.1.2, S5.2.1, S5.3.1]
+    status: proposed
+    legacyRefs: [E3, E4, F1.2, F3.1, F4.1, F5.2, F5.3]
+
+  - id: PQC-P2-E03
+    phaseRef: P2
+    name: Analyze Library, Vulnerability, and Vendor-Lifecycle Risk
+    purpose: Determine how software dependencies, vulnerability intelligence, support status, and vendor roadmaps affect risk and migration feasibility.
+    includedWork: [Library and module analysis, Vendor support and roadmap analysis, External dependency and blocker analysis]
+    boundaries:
+      excludedWork: *phase2_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Material library and vendor dependencies are reflected in risk analysis with blockers, provenance, confidence, and external dependencies.
+      acceptanceCriteria: [Vendor statements remain attributed claims until independently evidenced, Unsupported and end-of-life dependencies are visible]
+      requiredEvidence: [Library and vulnerability analysis, Vendor lifecycle register, External dependency and blocker record]
+      decisionOwnerRoles: [Risk lead, Technology owner roles]
+    targetWindow: {mode: relative, startWeek: 10, endWeek: 14}
+    dependencies: [PQC-P2-E01]
+    gateRefs: [PQC-P2-G02]
+    ownerRole: Technology risk analyst
+    reviewerRoles: *phase2_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-PROVENANCE-INTELLIGENCE
+        authority: internal_method
+        referenceIds: [KnowledgeSource, Finding]
+        relationship: supports
+        note: Source provenance and evidence status distinguish verified lifecycle facts, external guidance, and vendor claims in the risk record.
+    stories:
+      - id: PQC-P2-E03-S01
+        summary: Analyze cryptographic libraries, modules, versions, and vulnerability intelligence
+        outcome: Software cryptography dependencies and relevant vulnerability context are connected to affected assets and services.
+        description: Evaluate observed library and module versions, support state, known intelligence, exposure context, and evidence freshness.
+        includedScope: [Library and module inventory, Version and support analysis, Relevant vulnerability intelligence]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Each conclusion records source authority, version context, affected scope, freshness, and confidence"]
+        deliverables: &p2e03s01_artifacts ["Library, module, and vulnerability analysis"]
+        dependencies: [PQC-P2-E01-S02, PQC-P1-E07-S01]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Technology risk analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 10, endWeek: 12}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e03s01_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: &jira_p2e03
+          issueType: Story
+          parentPlanningId: PQC-P2-E03
+          fixVersion: Phase 2
+          labels: [pqc-assessment, phase-2]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Repository and software-supply-chain slice
+        legacyRefs: [S5.1.1]
+      - id: PQC-P2-E03-S02
+        summary: Analyze vendor support, end-of-life status, and published roadmaps
+        outcome: Decision-makers can distinguish supported migration paths, unsupported products, uncertain roadmaps, and externally controlled timelines.
+        description: Record vendor support evidence, lifecycle dates or relative states, roadmap claims, upgrade paths, product editions, and provenance without treating claims as proof.
+        includedScope: [Support status, End-of-life state, Roadmap and upgrade-path evidence]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Every vendor conclusion identifies product context, source authority, retrieval state, and evidence confidence"]
+        deliverables: &p2e03s02_artifacts [Vendor support and lifecycle register]
+        dependencies: [PQC-P2-E03-S01]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Technology risk analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 11, endWeek: 13}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e03s02_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e03
+        legacyGroup: Build, buy, and integrate
+        legacyRefs: [S4.2.1]
+      - id: PQC-P2-E03-S03
+        summary: Identify external dependencies, unsupported products, and vendor blockers
+        outcome: Risk records expose dependencies and blockers that the assessed organization cannot resolve unilaterally.
+        description: Consolidate third-party timing, interoperability dependencies, unsupported technology, uncertain roadmaps, and external decision needs.
+        includedScope: [External dependencies, Unsupported products, Vendor and interoperability blockers]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Each blocker has affected scope, accountable role, provenance, uncertainty, and next decision"]
+        deliverables: &p2e03s03_artifacts [External dependency and vendor-blocker register]
+        dependencies: [PQC-P2-E03-S02]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Technology risk analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 12, endWeek: 14}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e03s03_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e03
+        legacyGroup: Migration waves
+        legacyRefs: [S3.2.1, S4.2.1, S6.3.1]
+    status: proposed
+    legacyRefs: [E4, E5, F3.2, F4.2, F5.1, F6.3]
+
+  - id: PQC-P2-E04
+    phaseRef: P2
+    name: Evaluate Business-Service and Operational Impact
+    purpose: Translate technical exposure into business, operational, regulatory, customer, and reputational consequences.
+    includedWork: [Business-service and critical-process impact, Data and obligation impact, Operational disruption and blast-radius impact]
+    boundaries:
+      excludedWork: *phase2_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Material technical risks have documented business-service impact, affected stakeholders, consequence rationale, and unresolved context gaps.
+      acceptanceCriteria: [Impact statements trace to technical findings and business context, Unknown impact context remains explicit]
+      requiredEvidence: [Business-service impact analysis, Data and obligation impact analysis, Operational impact analysis]
+      decisionOwnerRoles: [Business review lead, Risk lead]
+    targetWindow: {mode: relative, startWeek: 11, endWeek: 15}
+    dependencies: [PQC-P2-E02, PQC-P2-E03]
+    gateRefs: [PQC-P2-G02]
+    ownerRole: Business impact analyst
+    reviewerRoles: *phase2_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-IMPACT-CONTEXT
+        authority: internal_method
+        referenceIds: [CryptoDependency, Finding]
+        relationship: direct
+        note: Business and technical dependency context links findings to consequence analysis while keeping evidence confidence and missing context visible.
+    stories:
+      - id: PQC-P2-E04-S01
+        summary: Evaluate business-service and critical-process impact
+        outcome: Material technical exposure is translated into service, process, availability, and operational consequences meaningful to accountable owners.
+        description: Evaluate how affected assets and shared dependencies support critical services and processes and how cryptographic failure or migration constraints could affect them.
+        includedScope: [Service impact, Critical-process impact, Availability and operational consequences]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Each impact statement links affected findings, dependencies, business context, confidence, and uncertainty"]
+        deliverables: &p2e04s01_artifacts [Business-service and critical-process impact analysis]
+        dependencies: [PQC-P1-E06-S01, PQC-P2-E02-S01]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Business impact analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 11, endWeek: 13}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e04s01_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: &jira_p2e04
+          issueType: Story
+          parentPlanningId: PQC-P2-E04
+          fixVersion: Phase 2
+          labels: [pqc-assessment, phase-2]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Context and prioritization
+        legacyRefs: [S3.1.1, S7.2.1]
+      - id: PQC-P2-E04-S02
+        summary: Evaluate data, regulatory, contractual, customer, and reputational impact
+        outcome: Risk analysis captures confidentiality, integrity, obligation, stakeholder, and trust consequences associated with material exposure.
+        description: Use authorized context to evaluate data sensitivity and lifetime, regulatory and contractual obligations, and customer or reputational consequences.
+        includedScope: [Data impact, Regulatory and contractual impact, Customer and reputational consequence]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Every impact rating or narrative identifies evidence, assumption, affected scope, confidence, and accountable reviewer role"]
+        deliverables: &p2e04s02_artifacts ["Data, obligation, customer, and reputational impact analysis"]
+        dependencies: [PQC-P1-E06-S02, PQC-P2-E02-S02]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Business impact analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 12, endWeek: 14}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e04s02_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e04
+        legacyGroup: Program measures
+        legacyRefs: [S3.1.1, S6.2.2]
+      - id: PQC-P2-E04-S03
+        summary: Evaluate operational disruption, regional blast radius, and recovery implications
+        outcome: Decision-makers understand how shared, regional, third-party, and recovery dependencies change the consequence of exposure or future migration.
+        description: Analyze operational disruption scenarios, regional and shared-service concentration, recovery expectations, and external dependency effects.
+        includedScope: [Operational disruption, Regional and shared-service blast radius, Recovery implications]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Each scenario traces to dependency evidence and states assumptions, confidence, and unresolved context"]
+        deliverables: &p2e04s03_artifacts ["Operational, regional, and recovery impact analysis"]
+        dependencies: [PQC-P1-E06-S03, PQC-P2-E02-S03, PQC-P2-E03-S03]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Business impact analyst
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 13, endWeek: 15}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e04s03_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e04
+        legacyGroup: Sustainable operating model
+        legacyRefs: [S3.1.1, S7.2.1]
+    status: proposed
+    legacyRefs: [E3, E6, E7, F3.1, F7.2]
+
+  - id: PQC-P2-E05
+    phaseRef: P2
+    name: Prioritize Risks, Candidates, and Exceptions
+    purpose: Produce a transparent order of attention and decision-ready cohorts without creating remediation execution authority.
+    includedWork: [Evidence-based risk prioritization, Candidate cohort formation, Exception and unresolved-decision record]
+    boundaries:
+      excludedWork: *phase2_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: Risks can be compared consistently, priority decisions are justified, and exceptions or deferred items have an owner role and rationale.
+      acceptanceCriteria: [Priority factors and confidence remain visible, Candidate cohorts are recommendations rather than authorized change plans]
+      requiredEvidence: [Prioritized risk analysis, Candidate cohort register, Exception and decision record]
+      decisionOwnerRoles: [Risk lead, Engagement sponsor]
+    targetWindow: {mode: relative, startWeek: 14, endWeek: 16}
+    dependencies: [PQC-P2-E04]
+    gateRefs: [PQC-P2-G02]
+    ownerRole: Risk lead
+    reviewerRoles: *phase2_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-WORK-ITEM-CANDIDATE
+        authority: internal_method
+        referenceIds: [Finding, WorkItem]
+        relationship: supports
+        note: Prioritized findings may yield standardized investigation or remediation candidates, but a candidate work item is not an approved remediation plan or execution permit.
+    stories:
+      - id: PQC-P2-E05-S01
+        summary: Prioritize risks using technical exposure, impact, confidence, and feasibility
+        outcome: Material risks receive explainable relative priority based on the approved method and the best available evidence.
+        description: Combine technical exposure, data lifetime, business impact, service criticality, confidence, agility, and dependency factors under the approved decision rules.
+        includedScope: [Risk comparison, Priority rationale, Confidence and feasibility effects]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Each priority is reproducible from its factors, evidence, confidence, and approved exception treatment"]
+        deliverables: &p2e05s01_artifacts [Prioritized PQC risk analysis]
+        dependencies: [PQC-P2-E02-S03, PQC-P2-E03-S03, PQC-P2-E04-S03]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 14, endWeek: 15}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e05s01_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: &jira_p2e05
+          issueType: Story
+          parentPlanningId: PQC-P2-E05
+          fixVersion: Phase 2
+          labels: [pqc-assessment, phase-2]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Context and prioritization
+        legacyRefs: [S3.1.2, S3.2.1]
+      - id: PQC-P2-E05-S02
+        summary: Group remediation and investigation candidates into decision-ready cohorts
+        outcome: Decision-makers receive coherent candidate groups based on shared urgency, dependency, feasibility, ownership, and evidence needs.
+        description: Group risks into recommended remediation, further-investigation, vendor-dependent, and owner-touch cohorts without producing execution plans or commitments.
+        includedScope: [Candidate cohorts, Ordering rationale, Dependencies and next decisions]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Each cohort states rationale, included risks, dependency state, owner role, and next decision"]
+        deliverables: &p2e05s02_artifacts [Decision-ready remediation and investigation candidate cohorts]
+        dependencies: [PQC-P2-E05-S01]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 15, endWeek: 16}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e05s02_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e05
+        legacyGroup: Migration waves
+        legacyRefs: [S3.2.1]
+      - id: PQC-P2-E05-S03
+        summary: Document exceptions, deferrals, vendor dependencies, and unresolved decisions
+        outcome: Deferred or exception-bound risks remain visible, time-bounded where applicable, and connected to accountable review and future decisions.
+        description: Record exception rationale, confidence, compensating context, review points, vendor dependencies, unresolved choices, and escalation needs.
+        includedScope: [Exceptions, Deferrals, Vendor dependencies, Unresolved decisions]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Every exception or deferral has rationale, owner role, review trigger, and visible residual uncertainty"]
+        deliverables: &p2e05s03_artifacts ["Exception, deferral, and unresolved-decision register"]
+        dependencies: [PQC-P2-E01-S03, PQC-P2-E05-S02]
+        gateRefs: [PQC-P2-G02]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 15, endWeek: 16}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e05s03_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e05
+        legacyGroup: Operational controls
+        legacyRefs: [S3.2.1, S6.2.1]
+    status: proposed
+    legacyRefs: [E3, E6, F3.1, F3.2, F6.2]
+
+  - id: PQC-P2-E06
+    phaseRef: P2
+    name: Produce and Review the PQC Risk Register
+    purpose: Deliver the authoritative Phase 2 risk register, reconcile stakeholder challenge, and obtain formal disposition.
+    includedWork: [Evidence-linked risk-register assembly, Stakeholder challenge and correction, Final register and engagement handoff]
+    boundaries:
+      excludedWork: *phase2_excluded
+      authorityLimits: *authority_limits
+      dataHandlingConstraints: *data_constraints
+      evidenceConstraints: *evidence_constraints
+    completion:
+      description: The risk register has been delivered, reviewed, reconciled with stakeholder feedback, and accepted or formally dispositioned.
+      acceptanceCriteria: [Every risk has a stable identity and evidence-linked rationale, Final acceptance does not create remediation execution authority]
+      requiredEvidence: [Draft and final PQC Risk Register, Stakeholder review record, Engagement handoff package]
+      decisionOwnerRoles: [Engagement sponsor, Risk lead]
+    targetWindow: {mode: relative, startWeek: 16, endWeek: 18}
+    dependencies: [PQC-P2-E05]
+    gateRefs: [PQC-P2-G03]
+    ownerRole: Risk lead
+    reviewerRoles: *phase2_reviewers
+    frameworkCrosswalk:
+      - frameworkId: FW-RISK-REGISTER
+        authority: internal_method
+        referenceIds: [Finding, WorkItem, GovernanceDecision]
+        relationship: supports
+        note: The risk register projects evidence-linked analysis, priorities, candidates, and exceptions into a governed deliverable without becoming execution authority.
+    stories:
+      - id: PQC-P2-E06-S01
+        summary: Assemble evidence-linked risk-register entries
+        outcome: Each material risk has a stable identity, affected scope, evidence, technical and business rationale, priority, confidence, owner role, and proposed treatment direction.
+        description: Build the risk register from validated analyses and candidate records, preserving evidence links, limitations, dependencies, exceptions, and review state.
+        includedScope: [Risk statements, Ratings and priority, Evidence and provenance, Ownership and treatment direction]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: [Every register entry satisfies the approved method and links to supporting analysis and evidence]
+        deliverables: &p2e06s01_artifacts [Draft evidence-linked PQC Risk Register]
+        dependencies: [PQC-P2-E05-S01, PQC-P2-E05-S02, PQC-P2-E05-S03]
+        gateRefs: [PQC-P2-G03]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 16, endWeek: 17}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e06s01_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: &jira_p2e06
+          issueType: Story
+          parentPlanningId: PQC-P2-E06
+          fixVersion: Phase 2
+          labels: [pqc-assessment, phase-2]
+          component: PQC Assessment
+          excluded: false
+        legacyGroup: Test and benchmark framework
+        legacyRefs: [S6.1.2, S6.2.2, S6.3.1]
+      - id: PQC-P2-E06-S02
+        summary: Conduct stakeholder review, challenge, and correction
+        outcome: Accountable reviewers can challenge risk facts, ratings, confidence, priorities, ownership, and recommendations before finalization.
+        description: Facilitate a governed risk review and record accepted corrections, rejected changes, unresolved disagreement, exceptions, and escalation.
+        includedScope: [Risk review session, Comment and decision record, Controlled corrections]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: [Every material challenge receives a documented disposition and evidence rationale]
+        deliverables: &p2e06s02_artifacts [Phase 2 risk-review and reconciliation record]
+        dependencies: [PQC-P2-E06-S01]
+        gateRefs: [PQC-P2-G03]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 17, endWeek: 18}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e06s02_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e06
+        legacyGroup: Operational controls
+        legacyRefs: [S6.1.1]
+      - id: PQC-P2-E06-S03
+        summary: Issue the accepted register, recommendations, exceptions, and handoff package
+        outcome: The engagement closes with a dispositioned risk register and decision-ready recommendations that remain distinct from approved remediation plans.
+        description: Incorporate accepted corrections, issue final deliverables, record acceptance or non-acceptance, and preserve exceptions, limitations, and future decision boundaries.
+        includedScope: [Final risk register, Recommendations, Exceptions, Engagement handoff and disposition]
+        excludedScope: *phase2_excluded
+        acceptanceCriteria: ["Final artifacts have stable references, evidence boundaries, unresolved decisions, and recorded disposition"]
+        deliverables: &p2e06s03_artifacts [Final PQC Risk Register, Recommendation and exception record, Engagement handoff package]
+        dependencies: [PQC-P2-E06-S02]
+        gateRefs: [PQC-P2-G03]
+        ownerRole: Risk lead
+        reviewerRoles: *phase2_reviewers
+        targetWindow: {mode: relative, startWeek: 18, endWeek: 18}
+        sourceRefs: *phase2_sources
+        status: proposed
+        deliveryEvidence:
+          status: planned
+          requiredArtifacts: *p2e06s03_artifacts
+          basisRefs: *phase2_sources
+        jiraProjection: *jira_p2e06
+        legacyGroup: Sustainable operating model
+        legacyRefs: [S6.3.1, S7.2.1, S7.2.2]
+    status: proposed
+    legacyRefs: [E6, E7, F6.1, F6.2, F6.3, F7.2]
+
+futureStateAppendix:
+  purpose: Preserve a non-committed path from assessment findings to governed remediation while keeping effectful work outside the two-phase assessment backlog.
+  boundaries:
+    - Appendix items are not engagement commitments, Jira work items, approved architectures, or evidence of implemented capability.
+    - Every future external effect requires separate scope, authority, private evidence handling, change control, rollback, and independent verification.
+    - Human approval and separation-of-duty requirements remain in force even where automation is technically possible.
+  jiraProjection: false
+  futureAuthorizationRequired: true
+  items:
+    - id: FUT-01
+      name: Standardized remediation work-item lifecycle
+      rationale: Translate prioritized findings into asset-type-specific work items only after remediation scope and ownership are approved.
+      futureEntryCriteria: [Remediation taxonomy approved, Accountable owner and ticket authority confirmed]
+      legacyRefs: [E5, F5.1, F5.2, F5.3, F6.2, S5.1.2, S5.2.2, S5.3.2, S6.2.1]
+    - id: FUT-02
+      name: Immutable remediation planning and approval binding
+      rationale: Bind future changes to a versioned plan, asset state, approval record, window, rollback path, and one-use execution authority.
+      futureEntryCriteria: [Plan and permit contracts approved, Approval and separation-of-duty policy confirmed]
+      legacyRefs: [E4, E6, F1.2, F4.1, F6.2, S1.2.2, S4.1.1, S4.2.2, S5.1.2, S5.2.2, S5.3.2, S6.1.2, S6.2.1]
+    - id: FUT-03
+      name: Ticket and change lifecycle automation
+      rationale: Integrate governed work items with ticket, change, task, approval, evidence, and closure workflows through provider-neutral ports.
+      futureEntryCriteria: [Authorized integration environment available, Ticket and change policies mapped, Idempotency behavior tested]
+      legacyRefs: [E6, F6.2, S6.2.1]
+    - id: FUT-04
+      name: Controlled execution and rollback adapters
+      rationale: Implement exact-plan, approval-bound, ledgered, reversible actions only for asset classes with safe provider behavior and readback.
+      futureEntryCriteria: [Execution authority granted, Provider capabilities proven, Rollback and failure boundaries accepted]
+      legacyRefs: [E4, E5, E6, F1.2, F4.1, F4.2, F5.1, F5.2, F5.3, F6.1, F6.2, S1.2.2, S4.1.1, S4.1.2, S4.2.1, S4.2.2, S5.1.2, S5.2.1, S5.2.2, S5.3.2, S6.1.1, S6.2.1, S6.3.1]
+    - id: FUT-05
+      name: Independent verification, reharvest, and closure guard
+      rationale: Close future work only when independent readback and fresh inventory evidence match the approved target state.
+      futureEntryCriteria: [Verification sources approved, Closure policy and stale-state rules accepted]
+      legacyRefs: [E4, E5, E6, F4.1, F5.1, F5.2, F5.3, F6.1, F6.2, S4.1.1, S4.1.2, S5.1.2, S5.2.1, S5.2.2, S5.3.2, S6.1.1, S6.1.2, S6.2.1, S6.3.1]
+    - id: FUT-06
+      name: Optional migration roadmap and operating-model extension
+      rationale: Convert accepted risks and candidates into capacity-aware horizons, ownership, training, and operating practices under separate scope.
+      futureEntryCriteria: [Roadmap horizon and capacity assumptions approved, Operating-model and enablement scope authorized]
+      legacyRefs: [E3, E7, F3.2, F7.1, F7.2, S3.2.2, S7.1.1, S7.1.2, S7.2.1, S7.2.2]
+
+jiraProjection:
+  authority: projection_only
+  hierarchy: Initiative>Epic>Story
+  phaseMapping: fix_version
+  initiativeFallback: omit_initiative_row
+  excludeFutureStateAppendix: true

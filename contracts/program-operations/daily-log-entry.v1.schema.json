@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/daily-log-entry.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "DailyLogEntry.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "entryId", "programId", "projectDayRef", "recordedAt", "category", "summary", "references", "recordStatus"],
+  "properties": {
+    "schemaVersion": {"const": "DailyLogEntry.v1"},
+    "entryId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "projectDayRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "recordedAt": {"$ref": "program-operations-common.v1.schema.json#/$defs/timestamp"},
+    "category": {"type": "string", "enum": ["progress", "decision", "blocker", "interruption", "evidence", "forecast", "close"]},
+    "summary": {"type": "string", "minLength": 3, "maxLength": 2000},
+    "references": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"},
+    "supersedesRecordId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"}
+  }
+}

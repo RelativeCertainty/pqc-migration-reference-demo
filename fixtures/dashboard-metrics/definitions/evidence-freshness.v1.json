@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "DashboardMetricDefinition.v1",
+  "metricDefinitionId": "metric:evidence-freshness:v1",
+  "name": "Evidence freshness",
+  "questionAnswered": "What fraction of eligible observations in the named projection is no older than the declared freshness threshold?",
+  "valueKind": "ratio",
+  "unit": "fraction",
+  "calculation": {
+    "formula": "eligible observations at or within the age threshold divided by all eligible observations",
+    "numeratorDefinition": "Eligible admitted observations whose observed time is not later than the as-of time and whose age is within the declared threshold.",
+    "denominatorDefinition": "All admitted observations eligible for the named projection, including stale observations but excluding quarantined or future-dated records.",
+    "missingDenominatorResult": "unavailable",
+    "zeroDenominatorResult": "unavailable",
+    "rounding": "Retain six decimal places in machine output; display percentages may round to one decimal place."
+  },
+  "scopeSemantics": {
+    "scopeReferenceRequired": true,
+    "denominatorSourceRequired": false,
+    "asOfTimestampRequired": true,
+    "unknownsExcludedFromSuccess": true,
+    "qualification": "The threshold, eligibility rule, oldest included observation, and projection as-of time must be shown together."
+  },
+  "interpretation": {
+    "doesMean": "The stated fraction of eligible evidence was observed within the declared age threshold.",
+    "doesNotMean": [
+      "Fresh evidence is accurate or complete.",
+      "The underlying asset remains unchanged after observation.",
+      "Quarantined or unavailable sources are fresh.",
+      "A migration outcome has been verified."
+    ],
+    "whenUnavailable": "Show unavailable and identify why no eligible observations or no valid threshold exists."
+  },
+  "safety": {
+    "syntheticDefinition": true,
+    "enterpriseCompletenessClaimAllowed": false,
+    "riskConclusionAllowed": false,
+    "migrationCompletionClaimAllowed": false
+  }
+}

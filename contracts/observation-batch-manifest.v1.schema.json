@@ -1,0 +1,150 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/observation-batch-manifest.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "ObservationBatchManifest.v1",
+  "description": "Content-addressed manifest for a normalized observation batch. Collection, normalization, packaging, and import times remain distinct.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "observationBatchId",
+    "tenantId",
+    "integrationProfileRef",
+    "collectionRunRef",
+    "sourceEventRefs",
+    "observationCount",
+    "artifact",
+    "timestamps",
+    "scanAuthority",
+    "admission",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "ObservationBatchManifest.v1" },
+    "observationBatchId": { "$ref": "#/$defs/identifier" },
+    "tenantId": { "$ref": "#/$defs/identifier" },
+    "integrationProfileRef": { "$ref": "#/$defs/identifier" },
+    "collectionRunRef": { "$ref": "#/$defs/identifier" },
+    "sourceEventRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 10000,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "observationCount": { "type": "integer", "minimum": 0, "maximum": 10000000 },
+    "artifact": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactRef", "contentDigest", "manifestDigest", "format", "byteCount", "encryptedAtRest"],
+      "properties": {
+        "artifactRef": { "$ref": "#/$defs/identifier" },
+        "contentDigest": { "$ref": "#/$defs/digest" },
+        "manifestDigest": { "$ref": "#/$defs/digest" },
+        "format": { "enum": ["jsonl", "parquet"] },
+        "byteCount": { "type": "integer", "minimum": 0, "maximum": 1099511627776 },
+        "encryptedAtRest": { "const": true }
+      }
+    },
+    "timestamps": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["collectionStartedAt", "collectionCompletedAt", "normalizedAt", "packagedAt", "importedAt"],
+      "properties": {
+        "collectionStartedAt": { "$ref": "#/$defs/timestamp" },
+        "collectionCompletedAt": { "$ref": "#/$defs/timestamp" },
+        "normalizedAt": { "$ref": "#/$defs/timestamp" },
+        "packagedAt": { "$ref": "#/$defs/timestamp" },
+        "importedAt": {
+          "oneOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }]
+        }
+      }
+    },
+    "scanAuthority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authoritativeFullScan", "completedWithoutGap", "tombstoneCandidate"],
+      "properties": {
+        "authoritativeFullScan": { "type": "boolean" },
+        "completedWithoutGap": { "type": "boolean" },
+        "tombstoneCandidate": { "type": "boolean" }
+      }
+    },
+    "admission": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "acceptedObservationCount", "quarantinedObservationCount", "reasonCodes"],
+      "properties": {
+        "status": { "enum": ["accepted", "partially_accepted", "quarantined"] },
+        "acceptedObservationCount": { "type": "integer", "minimum": 0, "maximum": 10000000 },
+        "quarantinedObservationCount": { "type": "integer", "minimum": 0, "maximum": 10000000 },
+        "reasonCodes": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/reasonCode" }
+        }
+      }
+    },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "scanAuthority": {
+            "properties": { "tombstoneCandidate": { "const": true } },
+            "required": ["tombstoneCandidate"]
+          }
+        },
+        "required": ["scanAuthority"]
+      },
+      "then": {
+        "properties": {
+          "scanAuthority": {
+            "properties": {
+              "authoritativeFullScan": { "const": true },
+              "completedWithoutGap": { "const": true }
+            }
+          },
+          "admission": {
+            "properties": { "status": { "const": "accepted" } }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 30,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "reasonCode": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 80,
+      "pattern": "^[a-z][a-z0-9_]+$"
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "rawPayloadEmbedded", "credentialValueEmbedded", "privateKeyEmbedded"],
+      "properties": {
+        "synthetic": { "type": "boolean" },
+        "rawPayloadEmbedded": { "const": false },
+        "credentialValueEmbedded": { "const": false },
+        "privateKeyEmbedded": { "const": false }
+      }
+    }
+  }
+}

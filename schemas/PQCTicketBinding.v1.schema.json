@@ -1,0 +1,46 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://upm.pba.io/schemas/PQCTicketBinding.v1.schema.json",
+  "title": "PQCTicketBinding.v1",
+  "description": "Versioned provider projection; it cannot authorize execution or imply cryptographic closure. Jira Cloud and Data Center are distinct dialects.",
+  "type": "object", "additionalProperties": false,
+  "required": ["contract_version", "synthetic", "tenant_id", "work_item_id", "provider", "integration_profile_ref", "record_kind", "provider_record_ref", "provider_revision_ref", "binding_sha256", "canonical_revision", "provider_status", "sync_state", "field_ownership", "status_mapping", "permission_refs"],
+  "properties": {
+    "contract_version": {"const": "pba.contract/PQCTicketBinding.v1"},
+    "synthetic": {"type": "boolean"},
+    "tenant_id": {"$ref": "#/$defs/tenant"},
+    "work_item_id": {"$ref": "#/$defs/ref"},
+    "provider": {"enum": ["servicenow", "jira_cloud", "jira_data_center"]},
+    "integration_profile_ref": {"$ref": "#/$defs/ref"},
+    "record_kind": {"enum": ["ticket", "change", "change_task", "approval", "cmdb_ci"]},
+    "provider_record_ref": {"$ref": "#/$defs/ref"},
+    "provider_revision_ref": {"$ref": "#/$defs/ref"},
+    "binding_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"},
+    "canonical_revision": {"type": "integer", "minimum": 1, "maximum": 2147483647},
+    "provider_status": {"enum": ["new", "in_progress", "closed", "todo", "doing", "done"]},
+    "sync_state": {"enum": ["synchronized", "reconciliation_pending", "conflict"]},
+    "field_ownership": {
+      "type": "object", "additionalProperties": false,
+      "required": ["plan", "scope", "acceptance_criteria", "migration_state", "provider_status", "approval_record"],
+      "properties": {
+        "plan": {"const": "pqc"}, "scope": {"const": "pqc"},
+        "acceptance_criteria": {"const": "pqc"}, "migration_state": {"const": "pqc"},
+        "provider_status": {"const": "provider"}, "approval_record": {"const": "provider_readback"}
+      }
+    },
+    "status_mapping": {
+      "type": "object", "additionalProperties": false,
+      "required": ["open", "in_progress", "closed"],
+      "properties": {
+        "open": {"enum": ["new", "todo"]},
+        "in_progress": {"enum": ["in_progress", "doing"]},
+        "closed": {"enum": ["closed", "done"]}
+      }
+    },
+    "permission_refs": {"type": "array", "minItems": 1, "maxItems": 32, "uniqueItems": true, "items": {"$ref": "#/$defs/ref"}}
+  },
+  "$defs": {
+    "ref": {"type": "string", "minLength": 2, "maxLength": 256, "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]+$"},
+    "tenant": {"type": "string", "maxLength": 64, "pattern": "^[a-z][a-z0-9-]{1,62}[a-z0-9]$"}
+  }
+}

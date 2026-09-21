@@ -1,19 +1,14 @@
-# Security Policy
+# Security policy
+Report vulnerabilities privately through this repository's GitHub security reporting. Never include credentials, customer records or private infrastructure information in public issues.
 
-## Reporting a vulnerability
+## Current boundary
+One C# loopback host serves React and assessment APIs. It uses isolated SQLite, bounded workbook parsing, assessment-scoped authorization, expected revisions, idempotency, CSRF and immutable reporting. Fixed fictional personas simulate roles; they are not enterprise authentication.
 
-Please use GitHub's private vulnerability-reporting feature for this
-repository. Do not place credentials, personal data, customer data, private
-infrastructure details, or exploit payloads in a public issue.
+Static assets are loaded into an immutable memory snapshot. Packaged builds contain a SHA-256 manifest which the host validates; the bounded launcher requires it. Tiny test fixtures may omit a manifest, but this is not a release integrity claim. Source maps, dot-paths, encoded traversal, manifest downloads and cross-site requests are denied. Proxy headers do not establish transport cryptography.
 
-## Scope and boundaries
+Do not use this application for real enterprise responses until identity, HTTPS, handling, retention, database custody, observability, authorization and recovery have been independently qualified. Never weaken those boundaries to make a demonstration work.
 
-This repository is a source-only, synthetic portfolio project. It does not
-assert a live public deployment or production security boundary. The included
-Worker and Go adapters expose read-only application routes, use no application
-data store, and are designed not to echo request bodies, cookies, identity, or
-source addresses.
+## Publication
+Run scripts/verify_public_reference.py before committing/pushing. It reports file paths and rule names, never matched secrets. An optional externally held private-marker file can screen known organization identifiers without committing those identifiers. Also review fixture/archive contents and changed history manually: a scanner is not a complete confidentiality proof.
 
-Do not use this project to process real inventory or sensitive evidence without
-an independent security, privacy, authorization, retention, deployment, and
-operational review.
+No deployment workflow, public hostname or production credential is configured. CI has contents-read permission only.

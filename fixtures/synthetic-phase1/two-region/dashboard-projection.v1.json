@@ -1,0 +1,86 @@
+{
+  "schemaVersion": "DashboardProjection.v1",
+  "projectionId": "projection:synthetic:phase1:two-region:v1",
+  "tenantId": "tenant:synthetic-reference",
+  "scope": {
+    "scopeRef": "scope:synthetic:two-region-tls",
+    "scopeLabel": "Two synthetic regional TLS deployments and five planned source families",
+    "regionRefs": ["region:synthetic:alpha", "region:synthetic:beta"],
+    "denominatorBoundary": "Exactly two TLS deployment units independently enumerated by denominator:synthetic:authorized-tls-deployments; no enterprise-wide population is represented."
+  },
+  "definitionRefs": [
+    "metric:source-readiness:v1",
+    "metric:authorized-estate-coverage:v1",
+    "metric:evidence-freshness:v1",
+    "metric:correlation-confidence:v1",
+    "metric:evidence-limitations:v1",
+    "metric:projection-lag:v1"
+  ],
+  "authoritativeAsOfAt": "2030-01-07T12:08:30Z",
+  "generatedAt": "2030-01-07T12:10:00Z",
+  "sourceReadiness": {
+    "metricDefinitionRef": "metric:source-readiness:v1",
+    "status": "available",
+    "numerator": 5,
+    "denominator": 5,
+    "fraction": 1.0,
+    "qualification": "All five synthetic contract packs passed local schema, pagination, reference, and safety validation; this is not live source readiness."
+  },
+  "authorizedEstateCoverage": {
+    "metricDefinitionRef": "metric:authorized-estate-coverage:v1",
+    "status": "available",
+    "numerator": 2,
+    "denominator": 2,
+    "fraction": 1.0,
+    "qualification": "Both of the two synthetic TLS deployment units in this deliberately bounded denominator have admitted observations; no broader coverage claim is permitted.",
+    "denominatorSourceRef": "denominator:synthetic:authorized-tls-deployments"
+  },
+  "evidenceFreshness": {
+    "metricDefinitionRef": "metric:evidence-freshness:v1",
+    "status": "available",
+    "numerator": 10,
+    "denominator": 10,
+    "fraction": 1.0,
+    "qualification": "All ten deterministic observations are within the one-hour fixture threshold at the synthetic as-of time; freshness does not establish accuracy.",
+    "thresholdSeconds": 3600,
+    "oldestEligibleObservationAt": "2030-01-07T12:00:00Z"
+  },
+  "correlationConfidence": {
+    "metricDefinitionRef": "metric:correlation-confidence:v1",
+    "status": "available",
+    "eligibleCount": 8,
+    "counts": {
+      "high": 4,
+      "moderate": 4,
+      "low": 0,
+      "unresolved": 0
+    },
+    "highConfidenceFraction": 0.5,
+    "qualification": "Confidence describes the deterministic correlation basis of eight synthetic dependencies, not a probability of truth or source accuracy."
+  },
+  "evidenceLimitations": {
+    "metricDefinitionRef": "metric:evidence-limitations:v1",
+    "openCount": 1,
+    "blockingCount": 0,
+    "limitationRefs": ["limitation:synthetic:ownership-not-validated"],
+    "qualification": "The open limitation is retained visibly and is not converted into a success percentage."
+  },
+  "projectionLag": {
+    "metricDefinitionRef": "metric:projection-lag:v1",
+    "status": "available",
+    "seconds": 90,
+    "qualification": "The projection was built 90 seconds after the latest synthetic authoritative commit it represents; this is separate from observation freshness."
+  },
+  "claims": {
+    "enterpriseCompletenessClaimed": false,
+    "riskConclusionClaimed": false,
+    "migrationCompletionClaimed": false,
+    "productionStateClaimed": false
+  },
+  "safety": {
+    "synthetic": true,
+    "rebuildableProjection": true,
+    "rawPayloadEmbedded": false,
+    "secretMaterialEmbedded": false
+  }
+}

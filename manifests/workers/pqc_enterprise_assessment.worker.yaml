@@ -1,0 +1,82 @@
+apiVersion: upm.pba.io/v1
+kind: Worker
+metadata:
+  name: pqc_enterprise_assessment
+  version: 0.1.0
+  domain: pqc_migration
+  description: One C# synthetic assessment command evaluation; no enterprise acceptance or external effects. Controller verifies and commits atomically.
+  labels:
+    pba.io/activation-state: disabled
+    pba.io/catalog-authority: repo-candidate
+    pba.io/default-enabled: "false"
+    pba.io/controller-commit-only: "true"
+    pba.io/molecular-worker-contract: "v1"
+    pba.io/observability-contract: metadata-only-v1
+    pba.io/output-boundary: metadata-only-worker-result
+    pba.io/redaction-contract: metadata-only
+spec:
+  runtime: dotnet
+  # Unbuilt, disabled deployment candidate; this image is never pulled by the demo.
+  image: registry.invalid/pqc-enterprise-assessment:0.1.0
+  entrypoint: PqcEnterpriseDemo.AssessmentWorkflow
+  substrate_profile:
+    dominant: [event]
+    supporting: [entity]
+    governance: [policy, capability]
+    evidence: [artifact, observation, relationship]
+    event_types: [transform, verify, audit]
+    observation_types: [assessment, outcome]
+    artifact_types: [evidence, receipt]
+    relationship_families: [provenance, authority, execution, boundary]
+    policy_families: [private_artifact_policy, authority_policy]
+    capability_refs: [pqc.contract_fixture.probe, artifact.read]
+    scope_required: true
+  primitive_profile:
+    dominant: [transformation]
+    supporting: [object, event]
+    governance: [category, relation]
+    evidence: [signal, quantity]
+  classification: {data_class: internal, data_sensitivity: none, regulatory_scope: none}
+  security:
+    mtls: {required: true}
+  lifecycle:
+    max_retries: 0
+    backoff_seconds: 0
+    timeout_seconds: 30
+    retry_on: []
+  capabilities: [pqc.contract_fixture.probe, artifact.read]
+  tenancy:
+    mode: tenant-aware
+    allowedTenants: [synthetic-enterprise]
+  placement:
+    contract_version: execution-placement.v1
+    mode: local_required
+    eligible_lanes: [dotnet]
+    trust_zones: [on_prem_private]
+    resources: {cpu_millis: 1000, memory_mb: 512, scratch_mb: 32, gpu_count: 0, max_duration_seconds: 30}
+    concurrency: {max_worker_inflight: 1, max_tenant_inflight: 1, max_runner_inflight: 1}
+    database: {access_mode: none, max_connections: 0, max_queries_per_run: 0, max_rows_per_query: 0, statement_timeout_ms: 0}
+    artifact_io: {input_mode: inline_metadata, output_mode: inline_metadata, max_inline_input_bytes: 2048, max_inline_output_bytes: 2048, require_content_hash: true}
+    cost: {max_microusd_per_run: 0}
+    fallback: {mode: fail_closed, max_placement_attempts: 1}
+    commit: {authority: entity.system.orchestrator, verification_required: true, worker_authoritative_write_allowed: false}
+  io:
+    inputSchema:
+      type: object
+      additionalProperties: false
+      required: [assessmentId, operation, request_sha256, expectedRevision, synthetic]
+      properties:
+        assessmentId: {type: string, minLength: 1, maxLength: 160}
+        operation: {type: string, minLength: 1, maxLength: 48}
+        request_sha256: {type: string, pattern: '^[0-9a-f]{64}$'}
+        expectedRevision: {type: integer, minimum: 0, maximum: 10000}
+        synthetic: {const: true}
+    outputSchema:
+      type: object
+      additionalProperties: false
+      required: [assessmentId, revision, artifact_sha256, synthetic]
+      properties:
+        assessmentId: {type: string, minLength: 1, maxLength: 160}
+        revision: {type: integer, minimum: 0, maximum: 10000}
+        artifact_sha256: {type: string, pattern: '^[0-9a-f]{64}$'}
+        synthetic: {const: true}

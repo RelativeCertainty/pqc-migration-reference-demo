@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "SyntheticSourcePage.v1",
+  "pageId": "page:synthetic:source-repositories:002",
+  "contractPackRef": "contract:source-pack:source-repositories:v1",
+  "sourceFamily": "source_repositories",
+  "pageNumber": 2,
+  "totalPageCount": 2,
+  "currentCursorRef": "cursor:synthetic:source-repositories:after-page-1",
+  "nextCursorRef": null,
+  "records": [
+    {
+      "sourceRecordId": "record:synthetic:source-repositories:shared-crypto",
+      "recordType": "source_repository",
+      "observedAt": "2030-01-07T12:03:15Z",
+      "attributes": {
+        "repositoryRef": "repo:synthetic:shared-crypto-library",
+        "applicationRef": "asset:synthetic:application:edge-service",
+        "componentRef": "asset:synthetic:component:shared-crypto-library",
+        "defaultBranchRef": "branch:synthetic:main",
+        "repositoryVisibility": "private_synthetic",
+        "archived": false
+      }
+    }
+  ],
+  "safety": {
+    "synthetic": true,
+    "independentlyAuthored": true,
+    "rawProviderPayload": false,
+    "containsCredentials": false,
+    "containsPersonalData": false,
+    "containsKeyMaterial": false
+  }
+}

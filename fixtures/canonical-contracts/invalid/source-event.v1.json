@@ -1,0 +1,23 @@
+{
+  "schemaVersion": "SourceEvent.v1",
+  "sourceEventId": "event:synthetic-page-001",
+  "tenantId": "tenant:synthetic-reference",
+  "integrationProfileRef": "profile:synthetic-pki",
+  "collectionRunRef": "run:synthetic-collection-001",
+  "eventKind": "snapshot_page",
+  "providerRecordRef": "synthetic-page-001",
+  "providerOccurredAt": null,
+  "collectedAt": "2030-01-07T12:02:00Z",
+  "artifact": {
+    "artifactRef": "artifact:synthetic-source-page-001",
+    "contentDigest": "sha256:aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "byteCount": 2048,
+    "mediaType": "application/json",
+    "encryptedAtRest": true,
+    "classification": "internal",
+    "secretAssessment": "none_detected"
+  },
+  "admission": { "status": "admitted", "reasonCodes": [] },
+  "safety": { "synthetic": true, "rawPayloadEmbedded": false, "credentialValueEmbedded": false, "privateKeyEmbedded": false },
+  "rawPayload": { "fixture": "must-not-be-embedded" }
+}

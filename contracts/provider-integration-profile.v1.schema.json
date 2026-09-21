@@ -1,0 +1,205 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/provider-integration-profile.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "ProviderIntegrationProfile.v1",
+  "description": "Product-neutral configuration boundary for one authorized read-only source integration. Endpoints and credentials are represented only by opaque enterprise references.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "integrationProfileId",
+    "tenantId",
+    "displayName",
+    "sourceFamily",
+    "provider",
+    "adapter",
+    "connection",
+    "authority",
+    "capabilities",
+    "collectionPolicy",
+    "dataHandling",
+    "status",
+    "evidenceStatus",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "ProviderIntegrationProfile.v1" },
+    "integrationProfileId": { "$ref": "#/$defs/identifier" },
+    "tenantId": { "$ref": "#/$defs/identifier" },
+    "displayName": { "$ref": "#/$defs/plainText" },
+    "sourceFamily": {
+      "enum": [
+        "application_portfolio_cmdb",
+        "pki_certificate_lifecycle",
+        "tls_termination_traffic_management",
+        "source_code_repository",
+        "software_analysis",
+        "cloud_kms_hsm",
+        "identity_signing",
+        "network_cryptography",
+        "data_storage_encryption",
+        "generic_authorized_source"
+      ]
+    },
+    "provider": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["productName", "edition", "apiVersion"],
+      "properties": {
+        "productName": { "oneOf": [{ "$ref": "#/$defs/plainText" }, { "type": "null" }] },
+        "edition": { "oneOf": [{ "$ref": "#/$defs/plainText" }, { "type": "null" }] },
+        "apiVersion": { "oneOf": [{ "$ref": "#/$defs/plainText" }, { "type": "null" }] }
+      }
+    },
+    "adapter": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["adapterId", "adapterVersion", "contractDialect"],
+      "properties": {
+        "adapterId": { "$ref": "#/$defs/identifier" },
+        "adapterVersion": { "type": "string", "maxLength": 32, "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "contractDialect": { "$ref": "#/$defs/identifier" }
+      }
+    },
+    "connection": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["environment", "accessMode", "endpointRef", "authenticationMode", "credentialSecretRef"],
+      "properties": {
+        "environment": { "enum": ["synthetic", "development", "test", "staging", "production_read_only"] },
+        "accessMode": { "const": "read_only" },
+        "endpointRef": { "$ref": "#/$defs/identifier" },
+        "authenticationMode": { "enum": ["none_synthetic", "oauth_client", "service_identity", "mutual_tls", "api_token_ref", "ssh_identity_ref"] },
+        "credentialSecretRef": {
+          "oneOf": [{ "$ref": "#/$defs/identifier" }, { "type": "null" }]
+        }
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["authorityClass", "factDomains", "coverageClaimAllowed"],
+      "properties": {
+        "authorityClass": { "enum": ["authoritative", "supporting", "candidate", "synthetic_reference"] },
+        "factDomains": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 30,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "coverageClaimAllowed": { "type": "boolean" }
+      }
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "supportStatus"],
+        "properties": {
+          "name": {
+            "enum": ["full_collection", "incremental_collection", "pagination", "stable_cursor", "provider_revision", "readback", "webhook_event", "rate_limit_metadata"]
+          },
+          "supportStatus": { "enum": ["declared", "contract_tested", "live_verified", "unsupported", "unknown"] }
+        }
+      }
+    },
+    "collectionPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["allowedModes", "maximumPageSize", "maximumAttempts", "retryableClassifications"],
+      "properties": {
+        "allowedModes": {
+          "type": "array",
+          "minItems": 1,
+          "uniqueItems": true,
+          "items": { "enum": ["full", "incremental", "reconciliation", "readback"] }
+        },
+        "maximumPageSize": { "type": "integer", "minimum": 1, "maximum": 100000 },
+        "maximumAttempts": { "type": "integer", "minimum": 1, "maximum": 20 },
+        "retryableClassifications": {
+          "type": "array",
+          "uniqueItems": true,
+          "items": { "enum": ["rate_limited", "timeout", "transient_provider_error"] }
+        }
+      }
+    },
+    "dataHandling": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "rawEvidenceRetentionDays", "encryptedArtifactRequired", "payloadLoggingAllowed"],
+      "properties": {
+        "classification": { "enum": ["public", "internal", "confidential", "restricted"] },
+        "rawEvidenceRetentionDays": { "type": "integer", "minimum": 0, "maximum": 3650 },
+        "encryptedArtifactRequired": { "const": true },
+        "payloadLoggingAllowed": { "const": false }
+      }
+    },
+    "status": { "enum": ["draft", "admitted", "suspended", "retired"] },
+    "evidenceStatus": { "enum": ["synthetic", "documented", "contract_tested", "live_readback", "closed_loop"] },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": {
+          "connection": {
+            "properties": { "authenticationMode": { "const": "none_synthetic" } },
+            "required": ["authenticationMode"]
+          }
+        },
+        "required": ["connection"]
+      },
+      "then": {
+        "properties": {
+          "connection": {
+            "properties": {
+              "environment": { "const": "synthetic" },
+              "credentialSecretRef": { "type": "null" }
+            }
+          },
+          "authority": {
+            "properties": {
+              "authorityClass": { "const": "synthetic_reference" },
+              "coverageClaimAllowed": { "const": false }
+            }
+          },
+          "evidenceStatus": { "const": "synthetic" },
+          "safety": {
+            "properties": { "synthetic": { "const": true } }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "plainText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 160,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "credentialValueEmbedded", "privateKeyEmbedded", "rawPayloadEmbedded"],
+      "properties": {
+        "synthetic": { "type": "boolean" },
+        "credentialValueEmbedded": { "const": false },
+        "privateKeyEmbedded": { "const": false },
+        "rawPayloadEmbedded": { "const": false }
+      }
+    }
+  }
+}

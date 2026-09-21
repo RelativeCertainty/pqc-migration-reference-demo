@@ -1,0 +1,1012 @@
+<!doctype html>
+<html lang="en" data-classification="public">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <meta name="generator" content="PBA readable document renderer v1">
+  <title>PQC Assessment Map Room Build Plan v1</title>
+  <style>
+    :root {
+      --page: #edf1f5;
+      --paper: #ffffff;
+      --text: #20252d;
+      --muted: #647080;
+      --line: #d9e0e8;
+      --accent: #285f86;
+      --accent-soft: #e9f2f8;
+      --notice: #7c4b13;
+      --notice-bg: #fff3dc;
+      --code: #f4f6f8;
+      --shadow: 0 18px 55px rgba(31, 43, 58, 0.11);
+      --measure: 76ch;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #11161d;
+        --paper: #1a212b;
+        --text: #e8edf3;
+        --muted: #a8b3c0;
+        --line: #35404e;
+        --accent: #8fc8ed;
+        --accent-soft: #203848;
+        --notice: #f0c47b;
+        --notice-bg: #3a2b19;
+        --code: #111821;
+        --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-underline-offset: 0.16em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--paper);
+      border: 2px solid var(--accent);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: none; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.83rem;
+    }
+    .classification {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--notice);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .classification::before {
+      content: "";
+      width: 0.62rem;
+      height: 0.62rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .reader-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .reader-actions a,
+    .reader-actions button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      padding: 0.42rem 0.75rem;
+      text-decoration: none;
+    }
+    .reader-actions a:hover,
+    .reader-actions button:hover { border-color: var(--accent); }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: clamp(1.1rem, 3vw, 2.6rem);
+      display: grid;
+      grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+      gap: clamp(1.1rem, 3vw, 2.8rem);
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 1.3rem;
+      max-height: calc(100vh - 2.6rem);
+      overflow: auto;
+      padding: 1rem 0.9rem 1rem 0;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .toc-title {
+      margin: 0 0 0.7rem;
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .toc-list { margin: 0; padding: 0; list-style: none; }
+    .toc-list li { margin: 0.22rem 0; }
+    .toc-list a {
+      display: block;
+      padding: 0.28rem 0.4rem;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a:focus {
+      border-left-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .toc-level-3 { padding-left: 0.75rem; }
+    .paper {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 5vw, 4.5rem);
+    }
+    .document-meta {
+      max-width: var(--measure);
+      margin: 0 auto 2.5rem;
+      padding: 0 0 1.15rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .document-meta strong { color: var(--text); }
+    .document-meta code { overflow-wrap: anywhere; word-break: break-all; }
+    .notice {
+      max-width: var(--measure);
+      margin: 0 auto 2rem;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--notice);
+      border-radius: 6px;
+      background: var(--notice-bg);
+      color: var(--notice);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+    article > * { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+    article h1,
+    article h2,
+    article h3,
+    article h4 {
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      scroll-margin-top: 1.5rem;
+    }
+    article h1 {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+      font-size: clamp(2.1rem, 5vw, 3.5rem);
+      font-weight: 760;
+    }
+    article h2 {
+      margin-top: 3.4rem;
+      margin-bottom: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    article h3 { margin-top: 2.4rem; font-size: 1.25rem; }
+    article h4 { margin-top: 2rem; font-size: 1.05rem; }
+    article p { margin-top: 0.85rem; margin-bottom: 0.85rem; }
+    article ul,
+    article ol { padding-left: 1.45rem; }
+    article li { margin: 0.42rem 0; padding-left: 0.15rem; }
+    article li::marker { color: var(--accent); font-weight: 700; }
+    article blockquote {
+      padding: 0.2rem 0 0.2rem 1.2rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-style: italic;
+    }
+    article code {
+      padding: 0.12em 0.32em;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 0.84em;
+      overflow-wrap: anywhere;
+    }
+    article pre {
+      max-width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--code);
+      overflow: auto;
+      line-height: 1.45;
+    }
+    article pre code { padding: 0; background: transparent; overflow-wrap: normal; }
+    article hr { margin-top: 2.8rem; margin-bottom: 2.8rem; border: 0; border-top: 1px solid var(--line); }
+    article img { max-width: 100%; height: auto; }
+    .image-placeholder {
+      display: inline-block;
+      padding: 0.3rem 0.5rem;
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.86rem;
+    }
+    .unsafe-link { color: var(--muted); text-decoration: line-through; }
+    article table {
+      display: block;
+      max-width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.88rem;
+    }
+    article th,
+    article td { padding: 0.58rem 0.7rem; border: 1px solid var(--line); text-align: left; }
+    .footer {
+      max-width: var(--measure);
+      margin: 3.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.76rem;
+    }
+    @media (max-width: 900px) {
+      body { font-size: 17px; }
+      .shell { display: block; padding: 0; }
+      .toc {
+        position: static;
+        max-height: 20rem;
+        overflow: auto;
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .toc-list { columns: 2; column-gap: 1.4rem; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; }
+    }
+    @media (max-width: 560px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .toc-list { columns: 1; }
+      .paper { padding: 1.2rem 1rem 2.5rem; }
+      article h1 { font-size: 2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    @media print {
+      :root { --paper: #fff; --text: #111; --muted: #444; --line: #ccc; }
+      @page { size: auto; margin: 0.7in; }
+      body { background: #fff; color: #111; font-size: 11pt; }
+      .topbar,
+      .toc,
+      .notice,
+      .skip-link,
+      .reader-actions { display: none !important; }
+      .shell { display: block; max-width: none; padding: 0; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+      article > * { max-width: none; }
+      article h1 { font-size: 24pt; }
+      article h2 { break-after: avoid; font-size: 16pt; }
+      article h3,
+      article h4 { break-after: avoid; }
+      article pre,
+      article blockquote { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.75em; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#document">Skip to document</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="classification">Public reading copy</div>
+      <div class="reader-actions" aria-label="Reader actions">
+        <a href="assessment-map-room-build-plan.md">Open source</a>
+        <button type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+  <main class="shell" id="document">
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol class="toc-list"><li class="toc-level-2"><a href="#document-status">Document status</a></li>
+<li class="toc-level-2"><a href="#outcome">Outcome</a></li>
+<li class="toc-level-2"><a href="#baseline-audit">Baseline audit</a></li>
+<li class="toc-level-2"><a href="#product-thesis">Product thesis</a></li>
+<li class="toc-level-2"><a href="#non-negotiable-distinctions">Non-negotiable distinctions</a></li>
+<li class="toc-level-3"><a href="#program-progress">Program progress</a></li>
+<li class="toc-level-3"><a href="#estate-mapping-progress">Estate-mapping progress</a></li>
+<li class="toc-level-3"><a href="#report-readiness">Report readiness</a></li>
+<li class="toc-level-2"><a href="#audience-facing-ontology">Audience-facing ontology</a></li>
+<li class="toc-level-2"><a href="#enterprise-map">Enterprise map</a></li>
+<li class="toc-level-2"><a href="#map-data-model">Map data model</a></li>
+<li class="toc-level-3"><a href="#nodes">Nodes</a></li>
+<li class="toc-level-3"><a href="#edges">Edges</a></li>
+<li class="toc-level-2"><a href="#state-model">State model</a></li>
+<li class="toc-level-3"><a href="#source-readiness">Source readiness</a></li>
+<li class="toc-level-3"><a href="#map-maturity">Map maturity</a></li>
+<li class="toc-level-3"><a href="#report-section-readiness">Report-section readiness</a></li>
+<li class="toc-level-2"><a href="#measurement-rules">Measurement rules</a></li>
+<li class="toc-level-2"><a href="#experience-architecture">Experience architecture</a></li>
+<li class="toc-level-3"><a href="#briefing-mode">Briefing mode</a></li>
+<li class="toc-level-3"><a href="#operator-mode">Operator mode</a></li>
+<li class="toc-level-3"><a href="#executive-mode">Executive mode</a></li>
+<li class="toc-level-2"><a href="#contract-plan">Contract plan</a></li>
+<li class="toc-level-3"><a href="#reuse">Reuse</a></li>
+<li class="toc-level-3"><a href="#add">Add</a></li>
+<li class="toc-level-2"><a href="#implementation-releases">Implementation releases</a></li>
+<li class="toc-level-3"><a href="#release-0-presentation-safe-walking-skeleton">Release 0 — presentation-safe walking skeleton</a></li>
+<li class="toc-level-3"><a href="#release-1-contract-backed-scenario-playback">Release 1 — contract-backed scenario playback</a></li>
+<li class="toc-level-3"><a href="#release-2-program-control-projection">Release 2 — program-control projection</a></li>
+<li class="toc-level-3"><a href="#release-3-source-readiness-and-evidence-map">Release 3 — source-readiness and evidence map</a></li>
+<li class="toc-level-3"><a href="#release-4-report-readiness-projection">Release 4 — report-readiness projection</a></li>
+<li class="toc-level-3"><a href="#release-5-enterprise-deployment-profile">Release 5 — enterprise deployment profile</a></li>
+<li class="toc-level-2"><a href="#component-sequence">Component sequence</a></li>
+<li class="toc-level-2"><a href="#repository-change-map">Repository change map</a></li>
+<li class="toc-level-2"><a href="#test-plan">Test plan</a></li>
+<li class="toc-level-3"><a href="#contract-and-domain-tests">Contract and domain tests</a></li>
+<li class="toc-level-3"><a href="#presentation-tests">Presentation tests</a></li>
+<li class="toc-level-3"><a href="#security-and-authority-tests">Security and authority tests</a></li>
+<li class="toc-level-3"><a href="#portability-tests">Portability tests</a></li>
+<li class="toc-level-2"><a href="#friday-safe-operating-protocol">Friday-safe operating protocol</a></li>
+<li class="toc-level-2"><a href="#definition-of-done">Definition of done</a></li>
+<li class="toc-level-2"><a href="#immediate-implementation-queue">Immediate implementation queue</a></li></ol>
+    </nav>
+    <div class="paper">
+      <div class="document-meta">
+        <strong>assessment-map-room-build-plan.md</strong><br>
+        3,126 words · about 15 minutes · source updated September 3, 2026 at 1:45 PM MDT<br>
+        Source SHA-256: <code>fac80aa2052234de3104f6ab7c59b8c781d4f86b67ce16e9a5ff3e5912e94fa4</code> · renderer v1
+      </div>
+      <aside class="notice"><strong>Public reading copy.</strong> Approved presentation copy.</aside>
+      <article>
+        <p>&lt;!-- SPDX-License-Identifier: CC-BY-4.0 --&gt;</p>
+<h1 id="pqc-assessment-map-room-build-plan-v1">PQC Assessment Map Room Build Plan v1</h1>
+<h2 id="document-status">Document status</h2>
+<ul>
+<li>Status: proposed implementation plan</li>
+<li>Intended audience: product owner, assessment lead, application engineers,
+source-integration engineers, project-control operators, and reviewers</li>
+<li>Public boundary: employer-neutral; synthetic examples only</li>
+<li>Current evidence level: design informed by existing synthetic and
+contract-tested repository behavior</li>
+<li>Authority boundary: read-only assessment; no production remediation,
+approval, ticket mutation, certificate action, key action, configuration
+change, or deployment action</li>
+<li>Machine-readable task manifest:
+<code>planning/assessment-map-room-build-plan.v1.yaml</code></li>
+</ul>
+<h2 id="outcome">Outcome</h2>
+<p>Build a presentation-ready and operationally useful <strong>PQC Assessment Map
+Room</strong> that explains and tracks three separate questions:</p>
+<ol>
+<li>Is the assessment program moving?</li>
+<li>How much of the authorized cryptographic estate can be supported by
+evidence?</li>
+<li>Which report conclusions are ready for review, and which remain limited?</li>
+</ol>
+<p>The Map Room is a read-only projection. Enterprise source systems remain
+authoritative for source-native facts. The program-control authority owns
+actions, dependencies, RFIs, decisions, and gates. Accepted reports remain
+immutable snapshots. The application does not become a competing source of
+truth.</p>
+<h2 id="baseline-audit">Baseline audit</h2>
+<p>The repository already provides substantial synthetic and contract-tested
+building blocks, but it does not yet contain an integrated Map Room:</p>
+<ul>
+<li>The browser has twelve hash-routed sections and a ten-step Interview Mode;
+it has no separate Phase 1 Briefing Mode.</li>
+<li>The application displays six informal source categories and five
+illustrative migration patterns. These are not the complete ten-domain,
+22-pattern, and 27-source ontology.</li>
+<li>The current dashboard derives values from hard-coded synthetic systems. It
+does not consume <code>DashboardProjection.v1</code>.</li>
+<li>The validated two-region Phase 1 fixture is not rendered by the browser, so
+its actual source-to-observation-to-asset-to-dependency lineage is not yet
+visible.</li>
+<li>The read-only Program Operations runtime is not connected to the browser.</li>
+<li>Program progress, estate-mapping progress, and report readiness do not yet
+have one composed projection model.</li>
+<li>The detailed biweekly report and smaller runtime report snapshot do not yet
+have a canonical mapping.</li>
+<li>The standalone export currently omits <code>contract-packs/</code>, and the public
+privacy scan does not yet cover YAML files.</li>
+</ul>
+<p>Release 0 must stabilize these boundaries before new presentation behavior is
+called reproducible from a clean checkout.</p>
+<h2 id="product-thesis">Product thesis</h2>
+<p>The application is the map room, not the territory:</p>
+<pre><code class="language-text">enterprise source
+  -&gt; source profile and approved access route
+  -&gt; evidence observation
+  -&gt; canonical asset
+  -&gt; dependency and business context
+  -&gt; finding or evidence limitation
+  -&gt; Phase 1 current-state report
+  -&gt; Phase 2 risk and business-impact analysis
+</code></pre>
+<p>The experience must let a non-technical stakeholder understand this sequence
+without first learning the complete program vocabulary. Technical detail must
+remain available through progressive disclosure.</p>
+<h2 id="non-negotiable-distinctions">Non-negotiable distinctions</h2>
+<h3 id="program-progress">Program progress</h3>
+<p>Program progress answers whether actions, access requests, RFIs, decisions,
+Jira work, deliverables, and gates are moving. It never proves estate coverage.</p>
+<h3 id="estate-mapping-progress">Estate-mapping progress</h3>
+<p>Estate-mapping progress answers which sources have been admitted, what they
+observed, which assets and dependencies can be correlated, and what remains
+unknown. It never proves project acceptance.</p>
+<h3 id="report-readiness">Report readiness</h3>
+<p>Report readiness answers which required statements are supported by adequate
+evidence and review. It never converts an unanswered question into a negative
+finding or treats an unknown population as zero.</p>
+<p>These three axes must be stored and rendered separately. A combined percentage
+is prohibited.</p>
+<h2 id="audience-facing-ontology">Audience-facing ontology</h2>
+<p>The interface introduces these concepts in order:</p>
+<ol>
+<li><strong>Estate domain</strong> — a major part of the enterprise in which cryptography may
+be used or governed.</li>
+<li><strong>Migration pattern</strong> — a repeatable way a cryptographic use may eventually
+be assessed, changed, and verified.</li>
+<li><strong>Source system</strong> — an enterprise platform, repository, service, or approved
+export that may provide authoritative facts.</li>
+<li><strong>Source profile</strong> — what the source covers, who operates it, how it may be
+accessed, and which limitations apply.</li>
+<li><strong>Observation</strong> — a dated, provenance-bearing fact from one source.</li>
+<li><strong>Canonical asset</strong> — a reviewable enterprise object assembled from one or
+more observations without discarding the source references.</li>
+<li><strong>Dependency</strong> — an evidence-backed relationship between two assets or
+between an asset and its enterprise context.</li>
+<li><strong>Evidence limitation</strong> — a known restriction on scope, access, freshness,
+correlation, authority, or interpretation.</li>
+<li><strong>Finding</strong> — a reviewable conclusion supported by observations and bounded
+by disclosed limitations.</li>
+<li><strong>Report readiness</strong> — whether the evidence required for a report section
+is available, reviewed, and adequate for its intended claim.</li>
+</ol>
+<h2 id="enterprise-map">Enterprise map</h2>
+<p>The public reference recognizes ten estate domains:</p>
+<ol>
+<li>Enterprise context and ownership.</li>
+<li>Certificates, trust, and public-key infrastructure.</li>
+<li>TLS termination and application traffic.</li>
+<li>Network, remote access, and machine access.</li>
+<li>Software, repositories, and delivery pipelines.</li>
+<li>Cloud, keys, secrets, identity, and workloads.</li>
+<li>Data, storage, backup, and long-lived information.</li>
+<li>DNS, email, documents, endpoints, and devices.</li>
+<li>Specialized regulated cryptography.</li>
+<li>Detection, governance, vendors, and assurance.</li>
+</ol>
+<p>Named commercial products may be shown only as recognition prompts. A product
+example never asserts enterprise use, approval, ownership, availability, or
+selection.</p>
+<h2 id="map-data-model">Map data model</h2>
+<h3 id="nodes">Nodes</h3>
+<p>The extensible asset model must support, at minimum:</p>
+<ul>
+<li>Application and business-service context.</li>
+<li>Certificate and trust metadata.</li>
+<li>TLS deployment or termination point.</li>
+<li>Source repository.</li>
+<li>Software component or cryptographic library.</li>
+<li>Key, HSM, or KMS reference without key material.</li>
+<li>Trust store or trust anchor.</li>
+<li>Signing and verification workflow.</li>
+<li>VPN, SSH, or other network cryptographic endpoint.</li>
+<li>Encrypted database, data store, archive, or backup set.</li>
+<li>Identity issuer or token-signing relationship.</li>
+<li>Device, firmware, secure-boot, or attestation object.</li>
+<li>Vendor-controlled product and installed-version context.</li>
+</ul>
+<h3 id="edges">Edges</h3>
+<p>The extensible dependency model must support relationships such as:</p>
+<ul>
+<li>Serves an application.</li>
+<li>Uses a certificate.</li>
+<li>Trusts or is trusted by.</li>
+<li>Implements or is implemented by.</li>
+<li>Contains or depends on a software component.</li>
+<li>Signs or verifies an artifact or message.</li>
+<li>Encrypts or protects a data set.</li>
+<li>Uses a key-management reference.</li>
+<li>Operates in an environment, site, or region.</li>
+<li>Supports a business service.</li>
+<li>Is operated or owned by a responsible function.</li>
+<li>Is supplied or controlled by a vendor.</li>
+</ul>
+<p>Every node and edge must retain one or more evidence references, correlation
+status, confidence basis, and review state.</p>
+<h2 id="state-model">State model</h2>
+<h3 id="source-readiness">Source readiness</h3>
+<p>Use explicit states rather than vague completion language:</p>
+<pre><code class="language-text">not_profiled
+candidate_source_identified
+routed_to_responsible_function
+owner_accepted
+access_requested
+access_ready
+capability_probe_passed
+collection_admitted
+unavailable
+deferred
+</code></pre>
+<h3 id="map-maturity">Map maturity</h3>
+<p>The public demonstration provides four reproducible synthetic states:</p>
+<ol>
+<li>
+<p><code>outline_established</code></p>
+<ul>
+<li>Estate domains and intended scope are visible.</li>
+<li>Source routes are unresolved.</li>
+<li>Coverage is unavailable.</li>
+<li>Report sections are structurally prepared but unsupported.</li>
+</ul>
+</li>
+<li>
+<p><code>sources_routed</code></p>
+<ul>
+<li>Candidate sources and responsible functions are represented.</li>
+<li>Access actions and target dates exist.</li>
+<li>No source facts are treated as collected evidence.</li>
+</ul>
+</li>
+<li>
+<p><code>evidence_arriving</code></p>
+<ul>
+<li>Admitted observations create candidate assets.</li>
+<li>Correlation creates dependencies and review queues.</li>
+<li>Conflicts, unmatched observations, and limitations remain visible.</li>
+<li>Some report sections are partially supported.</li>
+</ul>
+</li>
+<li>
+<p><code>phase1_assessment_ready</code></p>
+<ul>
+<li>Required in-scope sources have explicit dispositions.</li>
+<li>Applicable denominators and limitations are recorded.</li>
+<li>Material conflicts have been resolved or disclosed.</li>
+<li>The Phase 1 report is ready for accountable review.</li>
+<li>Phase 2 may begin only after the baseline is accepted.</li>
+</ul>
+</li>
+</ol>
+<p>The scenario selector must say <strong>Illustrative scenario</strong> and display a
+persistent synthetic-data banner. It must not resemble a live progress switch.</p>
+<h3 id="report-section-readiness">Report-section readiness</h3>
+<p>Use these states:</p>
+<pre><code class="language-text">not_started
+structure_ready
+evidence_partial
+review_ready
+accepted
+blocked
+not_applicable
+</code></pre>
+<p>Each section records required evidence classes, available evidence references,
+material limitations, accountable reviewer role, and status rationale.</p>
+<h2 id="measurement-rules">Measurement rules</h2>
+<ul>
+<li>A percentage may be displayed only when its numerator, denominator, scope,
+as-of time, and denominator source are available.</li>
+<li>An unknown denominator produces <code>not_measurable</code>, never zero.</li>
+<li>Source readiness measures enablement, not estate coverage.</li>
+<li>Observation count measures collected facts, not distinct assets or risks.</li>
+<li>Correlation confidence describes the matching basis, not probability of
+truth.</li>
+<li>Missing evidence becomes a limitation, not a clean result.</li>
+<li>Report readiness is evaluated by required claim and evidence class, not by
+the raw number of answered questions.</li>
+<li>Scenario metrics and actual program metrics cannot appear in the same visual
+without separate labels and sources.</li>
+</ul>
+<h2 id="experience-architecture">Experience architecture</h2>
+<h3 id="briefing-mode">Briefing mode</h3>
+<p>Add a six-step, presentation-safe route that preserves the meeting frame:</p>
+<ol>
+<li>Mission — why the map is being built.</li>
+<li>Estate — the ten-domain landscape.</li>
+<li>Method — sources become observations, assets, dependencies, and reports.</li>
+<li>Position — program, evidence, and report state shown separately.</li>
+<li>Demonstration — selected synthetic map state with drill-down.</li>
+<li>Action — decisions, routes, owners, dates, and consequences.</li>
+</ol>
+<p>Briefing mode uses large text, one main message per view, keyboard navigation,
+stable deep links, and no controls that resemble production execution.</p>
+<h3 id="operator-mode">Operator mode</h3>
+<p>Operator mode adds detail without changing authority:</p>
+<ul>
+<li>Source-readiness register.</li>
+<li>RFI and dependency drill-down.</li>
+<li>Capability-probe results.</li>
+<li>Evidence and provenance browser.</li>
+<li>Asset and dependency explorer.</li>
+<li>Conflict and unmatched-observation queues.</li>
+<li>Evidence-limitations register.</li>
+<li>Report-section readiness.</li>
+<li>Gate and decision position.</li>
+</ul>
+<h3 id="executive-mode">Executive mode</h3>
+<p>Executive mode displays only:</p>
+<ul>
+<li>Scope and as-of date.</li>
+<li>Current phase and next gate.</li>
+<li>Program blockers requiring action.</li>
+<li>Source-readiness position.</li>
+<li>Measurable coverage with denominator disclosure.</li>
+<li>Material limitations.</li>
+<li>Report readiness.</li>
+<li>Decisions and accountable dates.</li>
+</ul>
+<p>It excludes raw evidence, private notes, credentials, unrestricted source
+payloads, and unapproved findings.</p>
+<h2 id="contract-plan">Contract plan</h2>
+<p>Preserve existing version-one contracts unchanged. Add new versions or new
+contracts where semantics expand.</p>
+<h3 id="reuse">Reuse</h3>
+<ul>
+<li><code>ProviderIntegrationProfile.v1</code></li>
+<li><code>CapabilityProbe.v1</code></li>
+<li><code>CollectionRun.v1</code></li>
+<li><code>EvidenceObservation.v1</code></li>
+<li><code>CanonicalCryptoRecord.v1</code></li>
+<li><code>CryptoDependency.v1</code></li>
+<li><code>Phase1SyntheticFlow.v1</code></li>
+<li><code>DashboardProjection.v1</code></li>
+<li>Program Operations action, dependency, RFI, decision, gate, and report
+contracts</li>
+</ul>
+<h3 id="add">Add</h3>
+<ul>
+<li><code>PQCEstateOntology.v1</code> — the authoritative public taxonomy of ten estate
+domains, 22 migration patterns, 27 source-system types, recognition hints,
+and their many-to-many relationships.</li>
+<li><code>AssessmentMapProjection.v1</code> — nodes, edges, evidence references, conflicts,
+limitations, and bounded measurements.</li>
+<li><code>BriefingScenario.v1</code> — synthetic state, narrative sequence, and allowed
+projection references.</li>
+<li><code>ReportReadinessProjection.v1</code> — report sections, evidence requirements,
+limitations, review state, and acceptance state.</li>
+<li><code>ProgramPositionProjection.v1</code> — read-only action, dependency, decision, and
+gate summary for audience-filtered display.</li>
+</ul>
+<p>The contracts remain language-neutral JSON Schema. OpenAPI describes external
+HTTP projection access. Generated Protobuf/gRPC contracts may be used for
+internal component seams when the selected runtime supports them. Transport
+formats do not replace the canonical evidence schemas.</p>
+<h2 id="implementation-releases">Implementation releases</h2>
+<h3 id="release-0-presentation-safe-walking-skeleton">Release 0 — presentation-safe walking skeleton</h3>
+<p>Purpose: support an immediate stakeholder briefing without claiming new
+enterprise capability.</p>
+<p>Work:</p>
+<ul>
+<li>Preserve the current dirty working baseline and make the required existing
+contracts, fixtures, and validators durable before the UI depends on them.</li>
+<li>Include <code>contract-packs/</code> in the standalone export and extend public privacy
+validation to YAML.</li>
+<li>Define the six-step briefing narrative as checked-in data.</li>
+<li>Reuse the existing Overview, Architecture, Inventory, Dashboard, Posture,
+and Questions surfaces through a curated route.</li>
+<li>Preserve the current Interview Mode and add a distinct Phase 1 Briefing Mode.</li>
+<li>Add an unmistakable synthetic-reference boundary at the start and during
+every scenario view.</li>
+<li>Use the existing two-region Phase 1 fixture as the only evidence-bearing
+demonstration.</li>
+<li>Add a final action view containing role, action, required date, consequence,
+and status fields.</li>
+<li>Prepare a static screenshot or PDF fallback for every demonstrated view.</li>
+</ul>
+<p>Exit criteria:</p>
+<ul>
+<li>The six-step sequence completes in six minutes or less.</li>
+<li>No view claims live enterprise connectivity or enterprise-wide coverage.</li>
+<li>Every displayed number identifies its synthetic scope and denominator.</li>
+<li>The route works from a clean checkout.</li>
+<li>The standalone export contains the five public source contract packs.</li>
+<li>Public privacy validation covers the authored YAML sources.</li>
+<li>Keyboard navigation and 200-percent browser zoom remain usable.</li>
+<li>Existing repository validation remains green.</li>
+</ul>
+<h3 id="release-1-contract-backed-scenario-playback">Release 1 — contract-backed scenario playback</h3>
+<p>Purpose: demonstrate how the map changes as evidence matures.</p>
+<p>Work:</p>
+<ul>
+<li>Add the four <code>BriefingScenario.v1</code> fixtures.</li>
+<li>Add the canonical ten-domain, 22-pattern, and 27-source ontology and validate
+every cross-reference.</li>
+<li>Generate every scenario from shared source profiles, observations, assets,
+dependencies, limitations, and report-section rules.</li>
+<li>Add a scenario selector with descriptive state names, not percentages.</li>
+<li>Show why each metric is available or unavailable.</li>
+<li>Add regression tests proving that an unavailable denominator cannot produce
+a coverage percentage.</li>
+<li>Add tests proving that scenario data cannot be labeled actual.</li>
+</ul>
+<p>Exit criteria:</p>
+<ul>
+<li>All four scenarios validate against the same contracts.</li>
+<li>State transitions add evidence without silently deleting limitations.</li>
+<li>A later state cannot claim acceptance without the required review record.</li>
+<li>Scenario playback is deterministic.</li>
+</ul>
+<h3 id="release-2-program-control-projection">Release 2 — program-control projection</h3>
+<p>Purpose: let the application frame the live project conversation.</p>
+<p>Work:</p>
+<ul>
+<li>Bind a read-only adapter to the Program Operations API or approved exported
+snapshot.</li>
+<li>Display current cycle, next gate, due actions, blocking dependencies, open
+RFIs, decisions required, and report snapshot status.</li>
+<li>Apply audience filtering before data reaches the browser.</li>
+<li>Keep actual program position visually separate from synthetic estate data.</li>
+<li>Add as-of time, source version, and digest to every program projection.</li>
+<li>Keep the public hosted reference fixture-backed. Authenticated live Program
+Operations access belongs only in a separately approved enterprise
+deployment profile.</li>
+</ul>
+<p>Exit criteria:</p>
+<ul>
+<li>The browser cannot mutate program records.</li>
+<li>Private notes, time records, personal calendar details, and restricted
+evidence are absent.</li>
+<li>Every action includes its name, responsible role, required date,
+consequence, and source reference.</li>
+<li>Stale or unavailable program data is visibly identified.</li>
+</ul>
+<h3 id="release-3-source-readiness-and-evidence-map">Release 3 — source-readiness and evidence map</h3>
+<p>Purpose: replace illustrative source progress with admitted read-only evidence.</p>
+<p>Work:</p>
+<ul>
+<li>Implement source adapters one at a time behind the existing narrow ports.</li>
+<li>Require a source profile, access authority, classification, capability probe,
+and collection policy before admission.</li>
+<li>Normalize provider records into evidence observations.</li>
+<li>Correlate observations into canonical assets without losing provenance.</li>
+<li>Show conflicts and unmatched observations as review work.</li>
+<li>Add estate-domain and migration-pattern filters.</li>
+<li>Extend asset and dependency types only through versioned contracts and
+conformance fixtures.</li>
+</ul>
+<p>Exit criteria:</p>
+<ul>
+<li>Each adapter passes pagination, retry, duplication, authorization failure,
+malformed-record, schema-drift, and cursor-recovery tests.</li>
+<li>A source outage cannot corrupt prior accepted evidence.</li>
+<li>Provider-native objects do not enter the domain model.</li>
+<li>No credential, secret, key material, unrestricted payload, or raw source code
+enters the dashboard or telemetry.</li>
+</ul>
+<h3 id="release-4-report-readiness-projection">Release 4 — report-readiness projection</h3>
+<p>Purpose: show exactly how evidence supports Phase 1 and enables Phase 2.</p>
+<p>Work:</p>
+<ul>
+<li>Define evidence requirements for each Phase 1 report section.</li>
+<li>Define the mapping between the full biweekly report contract and the smaller
+runtime report snapshot.</li>
+<li>Bind assets, dependencies, findings, and limitations to report sections.</li>
+<li>Show unsupported, partially supported, review-ready, accepted, and blocked
+sections.</li>
+<li>Generate report preview content from the same authoritative references.</li>
+<li>Require an accepted Phase 1 baseline before enabling Phase 2 risk claims.</li>
+<li>Preserve corrections through superseding snapshots.</li>
+</ul>
+<p>Exit criteria:</p>
+<ul>
+<li>Every report statement is traceable to evidence or explicitly labeled
+interpretation.</li>
+<li>Every limitation appears in the report preview and readiness explanation.</li>
+<li>Accepted snapshots cannot be overwritten.</li>
+<li>Phase 2 readiness fails closed when required Phase 1 evidence is missing.</li>
+</ul>
+<h3 id="release-5-enterprise-deployment-profile">Release 5 — enterprise deployment profile</h3>
+<p>Purpose: bind the product-neutral core to an approved enterprise environment.</p>
+<p>Work:</p>
+<ul>
+<li>Generate runtime, relational-store, identity, secret-service, telemetry,
+ingress, object-storage, analytics, and source-adapter bindings from an
+approved technology-selection profile.</li>
+<li>Keep deployment-specific code in adapters and configuration.</li>
+<li>Add backup, restore, failover, rollback, accessibility, load, security, and
+operator-runbook evidence.</li>
+<li>Retain a clean local synthetic path for deterministic development and
+demonstration.</li>
+</ul>
+<p>Exit criteria:</p>
+<ul>
+<li>Selected bindings have internal evidence and authorized decision references.</li>
+<li>The deployment passes the same domain and adapter conformance suites as the
+reference implementation.</li>
+<li>Production-readiness and live-readback claims are made only after their own
+evidence gates pass.</li>
+</ul>
+<h2 id="component-sequence">Component sequence</h2>
+<p>Build and prove the Map Room through declared edges:</p>
+<pre><code class="language-text">contract
+  -&gt; deterministic fixture
+  -&gt; domain projection
+  -&gt; component test
+  -&gt; adjacent-component seam
+  -&gt; presentation-safe slice
+  -&gt; read-only enterprise adapter
+</code></pre>
+<p>Recommended order:</p>
+<ol>
+<li>Contracts and validation.</li>
+<li>Scenario fixtures.</li>
+<li>Pure projection functions.</li>
+<li>Briefing navigation and views.</li>
+<li>Program-position adapter.</li>
+<li>Source-readiness adapter.</li>
+<li>Evidence-map explorer.</li>
+<li>Report-readiness generator.</li>
+<li>Enterprise deployment adapters.</li>
+</ol>
+<p>Do not begin with the complete deployment stack. Each phase must emit a
+source-bound proof that states exactly what was demonstrated and what was not.</p>
+<h2 id="repository-change-map">Repository change map</h2>
+<p>Planned additions:</p>
+<pre><code class="language-text">contracts/pqc-estate-ontology.v1.schema.json
+contracts/assessment-map-projection.v1.schema.json
+contracts/briefing-scenario.v1.schema.json
+contracts/report-readiness-projection.v1.schema.json
+contracts/program-position-projection.v1.schema.json
+
+fixtures/assessment-map/outline-established.v1.json
+fixtures/assessment-map/sources-routed.v1.json
+fixtures/assessment-map/evidence-arriving.v1.json
+fixtures/assessment-map/phase1-assessment-ready.v1.json
+
+src/domain/assessmentMap.ts
+src/domain/reportReadiness.ts
+src/domain/briefing.ts
+src/components/BriefingMode.tsx
+src/components/EstateMap.tsx
+src/components/ProgramPosition.tsx
+src/components/ReportReadiness.tsx
+
+scripts/validate-assessment-map.py
+docs/assessment-map-room.md
+docs/assessment-map-room-presenter-guide.md
+</code></pre>
+<p>Existing files should be changed only after focused tests establish the
+intended compatibility behavior. Generated build-info files are not authored
+sources.</p>
+<h2 id="test-plan">Test plan</h2>
+<h3 id="contract-and-domain-tests">Contract and domain tests</h3>
+<ul>
+<li>Unique and resolvable domain, source, asset, dependency, evidence,
+limitation, report-section, action, decision, and gate identifiers.</li>
+<li>Every identifier appears with a plain-language name in human views.</li>
+<li>No dependency references a missing asset.</li>
+<li>Every asset and dependency retains evidence references.</li>
+<li>Duplicate observations do not create duplicate admitted effects.</li>
+<li>Conflicting sources remain visible and do not silently choose a winner.</li>
+<li>Unknown denominators suppress coverage percentages.</li>
+<li>Evidence limitations cannot be converted into success metrics.</li>
+<li>Report readiness cannot advance without required evidence and review.</li>
+</ul>
+<h3 id="presentation-tests">Presentation tests</h3>
+<ul>
+<li>Every briefing step has one primary message.</li>
+<li>All audience-facing terms are introduced before specialist use.</li>
+<li>The complete briefing fits the intended duration.</li>
+<li>All text remains readable at presentation distance and 200-percent zoom.</li>
+<li>No clipping, collisions, unintended wrapping, or obscured connectors.</li>
+<li>Keyboard-only operation follows the intended sequence.</li>
+<li>The synthetic boundary remains visible in screenshots and full-screen mode.</li>
+</ul>
+<h3 id="security-and-authority-tests">Security and authority tests</h3>
+<ul>
+<li>Browser identities have no write-capable endpoint.</li>
+<li>Scenario fixtures contain no enterprise identifiers or customer data.</li>
+<li>Program projections exclude private notes and time details.</li>
+<li>Raw evidence, source code, payloads, credentials, secrets, private keys, and
+unrestricted error text cannot enter the view or telemetry.</li>
+<li>Future remediation controls remain absent or deny-by-default.</li>
+</ul>
+<h3 id="portability-tests">Portability tests</h3>
+<ul>
+<li>A clean checkout can validate contracts and run the synthetic briefing.</li>
+<li>Generated clients agree with canonical schemas.</li>
+<li>Internal transport substitution does not change domain values.</li>
+<li>Enterprise adapters pass the same conformance tests as reference adapters.</li>
+<li>Presentation and report projections rebuild deterministically from source
+records.</li>
+</ul>
+<h2 id="friday-safe-operating-protocol">Friday-safe operating protocol</h2>
+<p>Until Release 0 is complete, use the existing application manually in this
+order:</p>
+<pre><code class="language-text">Overview
+  -&gt; Architecture
+  -&gt; Inventory
+  -&gt; Dashboard
+  -&gt; Questions
+</code></pre>
+<p>Before presenting:</p>
+<ul>
+<li>Run the repository checks.</li>
+<li>Rehearse the exact click path.</li>
+<li>Open the application locally as the primary path.</li>
+<li>Retain screenshots or a PDF as the offline fallback.</li>
+<li>Disable notifications and close unrelated applications and tabs.</li>
+<li>Confirm every visible state is labeled synthetic.</li>
+<li>Do not demonstrate future write, ticket, or remediation views as current
+assessment capability.</li>
+</ul>
+<p>During the meeting:</p>
+<ul>
+<li>Begin with the map-making purpose.</li>
+<li>Explain the ontology before opening detailed records.</li>
+<li>State that the workbook defines what must be learned and the app shows what
+admitted answers become.</li>
+<li>Return from the demonstration to actions, owners, dates, and consequences.</li>
+<li>Capture decisions in the authoritative program-control process, not in the
+presentation application.</li>
+</ul>
+<h2 id="definition-of-done">Definition of done</h2>
+<p>The Map Room v1 is done only when:</p>
+<ul>
+<li>A non-technical stakeholder can explain the map, its inputs, and its outputs
+after the six-step briefing.</li>
+<li>Actual program state, synthetic scenario state, estate evidence state, and
+report readiness cannot be confused.</li>
+<li>Every metric carries its scope, denominator, as-of time, and qualification.</li>
+<li>Every displayed asset and dependency is traceable to retained evidence.</li>
+<li>Unknowns and limitations remain visible.</li>
+<li>The same source records generate the dashboard and report-readiness views.</li>
+<li>The reference path runs from a clean checkout.</li>
+<li>The enterprise path can be completed by implementing documented adapters
+rather than rewriting the domain core.</li>
+<li>No unauthorized external action or production mutation is possible.</li>
+</ul>
+<h2 id="immediate-implementation-queue">Immediate implementation queue</h2>
+<ol>
+<li>Approve the Map Room name, three-axis model, and four scenario names.</li>
+<li>Add and validate the five new contracts.</li>
+<li>Build the four deterministic scenario fixtures from the current synthetic
+Phase 1 flow.</li>
+<li>Implement pure projection functions and negative tests.</li>
+<li>Add the six-step Briefing Mode and presentation-safe navigation.</li>
+<li>Rehearse and visually validate Release 0.</li>
+<li>Bind the read-only Program Operations projection.</li>
+<li>Add source-readiness and report-readiness views.</li>
+<li>Admit enterprise source adapters one at a time after authorization.</li>
+</ol>
+
+      </article>
+      <footer class="footer">
+        Generated locally from assessment-map-room-build-plan.md. The Markdown source remains the durable record.
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

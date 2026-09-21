@@ -1,0 +1,54 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/workflow-kernel/command-outbox.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "CommandOutbox.v1",
+  "description": "Durable transactional-outbox record for a safe CommandEnvelope. Publication state is transport status, not domain authority.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "commandOutboxId", "tenantId", "workflowInstanceRef", "commandEnvelopeRef", "commandEnvelopeDigest", "status", "deliveryAttemptCount", "maximumAttempts", "availableAt", "lease", "createdAt", "publishedAt", "lastFailureClassification", "safety"],
+  "properties": {
+    "schemaVersion": {"const": "CommandOutbox.v1"},
+    "commandOutboxId": {"$ref": "#/$defs/identifier"},
+    "tenantId": {"$ref": "#/$defs/identifier"},
+    "workflowInstanceRef": {"$ref": "#/$defs/identifier"},
+    "commandEnvelopeRef": {"$ref": "#/$defs/identifier"},
+    "commandEnvelopeDigest": {"$ref": "#/$defs/digest"},
+    "status": {"enum": ["pending", "leased", "published", "quarantined", "reconciliation_required"]},
+    "deliveryAttemptCount": {"type": "integer", "minimum": 0, "maximum": 20},
+    "maximumAttempts": {"type": "integer", "minimum": 1, "maximum": 20},
+    "availableAt": {"$ref": "#/$defs/timestamp"},
+    "lease": {
+      "type": "object", "additionalProperties": false,
+      "required": ["ownerRef", "expiresAt"],
+      "properties": {
+        "ownerRef": {"oneOf": [{"$ref": "#/$defs/identifier"}, {"type": "null"}]},
+        "expiresAt": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]}
+      }
+    },
+    "createdAt": {"$ref": "#/$defs/timestamp"},
+    "publishedAt": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+    "lastFailureClassification": {"enum": ["none", "rate_limited", "timeout", "transient_provider_error", "authentication", "authorization", "configuration", "schema_drift", "unknown_outcome"]},
+    "safety": {"$ref": "#/$defs/safety"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "leased"}}, "required": ["status"]},
+      "then": {"properties": {"lease": {"properties": {"ownerRef": {"$ref": "#/$defs/identifier"}, "expiresAt": {"$ref": "#/$defs/timestamp"}}}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "published"}}, "required": ["status"]},
+      "then": {"properties": {"publishedAt": {"$ref": "#/$defs/timestamp"}}}
+    }
+  ],
+  "$defs": {
+    "identifier": {"type": "string", "minLength": 3, "maxLength": 160, "pattern": "^[a-z0-9][a-z0-9._:-]+$"},
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "timestamp": {"type": "string", "format": "date-time", "maxLength": 30, "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"},
+    "safety": {
+      "type": "object", "additionalProperties": false,
+      "required": ["synthetic", "payloadEmbedded", "credentialValueEmbedded", "privateKeyEmbedded"],
+      "properties": {"synthetic": {"type": "boolean"}, "payloadEmbedded": {"const": false}, "credentialValueEmbedded": {"const": false}, "privateKeyEmbedded": {"const": false}}
+    }
+  }
+}

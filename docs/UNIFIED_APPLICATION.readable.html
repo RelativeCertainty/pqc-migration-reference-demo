@@ -1,0 +1,383 @@
+<!doctype html>
+<html lang="en" data-classification="public">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <meta name="generator" content="PBA readable document renderer v1">
+  <title>One application: migration and capability record</title>
+  <style>
+    :root {
+      --page: #edf1f5;
+      --paper: #ffffff;
+      --text: #20252d;
+      --muted: #647080;
+      --line: #d9e0e8;
+      --accent: #285f86;
+      --accent-soft: #e9f2f8;
+      --notice: #7c4b13;
+      --notice-bg: #fff3dc;
+      --code: #f4f6f8;
+      --shadow: 0 18px 55px rgba(31, 43, 58, 0.11);
+      --measure: 76ch;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #11161d;
+        --paper: #1a212b;
+        --text: #e8edf3;
+        --muted: #a8b3c0;
+        --line: #35404e;
+        --accent: #8fc8ed;
+        --accent-soft: #203848;
+        --notice: #f0c47b;
+        --notice-bg: #3a2b19;
+        --code: #111821;
+        --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-underline-offset: 0.16em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--paper);
+      border: 2px solid var(--accent);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: none; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.83rem;
+    }
+    .classification {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--notice);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .classification::before {
+      content: "";
+      width: 0.62rem;
+      height: 0.62rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .reader-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .reader-actions a,
+    .reader-actions button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      padding: 0.42rem 0.75rem;
+      text-decoration: none;
+    }
+    .reader-actions a:hover,
+    .reader-actions button:hover { border-color: var(--accent); }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: clamp(1.1rem, 3vw, 2.6rem);
+      display: grid;
+      grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+      gap: clamp(1.1rem, 3vw, 2.8rem);
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 1.3rem;
+      max-height: calc(100vh - 2.6rem);
+      overflow: auto;
+      padding: 1rem 0.9rem 1rem 0;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .toc-title {
+      margin: 0 0 0.7rem;
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .toc-list { margin: 0; padding: 0; list-style: none; }
+    .toc-list li { margin: 0.22rem 0; }
+    .toc-list a {
+      display: block;
+      padding: 0.28rem 0.4rem;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a:focus {
+      border-left-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .toc-level-3 { padding-left: 0.75rem; }
+    .paper {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 5vw, 4.5rem);
+    }
+    .document-meta {
+      max-width: var(--measure);
+      margin: 0 auto 2.5rem;
+      padding: 0 0 1.15rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .document-meta strong { color: var(--text); }
+    .document-meta code { overflow-wrap: anywhere; word-break: break-all; }
+    .notice {
+      max-width: var(--measure);
+      margin: 0 auto 2rem;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--notice);
+      border-radius: 6px;
+      background: var(--notice-bg);
+      color: var(--notice);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+    article > * { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+    article h1,
+    article h2,
+    article h3,
+    article h4 {
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      scroll-margin-top: 1.5rem;
+    }
+    article h1 {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+      font-size: clamp(2.1rem, 5vw, 3.5rem);
+      font-weight: 760;
+    }
+    article h2 {
+      margin-top: 3.4rem;
+      margin-bottom: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    article h3 { margin-top: 2.4rem; font-size: 1.25rem; }
+    article h4 { margin-top: 2rem; font-size: 1.05rem; }
+    article p { margin-top: 0.85rem; margin-bottom: 0.85rem; }
+    article ul,
+    article ol { padding-left: 1.45rem; }
+    article li { margin: 0.42rem 0; padding-left: 0.15rem; }
+    article li::marker { color: var(--accent); font-weight: 700; }
+    article blockquote {
+      padding: 0.2rem 0 0.2rem 1.2rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-style: italic;
+    }
+    article code {
+      padding: 0.12em 0.32em;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 0.84em;
+      overflow-wrap: anywhere;
+    }
+    article pre {
+      max-width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--code);
+      overflow: auto;
+      line-height: 1.45;
+    }
+    article pre code { padding: 0; background: transparent; overflow-wrap: normal; }
+    article hr { margin-top: 2.8rem; margin-bottom: 2.8rem; border: 0; border-top: 1px solid var(--line); }
+    article img { max-width: 100%; height: auto; }
+    .image-placeholder {
+      display: inline-block;
+      padding: 0.3rem 0.5rem;
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.86rem;
+    }
+    .unsafe-link { color: var(--muted); text-decoration: line-through; }
+    article table {
+      display: block;
+      max-width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.88rem;
+    }
+    article th,
+    article td { padding: 0.58rem 0.7rem; border: 1px solid var(--line); text-align: left; }
+    .footer {
+      max-width: var(--measure);
+      margin: 3.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.76rem;
+    }
+    @media (max-width: 900px) {
+      body { font-size: 17px; }
+      .shell { display: block; padding: 0; }
+      .toc {
+        position: static;
+        max-height: 20rem;
+        overflow: auto;
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .toc-list { columns: 2; column-gap: 1.4rem; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; }
+    }
+    @media (max-width: 560px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .toc-list { columns: 1; }
+      .paper { padding: 1.2rem 1rem 2.5rem; }
+      article h1 { font-size: 2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    @media print {
+      :root { --paper: #fff; --text: #111; --muted: #444; --line: #ccc; }
+      @page { size: auto; margin: 0.7in; }
+      body { background: #fff; color: #111; font-size: 11pt; }
+      .topbar,
+      .toc,
+      .notice,
+      .skip-link,
+      .reader-actions { display: none !important; }
+      .shell { display: block; max-width: none; padding: 0; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+      article > * { max-width: none; }
+      article h1 { font-size: 24pt; }
+      article h2 { break-after: avoid; font-size: 16pt; }
+      article h3,
+      article h4 { break-after: avoid; }
+      article pre,
+      article blockquote { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.75em; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#document">Skip to document</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="classification">Public reading copy</div>
+      <div class="reader-actions" aria-label="Reader actions">
+        <a href="UNIFIED_APPLICATION.md">Open source</a>
+        <button type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+  <main class="shell" id="document">
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol class="toc-list"><li class="toc-level-2"><a href="#decision">Decision</a></li>
+<li class="toc-level-2"><a href="#original-runtime-capabilities">Original runtime capabilities</a></li>
+<li class="toc-level-2"><a href="#preserved-original-frontend-capabilities">Preserved original frontend capabilities</a></li>
+<li class="toc-level-2"><a href="#deliberate-differences">Deliberate differences</a></li>
+<li class="toc-level-2"><a href="#evidence-and-limits">Evidence and limits</a></li></ol>
+    </nav>
+    <div class="paper">
+      <div class="document-meta">
+        <strong>UNIFIED_APPLICATION.md</strong><br>
+        458 words · about 3 minutes · source updated September 21, 2026 at 9:14 AM MDT<br>
+        Source SHA-256: <code>3b2e8a43705633e2e9bab5e0553f1f50b4e6d1c963ddecf7828b01517455f197</code> · renderer v1
+      </div>
+      <aside class="notice"><strong>Public reading copy.</strong> Approved presentation copy.</aside>
+      <article>
+        <h1 id="one-application-migration-and-capability-record">One application: migration and capability record</h1>
+<h2 id="decision">Decision</h2>
+<p>The C# implementation replaces the former Go application. React remains the sole frontend. The assessment workflow extends that product; it is not a separate demo.</p>
+<h2 id="original-runtime-capabilities">Original runtime capabilities</h2>
+<ul>
+<li>Static SPA and typed assets: now C# StaticAssets, with safe paths, bounded immutable snapshots, optional verified manifest at the direct test-host boundary and mandatory manifest in the packaged launcher.</li>
+<li>UI integrity: frontend build generates asset-manifest.sha256; C# validates every listed hash and complete membership. Manifest and source maps are not downloadable.</li>
+<li>Health/readiness: /healthz and /readyz remain available, alongside /health/live and /health/ready. Readiness now checks loaded synthetic state rather than merely process availability.</li>
+<li>Posture: authenticated /api/posture uses versioned pqc-posture.v3. Storage is truthfully isolated_sqlite and access is synthetic_session_only; the former v2 stateless/no-auth contract remains historical, not the active response schema.</li>
+<li>Version: the C# executable accepts --version and reports assembly source identity/runtime. UI responses include the validated manifest hash when present.</li>
+<li>Security: loopback-only explicit host, no trusted forwarded-crypto claims, same-origin checks, CSRF, no-store, safe error codes, disabled request logging, CSP and sensitive-path rejection.</li>
+<li>Portability: source builds with .NET rather than Go. The supported bounded launcher is Linux-only today; there is no assertion of a qualified Windows installer or public HTTPS deployment.</li>
+</ul>
+<h2 id="preserved-original-frontend-capabilities">Preserved original frontend capabilities</h2>
+<p>All twelve original topic modules are retained: overview, architecture, TVM mapping, inventory, prioritization, workflow, scenarios, decisions, patterns, posture, dashboard and questions. Guided explanation controls remain inside the common shell. Evidence-fusion, risk and source-status logic and their tests move with those modules. Their illustrative outputs are not promoted to authoritative assessment conclusions.</p>
+<p>The new operational application supplies discovery, specialist forms, Excel exchange, receipt/reconciliation, staged record review, assessment gates, business analysis, immutable reports, graph/search/coverage and work queues. Pure capacity calculations now run in the same C# host with same-session APIs and a React module; the standalone host is retired.</p>
+<h2 id="deliberate-differences">Deliberate differences</h2>
+<p>The old Worker and Go routes were stateless/read-only. The integrated application has durable synthetic state and authenticated role-scoped commands. Consequently API posture schema, access semantics, readiness and CSP are explicitly different. HTTP loopback does not send misleading production HSTS or claim upstream TLS. No second runtime is kept as an authority for compatibility.</p>
+<p>The inherited public Git history preserves old source. Current runtime configuration, CI and root run commands select C#/React only. Python fixtures, normalizers, BOM tools and schema examples are supporting development tools, not a Python production backend.</p>
+<h2 id="evidence-and-limits">Evidence and limits</h2>
+<p>This reconciliation is a development candidate. Exact executed checks are recorded by scripts/validate_reference.py against its commit. No source file, automated test, simulated decision or screenshot is owner acceptance or proof of live integration. Enterprise identity, SQL Server, HTTPS and migration execution still require their separate gates.</p>
+
+      </article>
+      <footer class="footer">
+        Generated locally from UNIFIED_APPLICATION.md. The Markdown source remains the durable record.
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

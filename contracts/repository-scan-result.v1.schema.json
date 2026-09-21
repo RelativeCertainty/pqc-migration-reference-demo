@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/pqc-migration-reference-demo/contracts/repository-scan-result.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "Repository Scan Result v1",
+  "description": "Privacy-bounded output from the offline repository discovery adapter. Findings are candidate cryptographic use, not vulnerabilities or a complete inventory.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "scanner", "target", "collectedAt", "summary", "observations", "diagnostics", "limitations"],
+  "properties": {
+    "schemaVersion": { "const": "pqc.repository-scan-result.v1" },
+    "scanner": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "version", "rulesetVersion"],
+      "properties": {
+        "name": { "const": "pqc-reference-repository-scanner" },
+        "version": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" },
+        "rulesetVersion": { "type": "string", "pattern": "^[0-9]+\\.[0-9]+\\.[0-9]+$" }
+      }
+    },
+    "target": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["label", "digest"],
+      "properties": {
+        "label": { "type": "string", "pattern": "^[A-Za-z0-9][A-Za-z0-9._-]{1,63}$" },
+        "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" }
+      }
+    },
+    "collectedAt": {
+      "type": "string",
+      "format": "date-time",
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}Z$"
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["visitedFiles", "inspectedFiles", "skippedFiles", "observationCount", "warningCount"],
+      "properties": {
+        "visitedFiles": { "type": "integer", "minimum": 0 },
+        "inspectedFiles": { "type": "integer", "minimum": 0 },
+        "skippedFiles": { "type": "integer", "minimum": 0 },
+        "observationCount": { "type": "integer", "minimum": 0 },
+        "warningCount": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "observations": {
+      "type": "array",
+      "items": { "$ref": "./evidence-observation.v1.schema.json" }
+    },
+    "diagnostics": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["code", "severity", "relativePath", "message"],
+        "properties": {
+          "code": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,63}$" },
+          "severity": { "enum": ["information", "warning"] },
+          "relativePath": {
+            "oneOf": [
+              { "type": "string", "minLength": 1, "maxLength": 512, "pattern": "^(?!/)(?!.*(?:^|/)\\.\\.(?:/|$)).+$" },
+              { "type": "null" }
+            ]
+          },
+          "message": { "type": "string", "minLength": 1, "maxLength": 240, "pattern": "^[^\\r\\n\\t]+$" }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "type": "string", "minLength": 1, "maxLength": 300, "pattern": "^[^\\r\\n\\t]+$" }
+    }
+  }
+}

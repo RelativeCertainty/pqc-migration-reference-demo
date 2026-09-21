@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "DashboardMetricDefinition.v1",
+  "metricDefinitionId": "metric:correlation-confidence:v1",
+  "name": "Correlation confidence distribution",
+  "questionAnswered": "How are admitted asset and dependency correlations distributed across the declared evidence-confidence categories?",
+  "valueKind": "categorical_distribution",
+  "unit": "items_by_category",
+  "calculation": {
+    "formula": "count eligible correlations in each of high, moderate, low, and unresolved categories",
+    "numeratorDefinition": null,
+    "denominatorDefinition": null,
+    "missingDenominatorResult": "unavailable",
+    "zeroDenominatorResult": "unavailable",
+    "rounding": "Counts remain integers; an optional high-confidence fraction uses the total eligible correlation count."
+  },
+  "scopeSemantics": {
+    "scopeReferenceRequired": true,
+    "denominatorSourceRequired": false,
+    "asOfTimestampRequired": true,
+    "unknownsExcludedFromSuccess": true,
+    "qualification": "Confidence categories describe the strength of the stated correlation rule and evidence, not a probability that the asset is correct."
+  },
+  "interpretation": {
+    "doesMean": "The projection reports how strongly each eligible relationship is supported under the declared correlation rules.",
+    "doesNotMean": [
+      "High confidence is a statistical probability of truth.",
+      "The underlying source record is authoritative for every field.",
+      "Low-confidence relationships may be silently discarded.",
+      "Risk or remediation priority has been determined."
+    ],
+    "whenUnavailable": "Show unavailable when there are no eligible correlations or the confidence rules are not declared."
+  },
+  "safety": {
+    "syntheticDefinition": true,
+    "enterpriseCompletenessClaimAllowed": false,
+    "riskConclusionAllowed": false,
+    "migrationCompletionClaimAllowed": false
+  }
+}

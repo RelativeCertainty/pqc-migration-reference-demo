@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "SyntheticSourcePage.v1",
+  "pageId": "page:synthetic:software-analysis:001",
+  "contractPackRef": "contract:source-pack:software-analysis:v1",
+  "sourceFamily": "software_analysis",
+  "pageNumber": 1,
+  "totalPageCount": 2,
+  "currentCursorRef": "cursor:synthetic:software-analysis:start",
+  "nextCursorRef": "cursor:synthetic:software-analysis:after-page-1",
+  "records": [
+    {
+      "sourceRecordId": "record:synthetic:software-analysis:edge",
+      "recordType": "software_analysis_signal",
+      "observedAt": "2030-01-07T12:04:00Z",
+      "attributes": {
+        "analysisArtifactRef": "artifact:synthetic:analysis:edge-service",
+        "repositoryRef": "repo:synthetic:edge-service",
+        "componentRef": "asset:synthetic:component:edge-service",
+        "cryptoPrimitiveClass": "asymmetric_encryption",
+        "algorithmFamily": "rsa",
+        "findingDisposition": "review_required",
+        "toolRuleRef": "rule:synthetic:crypto-use"
+      }
+    }
+  ],
+  "safety": {
+    "synthetic": true,
+    "independentlyAuthored": true,
+    "rawProviderPayload": false,
+    "containsCredentials": false,
+    "containsPersonalData": false,
+    "containsKeyMaterial": false
+  }
+}

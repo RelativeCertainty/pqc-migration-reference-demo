@@ -1,0 +1,247 @@
+{
+  "domains": [
+    {
+      "id": "area-06",
+      "name": "Cloud, keys and identity",
+      "families": [
+        {
+          "id": "cloud-inventory",
+          "name": "Cloud workloads and runtime inventory",
+          "examples": [
+            { "name": "AWS Config", "kind": "SaaS", "url": "https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html", "note": "AWS resource configuration inventory and history." },
+            { "name": "Azure Resource Graph", "kind": "SaaS", "url": "https://learn.microsoft.com/en-us/azure/governance/resource-graph/overview", "note": "Queries resource metadata across Azure subscriptions." },
+            { "name": "Google Cloud Asset Inventory", "kind": "SaaS", "url": "https://docs.cloud.google.com/asset-inventory/docs/asset-inventory-overview", "note": "Google Cloud resource and policy metadata inventory." },
+            { "name": "Oracle Cloud Infrastructure Search", "kind": "SaaS", "url": "https://docs.oracle.com/en-us/iaas/Content/Search/Concepts/queryoverview.htm", "note": "OCI Search; locates cloud resources by their attributes." },
+            { "name": "Kubernetes", "kind": "Open source", "url": "https://kubernetes.io/docs/concepts/overview/", "note": "Container orchestration platform; cluster objects describe workloads." },
+            { "name": "Red Hat OpenShift", "kind": "COTS", "url": "https://www.redhat.com/en/technologies/cloud-computing/openshift", "note": "Enterprise application and Kubernetes platform." },
+            { "name": "Nutanix Prism", "kind": "COTS", "url": "https://www.nutanix.com/products/prism", "note": "Management software for Nutanix infrastructure and workloads." },
+            { "name": "OpenStack", "kind": "Open source", "url": "https://www.openstack.org/software/", "note": "Cloud infrastructure software; deployments include multiple services." },
+            { "name": "CloudQuery", "kind": "SaaS", "url": "https://www.cloudquery.io/", "note": "Cloud asset inventory and configuration data platform." }
+          ]
+        },
+        {
+          "id": "iam",
+          "name": "Identity and access management",
+          "examples": [
+            { "name": "Microsoft Entra ID", "kind": "SaaS", "url": "https://learn.microsoft.com/en-us/entra/fundamentals/new-name", "note": "Cloud identity service; Azure Active Directory and Azure AD are earlier names." },
+            { "name": "Microsoft Active Directory Domain Services", "kind": "COTS", "url": "https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview", "note": "AD DS; Windows Server directory service, distinct from Entra ID." },
+            { "name": "Okta Workforce Identity", "kind": "SaaS", "url": "https://www.okta.com/products/workforce-identity/", "note": "Workforce authentication, access, and identity management." },
+            { "name": "Ping Identity PingFederate", "kind": "COTS", "url": "https://www.pingidentity.com/en/product/pingfederate.html", "note": "Federation server and single sign-on software." },
+            { "name": "Keycloak", "kind": "Open source", "url": "https://www.keycloak.org/", "note": "Identity provider with authentication and federation services." },
+            { "name": "OneLogin", "kind": "SaaS", "url": "https://www.onelogin.com/product", "note": "Workforce identity and single sign-on service." },
+            { "name": "IBM Verify", "kind": "SaaS", "url": "https://www.ibm.com/products/verify", "note": "Identity and access management product portfolio." },
+            { "name": "FreeIPA", "kind": "Open source", "url": "https://www.freeipa.org/", "note": "Linux identity, authentication, and policy management." },
+            { "name": "authentik", "kind": "Open source", "url": "https://goauthentik.io/", "note": "Identity provider and application access software." }
+          ]
+        },
+        {
+          "id": "kms",
+          "name": "Key management systems",
+          "examples": [
+            { "name": "AWS Key Management Service", "kind": "SaaS", "url": "https://aws.amazon.com/kms/", "note": "AWS KMS; managed cryptographic key service." },
+            { "name": "Azure Key Vault", "kind": "SaaS", "url": "https://learn.microsoft.com/en-us/azure/key-vault/general/overview", "note": "Manages keys, secrets, and certificates; identify the actual object type." },
+            { "name": "Google Cloud Key Management Service", "kind": "SaaS", "url": "https://cloud.google.com/security/products/security-key-management", "note": "Cloud KMS; managed cryptographic key service." },
+            { "name": "Oracle Cloud Infrastructure Vault", "kind": "SaaS", "url": "https://docs.oracle.com/en-us/iaas/Content/KeyManagement/Concepts/keyoverview.htm", "note": "OCI Vault and Key Management; identify the key and vault service in use." },
+            { "name": "IBM Key Protect for IBM Cloud", "kind": "SaaS", "url": "https://www.ibm.com/products/key-protect", "note": "Managed encryption key service for IBM Cloud." },
+            { "name": "Thales CipherTrust Manager", "kind": "COTS", "url": "https://cpl.thalesgroup.com/encryption/ciphertrust-manager", "note": "Enterprise key management within the CipherTrust platform." },
+            { "name": "Entrust KeyControl", "kind": "COTS", "url": "https://www.entrust.com/products/key-management/keycontrol", "note": "Enterprise encryption key management software." },
+            { "name": "Fortanix Data Security Manager", "kind": "COTS", "url": "https://www.fortanix.com/platform/data-security-manager", "note": "DSM; key management and cryptographic services platform." },
+            { "name": "OpenStack Barbican", "kind": "Open source", "url": "https://docs.openstack.org/barbican/latest/", "note": "OpenStack Key Manager service." },
+            { "name": "OpenBao Transit secrets engine", "kind": "Open source", "url": "https://openbao.org/docs/secrets/transit/", "note": "OpenBao component providing cryptographic operations through managed keys." }
+          ]
+        },
+        {
+          "id": "secrets",
+          "name": "Secrets and privileged credential management",
+          "examples": [
+            { "name": "AWS Secrets Manager", "kind": "SaaS", "url": "https://aws.amazon.com/secrets-manager/", "note": "Managed storage and access for application secrets." },
+            { "name": "Google Cloud Secret Manager", "kind": "SaaS", "url": "https://cloud.google.com/security/products/secret-manager", "note": "Managed secret storage and versioning." },
+            { "name": "HashiCorp Vault", "kind": "COTS", "url": "https://developer.hashicorp.com/vault/docs", "note": "Secrets management software; identify the deployed edition and engines." },
+            { "name": "CyberArk Conjur", "kind": "Open source", "url": "https://github.com/cyberark/conjur", "note": "The Conjur open-source project for machine and application secrets." },
+            { "name": "Delinea Secret Server", "kind": "COTS", "url": "https://delinea.com/products/secret-server", "note": "Privileged account credential vault and management software." },
+            { "name": "BeyondTrust Password Safe", "kind": "COTS", "url": "https://www.beyondtrust.com/products/password-safe", "note": "Privileged password, secrets, and session management." },
+            { "name": "Akeyless", "kind": "SaaS", "url": "https://www.akeyless.io/", "note": "Identity and secrets management platform." },
+            { "name": "Doppler", "kind": "SaaS", "url": "https://www.doppler.com/", "note": "Application secrets management and configuration delivery." },
+            { "name": "Infisical", "kind": "SaaS", "url": "https://infisical.com/", "note": "Secrets management platform; identify hosted or self-hosted deployment." },
+            { "name": "1Password Secrets Automation", "kind": "SaaS", "url": "https://www.1password.dev/secrets-automation", "note": "Developer and workload access to secrets stored in 1Password." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "area-07",
+      "name": "Protected data",
+      "families": [
+        {
+          "id": "data-governance",
+          "name": "Data governance, discovery and classification",
+          "examples": [
+            { "name": "Microsoft Purview", "kind": "SaaS", "url": "https://learn.microsoft.com/en-us/purview/purview", "note": "Data governance, security, and compliance portfolio; identify the component." },
+            { "name": "Collibra Data Governance", "kind": "SaaS", "url": "https://www.collibra.com/products/data-governance", "note": "Business data definitions, ownership, policies, and governance workflows." },
+            { "name": "Alation Data Catalog", "kind": "COTS", "url": "https://www.alation.com/product/data-catalog/", "note": "Data discovery and metadata catalog software." },
+            { "name": "BigID", "kind": "COTS", "url": "https://bigid.com/", "note": "Data discovery, classification, and security platform." },
+            { "name": "IBM Guardium", "kind": "COTS", "url": "https://www.ibm.com/products/guardium", "note": "Data security portfolio; identify the exact Guardium component." },
+            { "name": "OpenMetadata", "kind": "Open source", "url": "https://open-metadata.org/", "note": "Metadata catalog, discovery, and data governance software." },
+            { "name": "Apache Atlas", "kind": "Open source", "url": "https://github.com/apache/atlas", "note": "Metadata management and data governance framework." },
+            { "name": "DataHub", "kind": "Open source", "url": "https://github.com/datahub-project/datahub", "note": "The DataHub open-source metadata and data discovery project." }
+          ]
+        },
+        {
+          "id": "databases",
+          "name": "Databases and analytical data platforms",
+          "examples": [
+            { "name": "PostgreSQL", "kind": "Open source", "url": "https://www.postgresql.org/about/", "note": "Postgres; relational database software." },
+            { "name": "MySQL Community Server", "kind": "Open source", "url": "https://www.mysql.com/", "note": "Community edition of MySQL; editions and managed services differ." },
+            { "name": "MariaDB Server", "kind": "Open source", "url": "https://mariadb.org/", "note": "MariaDB relational database server." },
+            { "name": "Oracle AI Database", "kind": "COTS", "url": "https://www.oracle.com/database/", "note": "Oracle database portfolio; record the exact database release in use." },
+            { "name": "Microsoft SQL Server", "kind": "COTS", "url": "https://www.microsoft.com/en-us/sql-server/", "note": "Relational database software; distinguish it from managed Azure services." },
+            { "name": "IBM Db2", "kind": "COTS", "url": "https://www.ibm.com/products/db2", "note": "Db2 database portfolio; distinguish distributed and z/OS editions." },
+            { "name": "MongoDB Atlas", "kind": "SaaS", "url": "https://www.mongodb.com/products/platform/atlas-database", "note": "Managed MongoDB database service." },
+            { "name": "Apache Cassandra", "kind": "Open source", "url": "https://cassandra.apache.org/_/index.html", "note": "Distributed wide-column database software." },
+            { "name": "Redis Open Source", "kind": "Open source", "url": "https://redis.io/open-source/", "note": "In-memory data store; identify the exact release and distribution." },
+            { "name": "Snowflake", "kind": "SaaS", "url": "https://docs.snowflake.com/en/user-guide/intro-key-concepts", "note": "Managed cloud data and analytics platform." }
+          ]
+        },
+        {
+          "id": "storage-backup",
+          "name": "Storage, archives and backup",
+          "examples": [
+            { "name": "Amazon S3", "kind": "SaaS", "url": "https://aws.amazon.com/s3/", "note": "Amazon Simple Storage Service; cloud object storage." },
+            { "name": "Azure Blob Storage", "kind": "SaaS", "url": "https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction", "note": "Azure object storage for unstructured data." },
+            { "name": "Google Cloud Storage", "kind": "SaaS", "url": "https://cloud.google.com/storage", "note": "Google Cloud object storage service." },
+            { "name": "NetApp ONTAP", "kind": "COTS", "url": "https://www.netapp.com/ontap-data-management-software/", "note": "Storage operating and data management software." },
+            { "name": "Veeam Backup & Replication", "kind": "COTS", "url": "https://www.veeam.com/products/veeam-data-platform/backup-recovery.html", "note": "Backup and recovery software within Veeam Data Platform." },
+            { "name": "Commvault Cloud", "kind": "COTS", "url": "https://www.commvault.com/platform", "note": "Backup and cyber recovery portfolio; identify the deployment and component." },
+            { "name": "Rubrik Security Cloud", "kind": "SaaS", "url": "https://www.rubrik.com/products", "note": "Data protection and cyber recovery platform." },
+            { "name": "Ceph", "kind": "Open source", "url": "https://ceph.io/en/", "note": "Distributed object, block, and file storage software." },
+            { "name": "restic", "kind": "Open source", "url": "https://restic.net/", "note": "Backup software with repository-based storage." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "area-08",
+      "name": "Distributed endpoints",
+      "families": [
+        {
+          "id": "communications",
+          "name": "DNS, email and document communications",
+          "examples": [
+            { "name": "ISC BIND 9", "kind": "Open source", "url": "https://www.isc.org/bind/", "note": "DNS name server software; DNSSEC configuration is a separate evidence question." },
+            { "name": "PowerDNS Authoritative Server", "kind": "Open source", "url": "https://docs.powerdns.com/authoritative/index.html", "note": "Authoritative DNS server; distinguish it from PowerDNS Recursor." },
+            { "name": "Microsoft Exchange Online", "kind": "SaaS", "url": "https://learn.microsoft.com/en-us/exchange/exchange-online", "note": "Hosted Exchange email service." },
+            { "name": "Microsoft Exchange Server", "kind": "COTS", "url": "https://learn.microsoft.com/en-us/exchange/exchange-server", "note": "Exchange server software; identify the actual release and deployment." },
+            { "name": "Gmail for Google Workspace", "kind": "SaaS", "url": "https://workspace.google.com/products/gmail/", "note": "Organizational email service within Google Workspace." },
+            { "name": "Proton Mail", "kind": "SaaS", "url": "https://proton.me/mail", "note": "Hosted email service." },
+            { "name": "Dovecot", "kind": "Open source", "url": "https://dovecot.org/", "note": "IMAP server software; identify the edition and configured mail services." },
+            { "name": "LibreOffice", "kind": "Open source", "url": "https://www.libreoffice.org/", "note": "Office document software; locate document protection and signing workflows." },
+            { "name": "Adobe Acrobat", "kind": "COTS", "url": "https://www.adobe.com/acrobat.html", "note": "PDF document software; distinguish desktop and online workflows." }
+          ]
+        },
+        {
+          "id": "embedded-ot",
+          "name": "Embedded software and operational technology",
+          "examples": [
+            { "name": "Siemens STEP 7 in TIA Portal", "kind": "COTS", "url": "https://www.siemens.com/en-us/products/tia-portal/step7/", "note": "PLC engineering software within TIA Portal." },
+            { "name": "Siemens SIMATIC S7-1500", "kind": "Hardware/platform", "url": "https://www.siemens.com/en-gb/products/simatic/s7-1500/", "note": "PLC hardware platform; identify CPU, firmware, and engineering software separately." },
+            { "name": "Rockwell Automation Studio 5000 Logix Designer", "kind": "COTS", "url": "https://www.rockwellautomation.com/en-us/products/software/factorytalk/designsuite/studio-5000.html", "note": "Industrial controller programming and engineering software." },
+            { "name": "Rockwell Automation FactoryTalk Optix", "kind": "COTS", "url": "https://www.rockwellautomation.com/en-us/products/software/factorytalk/optix.html", "note": "Industrial HMI and visualization software platform." },
+            { "name": "CODESYS", "kind": "COTS", "url": "https://www.codesys.com/", "note": "Industrial automation engineering and runtime software ecosystem." },
+            { "name": "Inductive Automation Ignition", "kind": "COTS", "url": "https://inductiveautomation.com/ignition/", "note": "SCADA and industrial application software platform." },
+            { "name": "PTC Kepware Server", "kind": "COTS", "url": "https://www.ptc.com/en/products/kepware/kepserverex", "note": "Industrial connectivity software; KEPServerEX is a recognition name in earlier records." },
+            { "name": "Zephyr", "kind": "Open source", "url": "https://www.zephyrproject.org/", "note": "Embedded real-time operating system software." },
+            { "name": "FreeRTOS", "kind": "Open source", "url": "https://www.freertos.org/", "note": "Embedded real-time operating system and libraries." },
+            { "name": "Eclipse Mosquitto", "kind": "Open source", "url": "https://mosquitto.org/", "note": "MQTT message broker software used in device and other messaging systems." }
+          ]
+        },
+        {
+          "id": "endpoints",
+          "name": "Endpoint management and device encryption",
+          "examples": [
+            { "name": "Microsoft Intune", "kind": "SaaS", "url": "https://learn.microsoft.com/en-us/intune/fundamentals/what-is-intune", "note": "Endpoint, mobile device, and application management service." },
+            { "name": "Jamf Pro", "kind": "COTS", "url": "https://www.jamf.com/products/jamf-pro/", "note": "Apple device management software." },
+            { "name": "Omnissa Workspace ONE UEM", "kind": "COTS", "url": "https://www.omnissa.com/products/workspace-one-unified-endpoint-management/", "note": "Unified endpoint management software." },
+            { "name": "IBM MaaS360", "kind": "SaaS", "url": "https://www.ibm.com/products/maas360", "note": "Unified endpoint and mobile device management service." },
+            { "name": "ManageEngine Endpoint Central", "kind": "COTS", "url": "https://www.manageengine.com/products/desktop-central/", "note": "Endpoint management and security software." },
+            { "name": "Tanium Autonomous IT Platform", "kind": "COTS", "url": "https://www.tanium.com/autonomous-it-platform", "note": "Endpoint visibility and management platform; identify the licensed modules." },
+            { "name": "Microsoft BitLocker", "kind": "COTS", "url": "https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/", "note": "Windows volume encryption component." },
+            { "name": "Apple FileVault", "kind": "COTS", "url": "https://support.apple.com/guide/mac-help/how-does-filevault-work-on-a-mac-flvlt001/mac", "note": "macOS volume encryption capability; distinguish configuration from device hardware." },
+            { "name": "cryptsetup", "kind": "Open source", "url": "https://gitlab.com/cryptsetup/cryptsetup", "note": "Linux disk encryption tooling; LUKS is a related format name." },
+            { "name": "osquery", "kind": "Open source", "url": "https://github.com/osquery/osquery", "note": "Operating system instrumentation and inventory software." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "area-09",
+      "name": "Specialized and regulated cryptography",
+      "families": [
+        {
+          "id": "mainframe",
+          "name": "Mainframe platforms and security software",
+          "examples": [
+            { "name": "IBM z/OS", "kind": "COTS", "url": "https://www.ibm.com/products/zos", "note": "Operating system software for IBM Z mainframes." },
+            { "name": "IBM Integrated Cryptographic Service Facility", "kind": "COTS", "url": "https://www.ibm.com/docs/en/SSLTBW_3.2.0/pdf/csfb500_icsf_overview_hcr77f0.pdf", "note": "ICSF; z/OS cryptographic services software component." },
+            { "name": "IBM Resource Access Control Facility", "kind": "COTS", "url": "https://www.ibm.com/products/resource-access-control-facility", "note": "RACF; z/OS security and access control component." },
+            { "name": "IBM zSecure", "kind": "COTS", "url": "https://www.ibm.com/products/zsecure", "note": "Mainframe security administration and audit software portfolio." },
+            { "name": "IBM CICS Transaction Server for z/OS", "kind": "COTS", "url": "https://www.ibm.com/products/cics-transaction-server", "note": "Mainframe transaction processing software." },
+            { "name": "IBM MQ for z/OS", "kind": "COTS", "url": "https://www.ibm.com/products/mq/zos", "note": "Mainframe messaging middleware." },
+            { "name": "IBM Db2 for z/OS", "kind": "COTS", "url": "https://www.ibm.com/products/db2-for-zos", "note": "Mainframe relational database edition." },
+            { "name": "Broadcom ACF2", "kind": "COTS", "url": "https://www.broadcom.com/products/mainframe/security/acf2", "note": "ACF2 mainframe security software." },
+            { "name": "Broadcom Top Secret", "kind": "COTS", "url": "https://www.broadcom.com/products/mainframe/security/top-secret", "note": "Top Secret z/OS mainframe security software." }
+          ]
+        },
+        {
+          "id": "specialized-transactions",
+          "name": "Payment, financial messaging and specialized transaction systems",
+          "examples": [
+            { "name": "Thales payShield 10K", "kind": "Hardware/platform", "url": "https://cpl.thalesgroup.com/encryption/hardware-security-modules/payment-hsms/payshield-10k", "note": "Payment HSM appliance; identify firmware and host software separately." },
+            { "name": "Futurex Excrypt Plus", "kind": "Hardware/platform", "url": "https://www.futurex.com/products/hardware-security-modules/excrypt-plus-payment-hsm", "note": "Payment and general-purpose HSM appliance." },
+            { "name": "AWS Payment Cryptography", "kind": "SaaS", "url": "https://aws.amazon.com/payment-cryptography/", "note": "Managed payment cryptographic operations and key service." },
+            { "name": "Swift Alliance Access", "kind": "COTS", "url": "https://www.swift.com/products/alliance-access", "note": "Financial messaging interface software." },
+            { "name": "IBM Sterling B2B Integrator", "kind": "COTS", "url": "https://www.ibm.com/products/b2b-integrator", "note": "Business-to-business transaction and partner integration software." },
+            { "name": "Axway B2Bi", "kind": "COTS", "url": "https://www.axway.com/en/products/b2b-integration", "note": "B2B and EDI transaction integration software." },
+            { "name": "OpenText Trading Grid", "kind": "SaaS", "url": "https://www.opentext.com/products/trading-grid", "note": "Managed B2B integration and trading-partner transaction platform." },
+            { "name": "Hyperledger Fabric", "kind": "Open source", "url": "https://www.lfdecentralizedtrust.org/projects/fabric", "note": "Permissioned distributed-ledger software; identify the specific network and components." }
+          ]
+        }
+      ]
+    },
+    {
+      "id": "area-10",
+      "name": "Governance and assurance",
+      "families": [
+        {
+          "id": "policy-exceptions",
+          "name": "Policy, risk and exception management",
+          "examples": [
+            { "name": "ServiceNow Policy and Compliance Management", "kind": "SaaS", "url": "https://www.servicenow.com/products/policy-compliance-management.html", "note": "Policy, controls, compliance, and exception workflows." },
+            { "name": "Archer Policy Program Management", "kind": "COTS", "url": "https://community.archerirm.com/hc/en-us/articles/52147321515155-Archer-Policy-Program-Management", "note": "Policy ownership, standards, and exception management." },
+            { "name": "IBM OpenPages", "kind": "COTS", "url": "https://www.ibm.com/products/openpages", "note": "Governance, risk, and compliance software; identify the module." },
+            { "name": "LogicGate Risk Cloud", "kind": "SaaS", "url": "https://www.logicgate.ai/platform/", "note": "Risk and compliance workflow platform." },
+            { "name": "Optro", "kind": "SaaS", "url": "https://optro.ai/auditboard-to-optro", "note": "Audit, risk, and compliance platform; AuditBoard is the earlier brand name." },
+            { "name": "MetricStream Policy and Document Management", "kind": "COTS", "url": "https://www.metricstream.com/products/policy-and-document-management.htm", "note": "Policy, attestation, and exception management software." },
+            { "name": "OneTrust Compliance Automation", "kind": "SaaS", "url": "https://www.onetrust.com/products/compliance-automation/", "note": "Controls, policy, and compliance evidence management." },
+            { "name": "eramba Community", "kind": "Open source", "url": "https://www.eramba.org/", "note": "Community edition of the eramba GRC software." },
+            { "name": "SimpleRisk Core", "kind": "Open source", "url": "https://www.simplerisk.com/", "note": "Core governance, risk, and compliance software." },
+            { "name": "CISO Assistant Community", "kind": "Open source", "url": "https://github.com/intuitem/ciso-assistant-community", "note": "Risk, controls, compliance, and audit management software." }
+          ]
+        },
+        {
+          "id": "vendor-assurance",
+          "name": "Vendor and third-party assurance",
+          "examples": [
+            { "name": "ServiceNow Third-party Risk Management", "kind": "SaaS", "url": "https://www.servicenow.com/products/third-party-risk-management.html", "note": "Vendor risk assessment and review workflows." },
+            { "name": "OneTrust Third-Party Risk Management", "kind": "SaaS", "url": "https://www.onetrust.com/products/third-party-risk-management/", "note": "Third-party assessment and risk management." },
+            { "name": "ProcessUnity", "kind": "SaaS", "url": "https://www.processunity.com/", "note": "Third-party risk management and vendor assessment platform." },
+            { "name": "Vanta Third Party Risk Management", "kind": "SaaS", "url": "https://www.vanta.com/products/third-party-risk-management", "note": "Vendor assessment and third-party risk workflows." },
+            { "name": "Drata Third-Party Risk Management", "kind": "SaaS", "url": "https://drata.com/products/third-party-risk-management", "note": "Third-party inventory, assessments, and risk review." },
+            { "name": "Bitsight Vendor Risk Management", "kind": "SaaS", "url": "https://www.bitsight.com/products/vendor-risk-management", "note": "Vendor assessments and risk management; ratings do not prove cryptographic behavior." },
+            { "name": "UpGuard Vendor Risk", "kind": "SaaS", "url": "https://www.upguard.com/product/vendor-risk", "note": "Third-party assessment and vendor security monitoring." },
+            { "name": "Whistic", "kind": "SaaS", "url": "https://www.whistic.com/", "note": "Vendor risk assessment and security evidence exchange platform." }
+          ]
+        }
+      ]
+    }
+  ]
+}

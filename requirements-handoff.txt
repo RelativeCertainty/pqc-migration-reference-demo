@@ -1,0 +1,12 @@
+# Focused reference development toolchain; core security pins follow the source repo.
+pytest==9.0.3
+jsonschema==4.23.0
+jsonschema-specifications==2024.10.1
+referencing==0.36.2
+PyYAML==6.0.2
+cryptography==50.0.0
+markdown-it-py==3.0.0
+python-docx==1.2.0
+lxml==6.1.1
+reportlab==4.4.9
+pypdf==6.16.1

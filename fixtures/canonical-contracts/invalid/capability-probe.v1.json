@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "CapabilityProbe.v1",
+  "capabilityProbeId": "probe:synthetic-pki-read-only",
+  "tenantId": "tenant:synthetic-reference",
+  "integrationProfileRef": "profile:synthetic-pki",
+  "probeKind": "read_only_handshake",
+  "requestedAt": "2030-01-07T11:00:00Z",
+  "startedAt": "2030-01-07T11:01:00Z",
+  "finishedAt": "2030-01-07T11:02:00Z",
+  "outcome": "supported",
+  "providerRevisionDigest": "sha256:eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+  "capabilities": [
+    { "name": "authentication", "status": "supported", "receiptRefs": ["receipt:synthetic-auth"] },
+    { "name": "read_scope", "status": "unsupported", "receiptRefs": ["receipt:synthetic-read-scope"] }
+  ],
+  "pagination": { "style": "opaque_cursor", "maximumObservedPageSize": 100, "cursorStability": "verified" },
+  "rateLimit": { "observed": false, "retryAfterSupported": "not_observed", "receiptRefs": [] },
+  "authorization": { "readScopeStatus": "verified", "writeCapabilityExercised": false, "credentialValueRetained": false },
+  "evidence": { "status": "synthetic", "receiptRefs": ["receipt:synthetic-probe-summary"], "artifactRefs": ["artifact:synthetic-probe-001"] },
+  "limitations": ["Synthetic behavior does not establish support in a live provider environment."],
+  "safety": { "synthetic": true, "rawPayloadEmbedded": false, "credentialValueEmbedded": false, "privateKeyEmbedded": false }
+}

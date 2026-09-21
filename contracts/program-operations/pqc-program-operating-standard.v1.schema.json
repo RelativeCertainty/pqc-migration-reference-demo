@@ -1,0 +1,50 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/pqc-program-operating-standard.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "PQCProgramOperatingStandard.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "standardId", "name", "recordStatus", "cadences", "dailyRules", "authority"],
+  "properties": {
+    "schemaVersion": {"const": "PQCProgramOperatingStandard.v1"},
+    "standardId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "name": {"$ref": "program-operations-common.v1.schema.json#/$defs/plainLanguageName"},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"},
+    "cadences": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "frequency", "purpose"],
+        "properties": {
+          "name": {"type": "string", "minLength": 3},
+          "frequency": {"type": "string", "minLength": 3},
+          "purpose": {"type": "string", "minLength": 10}
+        }
+      }
+    },
+    "dailyRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["maximumOutcomes", "requiresPrimaryArtifact", "planningIncrementMinutes", "requiresCloseRecord"],
+      "properties": {
+        "maximumOutcomes": {"type": "integer", "minimum": 1, "maximum": 5},
+        "requiresPrimaryArtifact": {"type": "boolean"},
+        "planningIncrementMinutes": {"type": "integer", "enum": [5, 10, 15, 30, 60]},
+        "requiresCloseRecord": {"type": "boolean"}
+      }
+    },
+    "authority": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["operationalAuthority", "formalReportAuthority", "communicationAuthority"],
+      "properties": {
+        "operationalAuthority": {"type": "string", "minLength": 3},
+        "formalReportAuthority": {"type": "string", "minLength": 3},
+        "communicationAuthority": {"type": "string", "minLength": 3}
+      }
+    }
+  }
+}

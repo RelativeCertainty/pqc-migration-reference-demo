@@ -1,0 +1,628 @@
+<!doctype html>
+<html lang="en" data-classification="private">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <meta name="generator" content="PBA readable document renderer v1">
+  <title>Discovery and Evidence Intake — first-slice operator guide</title>
+  <style>
+    :root {
+      --page: #edf1f5;
+      --paper: #ffffff;
+      --text: #20252d;
+      --muted: #647080;
+      --line: #d9e0e8;
+      --accent: #285f86;
+      --accent-soft: #e9f2f8;
+      --notice: #7c4b13;
+      --notice-bg: #fff3dc;
+      --code: #f4f6f8;
+      --shadow: 0 18px 55px rgba(31, 43, 58, 0.11);
+      --measure: 76ch;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #11161d;
+        --paper: #1a212b;
+        --text: #e8edf3;
+        --muted: #a8b3c0;
+        --line: #35404e;
+        --accent: #8fc8ed;
+        --accent-soft: #203848;
+        --notice: #f0c47b;
+        --notice-bg: #3a2b19;
+        --code: #111821;
+        --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-underline-offset: 0.16em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--paper);
+      border: 2px solid var(--accent);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: none; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.83rem;
+    }
+    .classification {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--notice);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .classification::before {
+      content: "";
+      width: 0.62rem;
+      height: 0.62rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .reader-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .reader-actions a,
+    .reader-actions button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      padding: 0.42rem 0.75rem;
+      text-decoration: none;
+    }
+    .reader-actions a:hover,
+    .reader-actions button:hover { border-color: var(--accent); }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: clamp(1.1rem, 3vw, 2.6rem);
+      display: grid;
+      grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+      gap: clamp(1.1rem, 3vw, 2.8rem);
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 1.3rem;
+      max-height: calc(100vh - 2.6rem);
+      overflow: auto;
+      padding: 1rem 0.9rem 1rem 0;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .toc-title {
+      margin: 0 0 0.7rem;
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .toc-list { margin: 0; padding: 0; list-style: none; }
+    .toc-list li { margin: 0.22rem 0; }
+    .toc-list a {
+      display: block;
+      padding: 0.28rem 0.4rem;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a:focus {
+      border-left-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .toc-level-3 { padding-left: 0.75rem; }
+    .paper {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 5vw, 4.5rem);
+    }
+    .document-meta {
+      max-width: var(--measure);
+      margin: 0 auto 2.5rem;
+      padding: 0 0 1.15rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .document-meta strong { color: var(--text); }
+    .document-meta code { overflow-wrap: anywhere; word-break: break-all; }
+    .notice {
+      max-width: var(--measure);
+      margin: 0 auto 2rem;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--notice);
+      border-radius: 6px;
+      background: var(--notice-bg);
+      color: var(--notice);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+    article > * { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+    article h1,
+    article h2,
+    article h3,
+    article h4 {
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      scroll-margin-top: 1.5rem;
+    }
+    article h1 {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+      font-size: clamp(2.1rem, 5vw, 3.5rem);
+      font-weight: 760;
+    }
+    article h2 {
+      margin-top: 3.4rem;
+      margin-bottom: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    article h3 { margin-top: 2.4rem; font-size: 1.25rem; }
+    article h4 { margin-top: 2rem; font-size: 1.05rem; }
+    article p { margin-top: 0.85rem; margin-bottom: 0.85rem; }
+    article ul,
+    article ol { padding-left: 1.45rem; }
+    article li { margin: 0.42rem 0; padding-left: 0.15rem; }
+    article li::marker { color: var(--accent); font-weight: 700; }
+    article blockquote {
+      padding: 0.2rem 0 0.2rem 1.2rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-style: italic;
+    }
+    article code {
+      padding: 0.12em 0.32em;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 0.84em;
+      overflow-wrap: anywhere;
+    }
+    article pre {
+      max-width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--code);
+      overflow: auto;
+      line-height: 1.45;
+    }
+    article pre code { padding: 0; background: transparent; overflow-wrap: normal; }
+    article hr { margin-top: 2.8rem; margin-bottom: 2.8rem; border: 0; border-top: 1px solid var(--line); }
+    article img { max-width: 100%; height: auto; }
+    .image-placeholder {
+      display: inline-block;
+      padding: 0.3rem 0.5rem;
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.86rem;
+    }
+    .unsafe-link { color: var(--muted); text-decoration: line-through; }
+    article table {
+      display: block;
+      max-width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.88rem;
+    }
+    article th,
+    article td { padding: 0.58rem 0.7rem; border: 1px solid var(--line); text-align: left; }
+    .footer {
+      max-width: var(--measure);
+      margin: 3.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.76rem;
+    }
+    @media (max-width: 900px) {
+      body { font-size: 17px; }
+      .shell { display: block; padding: 0; }
+      .toc {
+        position: static;
+        max-height: 20rem;
+        overflow: auto;
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .toc-list { columns: 2; column-gap: 1.4rem; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; }
+    }
+    @media (max-width: 560px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .toc-list { columns: 1; }
+      .paper { padding: 1.2rem 1rem 2.5rem; }
+      article h1 { font-size: 2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    @media print {
+      :root { --paper: #fff; --text: #111; --muted: #444; --line: #ccc; }
+      @page { size: auto; margin: 0.7in; }
+      body { background: #fff; color: #111; font-size: 11pt; }
+      .topbar,
+      .toc,
+      .notice,
+      .skip-link,
+      .reader-actions { display: none !important; }
+      .shell { display: block; max-width: none; padding: 0; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+      article > * { max-width: none; }
+      article h1 { font-size: 24pt; }
+      article h2 { break-after: avoid; font-size: 16pt; }
+      article h3,
+      article h4 { break-after: avoid; }
+      article pre,
+      article blockquote { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.75em; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#document">Skip to document</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="classification">Private local reader</div>
+      <div class="reader-actions" aria-label="Reader actions">
+        <a href="INTAKE_WORKSPACE_OPERATOR.md">Open source</a>
+        <button type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+  <main class="shell" id="document">
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol class="toc-list"><li class="toc-level-2"><a href="#start-here">Start here</a></li>
+<li class="toc-level-2"><a href="#review-the-worked-example">Review the worked example</a></li>
+<li class="toc-level-2"><a href="#first-walkthrough-two-deployments-and-one-useful-unknown">First walkthrough: two deployments and one useful unknown</a></li>
+<li class="toc-level-2"><a href="#excel-is-another-entry-surface-not-an-approval-channel">Excel is another entry surface, not an approval channel</a></li>
+<li class="toc-level-2"><a href="#technical-evidence-and-actual-report-inputs">Technical evidence and actual report inputs</a></li>
+<li class="toc-level-2"><a href="#what-is-implemented-and-what-is-deliberately-next">What is implemented, and what is deliberately next</a></li>
+<li class="toc-level-2"><a href="#candidate-operation-and-recovery">Candidate operation and recovery</a></li>
+<li class="toc-level-2"><a href="#owner-review-requested-not-recorded">Owner review requested, not recorded</a></li></ol>
+    </nav>
+    <div class="paper">
+      <div class="document-meta">
+        <strong>INTAKE_WORKSPACE_OPERATOR.md</strong><br>
+        2,581 words · about 12 minutes · source updated September 8, 2026 at 5:36 PM MDT<br>
+        Source SHA-256: <code>d38fdfa25a74fa6aaf7b6d37fbf99d124da36c669d00501fcacc35a8a224a88d</code> · renderer v1
+      </div>
+      <aside class="notice"><strong>Private local reader.</strong> Keep this copy local unless sharing is explicitly approved.</aside>
+      <article>
+        <h1 id="discovery-and-evidence-intake-first-slice-operator-guide">Discovery and Evidence Intake — first-slice operator guide</h1>
+<p>8 September 2026. Private development guide. Synthetic information only.</p>
+<h2 id="start-here">Start here</h2>
+<p>Open <a href="http://127.0.0.1:18475/#intake" rel="noopener noreferrer" referrerpolicy="no-referrer">Discovery and Evidence Intake</a> on this Linux host.
+This candidate is separate from the older applications on ports 18473 and 18474.
+It does not replace their application files or state.</p>
+<p>The purpose is to answer a practical question: <strong>Which systems and functions can
+supply the information for this assessment, what have they told us, and what can
+the report responsibly conclude?</strong></p>
+<p>The first slice connects these actions:</p>
+<pre><code class="language-text">Create a focused request with software examples
+→ identify separate deployments and evidence sources
+→ save a useful, possibly partial, response in the web form or Excel
+→ hand the response to the coordinator and technical reviewer
+→ preserve unknowns and explain their report consequence
+→ separately admit qualified synthetic technical observations when gates permit
+</code></pre>
+<p>A response is not a verified inventory. A returned questionnaire is not a closed
+assessment. A reviewed limitation is not evidence that cryptographic exposure is
+low. Each screen explains what changed and who acts next.</p>
+<h2 id="review-the-worked-example">Review the worked example</h2>
+<p>The Chrome engineering walkthrough created
+<a href="http://127.0.0.1:18475/#intake?assessment=assessment-c676e1be26cf4af58ffccdf38239d0dc" rel="noopener noreferrer" referrerpolicy="no-referrer">Synthetic intake usability walkthrough — engineering test</a>.
+It contains two separately identified NGINX deployments, seven saved routing
+answers, a contributor handoff and a synthetic factual review with limitations.
+The west deployment's ownership and evidence route remain unknown. No technical
+observations or formal gate approvals were added to this example.</p>
+<p>As <strong>Analyst</strong>, open that assessment and read the report consequence below the
+request. The displayed ownership, product and evidence-location responses are
+attributed statements, not normalized facts or approved access routes. To inspect
+editing safeguards, change an answer without saving: navigation and Excel
+operations pause. <strong>Discard unsaved web edits</strong> restores the saved answer without
+altering its review. Saving a changed response instead returns it to review.</p>
+<p><strong>Open Phase 1 report preparation →</strong> opens stage 4 of the same assessment.
+The example intentionally lacks the objective and handling basis needed to
+generate a report. A generation attempt explains the missing stage-1 input;
+formal deliverable acceptance also remains blocked. <strong>Return to Discovery &amp;
+intake →</strong> returns to the source request journey. This is an engineering example
+for your review, not your recorded acceptance or an enterprise deliverable.</p>
+<h2 id="first-walkthrough-two-deployments-and-one-useful-unknown">First walkthrough: two deployments and one useful unknown</h2>
+<ol>
+<li>On the login screen, leave <strong>Analyst</strong> selected. Use the published synthetic
+demo password <code>synthetic-demo-only</code> and select <strong>Open workspace</strong>. Never enter
+a real enterprise password or customer data here.</li>
+<li>In <strong>Discovery / intake</strong>, choose an assessment. If there are none, follow the
+link to <strong>Guided assessment</strong>, enter a clearly synthetic name and select
+<strong>Start assessment →</strong>. Use <strong>Return to Discovery &amp; intake →</strong> to continue
+the request journey. A new assessment has no accepted gates or admitted
+evidence.</li>
+<li>Expand <strong>Create a focused source request</strong>. Name it “Synthetic portal
+deployments and evidence routes.” Choose the traffic-termination software
+family and <strong>Source contributor 1</strong>. Select <strong>Create request—not send an
+email</strong>. Only families inside the current assessment boundary are offered.</li>
+<li>Read the request's purpose and software-recognition examples. These examples
+help identify the software class; they do not assert a the example enterprise product choice.</li>
+<li>Sign out, choose <strong>Source contributor 1</strong> in the login selector and sign in
+with the same demonstration password. Open <strong>My requests</strong> and choose the
+assigned assessment. Contributor 2 cannot read or change this request.</li>
+<li>Expand <strong>Add a deployment or evidence source</strong>. Add “Synthetic portal east”
+as a system being assessed, product “NGINX,” environment “test-east.” Add
+“Synthetic portal west” separately, with the same product and “test-west.”
+Optional product and environment details may remain unknown. Matching product
+names never merge the two system identities.</li>
+<li>Under <strong>Share what you know</strong>, record a shared responsible function, such as
+“Synthetic application services.” State where an existing configuration export
+might be held. Open the specific answers for the west deployment; enter
+“I do not know” for its owner and refer it to “Synthetic regional platform
+function.” Record the missing route as a limitation.</li>
+<li>Select <strong>Save partial response</strong>. The receipt says this is a draft. The report
+consequence separates the reported owner from the absence of technical
+observations. Nothing has been emailed, collected from a vendor or approved.</li>
+<li>Select <strong>Check response before handoff</strong>, inspect the saved-response summary,
+then <strong>Confirm handoff to coordinator</strong>. The status now says the response is
+with the coordinator/reviewer. It does not say every question was answered.</li>
+<li>Sign out and sign in as <strong>Technical reviewer</strong>. Reopen the same assessment and
+request. In <strong>Factual review and next handoff</strong>, choose <strong>Usable with a
+recorded limitation</strong>, or return it for clarification. Explain what the
+response supports, what remains unknown and the next responsible function.
+Check the determination, then record it. This synthetic demonstration action
+is not an owner product-validation verdict or enterprise acceptance.</li>
+<li>Read <strong>What this intake contributes to the report</strong>. It presents conclusions,
+limits and next decisions. Both deployments remain distinct. Ownership is
+attributed testimony. The west-source gap remains visible rather than
+becoming an invented fact or a completion percentage.</li>
+</ol>
+<p>Use <strong>Sign out</strong> when switching roles. Tabs in the same browser share a session;
+opening another tab does not create an independent identity. Older bookmarked
+links that are not assigned to a contributor now explain the access problem and
+offer a return to that contributor's assignments.</p>
+<h2 id="excel-is-another-entry-surface-not-an-approval-channel">Excel is another entry surface, not an approval channel</h2>
+<ol>
+<li>As the assigned contributor or assessment lead, save the web answers first.
+Unsaved web answers pause Excel export/import, adding systems and the app's
+workspace/navigation controls. Choose <strong>Save partial response</strong> or
+<strong>Discard unsaved web edits</strong> explicitly; there is no silent autosave.</li>
+<li>Select <strong>Prepare Excel questionnaire</strong>, then <strong>Download prepared Excel file</strong>.
+The app retains the exact export, question identities and answer baseline.
+Preparing or downloading it does not send an email.</li>
+<li>Keep the generated layout. Enter literal text in the response column; do not
+add formulas, macros, sheets or approval instructions. This slice accepts only
+its generated questionnaire format, not the old RFI spreadsheets.</li>
+<li>Choose the returned <code>.xlsx</code> under <strong>Preview a returned questionnaire</strong>. The
+maximum compressed upload is 1 MiB. Preview does not change any answers.</li>
+<li>Review the original exported answer, current web answer and returned answer.
+Resolve competing edits explicitly. Blank returned cells preserve the current
+answer. Import review offers an explicit clear for changed or conflicting rows;
+unchanged rows are hidden. To erase an answer preserved by a blank return,
+clear that answer in the web form and save it deliberately. An unchanged old
+answer cannot overwrite a newer web answer.</li>
+<li>Select <strong>Apply reviewed changes only</strong>. This saves a draft, not a submitted or
+approved response. Check and hand off when ready. Imported authorship remains
+unverified; the signed-in importer and intended recipient are kept distinct.</li>
+</ol>
+<p>If the request changes while a preview is open, reload and preview the file
+again. If its family leaves scope, historical responses and existing exports
+remain readable, but new edits, exports, imports, review and admission stop until
+the assessment lead explicitly restores the relevant scope.</p>
+<p>The OpenXML structural tests and the LibreOffice open/save/re-import roundtrip
+passed. Literal text, leading zeros and stable question identities were preserved.
+These checks do not establish Microsoft Excel desktop qualification. Do not use a spreadsheet's
+“approved” text as an authenticated decision.</p>
+<p>Do not manually replace the URL or use browser history to switch requests while
+editing. Those browser actions are not covered by the in-app navigation guard.
+Reload/close produces a browser unsaved-work warning where supported.</p>
+<h2 id="technical-evidence-and-actual-report-inputs">Technical evidence and actual report inputs</h2>
+<p>The first admitted raw format is the bounded synthetic TLS reference page at
+<code>integrations/pqc/reference_assessment/tls.page.json</code>. It is not an F5, NGINX,
+ServiceNow or other vendor-export adapter.</p>
+<ol>
+<li>Add an <strong>Evidence source</strong>, such as “Synthetic configuration observer,” and
+link it to the particular assessed deployment. An evidence-producing system
+is not automatically the system about which its records speak.</li>
+<li>In the evidence section, select the subject deployment and evidence source,
+and stage the reference JSON. Staging records custody and source attribution;
+it does not add admitted assets or claim permission to collect enterprise data.
+The staged card displays identities, count and file reference—not individual
+observation values or their evidence basis. Inspect the operator-provided
+synthetic fixture itself before considering admission; this screen is not a
+full technical-content review surface.</li>
+<li>Admission remains blocked until the existing G00 and P1-G01 requirements and
+their designated decisions are satisfied for this assessment. Follow the
+<strong>Guided assessment</strong> gate screens to review the exact outstanding requirements.
+Intake responses do not silently satisfy the separate access register or
+authorize source access. The assessment lead owns that register and admission.</li>
+<li>Once eligible, the assessment lead may admit the synthetic batch. The admitted
+observations then appear in assessment-scoped asset search/detail and report
+inputs. Staged-only records do not.</li>
+<li>Inspect key establishment and certificate authentication separately. A supplied
+<code>X25519MLKEM768</code> value does not turn a classical certificate signature into a
+post-quantum signature. The source's stated evidence basis is retained, but this
+import does not independently exercise the endpoint.</li>
+<li>As the assessment lead, select <strong>Open Phase 1 report preparation →</strong> below
+the intake preview. This opens Guided assessment, stage 4, where the report
+controls show their unmet prerequisites. Use the guided assessment's report
+generation and review controls for an immutable Phase 1 or Phase 2 document.
+New documents include the intake conclusions, limitations and selected
+evidence in their frozen inputs. New
+answers cannot rewrite an older report. Phase 2 still selects an explicit
+accepted-or-qualified Phase 1 package; this preview does not grant reliance.</li>
+</ol>
+<p>The current TLS format has no observation timestamp, and its application and
+certificate references are not independently resolved by this new intake slice.
+Those limitations remain explicit. Admission does not automatically create a
+reviewed risk scenario, migration recommendation or verified completion.</p>
+<h2 id="what-is-implemented-and-what-is-deliberately-next">What is implemented, and what is deliberately next</h2>
+<p>Implemented in this development candidate:</p>
+<ul>
+<li>C#-owned transactional requests, distinct systems, attribution, review,
+server-bound Excel reconciliation, receipts and report input history.</li>
+<li>Two isolated synthetic contributor assignments plus lead/reviewer roles.</li>
+<li>All ten estate areas and 27 runtime source families remain represented.</li>
+<li>An explicit crosswalk for the different 27-entry questionnaire catalog,
+including partial and unresolved mappings. Numbers and names are not used as
+an automatic identity match.</li>
+<li>A shared first-routing questionnaire with product-recognition examples.</li>
+<li>One raw synthetic TLS intake format, distinct source/subject identities,
+gated admission and connected asset/report readback.</li>
+</ul>
+<p>Not yet implemented or claimed:</p>
+<ul>
+<li>All legacy form layouts, all product-specific questions or all raw vendor
+import formats. The crosswalk is a reviewed engineering artifact, not a live
+legacy import service. Two runtime families remain explicitly unmapped.</li>
+<li>Full multi-source identity reconciliation or a qualified commercial adapter.</li>
+<li>An automatic transfer of every intake answer into every legacy gate field.</li>
+<li>Enterprise authentication, SQL Server persistence, arbitrary confidential
+uploads, public response links, email delivery, ticket submission or migration.</li>
+<li>Production readiness, completed WCAG AA verification, independent owner
+acceptance or native Microsoft Office compatibility certification.</li>
+</ul>
+<p>The first slice is bounded to 20 requests and 80 systems per assessment, at most
+8 systems per request, 25 exports, 25 import previews and 20 evidence batches.
+Answers are at most 512 characters. A TLS batch is at most 32 KiB / 32 records.
+The snapshot limit is 2 MiB; SQLite has a page-count ceiling. Limits stop writes
+rather than deleting old immutable history. There is no automatic retention or
+archival policy for these snapshots yet.</p>
+<h2 id="candidate-operation-and-recovery">Candidate operation and recovery</h2>
+<p>The candidate has its own fresh synthetic fixture, release and SQLite state:</p>
+<p><code>artifacts/pqc-enterprise-demo/intake-review-20260908-Rq8mET/</code></p>
+<p>To restart it after its two-hour runtime expires, from the repository root:</p>
+<pre><code class="language-bash">.venv/security-ci/bin/python scripts/run_pqc_enterprise_demo.py \
+  --release-dir artifacts/pqc-enterprise-demo/intake-review-20260908-Rq8mET/release-v4 \
+  --fixture artifacts/pqc-enterprise-demo/intake-review-20260908-Rq8mET/input/synthetic-input.json \
+  --data-dir artifacts/pqc-enterprise-demo/intake-review-20260908-Rq8mET/state \
+  --port 18475
+</code></pre>
+<p>Keep the foreground terminal open. Ctrl+C stops only that launch. If another
+demo holds the launcher lock or the port, do not kill it; coordinate the review
+slot. The launcher requires at least 3 GiB available memory and 2 GiB free disk.</p>
+<p>The application is capped at one CPU / 1 GiB RAM / no additional swap. A single
+workbook parser is a separate, temporary unit capped at one CPU / 512 MiB RAM /
+no additional swap, with no network and a 30-second deadline. Combined app/parser
+ceilings are therefore 1.5 GiB and two CPU equivalents during parsing, not 1 GiB
+total. Failed cleanup closes the parser lane until application restart rather
+than admitting overlapping parser work. The parser is a bounded managed reader,
+not a generally qualified hostile-file sandbox with a minimal filesystem view.</p>
+<p>State and input paths are owner-only. There is no enterprise encryption/key
+management or public HTTPS deployment in this candidate. Do not share its SQLite
+files, fixture custody directories or loopback URL as an enterprise service.</p>
+<p>Rollback means returning to an older application together with its own preserved
+state. Never point an older build at this candidate database to simulate rollback.
+The isolated HTTP tests exercise exact report/export preservation through restart
+and backup/restore. They do not test restoration of an owner production database.</p>
+<h2 id="owner-review-requested-not-recorded">Owner review requested, not recorded</h2>
+<p>Affected behaviors are R2 for the questionnaire-to-report workflow and R3 for
+assignment authorization, workbook reconciliation/admission boundaries and
+contributor restriction of legacy routes. These require targeted owner validation
+before an affected production activation or readiness claim.</p>
+<p>Please judge the practical outcome: can you tell why this request exists, provide
+a partial answer, identify who acts next, and see what the report may or may not
+conclude? Record an issue if returning a questionnaire looks like completion of
+the assessment. Automated persona interactions and tests do not record your
+<code>works</code>, <code>issue_found</code> or <code>blocked</code> outcome.</p>
+<p>The resumed Chrome walkthrough inspected the landing screen and created a fresh
+synthetic assessment. It found a real request-creation defect: the frontend
+omitted a required nullable command field. Release v3 sends that field explicitly
+for both intake and assessment commands. It also adds unsaved-answer safeguards,
+a return-to-intake route, clearer review responsibilities and a report-preparation
+link. Ten focused HTTP tests, frontend typechecking and all 58 frontend tests
+passed. An earlier transient failure in an untouched graph test passed on focused
+and full reruns without changing that test.</p>
+<p>After the extension panel was dismissed, the release-v3 Chrome walkthrough
+created the request, entered two separate deployments, saved a partial response,
+handed it off and recorded a synthetic reviewer limitation. It verified disabled
+navigation/Excel controls during unsaved edits, explicit discard without a state
+revision change, the Phase 1 preparation link, the missing-objective explanation
+and the return link. No formal gate approval, technical-evidence admission or
+accepted report was generated in that fresh example.</p>
+<p>The walkthrough also found two wording defects: free-text unknowns looked like
+established owners/routes, and a completed review still displayed a pending-handoff
+prompt. Release v4 corrects both and makes the staged-file metadata-only review
+limitation explicit. Its backend build passed with no warnings/errors; 39 combined
+intake/existing application HTTP tests and all 62 frontend tests passed, as did
+typechecking and Worker architecture conformance. The candidate was backed up to
+<code>pre-v4-backup</code> and restarted with its same synthetic state. No earlier release or
+backup was overwritten.</p>
+<p>Chrome was blocked by an open extension panel during sign-in to v4, so final-copy
+browser readback remains pending. The successful end-to-end interaction above was
+on v3; automated v4 checks are not being substituted for that last readback.
+Desktop screenshots of the form and report preview showed no obvious border
+collisions or overlapping controls. Full responsive, keyboard and
+assistive-technology testing remains outstanding. No automated persona interaction
+or engineering check is your acceptance.</p>
+
+      </article>
+      <footer class="footer">
+        Generated locally from INTAKE_WORKSPACE_OPERATOR.md. The Markdown source remains the durable record.
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

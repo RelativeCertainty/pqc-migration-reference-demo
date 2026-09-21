@@ -1,0 +1,199 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/capability-probe.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "CapabilityProbe.v1",
+  "description": "Safe result of a bounded read-only provider capability probe. It records support and limitations through receipts and digests without retaining response payloads.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "capabilityProbeId",
+    "tenantId",
+    "integrationProfileRef",
+    "probeKind",
+    "requestedAt",
+    "startedAt",
+    "finishedAt",
+    "outcome",
+    "providerRevisionDigest",
+    "capabilities",
+    "pagination",
+    "rateLimit",
+    "authorization",
+    "evidence",
+    "limitations",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "CapabilityProbe.v1" },
+    "capabilityProbeId": { "$ref": "#/$defs/identifier" },
+    "tenantId": { "$ref": "#/$defs/identifier" },
+    "integrationProfileRef": { "$ref": "#/$defs/identifier" },
+    "probeKind": { "enum": ["read_only_handshake", "pagination_contract", "schema_contract", "authentication_scope", "rate_limit_contract"] },
+    "requestedAt": { "$ref": "#/$defs/timestamp" },
+    "startedAt": { "$ref": "#/$defs/timestamp" },
+    "finishedAt": { "$ref": "#/$defs/timestamp" },
+    "outcome": { "enum": ["supported", "partially_supported", "unsupported", "unreachable", "unauthorized", "schema_drift"] },
+    "providerRevisionDigest": {
+      "oneOf": [{ "$ref": "#/$defs/digest" }, { "type": "null" }]
+    },
+    "capabilities": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 50,
+      "uniqueItems": true,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["name", "status", "receiptRefs"],
+        "properties": {
+          "name": {
+            "enum": ["authentication", "read_scope", "full_collection", "incremental_collection", "pagination", "stable_cursor", "provider_revision", "rate_limit_metadata", "readback"]
+          },
+          "status": { "enum": ["supported", "degraded", "unsupported", "not_tested"] },
+          "receiptRefs": {
+            "type": "array",
+            "maxItems": 20,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/identifier" }
+          }
+        }
+      }
+    },
+    "pagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["style", "maximumObservedPageSize", "cursorStability"],
+      "properties": {
+        "style": { "enum": ["none", "page_number", "offset_limit", "opaque_cursor", "continuation_link", "async_job"] },
+        "maximumObservedPageSize": {
+          "oneOf": [{ "type": "integer", "minimum": 1, "maximum": 100000 }, { "type": "null" }]
+        },
+        "cursorStability": { "enum": ["not_applicable", "verified", "unverified", "unstable"] }
+      }
+    },
+    "rateLimit": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observed", "retryAfterSupported", "receiptRefs"],
+      "properties": {
+        "observed": { "type": "boolean" },
+        "retryAfterSupported": { "enum": ["yes", "no", "not_observed"] },
+        "receiptRefs": {
+          "type": "array",
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "authorization": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readScopeStatus", "writeCapabilityExercised", "credentialValueRetained"],
+      "properties": {
+        "readScopeStatus": { "enum": ["verified", "insufficient", "not_tested"] },
+        "writeCapabilityExercised": { "const": false },
+        "credentialValueRetained": { "const": false }
+      }
+    },
+    "evidence": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["status", "receiptRefs", "artifactRefs"],
+      "properties": {
+        "status": { "enum": ["synthetic", "documented", "contract_tested", "live_readback"] },
+        "receiptRefs": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "artifactRefs": {
+          "type": "array",
+          "maxItems": 100,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "limitations": {
+      "type": "array",
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300,
+        "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+      }
+    },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "outcome": { "const": "supported" } },
+        "required": ["outcome"]
+      },
+      "then": {
+        "properties": {
+          "capabilities": {
+            "items": {
+              "properties": { "status": { "const": "supported" } }
+            }
+          },
+          "authorization": {
+            "properties": { "readScopeStatus": { "const": "verified" } }
+          }
+        }
+      }
+    },
+    {
+      "if": {
+        "properties": {
+          "safety": {
+            "properties": { "synthetic": { "const": true } },
+            "required": ["synthetic"]
+          }
+        },
+        "required": ["safety"]
+      },
+      "then": {
+        "properties": {
+          "evidence": {
+            "properties": { "status": { "const": "synthetic" } }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 30,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "digest": { "type": "string", "pattern": "^sha256:[a-f0-9]{64}$" },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "rawPayloadEmbedded", "credentialValueEmbedded", "privateKeyEmbedded"],
+      "properties": {
+        "synthetic": { "type": "boolean" },
+        "rawPayloadEmbedded": { "const": false },
+        "credentialValueEmbedded": { "const": false },
+        "privateKeyEmbedded": { "const": false }
+      }
+    }
+  }
+}

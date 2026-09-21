@@ -1,0 +1,7 @@
+{
+  "name": "synthetic-pqc-scan-fixture",
+  "private": true,
+  "dependencies": {
+    "node-forge": "1.3.1"
+  }
+}

@@ -1,0 +1,380 @@
+# SPDX-License-Identifier: CC-BY-4.0
+schemaVersion: pqc.project-backlog-migration.v1
+migrationId: pqc-backlog-v1-to-v2
+classification: employer-neutral-public-reference
+
+source:
+  path: planning/backlog.v1.yaml
+  schemaVersion: pqc.project-backlog.v1
+  counts:
+    epics: 7
+    features: 17
+    stories: 33
+
+target:
+  path: planning/backlog.v2.yaml
+  schemaVersion: pqc.project-backlog.v2
+  hierarchy: initiative-phase-grouping-epic-story
+  featureLayer: removed
+  referenceLevel: exact-story-where-stable-otherwise-epic-or-future-appendix
+  epicCatalog:
+    - id: PQC-E00
+      name: Engagement Governance, Reporting, and Stakeholder Alignment
+    - id: PQC-P1-E01
+      name: Confirm Scope, Assessment Method, and Standards
+    - id: PQC-P1-E02
+      name: Establish Source Access and Evidence-Handling Controls
+    - id: PQC-P1-E03
+      name: Validate Existing Inventories and Assessment Artifacts
+    - id: PQC-P1-E04
+      name: Discover the Authorized Cryptographic Estate
+    - id: PQC-P1-E05
+      name: Normalize, Correlate, and Measure Inventory Coverage
+    - id: PQC-P1-E06
+      name: Map Business, Data, Regulatory, and Technical Dependencies
+    - id: PQC-P1-E07
+      name: Identify Exposure, Legacy Implementations, and Evidence Gaps
+    - id: PQC-P1-E08
+      name: Produce and Review the Current-State Assessment Report
+    - id: PQC-P2-E01
+      name: Confirm Risk Method and Phase 2 Readiness
+    - id: PQC-P2-E02
+      name: Analyze Cryptographic Exposure and Decryption Scenarios
+    - id: PQC-P2-E03
+      name: Analyze Library, Vulnerability, and Vendor-Lifecycle Risk
+    - id: PQC-P2-E04
+      name: Evaluate Business-Service and Operational Impact
+    - id: PQC-P2-E05
+      name: Prioritize Risks, Candidates, and Exceptions
+    - id: PQC-P2-E06
+      name: Produce and Review the PQC Risk Register
+
+rules:
+  allowedDispositions:
+    - mapped
+    - split
+    - merged
+    - deferred
+    - excluded
+    - future_appendix
+  invariants:
+    - Every v1 epic, feature, and story appears exactly once in mappings.
+    - Every non-excluded mapping has at least one targetRef.
+    - Every excluded mapping has an empty targetRefs list and an exclusionRationale.
+    - Target refs use only admitted v2 epic/story IDs or registered FUT appendix IDs.
+    - A split distributes one legacy record across multiple target records.
+    - A merged record is absorbed with other legacy records into one target record.
+    - Deferred and future-appendix records do not become committed assessment work.
+    - No mapping imports employer, customer, credential, environment, or tenant details.
+
+futureAppendices:
+  - id: FUT-01
+    name: Standardized remediation work-item lifecycle
+    admission: Remediation scope, ownership, and asset-type work-item contracts must be approved.
+  - id: FUT-02
+    name: Immutable remediation planning and approval binding
+    admission: Plan, asset-state, approval, window, rollback, and one-use permit contracts must be approved.
+  - id: FUT-03
+    name: Ticket and change lifecycle automation
+    admission: An authorized integration environment and mapped ticket, change, and idempotency policies are required.
+  - id: FUT-04
+    name: Controlled execution and rollback adapters
+    admission: Execution authority, proven provider capabilities, and accepted rollback and failure boundaries are required.
+  - id: FUT-05
+    name: Independent verification, reharvest, and closure guard
+    admission: Verification sources, closure policy, and stale-state rules must be approved.
+  - id: FUT-06
+    name: Optional migration roadmap and operating-model extension
+    admission: Roadmap horizon, capacity assumptions, operating model, and enablement scope must be approved.
+
+mappings:
+  epics:
+    - legacyRef: E1
+      legacyName: Program mobilization and governance
+      disposition: split
+      targetRefs: [PQC-E00, PQC-P1-E01]
+      rationale: Governance and stakeholder alignment become cross-phase control while scope, method, standards, authority, and success criteria become Phase 1 work.
+    - legacyRef: E2
+      legacyName: Cryptographic assessment and inventory
+      disposition: split
+      targetRefs: [PQC-P1-E01, PQC-P1-E02, PQC-P1-E03, PQC-P1-E04, PQC-P1-E05]
+      rationale: The broad inventory epic is decomposed into method, source readiness, artifact validation, discovery, and measurable reconciliation.
+    - legacyRef: E3
+      legacyName: Risk, dependencies, and enterprise roadmap
+      disposition: split
+      targetRefs: [PQC-P1-E05, PQC-P1-E06, PQC-P1-E07, PQC-P2-E01, PQC-P2-E02, PQC-P2-E04, PQC-P2-E05, FUT-06]
+      rationale: Phase 1 preserves contextual dependencies and exposure evidence; Phase 2 owns risk and prioritization; multi-horizon roadmap commitments remain optional.
+    - legacyRef: E4
+      legacyName: Crypto-agile reference architecture and sourcing
+      disposition: split
+      targetRefs: [PQC-P2-E02, PQC-P2-E03, FUT-02, FUT-04, FUT-05]
+      rationale: Crypto-agility and vendor evidence inform Phase 2 analysis, while approval binding, execution adapters, and independent verification remain future authorized work.
+    - legacyRef: E5
+      legacyName: Vertical proof slices
+      disposition: split
+      targetRefs: [PQC-P1-E04, PQC-P1-E07, PQC-P2-E03, FUT-01, FUT-04, FUT-05]
+      rationale: Read-only observations and dependency intelligence inform the assessment, while effectful remediation, rollback, and verification remain future authorized work.
+    - legacyRef: E6
+      legacyName: Validation, compliance, and operations
+      disposition: split
+      targetRefs: [PQC-E00, PQC-P1-E01, PQC-P1-E05, PQC-P1-E08, PQC-P2-E01, PQC-P2-E04, PQC-P2-E05, PQC-P2-E06, FUT-02, FUT-03, FUT-04, FUT-05]
+      rationale: Evidence criteria, measures, reviews, impact, exceptions, and risk-register controls remain in scope while approval, ticketing, effect, rollback, and closure automation remain future work.
+    - legacyRef: E7
+      legacyName: Enablement and handoff
+      disposition: split
+      targetRefs: [PQC-E00, PQC-P1-E06, PQC-P1-E08, PQC-P2-E04, PQC-P2-E06, FUT-06]
+      rationale: Ownership and controlled handoff support both assessment phases while training, roadmap, and operating-model extension remain optional future scope.
+
+  features:
+    - legacyRef: F1.1
+      legacyName: Charter and authority
+      disposition: split
+      targetRefs: [PQC-E00, PQC-P1-E01]
+      rationale: Governance, roles, forums, escalation, authority, success criteria, and scope are divided between cross-phase control and Phase 1 method confirmation.
+    - legacyRef: F1.2
+      legacyName: Standards and policy baseline
+      disposition: split
+      targetRefs: [PQC-P1-E01, PQC-P2-E01, PQC-P2-E02, FUT-02, FUT-04]
+      rationale: Standards and evidence criteria are Phase 1 inputs, risk and crypto-agility analysis are Phase 2 work, and executable policy binding remains future scope.
+    - legacyRef: F2.1
+      legacyName: Canonical inventory contract
+      disposition: split
+      targetRefs: [PQC-P1-E01, PQC-P1-E03, PQC-P1-E05]
+      rationale: Contract intent is represented by assessment criteria, artifact validation rules, normalization, correlation, and coverage measures.
+    - legacyRef: F2.2
+      legacyName: Discovery-source mobilization
+      disposition: split
+      targetRefs: [PQC-P1-E02, PQC-P1-E03, PQC-P1-E04]
+      rationale: Source ownership and access precede validation of existing artifacts and authorized discovery.
+    - legacyRef: F2.3
+      legacyName: Baseline assessment
+      disposition: split
+      targetRefs: [PQC-P1-E04, PQC-P1-E05]
+      rationale: Collection is separated from normalization, correlation, and measurable coverage.
+    - legacyRef: F3.1
+      legacyName: Context and prioritization
+      disposition: split
+      targetRefs: [PQC-P1-E05, PQC-P1-E06, PQC-P1-E07, PQC-P2-E01, PQC-P2-E02, PQC-P2-E04, PQC-P2-E05]
+      rationale: Context is established in Phase 1 and evaluated through Phase 2 risk, exposure, impact, and prioritization methods.
+    - legacyRef: F3.2
+      legacyName: Migration waves
+      disposition: split
+      targetRefs: [PQC-P2-E03, PQC-P2-E05, FUT-06]
+      rationale: Candidate and exception prioritization remains in Phase 2; committed multi-horizon delivery waves require separate roadmap authority.
+    - legacyRef: F4.1
+      legacyName: Target architecture
+      disposition: split
+      targetRefs: [PQC-P2-E02, FUT-02, FUT-04, FUT-05]
+      rationale: Crypto-agility and migration-constraint analysis remain in Phase 2 while approval-bound execution and verification architecture require future authorization.
+    - legacyRef: F4.2
+      legacyName: Build, buy, and integrate
+      disposition: split
+      targetRefs: [PQC-P2-E03, FUT-04]
+      rationale: Vendor lifecycle and readiness evidence inform Phase 2, while implementation and provider-adapter decisions remain future authorized work.
+    - legacyRef: F5.1
+      legacyName: Repository and software-supply-chain slice
+      disposition: split
+      targetRefs: [PQC-P1-E04, PQC-P1-E05, PQC-P1-E07, PQC-P2-E03, FUT-01, FUT-04, FUT-05]
+      rationale: Authorized discovery, normalization, exposure, and library intelligence remain assessment work; remediation, execution, and verification are future scope.
+    - legacyRef: F5.2
+      legacyName: TLS and PKI slice
+      disposition: split
+      targetRefs: [PQC-P1-E04, PQC-P1-E07, PQC-P2-E02, FUT-01, FUT-04, FUT-05]
+      rationale: Endpoint and PKI observations inform current state and exposure analysis, while configuration pilots require future effect and verification authority.
+    - legacyRef: F5.3
+      legacyName: SSH slice
+      disposition: split
+      targetRefs: [PQC-P1-E04, PQC-P1-E06, PQC-P1-E07, PQC-P2-E02, FUT-01, FUT-04, FUT-05]
+      rationale: SSH discovery, dependencies, and legacy constraints inform assessment work, while hybrid rollout and readback require future authority.
+    - legacyRef: F6.1
+      legacyName: Test and benchmark framework
+      disposition: split
+      targetRefs: [PQC-P1-E01, PQC-P1-E08, PQC-P2-E06, FUT-04, FUT-05]
+      rationale: Evidence criteria and review stay in the assessment; effectful test, rollback, and independent verification suites remain future scope.
+    - legacyRef: F6.2
+      legacyName: Operational controls
+      disposition: split
+      targetRefs: [PQC-E00, PQC-P1-E01, PQC-P2-E01, PQC-P2-E05, PQC-P2-E06, FUT-01, FUT-02, FUT-03, FUT-04, FUT-05]
+      rationale: Decision, evidence, exception, and review controls inform the assessment while remediation, approval, ticketing, effects, rollback, and closure remain future work.
+    - legacyRef: F6.3
+      legacyName: Program measures
+      disposition: split
+      targetRefs: [PQC-E00, PQC-P1-E05, PQC-P1-E07, PQC-P1-E08, PQC-P2-E03, PQC-P2-E06]
+      rationale: Reporting, coverage, evidence gaps, vendor blockers, and risk-register measures become visible phase outcomes.
+    - legacyRef: F7.1
+      legacyName: Training
+      disposition: future_appendix
+      targetRefs: [FUT-06]
+      rationale: Training and labs are retained without treating them as accepted assessment scope.
+    - legacyRef: F7.2
+      legacyName: Sustainable operating model
+      disposition: split
+      targetRefs: [PQC-E00, PQC-P1-E06, PQC-P1-E08, PQC-P2-E04, PQC-P2-E06, FUT-06]
+      rationale: Accountable ownership and handoff inform governance and the risk register, while full operating-model transfer remains optional.
+
+  stories:
+    - legacyRef: S1.1.1
+      legacyOutcome: Confirm sponsor, outcomes, scope, exclusions, success measures, decision rights, escalation paths, and cadence.
+      disposition: split
+      targetRefs: [PQC-E00-S01, PQC-E00-S02, PQC-E00-S03, PQC-P1-E01-S01]
+      rationale: The compound charter story is distributed across governance, ongoing control, reporting coordination, and the Phase 1 scope and success-criteria story.
+    - legacyRef: S1.1.2
+      legacyOutcome: Establish stakeholder map, RACI, RAID register, decision log, evidence gates, and architecture and risk forums.
+      disposition: split
+      targetRefs: [PQC-E00-S01, PQC-E00-S02, PQC-E00-S03]
+      rationale: Governance controls, forums, and escalation become the three cross-phase engagement-control stories.
+    - legacyRef: S1.2.1
+      legacyOutcome: Establish an authoritative standards register separating final standards, drafts, sector guidance, and vendor claims.
+      disposition: mapped
+      targetRefs: [PQC-P1-E01-S02]
+      rationale: The standards register is a direct element of the Phase 1 assessment method and taxonomy story.
+    - legacyRef: S1.2.2
+      legacyOutcome: Draft interim policy for approved algorithms, hybrid approaches, exceptions, evidence, and crypto-agility.
+      disposition: split
+      targetRefs: [PQC-P1-E01-S02, PQC-P1-E01-S03, PQC-P2-E01-S02, PQC-P2-E01-S03, PQC-P2-E02-S03, FUT-02, FUT-04]
+      rationale: Standards and evidence rules become Phase 1 inputs; risk, exception, and agility analysis become Phase 2 work; executable policy binding remains future scope.
+    - legacyRef: S2.1.1
+      legacyOutcome: Define asset, service, owner, data lifetime, algorithm, protocol, metadata, dependency, environment, exposure, vendor, confidence, source, and freshness fields without key material.
+      disposition: split
+      targetRefs: [PQC-P1-E01-S03, PQC-P1-E05-S01, PQC-P1-E05-S02, PQC-P1-E06-S01, PQC-P1-E06-S02, PQC-P1-E06-S03]
+      rationale: Evidence rules, canonical normalization, correlation, and explicit business, data, and technical context collectively preserve the inventory contract intent.
+    - legacyRef: S2.1.2
+      legacyOutcome: Establish source authority, provenance, deduplication, conflict, staleness, and human-review rules.
+      disposition: split
+      targetRefs: [PQC-P1-E01-S03, PQC-P1-E02-S01, PQC-P1-E03-S02, PQC-P1-E03-S03, PQC-P1-E05-S03]
+      rationale: Evidence-quality rules and source authority precede artifact disposition and measurable reconciliation.
+    - legacyRef: S2.2.1
+      legacyOutcome: Inventory existing PKI, code, network, CMDB, cloud, vulnerability, KMS/HSM, and vendor sources.
+      disposition: split
+      targetRefs: [PQC-P1-E02-S01, PQC-P1-E03-S01, PQC-P1-E04-S01]
+      rationale: The source inventory becomes the owner register, existing-artifact catalog, and authorized discovery plan.
+    - legacyRef: S2.2.2
+      legacyOutcome: Select an authorized read-only pilot cohort and document access, classification, retention, and source-owner responsibilities.
+      disposition: split
+      targetRefs: [PQC-P1-E01-S01, PQC-P1-E02-S01, PQC-P1-E02-S02, PQC-P1-E02-S03, PQC-P1-E04-S01]
+      rationale: The cohort becomes a scope decision backed by source ownership, handling controls, readiness contingencies, and an authorized discovery plan.
+    - legacyRef: S2.3.1
+      legacyOutcome: Collect the first authorized cohort and normalize observations through source-specific adapters.
+      disposition: split
+      targetRefs: [PQC-P1-E04-S02, PQC-P1-E04-S03, PQC-P1-E05-S01]
+      rationale: Authorized collection, provenance and failure recording, and canonical normalization remain distinct work.
+    - legacyRef: S2.3.2
+      legacyOutcome: Measure coverage, unmatched records, conflicts, duplicates, stale evidence, and unresolved ownership.
+      disposition: merged
+      targetRefs: [PQC-P1-E05-S03]
+      rationale: The legacy measures merge with related coverage requirements into one explicit v2 measurement story.
+    - legacyRef: S3.1.1
+      legacyOutcome: Map cryptographic assets to services, sensitive data, retention, exposure, criticality, change control, and vendor dependencies.
+      disposition: split
+      targetRefs: [PQC-P1-E05-S02, PQC-P1-E06-S01, PQC-P1-E06-S02, PQC-P1-E06-S03, PQC-P1-E07-S01, PQC-P2-E04-S01, PQC-P2-E04-S02, PQC-P2-E04-S03]
+      rationale: Phase 1 correlates assets with business, data, and technical context; Phase 2 evaluates resulting service, obligation, and operational impact.
+    - legacyRef: S3.1.2
+      legacyOutcome: Approve a transparent priority model covering harvest-now risk, vulnerable public-key use, lifetime, exposure, criticality, readiness, agility, and controls.
+      disposition: split
+      targetRefs: [PQC-P2-E01-S01, PQC-P2-E01-S02, PQC-P2-E02-S01, PQC-P2-E02-S02, PQC-P2-E02-S03, PQC-P2-E05-S01]
+      rationale: The compound model is decomposed into baseline readiness, risk method, technical and decryption exposure, agility constraints, and prioritization.
+    - legacyRef: S3.2.1
+      legacyOutcome: Identify urgent cohorts, pilots, vendor-blocked assets, unsupported technology, and exception candidates.
+      disposition: split
+      targetRefs: [PQC-P2-E03-S03, PQC-P2-E05-S01, PQC-P2-E05-S02, PQC-P2-E05-S03]
+      rationale: External blockers, prioritization, candidate cohorts, and exception decisions receive separate Phase 2 treatment.
+    - legacyRef: S3.2.2
+      legacyOutcome: Produce 90-day, 12-month, 24-month, and 36-month waves with dependencies, capacity, and measurable exits.
+      disposition: future_appendix
+      targetRefs: [FUT-06]
+      rationale: Multi-horizon delivery commitments exceed the assessment and risk-register baseline.
+    - legacyRef: S4.1.1
+      legacyOutcome: Define domain-owned policy, replaceable profiles, provider-neutral ports, anti-corruption adapters, evidence, and independent verification.
+      disposition: split
+      targetRefs: [PQC-P2-E02-S03, FUT-02, FUT-04, FUT-05]
+      rationale: Crypto-agility and migration constraints are assessed in Phase 2; approval binding, provider adapters, and verification remain future target architecture.
+    - legacyRef: S4.1.2
+      legacyOutcome: Define TLS, PKI, KMS/HSM, SSH, API, VPN, signing, hybrid, rollback, and compatibility patterns.
+      disposition: split
+      targetRefs: [PQC-P2-E02-S01, PQC-P2-E02-S03, FUT-04, FUT-05]
+      rationale: Configuration exposure and migration constraints inform Phase 2, while executable patterns, rollback, and verification require future authorization.
+    - legacyRef: S4.2.1
+      legacyOutcome: Score tools, vendors, open-source components, and internal build options on coverage, authority, integration, evidence, support, cost, and lock-in.
+      disposition: split
+      targetRefs: [PQC-P2-E03-S02, PQC-P2-E03-S03, FUT-04]
+      rationale: Vendor lifecycle, readiness, and blockers remain Phase 2 evidence; implementation and adapter decisions require future authority.
+    - legacyRef: S4.2.2
+      legacyOutcome: Record architecture decisions naming systems of record and deliberately small custom-engineering areas.
+      disposition: future_appendix
+      targetRefs: [FUT-02, FUT-04]
+      rationale: Architecture, approval-binding, system-of-record, and adapter decisions are not implied by an assessment finding.
+    - legacyRef: S5.1.1
+      legacyOutcome: Scan an authorized source cohort, normalize findings, reconcile dependencies, and establish measured coverage.
+      disposition: split
+      targetRefs: [PQC-P1-E04-S02, PQC-P1-E04-S03, PQC-P1-E05-S01, PQC-P1-E05-S02, PQC-P1-E05-S03, PQC-P2-E03-S01]
+      rationale: Read-only source discovery contributes provenance-bearing observations, normalization, dependency correlation, coverage, and later library analysis.
+    - legacyRef: S5.1.2
+      legacyOutcome: Generate remediation proposals and approved pull requests while preserving human-only merge authority.
+      disposition: future_appendix
+      targetRefs: [FUT-01, FUT-02, FUT-04, FUT-05]
+      rationale: Remediation proposals and source-control effects require standardized work items, immutable approval binding, controlled execution, independent verification, and retained human merge authority.
+    - legacyRef: S5.2.1
+      legacyOutcome: Inventory an authorized endpoint cohort and lab-test classical, hybrid, and target configurations.
+      disposition: split
+      targetRefs: [PQC-P1-E04-S02, PQC-P1-E07-S01, PQC-P2-E02-S01, PQC-P2-E02-S03, FUT-04, FUT-05]
+      rationale: Endpoint observations and configuration exposure support both phases; effectful lab patterns and verification remain future work.
+    - legacyRef: S5.2.2
+      legacyOutcome: Pilot an approved TLS/PKI configuration with rollback, interoperability, performance, chain, and independent readback evidence.
+      disposition: deferred
+      targetRefs: [FUT-01, FUT-02, FUT-04, FUT-05]
+      rationale: The effectful pilot requires separate change, test, verification, and rollback authority.
+    - legacyRef: S5.3.1
+      legacyOutcome: Inventory SSH clients, servers, key-exchange support, administrative dependencies, and fallback requirements.
+      disposition: split
+      targetRefs: [PQC-P1-E04-S02, PQC-P1-E05-S02, PQC-P1-E06-S03, PQC-P1-E07-S01, PQC-P1-E07-S02, PQC-P2-E02-S01, PQC-P2-E02-S03]
+      rationale: SSH inventory, dependencies, exposure, legacy constraints, and agility limitations contribute to both assessment phases.
+    - legacyRef: S5.3.2
+      legacyOutcome: Pilot an approved hybrid PQC key exchange where supported and verify negotiation and rollback.
+      disposition: deferred
+      targetRefs: [FUT-01, FUT-02, FUT-04, FUT-05]
+      rationale: Hybrid rollout and rollback are effectful work beyond assessment authority.
+    - legacyRef: S6.1.1
+      legacyOutcome: Define functional, interoperability, performance, negative, failure-injection, rollback, and regression suites.
+      disposition: split
+      targetRefs: [PQC-P1-E01-S03, PQC-P1-E08-S02, PQC-P2-E06-S02, FUT-04, FUT-05]
+      rationale: Assessment-quality and stakeholder-review criteria remain in scope; effectful failure, rollback, and independent-verification suites remain future work.
+    - legacyRef: S6.1.2
+      legacyOutcome: Capture versioned evidence envelopes containing request, decision, execution, result, readback, timestamps, and owner.
+      disposition: split
+      targetRefs: [PQC-P1-E01-S03, PQC-P1-E04-S03, PQC-P1-E08-S02, PQC-P2-E06-S01, FUT-02, FUT-05]
+      rationale: Evidence semantics inform methodology, provenance, report review, and risk-register traceability; effect permits and independent closure remain future work.
+    - legacyRef: S6.2.1
+      legacyOutcome: Define tickets, approvals, exception expiry, retry/idempotency, incident, rollback, and retention procedures.
+      disposition: split
+      targetRefs: [PQC-E00-S01, PQC-E00-S02, PQC-E00-S03, PQC-P2-E01-S03, PQC-P2-E05-S03, FUT-01, FUT-02, FUT-03, FUT-04, FUT-05]
+      rationale: Governance, review, exception, and decision controls remain relevant; remediation, approvals, ticketing, retries, effects, rollback, and closure become future lifecycle work.
+    - legacyRef: S6.2.2
+      legacyOutcome: Map practices to applicable risk and audit controls without claiming certification.
+      disposition: split
+      targetRefs: [PQC-P1-E01-S02, PQC-P1-E06-S02, PQC-P1-E08-S02, PQC-P2-E04-S02, PQC-P2-E06-S01]
+      rationale: Applicable standards, obligation context, factual review, impact, and register evidence preserve the non-certification control-mapping boundary.
+    - legacyRef: S6.3.1
+      legacyOutcome: Report coverage, unknown ownership, staleness, high-risk backlog, vendor readiness, pilot success, rollback success, and validated migration rate.
+      disposition: split
+      targetRefs: [PQC-E00-S03, PQC-P1-E05-S03, PQC-P1-E07-S03, PQC-P1-E08-S01, PQC-P2-E03-S03, PQC-P2-E06-S01, PQC-P2-E06-S03, FUT-04, FUT-05]
+      rationale: Measures are separated into formal reporting, Phase 1 coverage and evidence gaps, vendor blockers, and Phase 2 register handoff; pilot, rollback, and validated-migration measures remain future-only under controlled execution and independent verification.
+    - legacyRef: S7.1.1
+      legacyOutcome: Deliver audience-specific modules for executives, program managers, architects, engineers, risk, and operations.
+      disposition: future_appendix
+      targetRefs: [FUT-06]
+      rationale: Audience training requires a separate enablement commitment.
+    - legacyRef: S7.1.2
+      legacyOutcome: Teach the architecture and project method through repository, TLS, and SSH labs.
+      disposition: future_appendix
+      targetRefs: [FUT-06]
+      rationale: Hands-on labs are retained as optional enablement rather than assessment work.
+    - legacyRef: S7.2.1
+      legacyOutcome: Assign durable ownership for inventory, policy, architecture, pilots, exceptions, evidence, vendors, and metrics.
+      disposition: split
+      targetRefs: [PQC-E00-S01, PQC-P1-E06-S01, PQC-P1-E06-S03, PQC-P1-E08-S03, PQC-P2-E04-S01, PQC-P2-E04-S03, PQC-P2-E06-S03, FUT-06]
+      rationale: Accountable ownership supports governance, dependency and impact validation, phase handoffs, and the risk register; a full operating model remains optional.
+    - legacyRef: S7.2.2
+      legacyOutcome: Transfer backlog, patterns, playbooks, decisions, training, and next-wave roadmap.
+      disposition: split
+      targetRefs: [PQC-P2-E06-S03, FUT-06]
+      rationale: The accepted register and engagement handoff remain in scope, while training, operating-model transfer, and next-wave roadmapping require future authorization.

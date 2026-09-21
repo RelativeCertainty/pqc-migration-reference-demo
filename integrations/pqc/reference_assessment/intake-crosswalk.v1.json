@@ -1,0 +1,285 @@
+{
+  "schema_version": "pba.pqc.intake-catalog-crosswalk.v1",
+  "crosswalk_id": "intake-rfi-runtime-20260908-v1",
+  "status": "development_classification_mapping_requires_review",
+  "source_catalog": {
+    "reference": "pqc-source-discovery-rfi-catalog.v1.yaml",
+    "snapshot_scope": "classification_ids_and_labels_only_no_answers_or_enterprise_instances",
+    "profile_count": 27
+  },
+  "runtime_catalog": {
+    "reference": "catalog.v1.json",
+    "schema_version": "pba.pqc.reference-qualification-catalog.v1",
+    "sha256": "f73b7a93562ed7490f83fa8b8b68afe4e753b745641923740fc87bea72ff1cb4",
+    "family_count": 27
+  },
+  "relationship_definitions": {
+    "exact": "Equivalent classification for initial routing only; never identical fields, evidence requirements, adapter behavior or authority.",
+    "partial": "One classification covers only part of the other; unrepresented aspects remain explicit and require question-level applicability review.",
+    "overlap": "Classes intersect for some purposes but neither substitutes for the other; a selected product and evidence scope must resolve the intersection.",
+    "unmapped": "No dedicated matching questionnaire classification exists in this snapshot; generic questions or related products do not close the gap."
+  },
+  "rules": [
+    "Resolve by explicit stable IDs and mapping revisions, never by catalog order, numeric suffix or display name.",
+    "Retain both original identifiers; a mapping never renumbers a source profile or replaces a runtime family ID.",
+    "One RFI may relate to multiple runtime families and multiple RFIs may relate to one family.",
+    "Mappings identify candidate routing and question applicability, not deployed products, authorized collection or enterprise completeness.",
+    "Bind the selected crosswalk revision into assignment/export/import/report lineage; later revisions cannot silently remap historical answers.",
+    "Unresolved aspects require an explicit applicability decision or documented limitation, not automatic copying of answers into another class.",
+    "No mapping creates a source instance, evidence source, assessed deployment, cryptographic use or admitted observation."
+  ],
+  "rfi_profiles": [
+    {
+      "id": "SRC-RFI-001",
+      "label": "Application, business-service and configuration-item portfolio",
+      "mappings": [
+        {"family_id": "cmdb", "relationship": "partial", "rationale": "Configuration-item and service records form one part of the combined portfolio questionnaire."},
+        {"family_id": "application-portfolio", "relationship": "partial", "rationale": "Application lifecycle and business-service ownership form another part; the portfolio is not assumed to be the CMDB."}
+      ],
+      "unresolved_aspects": ["Confirm per-fact authority where separate application, service and configuration repositories overlap."]
+    },
+    {
+      "id": "SRC-RFI-002",
+      "label": "PKI, certification authorities and certificate lifecycle",
+      "mappings": [
+        {"family_id": "certificate-lifecycle", "relationship": "partial", "rationale": "Certificate inventory and lifecycle are one part of the combined PKI questionnaire."},
+        {"family_id": "certificate-authorities", "relationship": "partial", "rationale": "Issuance hierarchy and trust sources need their own evidence route, potentially separate from lifecycle inventory."}
+      ],
+      "unresolved_aspects": ["A certificate inventory does not establish certificate deployment or relying-party trust."]
+    },
+    {
+      "id": "SRC-RFI-003",
+      "label": "TLS termination, load balancing, proxies, API gateways and ingress",
+      "mappings": [
+        {"family_id": "traffic-termination", "relationship": "partial", "rationale": "Listener and TLS termination configuration are part of this broader questionnaire."},
+        {"family_id": "api-and-mesh", "relationship": "overlap", "rationale": "API and ingress TLS overlap; workload identity and internal mesh policy also require the dedicated workload questions."}
+      ],
+      "unresolved_aspects": ["Do not infer negotiated behavior from configured TLS settings or infer all mesh coverage from edge ingress."]
+    },
+    {
+      "id": "SRC-RFI-004",
+      "label": "Network device, controller, firewall, router and appliance configuration",
+      "mappings": [
+        {"family_id": "traffic-termination", "relationship": "overlap", "rationale": "Some device configurations expose TLS termination; the family is not a general network-device inventory."},
+        {"family_id": "ssh", "relationship": "overlap", "rationale": "Device management may include SSH endpoints but does not represent every device cryptographic function."},
+        {"family_id": "vpn", "relationship": "overlap", "rationale": "Device tunnels and VPN profiles intersect the VPN family, not the entire network configuration class."}
+      ],
+      "unresolved_aspects": ["No dedicated general network-device configuration family exists in runtime v1.", "Network telemetry is observed behavior, not a substitute for authoritative device configuration."]
+    },
+    {
+      "id": "SRC-RFI-005",
+      "label": "SSH, privileged access, bastions and machine identities",
+      "mappings": [
+        {"family_id": "ssh", "relationship": "partial", "rationale": "SSH is the directly applicable runtime portion; privileged-access and broader machine-identity functions are not implied."}
+      ],
+      "unresolved_aspects": ["PAM approvals, session controls and non-SSH machine identities need explicit product-specific questions."]
+    },
+    {
+      "id": "SRC-RFI-006",
+      "label": "VPN, IPsec, IKE and remote access",
+      "mappings": [
+        {"family_id": "vpn", "relationship": "exact", "rationale": "Both classify VPN gateways, encrypted network access and peer dependencies for initial routing."}
+      ],
+      "unresolved_aspects": []
+    },
+    {
+      "id": "SRC-RFI-007",
+      "label": "Source-code repositories and repository catalogs",
+      "mappings": [
+        {"family_id": "source-build", "relationship": "partial", "rationale": "Repositories supply the source part of the combined source-and-build runtime family; build and release require RFI-009."}
+      ],
+      "unresolved_aspects": ["Source revision alone does not prove the runtime dependency or deployed artifact."]
+    },
+    {
+      "id": "SRC-RFI-008",
+      "label": "SAST, SCA, SBOM, code search and software-analysis results",
+      "mappings": [
+        {"family_id": "dependency-analysis", "relationship": "exact", "rationale": "Both classify software component, dependency and cryptographic call-site analysis sources."}
+      ],
+      "unresolved_aspects": []
+    },
+    {
+      "id": "SRC-RFI-009",
+      "label": "CI/CD, build, release, package, container and artifact registries",
+      "mappings": [
+        {"family_id": "source-build", "relationship": "partial", "rationale": "Build and release metadata supply the build portion of the combined runtime family; source scope remains separately attributed."},
+        {"family_id": "software-signing", "relationship": "overlap", "rationale": "Build pipelines may record signing steps and artifacts but do not necessarily own signing policy, custody or verifier populations."}
+      ],
+      "unresolved_aspects": ["Artifact registry membership is not proof that a specific artifact was deployed or successfully verified."]
+    },
+    {
+      "id": "SRC-RFI-010",
+      "label": "Software, container, code and document signing services",
+      "mappings": [
+        {"family_id": "software-signing", "relationship": "partial", "rationale": "Artifact signing is directly represented; document-specific signing and recipient policy may be outside this runtime family."},
+        {"family_id": "communications", "relationship": "overlap", "rationale": "Document signing intersects communications, while artifact update paths remain in software-signing."}
+      ],
+      "unresolved_aspects": ["Document-signing questions must remain applicable to the document service rather than copied to every software build."]
+    },
+    {
+      "id": "SRC-RFI-011",
+      "label": "Cloud resource inventories and cloud-native cryptographic services",
+      "mappings": [
+        {"family_id": "cloud-inventory", "relationship": "partial", "rationale": "Cloud resource and workload identity are the inventory portion of the questionnaire."},
+        {"family_id": "kms", "relationship": "overlap", "rationale": "Cloud inventories may link KMS resources, but key-consumer and policy evidence requires the selected KMS interface."},
+        {"family_id": "secrets", "relationship": "overlap", "rationale": "Cloud secret-resource metadata can identify a route without proving rotation, consumers or handling policy."}
+      ],
+      "unresolved_aspects": ["A cloud control-plane inventory is not automatically authoritative for every cryptographic service or workload it lists."]
+    },
+    {
+      "id": "SRC-RFI-012",
+      "label": "Key-management services and envelope encryption",
+      "mappings": [
+        {"family_id": "kms", "relationship": "exact", "rationale": "Both classify KMS metadata, algorithms and key-consumer dependencies for routing."}
+      ],
+      "unresolved_aspects": []
+    },
+    {
+      "id": "SRC-RFI-013",
+      "label": "General HSMs and enterprise cryptographic services",
+      "mappings": [
+        {"family_id": "hsm", "relationship": "exact", "rationale": "Both classify general hardware cryptographic modules, mechanisms and non-secret custody metadata."}
+      ],
+      "unresolved_aspects": []
+    },
+    {
+      "id": "SRC-RFI-014",
+      "label": "Secrets management and application-secret references",
+      "mappings": [
+        {"family_id": "secrets", "relationship": "exact", "rationale": "Both classify secret and credential metadata, consumers and rotation references; no secret values are requested."}
+      ],
+      "unresolved_aspects": []
+    },
+    {
+      "id": "SRC-RFI-015",
+      "label": "Identity providers, federation, tokens and assertion signing",
+      "mappings": [
+        {"family_id": "iam", "relationship": "exact", "rationale": "Both classify issuer metadata, federation trust and token or credential consumers."}
+      ],
+      "unresolved_aspects": []
+    },
+    {
+      "id": "SRC-RFI-016",
+      "label": "Workload identity, service meshes, container platforms and cluster ingress",
+      "mappings": [
+        {"family_id": "api-and-mesh", "relationship": "partial", "rationale": "Mesh routes and transport policy are a directly represented subset of the broader workload and container questionnaire."},
+        {"family_id": "cloud-inventory", "relationship": "overlap", "rationale": "Runtime workload and deployment inventory overlaps; a container platform is not necessarily a public-cloud resource source."},
+        {"family_id": "iam", "relationship": "overlap", "rationale": "Workload identity intersects IAM, but mesh trust domains must not be equated with enterprise federation automatically."}
+      ],
+      "unresolved_aspects": ["Cluster and container-platform inventory may need a qualified product mapping beyond the mesh or cloud subset."]
+    },
+    {
+      "id": "SRC-RFI-017",
+      "label": "Database, storage, filesystem and data-platform encryption",
+      "mappings": [
+        {"family_id": "databases", "relationship": "partial", "rationale": "Databases and data platforms are one part of the combined data-protection questionnaire."},
+        {"family_id": "storage-backup", "relationship": "overlap", "rationale": "Storage and filesystem encryption overlap, while backup, archive and restore have separate RFI-018 questions."}
+      ],
+      "unresolved_aspects": ["Database encryption settings do not establish backup encryption, retained-copy coverage or restoration success."]
+    },
+    {
+      "id": "SRC-RFI-018",
+      "label": "Backup, archive, tape and recovery-copy management",
+      "mappings": [
+        {"family_id": "storage-backup", "relationship": "partial", "rationale": "Backup and archive evidence supply part of the broader storage-and-backup runtime family."}
+      ],
+      "unresolved_aspects": ["Backup metadata and restoration verification require distinct evidence bases."]
+    },
+    {
+      "id": "SRC-RFI-019",
+      "label": "DNS and DNSSEC management",
+      "mappings": [
+        {"family_id": "communications", "relationship": "partial", "rationale": "DNS and DNSSEC are one portion of the combined DNS, email and document runtime family."}
+      ],
+      "unresolved_aspects": ["Do not ask a DNS responder to attest to email or document systems; preserve DNS-specific rollover and delegation questions."]
+    },
+    {
+      "id": "SRC-RFI-020",
+      "label": "Email, message and document encryption or signing",
+      "mappings": [
+        {"family_id": "communications", "relationship": "partial", "rationale": "Message and document protection provide another portion of communications; DNS remains separately scoped."}
+      ],
+      "unresolved_aspects": ["Email, message and document products may have different owners, evidence routes and recipient populations."]
+    },
+    {
+      "id": "SRC-RFI-021",
+      "label": "Endpoint, server, configuration-management and operating-system inventory",
+      "mappings": [
+        {"family_id": "endpoints", "relationship": "partial", "rationale": "Fleet versions, updates and trust configuration are represented; server runtime and configuration details can exceed the family model."},
+        {"family_id": "ssh", "relationship": "overlap", "rationale": "Host inventory may provide SSH configuration but cannot replace host-key, client-cohort and authenticated operation evidence."},
+        {"family_id": "dependency-analysis", "relationship": "overlap", "rationale": "Installed runtime/library inventory intersects dependency analysis, not every source-level cryptographic call site."}
+      ],
+      "unresolved_aspects": ["Server, mobile and managed endpoint populations require explicit scopes rather than a shared completeness claim."]
+    },
+    {
+      "id": "SRC-RFI-022",
+      "label": "Devices, operational technology, firmware, attestation and secure boot",
+      "mappings": [
+        {"family_id": "embedded-ot", "relationship": "exact", "rationale": "Both classify device and firmware trust chains, update constraints and operational-system evidence."}
+      ],
+      "unresolved_aspects": []
+    },
+    {
+      "id": "SRC-RFI-023",
+      "label": "Payment, PIN, EMV, card-network and payment-HSM cryptography",
+      "mappings": [
+        {"family_id": "specialized-transactions", "relationship": "partial", "rationale": "Regulated payment cryptography is a specific part of the broader transaction runtime family."}
+      ],
+      "unresolved_aspects": ["General HSM metadata does not satisfy payment-specific handling, ceremony or ecosystem requirements."]
+    },
+    {
+      "id": "SRC-RFI-024",
+      "label": "Blockchain, distributed ledgers, wallets and digital-asset custody",
+      "mappings": [
+        {"family_id": "specialized-transactions", "relationship": "overlap", "rationale": "Transaction signing and specialist controls intersect, but wallet, quorum, ledger and custody semantics are not a lossless fit."}
+      ],
+      "unresolved_aspects": ["No dedicated digital-asset custody runtime family exists in v1.", "Do not normalize wallet, ledger, quorum or recovery facts as generic payment facts without a separately versioned model and tests."]
+    },
+    {
+      "id": "SRC-RFI-025",
+      "label": "Security telemetry, NDR, SIEM, vulnerability and exposure management",
+      "mappings": [
+        {"family_id": "network-telemetry", "relationship": "partial", "rationale": "Observed network handshakes and sensor limits are one part of the broader security telemetry questionnaire."},
+        {"family_id": "vendor-assurance", "relationship": "overlap", "rationale": "Detection and drift evidence overlap the runtime assurance family; vendor claims and sensor observations remain distinct evidence bases."}
+      ],
+      "unresolved_aspects": ["SIEM events, vulnerability records and configuration compliance require explicit product schemas; the network family does not cover all security telemetry."]
+    },
+    {
+      "id": "SRC-RFI-026",
+      "label": "Data catalogs, classification, retention, privacy and records management",
+      "mappings": [
+        {"family_id": "data-governance", "relationship": "exact", "rationale": "Both classify protected-information context, lifetime, lifecycle and system associations."}
+      ],
+      "unresolved_aspects": []
+    },
+    {
+      "id": "SRC-RFI-027",
+      "label": "Third parties, vendors, products, SaaS and lifecycle inventories",
+      "mappings": [
+        {"family_id": "vendor-assurance", "relationship": "partial", "rationale": "Vendor support, capability and lifecycle claims are a portion of the combined assurance-and-detection runtime family."}
+      ],
+      "unresolved_aspects": ["Vendor statements do not independently verify deployed capabilities or ongoing drift; contract and product qualification remain separate."]
+    }
+  ],
+  "unmapped_runtime_families": [
+    {
+      "family_id": "mainframe",
+      "relationship": "unmapped",
+      "reason": "No dedicated mainframe source-system RFI appears in the 27-profile catalog. Generic HSM, application or product questions may assist routing but are not equivalent.",
+      "next_action": "Retain the runtime family and draft a reviewed, versioned mainframe questionnaire extension before claiming question-level coverage."
+    },
+    {
+      "family_id": "policy-exceptions",
+      "relationship": "unmapped",
+      "reason": "No dedicated governance, exception or work-coordination source-system RFI appears in the 27-profile catalog. Policy-related questions elsewhere do not define a complete source profile.",
+      "next_action": "Retain the runtime family and draft a reviewed, versioned policy/exception/work-coordination questionnaire extension; imports must not manufacture approvals."
+    }
+  ],
+  "limitations": [
+    "This is a reviewed-by-code development proposal, not an owner-approved enterprise taxonomy or question-level equivalence assessment.",
+    "Twenty-seven questionnaires and twenty-seven runtime families do not form a one-to-one correspondence or imply enterprise completeness.",
+    "The classification-only snapshot excludes private answers, owners, contact routes, source instances, schedules, payloads and credentials.",
+    "Recognition or mapping cannot establish a qualified product adapter, source access, cryptographic behavior, report acceptance or migration authorization.",
+    "Question IDs, template versions, answer scope and expected evidence remain separately bound; common questions must not be multiplied mechanically across every linked family."
+  ]
+}

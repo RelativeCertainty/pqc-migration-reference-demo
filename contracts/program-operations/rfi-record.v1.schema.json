@@ -1,0 +1,23 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/rfi-record.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "RFIRecord.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "rfiId", "programId", "name", "informationNeeded", "responsibleFunction", "neededBy", "status", "acceptableResponseMethods", "deliveryConsequence", "questionRefs"],
+  "properties": {
+    "schemaVersion": {"const": "RFIRecord.v1"},
+    "rfiId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "name": {"$ref": "program-operations-common.v1.schema.json#/$defs/plainLanguageName"},
+    "informationNeeded": {"type": "string", "minLength": 10, "maxLength": 3000},
+    "responsibleFunction": {"type": "string", "minLength": 3, "maxLength": 200},
+    "neededBy": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+    "status": {"type": "string", "enum": ["draft", "not_issued", "issued", "acknowledged", "partially_answered", "answered", "validated", "blocked", "withdrawn"]},
+    "acceptableResponseMethods": {"type": "array", "minItems": 1, "items": {"type": "string", "enum": ["api_access", "repository_access", "approved_export", "documentation", "technical_clarification", "bounded_validation"]}, "uniqueItems": true},
+    "deliveryConsequence": {"type": "string", "minLength": 3, "maxLength": 1000},
+    "questionRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "responseEvidenceRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"}
+  }
+}

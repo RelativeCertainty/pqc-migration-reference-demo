@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/project-day.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "ProjectDay.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "recordId", "programId", "date", "cycleRef", "phaseRef", "recordStatus", "plannedCapacityMinutes", "workWindows", "intendedOutcomes", "primaryArtifact", "references"],
+  "properties": {
+    "schemaVersion": {"const": "ProjectDay.v1"},
+    "recordId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "date": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+    "cycleRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "phaseRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"},
+    "plannedCapacityMinutes": {"type": "integer", "minimum": 0, "maximum": 1440},
+    "workWindows": {"type": "array", "items": {"$ref": "program-operations-common.v1.schema.json#/$defs/workWindow"}},
+    "intendedOutcomes": {"type": "array", "minItems": 1, "maxItems": 3, "items": {"$ref": "program-operations-common.v1.schema.json#/$defs/outcome"}},
+    "primaryArtifact": {"$ref": "program-operations-common.v1.schema.json#/$defs/plainLanguageName"},
+    "references": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["storyRefs", "actionRefs", "dependencyRefs", "rfiRefs", "gateRefs"],
+      "properties": {
+        "storyRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+        "actionRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+        "dependencyRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+        "rfiRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+        "gateRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"}
+      }
+    },
+    "tomorrowFirstAction": {"type": "string", "maxLength": 500}
+  }
+}

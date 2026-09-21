@@ -1,0 +1,86 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/program-operations-common.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "PQC Program Operations Common Types v1",
+  "description": "Shared public-safe types for the program-operations reference contracts.",
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[A-Za-z0-9][A-Za-z0-9._:-]*$"
+    },
+    "plainLanguageName": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 240
+    },
+    "date": {
+      "type": "string",
+      "format": "date"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time"
+    },
+    "recordStatus": {
+      "type": "string",
+      "enum": ["draft", "active", "finalized", "superseded", "cancelled"]
+    },
+    "deliveryStatus": {
+      "type": "string",
+      "enum": ["planned", "in_progress", "accomplished", "partially_accomplished", "blocked", "deferred", "cancelled"]
+    },
+    "evidenceStatus": {
+      "type": "string",
+      "enum": ["planned", "available", "collected", "validated", "accepted", "blocked", "unresolved"]
+    },
+    "referenceList": {
+      "type": "array",
+      "items": {"$ref": "#/$defs/identifier"},
+      "uniqueItems": true,
+      "default": []
+    },
+    "workWindow": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["start", "end", "purpose"],
+      "properties": {
+        "start": {"$ref": "#/$defs/timestamp"},
+        "end": {"$ref": "#/$defs/timestamp"},
+        "purpose": {"type": "string", "minLength": 3, "maxLength": 240},
+        "protected": {"type": "boolean", "default": false}
+      }
+    },
+    "outcome": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "name", "status"],
+      "properties": {
+        "id": {"$ref": "#/$defs/identifier"},
+        "name": {"$ref": "#/$defs/plainLanguageName"},
+        "status": {"$ref": "#/$defs/deliveryStatus"},
+        "evidenceRef": {"$ref": "#/$defs/identifier"},
+        "notes": {"type": "string", "maxLength": 1000}
+      }
+    },
+    "artifactReference": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["artifactId", "name", "digestAlgorithm", "digest", "classification"],
+      "properties": {
+        "artifactId": {"$ref": "#/$defs/identifier"},
+        "name": {"$ref": "#/$defs/plainLanguageName"},
+        "digestAlgorithm": {"const": "sha256"},
+        "digest": {"type": "string", "pattern": "^[a-f0-9]{64}$"},
+        "classification": {"type": "string", "enum": ["public", "internal", "confidential", "restricted"]},
+        "safeLocationRef": {"type": "string", "maxLength": 500}
+      }
+    },
+    "audience": {
+      "type": "string",
+      "enum": ["program_operator", "management", "delivery", "jira_coordination", "domain_specialist"]
+    }
+  }
+}

@@ -1,0 +1,12 @@
+{
+  "schemaVersion": "pqc.response-to-report.blocked-source.v1",
+  "synthetic": true,
+  "deployment": "edge-third",
+  "state": "blocked",
+  "reason": "handling_route_unresolved",
+  "causeBasis": "Synthetic exercise scenario; no enterprise restriction inferred",
+  "nextFunction": "Synthetic assessment coordination",
+  "observations": [],
+  "standardsStatus": "proposed_not_adopted",
+  "executionAuthorized": false
+}

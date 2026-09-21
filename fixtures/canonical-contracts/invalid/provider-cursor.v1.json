@@ -1,0 +1,21 @@
+{
+  "schemaVersion": "ProviderCursor.v1",
+  "providerCursorId": "cursor:synthetic-pki-global-r1",
+  "tenantId": "tenant:synthetic-reference",
+  "integrationProfileRef": "profile:synthetic-pki",
+  "scopeKey": "synthetic-global",
+  "revision": 1,
+  "state": "committed",
+  "cursorKind": "opaque_token",
+  "sealedPositionRef": "sealed:synthetic-cursor-position-r1",
+  "positionDigest": "sha256:dddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddddd",
+  "predecessorCursorRef": null,
+  "advancedBy": {
+    "collectionRunRef": "run:synthetic-collection-001",
+    "sourceEventRef": "event:synthetic-page-001",
+    "observationBatchRef": "batch:synthetic-observations-001"
+  },
+  "observedAt": "2030-01-07T12:02:00Z",
+  "committedAt": null,
+  "safety": { "synthetic": true, "cursorValueEmbedded": false, "credentialValueEmbedded": false }
+}

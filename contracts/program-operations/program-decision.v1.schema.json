@@ -1,0 +1,25 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/program-decision.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "ProgramDecision.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "decisionId", "programId", "name", "question", "decisionOwnerRole", "requiredBy", "status", "options", "evidenceRefs"],
+  "properties": {
+    "schemaVersion": {"const": "ProgramDecision.v1"},
+    "decisionId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "name": {"$ref": "program-operations-common.v1.schema.json#/$defs/plainLanguageName"},
+    "question": {"type": "string", "minLength": 10, "maxLength": 2000},
+    "decisionOwnerRole": {"type": "string", "minLength": 3, "maxLength": 160},
+    "requiredBy": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+    "status": {"type": "string", "enum": ["pending", "approved", "rejected", "deferred", "superseded"]},
+    "options": {"type": "array", "minItems": 1, "items": {"type": "string", "minLength": 3, "maxLength": 500}, "uniqueItems": true},
+    "selectedOption": {"type": "string", "minLength": 3, "maxLength": 500},
+    "rationale": {"type": "string", "maxLength": 3000},
+    "evidenceRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "decidedAt": {"$ref": "program-operations-common.v1.schema.json#/$defs/timestamp"},
+    "supersedesDecisionId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"}
+  }
+}

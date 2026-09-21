@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "SourceContractPackManifest.v1",
+  "contractPackId": "contract:source-pack:tls-traffic-management:v1",
+  "packVersion": "1.0.0",
+  "sourceFamily": "tls_traffic_management",
+  "title": "TLS termination and traffic-management synthetic contract pack",
+  "purpose": "Prove product-neutral pagination and mapping for two regional TLS endpoints, their deployment references, and bounded protocol metadata.",
+  "provenance": {
+    "origin": "independently_authored_synthetic",
+    "contractEvidenceStatus": "synthetic_contract_tested",
+    "retrievalRequired": false,
+    "redistributionStatus": "independently_authored_public_fixture"
+  },
+  "access": {
+    "classification": "synthetic_local",
+    "authenticationMode": "simulated_reference",
+    "credentialReferenceOnly": true,
+    "readOnly": true
+  },
+  "pagination": {
+    "mode": "opaque_cursor",
+    "pageSizeLimit": 100,
+    "cursorIsOpaqueReference": true,
+    "rawCursorStored": false,
+    "terminalCondition": "next_cursor_ref_is_null"
+  },
+  "responseContractRef": "contract:synthetic-source-page.v1",
+  "fixturePageRefs": ["fixtures/page-001.v1.json", "fixtures/page-002.v1.json"],
+  "canonicalMappings": [
+    {
+      "sourceField": "attributes.endpointRef",
+      "canonicalTarget": "asset.endpointRef",
+      "required": true,
+      "semanticNote": "Opaque synthetic endpoint identity; no resolvable hostname or address is included."
+    },
+    {
+      "sourceField": "attributes.deploymentRef",
+      "canonicalTarget": "asset.deploymentRef",
+      "required": true,
+      "semanticNote": "Links endpoint configuration to a synthetic regional deployment."
+    },
+    {
+      "sourceField": "attributes.certificateRef",
+      "canonicalTarget": "dependency.certificateRef",
+      "required": true,
+      "semanticNote": "Correlates the endpoint to opaque synthetic certificate metadata."
+    },
+    {
+      "sourceField": "attributes.minimumProtocol",
+      "canonicalTarget": "observation.minimumProtocol",
+      "required": true,
+      "semanticNote": "Provides bounded protocol configuration evidence without active endpoint scanning."
+    }
+  ],
+  "conformanceBehaviors": [
+    "pagination",
+    "rate_limit_retry",
+    "timeout_retry",
+    "duplicate_delivery",
+    "authorization_failure",
+    "malformed_record_quarantine",
+    "schema_drift_quarantine",
+    "cursor_resume"
+  ],
+  "limitations": [
+    "The fixture does not prove runtime protocol negotiation, active reachability, or an enterprise-wide endpoint population.",
+    "Endpoint identifiers are deliberately nonresolvable and synthetic."
+  ],
+  "safety": {
+    "synthetic": true,
+    "vendorClaimed": false,
+    "liveIntegrationClaimed": false,
+    "containsCredentials": false,
+    "containsRawEnterprisePayload": false
+  }
+}

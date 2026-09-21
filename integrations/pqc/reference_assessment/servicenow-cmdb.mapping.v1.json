@@ -1,0 +1,27 @@
+{
+  "schema_version": "pba.pqc.servicenow-cmdb-mapping.v1",
+  "status": "documentation_shaped_synthetic_candidate_not_product_qualified",
+  "table_candidate": "cmdb_ci_appl",
+  "product_binding": {"product": "ServiceNow", "edition": null, "version": null, "instance": null, "minimum_permissions": null, "authentication": null, "dictionary_validated": false},
+  "method": "GET",
+  "field_mapping": {"id": "sys_id", "name": "name", "owner_id": "owned_by"},
+  "request_contract": {"sysparm_display_value": "false", "sysparm_exclude_reference_link": "true", "sysparm_fields": "sys_id,name,owned_by", "sysparm_query": "ORDERBYsys_id", "sysparm_query_no_domain": "false"},
+  "mapping_decisions": [
+    "The table and three fields are a candidate mapping to validate against an authorized instance dictionary; documentation does not prove their availability or ACL visibility.",
+    "Captured sys_id, name and owned_by remain source assertions. A user reference does not establish that person's acceptance or business accountability.",
+    "Missing owned_by maps to unknown. Display-name-only references are rejected; no name-based identity matching occurs.",
+    "Business-service association, criticality and confidentiality lifetime are deliberately unmapped. No custom enterprise fields or ordinal score meanings are assumed.",
+    "Synthetic environment is a fixture boundary, not a native ServiceNow environment assertion.",
+    "Reference Link parsing accepts only the synthetic next-link shape. Other native header variants require separate qualification; no links are fetched."
+  ],
+  "official_sources": [{"title": "ServiceNow Zurich Table API", "url": "https://www.servicenow.com/docs/r/zurich/api-reference/rest-apis/c_TableAPI.html", "checked_on": "2026-09-05"}],
+  "documentation_facts": [
+    "sysparm_display_value=false requests database values; reference values identify native records rather than display names.",
+    "sysparm_exclude_reference_link=true suppresses reference links; sysparm_fields limits requested fields.",
+    "sysparm_limit is applied before ACL evaluation. A short result is not used to establish completeness.",
+    "Offset advances by the requested limit. Link headers provide pagination references; this candidate never dereferences them."
+  ],
+  "qualification_gates": ["confirm table/class and field dictionary", "confirm edition/version and instance", "approve read-only source route and least privilege", "qualify pagination and deletion semantics", "independently reconcile collection completeness", "separately authorize any future mutation adapter"],
+  "write_operations": [],
+  "live_connection_supported": false
+}

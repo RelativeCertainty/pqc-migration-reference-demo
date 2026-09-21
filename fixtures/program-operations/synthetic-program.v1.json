@@ -1,0 +1,375 @@
+{
+  "schemaVersion": "pqc.program-operations-fixture.v1",
+  "evidenceStatus": "synthetic",
+  "asOf": "2030-01-07T14:00:00Z",
+  "program": {
+    "programId": "PROGRAM-SYNTHETIC-001",
+    "name": "Synthetic Enterprise PQC Assessment",
+    "purpose": "Demonstrate a source-backed program control model without using customer records.",
+    "status": "active",
+    "phase": "PHASE-1-CURRENT-STATE",
+    "cycle": "CYCLE-01-ENABLEMENT",
+    "startDate": "2030-01-02",
+    "targetEndDate": "2030-05-10"
+  },
+  "operatingStandard": {
+    "schemaVersion": "PQCProgramOperatingStandard.v1",
+    "standardId": "STANDARD-PQC-OPS-001",
+    "name": "Evidence-backed PQC program operating standard",
+    "recordStatus": "active",
+    "cadences": [
+      {
+        "name": "Daily operating cycle",
+        "frequency": "Each workday",
+        "purpose": "Set bounded outcomes, preserve evidence, and expose dependencies early."
+      },
+      {
+        "name": "Formal status cycle",
+        "frequency": "Every two weeks",
+        "purpose": "Create an immutable evidence-linked status snapshot for review."
+      }
+    ],
+    "dailyRules": {
+      "maximumOutcomes": 3,
+      "requiresPrimaryArtifact": true,
+      "planningIncrementMinutes": 15,
+      "requiresCloseRecord": true
+    },
+    "authority": {
+      "operationalAuthority": "Approved program record store",
+      "formalReportAuthority": "Finalized digest-bound report snapshots",
+      "communicationAuthority": "Accountable human reviewer"
+    }
+  },
+  "implementationProfile": {
+    "schemaVersion": "PQCProgramImplementationProfile.v1",
+    "profileId": "PROFILE-SYNTHETIC-001",
+    "programId": "PROGRAM-SYNTHETIC-001",
+    "recordStatus": "active",
+    "standardRef": "STANDARD-PQC-OPS-001",
+    "calendar": {
+      "timezone": "Etc/UTC",
+      "programStart": "2030-01-02",
+      "programEnd": "2030-05-10",
+      "protectedDates": ["2030-01-21"]
+    },
+    "adapterBindings": [
+      {
+        "capability": "program_record_store",
+        "adapter": "synthetic_json_fixture",
+        "status": "validated",
+        "configurationRef": "config/adapter-bindings.example.json"
+      },
+      {
+        "capability": "backlog_reader",
+        "adapter": "disabled_enterprise_adapter",
+        "status": "disabled",
+        "configurationRef": "config/adapter-bindings.example.json"
+      }
+    ],
+    "dataRules": {
+      "classification": "public",
+      "credentialHandling": "Credentials are never accepted by the reference runtime.",
+      "externalDispatch": "disabled"
+    }
+  },
+  "projectDays": [
+    {
+      "schemaVersion": "ProjectDay.v1",
+      "recordId": "DAY-2030-01-07",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "date": "2030-01-07",
+      "cycleRef": "CYCLE-01-ENABLEMENT",
+      "phaseRef": "PHASE-1-CURRENT-STATE",
+      "recordStatus": "active",
+      "plannedCapacityMinutes": 420,
+      "workWindows": [
+        {
+          "start": "2030-01-07T14:00:00Z",
+          "end": "2030-01-07T17:00:00Z",
+          "purpose": "Protected technical execution",
+          "protected": true
+        },
+        {
+          "start": "2030-01-07T17:30:00Z",
+          "end": "2030-01-07T21:30:00Z",
+          "purpose": "Source enablement and project control",
+          "protected": false
+        }
+      ],
+      "intendedOutcomes": [
+        {
+          "id": "OUTCOME-001",
+          "name": "Confirm the first source-system access route",
+          "status": "in_progress",
+          "notes": "Use a read-only capability probe after access is approved."
+        },
+        {
+          "id": "OUTCOME-002",
+          "name": "Validate the collection ledger contract",
+          "status": "planned"
+        },
+        {
+          "id": "OUTCOME-003",
+          "name": "Prepare the next gate-readiness view",
+          "status": "planned"
+        }
+      ],
+      "primaryArtifact": "Source-enablement and dependency snapshot",
+      "references": {
+        "storyRefs": ["STORY-SYNTHETIC-001"],
+        "actionRefs": ["ACTION-001", "ACTION-002"],
+        "dependencyRefs": ["DEPENDENCY-001"],
+        "rfiRefs": ["RFI-001"],
+        "gateRefs": ["GATE-001"]
+      },
+      "tomorrowFirstAction": "Review responses and update the capability-probe plan."
+    }
+  ],
+  "dailyLogEntries": [
+    {
+      "schemaVersion": "DailyLogEntry.v1",
+      "entryId": "LOG-2030-01-07-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "projectDayRef": "DAY-2030-01-07",
+      "recordedAt": "2030-01-07T15:30:00Z",
+      "category": "progress",
+      "summary": "Validated the synthetic fixture and read-only query path.",
+      "references": ["STORY-SYNTHETIC-001"],
+      "recordStatus": "finalized"
+    }
+  ],
+  "workSessions": [
+    {
+      "schemaVersion": "WorkSession.v1",
+      "sessionId": "SESSION-2030-01-07-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "projectDayRef": "DAY-2030-01-07",
+      "startedAt": "2030-01-07T14:00:00Z",
+      "endedAt": "2030-01-07T15:30:00Z",
+      "timeCategory": "technical_execution",
+      "summary": "Exercised the reference program-operations interface.",
+      "references": ["STORY-SYNTHETIC-001"],
+      "recordStatus": "finalized"
+    }
+  ],
+  "timeEntries": [
+    {
+      "schemaVersion": "TimeEntry.v1",
+      "timeEntryId": "TIME-2030-01-07-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "projectDayRef": "DAY-2030-01-07",
+      "sessionRef": "SESSION-2030-01-07-001",
+      "actualMinutes": 90,
+      "timeCategory": "technical_execution",
+      "recordStatus": "finalized",
+      "billingDetermination": "not_determined",
+      "note": "The operating record does not determine contractual billability."
+    }
+  ],
+  "dailySnapshots": [
+    {
+      "schemaVersion": "DailyStatusSnapshot.v1",
+      "snapshotId": "SNAPSHOT-2030-01-07-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "projectDayRef": "DAY-2030-01-07",
+      "asOf": "2030-01-07T21:30:00Z",
+      "recordStatus": "finalized",
+      "outcomeSummary": "One synthetic interface path was validated; source access remains unresolved.",
+      "openActionRefs": ["ACTION-001", "ACTION-002"],
+      "blockingDependencyRefs": ["DEPENDENCY-001"],
+      "evidenceRefs": ["EVIDENCE-SYNTHETIC-001"],
+      "digestAlgorithm": "sha256",
+      "digest": "bdde3d044dd6230e38617059d24041dbc440445bd96e3d036505cba00a85134a"
+    }
+  ],
+  "stakeholderUpdates": [
+    {
+      "schemaVersion": "StakeholderUpdate.v1",
+      "updateId": "UPDATE-2030-01-07-MANAGEMENT",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "projectDayRef": "DAY-2030-01-07",
+      "audience": "management",
+      "recordStatus": "draft",
+      "subject": "PQC assessment — daily operating update",
+      "completedFacts": [
+        "The synthetic program-operations query path passed its local checks."
+      ],
+      "plannedWork": [
+        "Confirm the first source access route.",
+        "Validate the collection ledger contract.",
+        "Prepare the next gate-readiness view."
+      ],
+      "asks": [
+        {
+          "action": "Identify the function that can authorize read-only source access.",
+          "accountableRole": "Source-system service owner",
+          "requiredBy": "2030-01-09",
+          "unresolvedConsequence": "The capability probe cannot begin."
+        }
+      ],
+      "dispatchAllowed": false,
+      "wordCount": 54
+    }
+  ],
+  "actions": [
+    {
+      "schemaVersion": "ProgramAction.v1",
+      "actionId": "ACTION-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "name": "Route the source-access request",
+      "description": "Identify the responsible function and submit the approved read-only access request.",
+      "accountableRole": "Source enablement coordinator",
+      "dueDate": "2030-01-09",
+      "status": "open",
+      "unresolvedConsequence": "The first capability probe cannot start.",
+      "references": ["RFI-001", "DEPENDENCY-001", "GATE-001"]
+    },
+    {
+      "schemaVersion": "ProgramAction.v1",
+      "actionId": "ACTION-002",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "name": "Review the ledger contract",
+      "description": "Confirm that the collection record preserves source, cursor, digest, and run references together.",
+      "accountableRole": "Technical lead",
+      "dueDate": "2030-01-08",
+      "status": "in_progress",
+      "unresolvedConsequence": "Collection implementation remains blocked from conformance testing.",
+      "references": ["STORY-SYNTHETIC-001", "GATE-001"]
+    }
+  ],
+  "dependencies": [
+    {
+      "schemaVersion": "ProgramDependency.v1",
+      "dependencyId": "DEPENDENCY-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "name": "Approved read-only source interface",
+      "dependencyType": "access",
+      "providerRole": "Source-system service owner",
+      "neededBy": "2030-01-09",
+      "status": "requested",
+      "deliveryConsequence": "Real capability probing and source-backed harvesting cannot begin.",
+      "fallback": "Continue with the documented contract simulator and mark all results synthetic.",
+      "references": ["RFI-001", "ACTION-001", "GATE-001"]
+    },
+    {
+      "schemaVersion": "ProgramDependency.v1",
+      "dependencyId": "DEPENDENCY-002",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "name": "Approved relational record store",
+      "dependencyType": "environment",
+      "providerRole": "Platform engineering",
+      "neededBy": "2030-01-12",
+      "status": "identified",
+      "deliveryConsequence": "The JSON fixture remains the only local authority.",
+      "fallback": "Use the fixture adapter for contract development only.",
+      "references": ["GATE-001"]
+    }
+  ],
+  "rfis": [
+    {
+      "schemaVersion": "RFIRecord.v1",
+      "rfiId": "RFI-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "name": "Read-only certificate inventory source and access route",
+      "informationNeeded": "Identify the authoritative certificate inventory service, its accountable service function, approved non-production interface, authentication method, pagination behavior, documentation, test data, and access-request path.",
+      "responsibleFunction": "Certificate lifecycle service function",
+      "neededBy": "2030-01-09",
+      "status": "not_issued",
+      "acceptableResponseMethods": ["api_access", "approved_export", "documentation", "technical_clarification"],
+      "deliveryConsequence": "Certificate observations cannot be source-backed.",
+      "questionRefs": ["RFI-001-Q001", "RFI-001-Q002"],
+      "responseEvidenceRefs": []
+    },
+    {
+      "schemaVersion": "RFIRecord.v1",
+      "rfiId": "RFI-002",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "name": "Application and service context source and access route",
+      "informationNeeded": "Identify the authoritative application and service inventory, stable native identifiers, supported relationships, approved read-only interface, documentation, test environment, and access-request path.",
+      "responsibleFunction": "Enterprise service inventory function",
+      "neededBy": "2030-01-12",
+      "status": "draft",
+      "acceptableResponseMethods": ["api_access", "approved_export", "documentation", "technical_clarification"],
+      "deliveryConsequence": "Cryptographic observations cannot be reliably connected to accountable services.",
+      "questionRefs": ["RFI-002-Q001", "RFI-002-Q002"],
+      "responseEvidenceRefs": []
+    }
+  ],
+  "decisions": [
+    {
+      "schemaVersion": "ProgramDecision.v1",
+      "decisionId": "DECISION-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "name": "Select the initial program record-store binding",
+      "question": "Which approved relational service will own durable program records after the synthetic reference stage?",
+      "decisionOwnerRole": "Platform architecture authority",
+      "requiredBy": "2030-01-12",
+      "status": "pending",
+      "options": ["approved_relational_store", "continue_fixture_only"],
+      "evidenceRefs": []
+    }
+  ],
+  "gates": [
+    {
+      "schemaVersion": "GateAssessment.v1",
+      "gateAssessmentId": "GATE-ASSESSMENT-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "gateId": "GATE-001",
+      "name": "Source enablement readiness",
+      "assessmentDate": "2030-01-12",
+      "status": "not_assessed",
+      "conditions": [
+        {
+          "conditionId": "GATE-001-C01",
+          "description": "An authoritative source and accountable service function are identified.",
+          "status": "in_progress"
+        },
+        {
+          "conditionId": "GATE-001-C02",
+          "description": "The approved read-only access route and test interface are documented.",
+          "status": "not_started"
+        }
+      ],
+      "evidenceRefs": [],
+      "decisionOwnerRole": "Assessment sponsor",
+      "limitations": ["Only synthetic interface evidence is currently available."]
+    }
+  ],
+  "reports": [
+    {
+      "schemaVersion": "ProgramReportSnapshot.v1",
+      "reportId": "REPORT-CYCLE-01-DRAFT",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "name": "Cycle 1 synthetic status report",
+      "periodStart": "2030-01-02",
+      "periodEnd": "2030-01-12",
+      "asOf": "2030-01-07T14:00:00Z",
+      "recordStatus": "draft",
+      "evidenceStatus": "available",
+      "summary": "Synthetic control records demonstrate the report projection without asserting enterprise progress.",
+      "recordRefs": ["DAY-2030-01-07", "GATE-001"],
+      "supersedesReportId": null
+    }
+  ],
+  "externalReferences": [
+    {
+      "schemaVersion": "ExternalReferenceBinding.v1",
+      "bindingId": "BINDING-001",
+      "programId": "PROGRAM-SYNTHETIC-001",
+      "capability": "backlog_execution_state",
+      "externalSystemType": "backlog",
+      "localRecordRef": "STORY-SYNTHETIC-001",
+      "externalReference": "synthetic-backlog://story/STORY-SYNTHETIC-001",
+      "syncDirection": "read_only_import",
+      "status": "candidate",
+      "lastVerifiedAt": "2030-01-07T14:00:00Z"
+    }
+  ],
+  "manual": {
+    "title": "PQC Program Operations Reference Manual",
+    "version": "1.0",
+    "path": "docs/program-operations-runtime.md",
+    "summary": "Explains the public-safe operating model, runtime boundary, adapter seams, and path to an enterprise implementation."
+  }
+}

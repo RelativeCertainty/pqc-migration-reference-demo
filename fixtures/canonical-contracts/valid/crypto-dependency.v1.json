@@ -1,0 +1,28 @@
+{
+  "schemaVersion": "CryptoDependency.v1",
+  "cryptoDependencyId": "dependency:synthetic-service-certificate",
+  "tenantId": "tenant:synthetic-reference",
+  "sourceAssetRef": "asset:synthetic-service-edge",
+  "targetAssetRef": "asset:synthetic-certificate-deployment",
+  "relationshipType": "depends_on",
+  "evidenceRefs": ["event:synthetic-page-001", "batch:synthetic-observations-001"],
+  "confidence": {
+    "level": "high",
+    "basis": "provider_native_id",
+    "score": 0.98
+  },
+  "validity": {
+    "firstObservedAt": "2030-01-07T12:02:00Z",
+    "lastObservedAt": "2030-01-07T12:02:00Z",
+    "active": true
+  },
+  "review": {
+    "required": false,
+    "reasonCodes": []
+  },
+  "safety": {
+    "synthetic": true,
+    "rawPayloadEmbedded": false,
+    "secretMaterialEmbedded": false
+  }
+}

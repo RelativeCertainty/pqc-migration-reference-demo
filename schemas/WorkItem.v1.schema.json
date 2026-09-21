@@ -1,0 +1,120 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://upm.pba.io/schemas/WorkItem.v1.schema.json",
+  "title": "WorkItem.v1",
+  "description": "Canonical tenant-bound lifecycle record for cryptographic-estate remediation work. External tickets are opaque bindings, not workflow authority.",
+  "type": "object",
+  "properties": {
+    "contract_version": { "const": "pba.contract/WorkItem.v1" },
+    "work_item_id": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+    "tenant_id": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/slug" },
+    "revision_id": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+    "work_type": {
+      "type": "string",
+      "enum": [
+        "inventory_gap",
+        "certificate_renewal",
+        "algorithm_migration",
+        "trust_store_update",
+        "key_rotation",
+        "kms_rewrap",
+        "code_signing_update",
+        "network_crypto_update",
+        "firmware_update",
+        "exception_review",
+        "manual_assessment"
+      ]
+    },
+    "state": {
+      "type": "string",
+      "enum": [
+        "proposed",
+        "evidence_review",
+        "triaged",
+        "plan_ready",
+        "awaiting_approval",
+        "approved",
+        "scheduled",
+        "executing",
+        "verifying",
+        "resolved",
+        "blocked",
+        "exception",
+        "canceled",
+        "failed",
+        "rollback_pending",
+        "rolled_back"
+      ]
+    },
+    "priority": { "type": "string", "enum": ["urgent", "high", "normal", "low"] },
+    "finding_refs": {
+      "type": "array",
+      "items": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+      "minItems": 1,
+      "maxItems": 1024,
+      "uniqueItems": true
+    },
+    "asset_refs": {
+      "type": "array",
+      "items": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+      "minItems": 1,
+      "maxItems": 4096,
+      "uniqueItems": true
+    },
+    "owner_ref": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+    "business_service_ref": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+    "remediation_plan_ref": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/immutableRef" },
+    "ticket_bindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "properties": {
+          "integration_profile_ref": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+          "record_kind": { "type": "string", "enum": ["ticket", "change", "change_task", "approval", "cmdb_ci"] },
+          "provider_record_ref": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+          "provider_revision_ref": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/opaqueId" },
+          "binding_sha256": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/sha256" }
+        },
+        "required": ["integration_profile_ref", "record_kind", "provider_record_ref", "provider_revision_ref", "binding_sha256"],
+        "additionalProperties": false
+      },
+      "maxItems": 256
+    },
+    "block_reason": {
+      "type": "string",
+      "enum": ["technical_block", "policy_block", "vendor_block", "owner_touch_required", "none"]
+    },
+    "classification": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/classification" },
+    "created_at": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/timestamp" },
+    "updated_at": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/timestamp" },
+    "due_at": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/timestamp" },
+    "canonical_content_sha256": { "$ref": "./common.ProductionAlignment.v1.schema.json#/$defs/sha256" }
+  },
+  "required": [
+    "contract_version",
+    "work_item_id",
+    "tenant_id",
+    "revision_id",
+    "work_type",
+    "state",
+    "priority",
+    "finding_refs",
+    "asset_refs",
+    "ticket_bindings",
+    "block_reason",
+    "classification",
+    "created_at",
+    "updated_at",
+    "canonical_content_sha256"
+  ],
+  "allOf": [
+    {
+      "if": {
+        "properties": { "state": { "enum": ["blocked", "exception"] } },
+        "required": ["state"]
+      },
+      "then": { "properties": { "block_reason": { "not": { "const": "none" } } } }
+    }
+  ],
+  "additionalProperties": false
+}

@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "DashboardMetricDefinition.v1",
+  "metricDefinitionId": "metric:source-readiness:v1",
+  "name": "Source readiness",
+  "questionAnswered": "How many source families in the named assessment plan have passed the stated readiness checks as of the projection time?",
+  "valueKind": "ratio",
+  "unit": "fraction",
+  "calculation": {
+    "formula": "ready planned source families divided by all planned source families in the named scope",
+    "numeratorDefinition": "Planned source families with an admitted interface, authorized read-only route, successful capability probe, and named operating function.",
+    "denominatorDefinition": "All source families explicitly listed in the approved source-enablement plan for the named scope.",
+    "missingDenominatorResult": "unavailable",
+    "zeroDenominatorResult": "unavailable",
+    "rounding": "Retain six decimal places in machine output; display percentages may round to one decimal place."
+  },
+  "scopeSemantics": {
+    "scopeReferenceRequired": true,
+    "denominatorSourceRequired": true,
+    "asOfTimestampRequired": true,
+    "unknownsExcludedFromSuccess": true,
+    "qualification": "Readiness is limited to the planned source families and checks named by the referenced source-enablement plan."
+  },
+  "interpretation": {
+    "doesMean": "The stated fraction of planned source families is technically ready for the bounded assessment workflow.",
+    "doesNotMean": [
+      "The enterprise cryptographic estate is completely inventoried.",
+      "Every record exposed by a ready source is accurate.",
+      "The source is authorized for write operations.",
+      "Migration or remediation is complete."
+    ],
+    "whenUnavailable": "Show unavailable and identify the missing or empty source-enablement plan; do not display zero percent."
+  },
+  "safety": {
+    "syntheticDefinition": true,
+    "enterpriseCompletenessClaimAllowed": false,
+    "riskConclusionAllowed": false,
+    "migrationCompletionClaimAllowed": false
+  }
+}

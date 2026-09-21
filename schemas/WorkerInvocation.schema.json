@@ -1,0 +1,177 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pba.io/schemas/WorkerInvocation.schema.json",
+  "title": "WorkerInvocation",
+  "description": "Worker invocation contract for the UPM worker archetype.",
+  "type": "object",
+  "required": [
+    "version",
+    "id",
+    "trace",
+    "pipeline_run_id",
+    "pipeline",
+    "worker",
+    "step",
+    "tenant",
+    "environment",
+    "domain",
+    "classification",
+    "sensitivity",
+    "input"
+  ],
+  "additionalProperties": false,
+  "properties": {
+    "version": { "type": "string", "enum": ["v1"] },
+    "id": { "type": "string", "description": "Invocation ID, often aligned to WorkerRun.id" },
+    "trace": {
+      "type": "object",
+      "required": ["trace_id", "span_id"],
+      "properties": {
+        "trace_id": { "type": "string" },
+        "span_id": { "type": "string" },
+        "parent_span_id": { "type": "string" },
+        "traceparent": { "type": "string", "pattern": "^[0-9a-f]{2}-[0-9a-f]{32}-[0-9a-f]{16}-[0-9a-f]{2}$" }
+      },
+      "additionalProperties": true
+    },
+    "pipeline_run_id": { "type": "string" },
+    "pipeline": { "type": "string" },
+    "worker": { "type": "string" },
+    "worker_version": { "type": ["string", "null"] },
+    "step": { "type": "string" },
+    "tenant": { "type": "string" },
+    "environment": { "type": "string" },
+    "domain": { "type": "string" },
+    "classification": {
+      "$ref": "./common.Classification.schema.json"
+    },
+    "sensitivity": {
+      "oneOf": [
+        { "type": "string" },
+        { "type": "array", "items": { "type": "string" } }
+      ]
+    },
+    "input": { "type": "object", "additionalProperties": true },
+    "secrets": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": ["name"],
+        "properties": {
+          "name": { "type": "string" },
+          "provider": { "type": ["string", "null"] },
+          "ref": { "type": ["string", "null"] },
+          "path": { "type": ["string", "null"] },
+          "key": { "type": ["string", "null"] }
+        },
+        "additionalProperties": true
+      }
+    },
+    "grant": {
+      "type": "object",
+      "description": "The exact policy-issued grant. Governed execution requires this field even though compatibility callers may omit it.",
+      "required": ["capabilities", "audit"],
+      "properties": {
+        "profile": { "type": "string" },
+        "capabilities": {
+          "type": "array",
+          "items": { "type": "string", "minLength": 1 },
+          "minItems": 1,
+          "uniqueItems": true
+        },
+        "limits": { "type": "object", "additionalProperties": true },
+        "io": { "type": "object", "additionalProperties": true },
+        "llm": { "type": "object", "additionalProperties": true },
+        "audit": {
+          "type": "object",
+          "required": ["decision_id", "policy_revision"],
+          "properties": {
+            "decision_id": { "type": "string", "minLength": 1 },
+            "policy_revision": { "type": "string", "minLength": 1 }
+          },
+          "additionalProperties": true
+        }
+      },
+      "additionalProperties": true
+    },
+    "break_glass_token": {
+      "type": "string",
+      "writeOnly": true,
+      "deprecated": true,
+      "description": "Legacy dev/local-only credential. It must not be used by governed Temporal execution or persisted in history, evidence, or telemetry."
+    },
+    "meta": { "type": "object", "additionalProperties": true },
+    "lifecycle": {
+      "type": "object",
+      "properties": {
+        "timeout_seconds": { "type": "number", "exclusiveMinimum": 0 },
+        "timeout": { "type": "number", "exclusiveMinimum": 0 },
+        "max_retries": { "type": "integer", "minimum": 0 },
+        "backoff_seconds": { "type": "number", "minimum": 0 },
+        "retry_on": { "type": "array", "items": { "type": "string" }, "uniqueItems": true }
+      },
+      "additionalProperties": true
+    },
+    "scope": {
+      "type": "object",
+      "required": ["scope_id", "scope_type", "boundary_class", "sensitivity", "resource_refs"],
+      "properties": {
+        "scope_id": { "type": "string", "minLength": 1 },
+        "scope_type": { "type": "string", "minLength": 1 },
+        "boundary_class": { "type": "string", "minLength": 1 },
+        "sensitivity": { "type": "string", "minLength": 1 },
+        "resource_refs": { "type": "array", "items": { "type": "string", "minLength": 1 }, "minItems": 1, "uniqueItems": true }
+      },
+      "additionalProperties": false
+    },
+    "policy_decision": {
+      "type": "object",
+      "required": ["allow", "reason", "decision_id", "policy_revision", "policy_ref"],
+      "properties": {
+        "allow": { "const": true },
+        "reason": { "type": "string" },
+        "decision_id": { "type": "string", "minLength": 1 },
+        "policy_revision": { "type": "string", "minLength": 1 },
+        "policy_ref": { "type": "string", "minLength": 1 }
+      },
+      "additionalProperties": false
+    },
+    "idempotency_key": { "type": "string", "minLength": 1 },
+    "processing_record_ref": { "type": "string", "minLength": 1 },
+    "approval_refs": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "manifest": {
+      "type": "object",
+      "required": ["ref", "version", "sha256", "source"],
+      "properties": {
+        "catalog_id": { "type": "string" },
+        "ref": { "type": "string", "minLength": 1 },
+        "version": { "type": "string", "minLength": 1 },
+        "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "source": { "const": "postgres" },
+        "pipeline_ref": { "type": "string" },
+        "pipeline_version": { "type": "string" },
+        "pipeline_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+      },
+      "additionalProperties": false
+    },
+    "placement": {
+      "type": "object",
+      "required": ["decision_ref", "content_sha256", "placement", "runner_id", "task_queue", "trust_zone"],
+      "additionalProperties": false,
+      "properties": {
+        "decision_ref": { "type": "string", "minLength": 1 },
+        "content_sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+        "placement": { "type": "string", "enum": ["local", "remote"] },
+        "runner_id": { "type": "string", "minLength": 1 },
+        "task_queue": { "type": "string", "minLength": 1 },
+        "trust_zone": { "type": "string", "enum": ["controller_local", "on_prem_private", "cloud_private", "customer_private"] }
+      }
+    },
+    "metadata": { "type": "object", "additionalProperties": true }
+  }
+}

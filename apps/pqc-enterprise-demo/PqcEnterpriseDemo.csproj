@@ -1,0 +1,27 @@
+<Project Sdk="Microsoft.NET.Sdk.Web">
+  <PropertyGroup>
+    <TargetFramework>net10.0</TargetFramework>
+    <Nullable>enable</Nullable>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
+    <NuGetAudit>true</NuGetAudit>
+    <NuGetAuditMode>all</NuGetAuditMode>
+  </PropertyGroup>
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Data.Sqlite" Version="[10.0.11]" />
+    <PackageReference Include="DocumentFormat.OpenXml" Version="[3.5.1]" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Update="Fixtures/**/*.json" CopyToOutputDirectory="PreserveNewest" />
+    <EmbeddedResource Include="ReferenceData/recognition-domains-1-5.v1.json" LogicalName="PqcEnterpriseDemo.Recognition.1-5" />
+    <EmbeddedResource Include="ReferenceData/recognition-domains-6-10.v1.json" LogicalName="PqcEnterpriseDemo.Recognition.6-10" />
+    <EmbeddedResource Include="ReferenceData/operational-return-v1.catalog.json" LogicalName="PqcEnterpriseDemo.OperationalReturn.v1" />
+    <EmbeddedResource Include="../../manifests/workers/pqc_enterprise_report_projection.worker.yaml" LogicalName="PqcEnterpriseDemo.ReportWorkerManifest" />
+    <EmbeddedResource Include="../../manifests/pipelines/pqc_enterprise_report_projection.pipeline.yaml" LogicalName="PqcEnterpriseDemo.ReportPipelineManifest" />
+    <EmbeddedResource Include="../../manifests/workers/pqc_enterprise_review.worker.yaml" LogicalName="PqcEnterpriseDemo.ReviewWorkerManifest" />
+    <EmbeddedResource Include="../../manifests/pipelines/pqc_enterprise_review.pipeline.yaml" LogicalName="PqcEnterpriseDemo.ReviewPipelineManifest" />
+    <EmbeddedResource Include="../../manifests/workers/pqc_enterprise_assessment.worker.yaml" LogicalName="PqcEnterpriseDemo.AssessmentWorkerManifest" />
+    <EmbeddedResource Include="../../manifests/pipelines/pqc_enterprise_assessment.pipeline.yaml" LogicalName="PqcEnterpriseDemo.AssessmentPipelineManifest" />
+  </ItemGroup>
+</Project>

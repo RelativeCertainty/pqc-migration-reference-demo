@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "SourceContractPackManifest.v1",
+  "contractPackId": "contract:source-pack:pki-certificate-lifecycle:v1",
+  "packVersion": "1.0.0",
+  "sourceFamily": "pki_certificate_lifecycle",
+  "title": "PKI and certificate lifecycle synthetic contract pack",
+  "purpose": "Prove product-neutral pagination and mapping for certificate metadata and two synthetic deployment references without certificate subjects, issuers, keys, or provider payloads.",
+  "provenance": {
+    "origin": "independently_authored_synthetic",
+    "contractEvidenceStatus": "synthetic_contract_tested",
+    "retrievalRequired": false,
+    "redistributionStatus": "independently_authored_public_fixture"
+  },
+  "access": {
+    "classification": "synthetic_local",
+    "authenticationMode": "simulated_reference",
+    "credentialReferenceOnly": true,
+    "readOnly": true
+  },
+  "pagination": {
+    "mode": "opaque_cursor",
+    "pageSizeLimit": 100,
+    "cursorIsOpaqueReference": true,
+    "rawCursorStored": false,
+    "terminalCondition": "next_cursor_ref_is_null"
+  },
+  "responseContractRef": "contract:synthetic-source-page.v1",
+  "fixturePageRefs": ["fixtures/page-001.v1.json", "fixtures/page-002.v1.json"],
+  "canonicalMappings": [
+    {
+      "sourceField": "attributes.certificateRef",
+      "canonicalTarget": "asset.certificateRef",
+      "required": true,
+      "semanticNote": "Opaque synthetic certificate identity; no subject or issuer value is exposed."
+    },
+    {
+      "sourceField": "attributes.deploymentRef",
+      "canonicalTarget": "asset.deploymentRef",
+      "required": true,
+      "semanticNote": "Associates certificate metadata with one synthetic regional deployment."
+    },
+    {
+      "sourceField": "attributes.publicKeyAlgorithm",
+      "canonicalTarget": "observation.publicKeyAlgorithm",
+      "required": true,
+      "semanticNote": "Normalizes only the algorithm family needed for assessment classification."
+    },
+    {
+      "sourceField": "attributes.publicKeyBits",
+      "canonicalTarget": "observation.publicKeyBits",
+      "required": true,
+      "semanticNote": "Carries public-key size metadata, never key material."
+    }
+  ],
+  "conformanceBehaviors": [
+    "pagination",
+    "rate_limit_retry",
+    "timeout_retry",
+    "duplicate_delivery",
+    "authorization_failure",
+    "malformed_record_quarantine",
+    "schema_drift_quarantine",
+    "cursor_resume"
+  ],
+  "limitations": [
+    "The fixture does not model a vendor edition, enrollment protocol, issuance action, certificate subject, issuer, serial number, or private key.",
+    "Lifecycle metadata is synthetic and supports contract testing only."
+  ],
+  "safety": {
+    "synthetic": true,
+    "vendorClaimed": false,
+    "liveIntegrationClaimed": false,
+    "containsCredentials": false,
+    "containsRawEnterprisePayload": false
+  }
+}

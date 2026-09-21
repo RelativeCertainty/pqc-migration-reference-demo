@@ -1,0 +1,606 @@
+{
+  "schemaVersion": "BriefingScenario.v1",
+  "scenarioId": "briefing-scenario:assessment-map-room:v1",
+  "title": "PQC Assessment Map Room",
+  "purpose": "Frame a six-step stakeholder conversation about what the assessment maps, which evidence creates the map, how evidence becomes report content, what the public reference implementation can demonstrate, and which leadership actions unblock the next step.",
+  "intendedDurationMinutes": 6,
+  "syntheticBoundary": {
+    "boundaryId": "boundary:synthetic-reference:v1",
+    "label": "Synthetic reference demonstration",
+    "statement": "All estate records, measurements, dates, actions, and outcomes shown in this briefing are synthetic examples. The demonstration contains no customer data, has no live enterprise connections, and does not represent enterprise progress or completeness.",
+    "display": {
+      "mode": "persistent_banner",
+      "persistEveryStep": true,
+      "visibleInFullScreen": true,
+      "visibleInScreenshots": true,
+      "cannotBeDismissed": true
+    }
+  },
+  "presentationClaims": {
+    "liveEnterpriseStateClaimed": false,
+    "enterpriseCompletenessClaimed": false,
+    "productionReadinessClaimed": false,
+    "customerApprovalClaimed": false,
+    "riskConclusionClaimed": false,
+    "productSelectionClaimed": false
+  },
+  "briefingSteps": [
+    {
+      "stepId": "briefing:mission",
+      "order": 1,
+      "name": "Mission",
+      "headline": "Build an evidence-backed map before drawing risk conclusions",
+      "primaryMessage": "Phase 1 identifies the cryptographic estate, its dependencies, the supporting evidence, and the remaining limitations. Phase 2 uses the accepted map to analyze technical exposure and business impact.",
+      "contentNature": "explanatory",
+      "contentRefs": ["flow:assessment-map:v1"],
+      "syntheticBoundaryRef": "boundary:synthetic-reference:v1",
+      "navigationTarget": "/briefing/mission"
+    },
+    {
+      "stepId": "briefing:estate",
+      "order": 2,
+      "name": "Estate",
+      "headline": "The map spans ten connected parts of an enterprise",
+      "primaryMessage": "The domains identify where cryptography may exist or be governed. They orient the conversation without implying that every possible source, asset, or dependency has already been found.",
+      "contentNature": "explanatory",
+      "contentRefs": [
+        "domain:enterprise-context-ownership",
+        "domain:certificates-trust-pki",
+        "domain:tls-application-traffic",
+        "domain:network-remote-machine-access",
+        "domain:software-repositories-delivery",
+        "domain:cloud-keys-secrets-identity",
+        "domain:data-storage-backup",
+        "domain:dns-email-documents-endpoints",
+        "domain:specialized-regulated-cryptography",
+        "domain:detection-governance-vendor-assurance"
+      ],
+      "syntheticBoundaryRef": "boundary:synthetic-reference:v1",
+      "navigationTarget": "/briefing/estate"
+    },
+    {
+      "stepId": "briefing:method",
+      "order": 3,
+      "name": "Method",
+      "headline": "Authoritative source facts become traceable assets, dependencies, and reports",
+      "primaryMessage": "Surveying means identifying suitable source systems, establishing an approved read-only route, recording provenance-bearing observations, correlating them into canonical assets and dependencies, and preserving findings and limitations through reporting.",
+      "contentNature": "explanatory",
+      "contentRefs": [
+        "map-node:source",
+        "map-node:access-profile",
+        "map-node:observation",
+        "map-node:asset",
+        "map-node:dependency-context",
+        "map-node:finding-limitation",
+        "map-node:phase1-report",
+        "map-node:phase2-analysis"
+      ],
+      "syntheticBoundaryRef": "boundary:synthetic-reference:v1",
+      "navigationTarget": "/briefing/method"
+    },
+    {
+      "stepId": "briefing:position",
+      "order": 4,
+      "name": "Position",
+      "headline": "Implementation state and estate state are different measures",
+      "primaryMessage": "Verified public-reference artifacts can demonstrate the method, but they do not establish customer access, enterprise evidence, report readiness, or production capability. The two states remain separately labeled and are never combined into one progress percentage.",
+      "contentNature": "actual_and_synthetic_separated",
+      "contentRefs": [
+        "state:verified-public-reference",
+        "state:synthetic-estate-demonstration"
+      ],
+      "syntheticBoundaryRef": "boundary:synthetic-reference:v1",
+      "navigationTarget": "/briefing/position"
+    },
+    {
+      "stepId": "briefing:demonstration",
+      "order": 5,
+      "name": "Demonstration",
+      "headline": "A narrow synthetic flow shows how several sources assemble one connected map",
+      "primaryMessage": "Five initial source contract packs produce synthetic observations, assets, relationships, dashboard measurements, and an explicit limitation. The example proves presentation and contract behavior only within its declared two-region scope.",
+      "contentNature": "synthetic_reference",
+      "contentRefs": [
+        "demonstration:synthetic-two-region-phase1",
+        "lineage:synthetic-edge-service"
+      ],
+      "syntheticBoundaryRef": "boundary:synthetic-reference:v1",
+      "navigationTarget": "/briefing/demonstration"
+    },
+    {
+      "stepId": "briefing:action",
+      "order": 6,
+      "name": "Action",
+      "headline": "Leadership moves the map forward by assigning routes, owners, and dates",
+      "primaryMessage": "The briefing closes by naming the responsible role, requested outcome, required date, and delivery consequence for each unresolved enabling action. The presentation does not record approval or mutate project systems.",
+      "contentNature": "leadership_action",
+      "contentRefs": [
+        "action:route-initial-sources",
+        "action:confirm-platform-enablement",
+        "action:confirm-project-governance"
+      ],
+      "syntheticBoundaryRef": "boundary:synthetic-reference:v1",
+      "navigationTarget": "/briefing/action"
+    }
+  ],
+  "estateDomains": [
+    {
+      "domainId": "domain:enterprise-context-ownership",
+      "order": 1,
+      "name": "Enterprise context and ownership",
+      "plainLanguageScope": "Applications, business services, configuration records, environments, regions, responsible functions, critical processes, and the relationships that explain why a technical asset matters.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "ServiceNow CMDB", "recognitionCategory": "configuration and service context" },
+          { "productName": "BMC Helix", "recognitionCategory": "configuration and service context" },
+          { "productName": "LeanIX", "recognitionCategory": "application and architecture portfolio" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:certificates-trust-pki",
+      "order": 2,
+      "name": "Certificates, trust, and PKI",
+      "plainLanguageScope": "Certificate authorities, issued certificates, trust stores, revocation services, certificate owners, issuance workflows, renewal, discovery, and lifecycle administration.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "Microsoft Active Directory Certificate Services", "recognitionCategory": "certificate authority" },
+          { "productName": "Keyfactor Command", "recognitionCategory": "certificate lifecycle management" },
+          { "productName": "Venafi TLS Protect", "recognitionCategory": "certificate discovery and lifecycle management" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:tls-application-traffic",
+      "order": 3,
+      "name": "TLS termination and application traffic",
+      "plainLanguageScope": "Load balancers, reverse proxies, API gateways, web servers, ingress controllers, service mesh, and other locations where encrypted application connections begin, end, or are re-established.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "F5 BIG-IP", "recognitionCategory": "traffic management and TLS termination" },
+          { "productName": "NGINX", "recognitionCategory": "web proxy and ingress" },
+          { "productName": "Kong Gateway", "recognitionCategory": "API gateway" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:network-remote-machine-access",
+      "order": 4,
+      "name": "Network, remote access, and machine access",
+      "plainLanguageScope": "Firewalls, virtual private networks, secure shell access, bastions, routers, switches, privileged access paths, and machine-to-machine channels that depend on cryptography.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "Palo Alto Panorama", "recognitionCategory": "network security management" },
+          { "productName": "Cisco Secure Firewall", "recognitionCategory": "network security and virtual private networking" },
+          { "productName": "OpenSSH", "recognitionCategory": "secure machine access" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:software-repositories-delivery",
+      "order": 5,
+      "name": "Software, repositories, and delivery pipelines",
+      "plainLanguageScope": "Source repositories, cryptographic libraries, build systems, package and container registries, software composition analysis, code scanning, signing, and delivery automation.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "GitHub Enterprise", "recognitionCategory": "source-code repository" },
+          { "productName": "GitLab", "recognitionCategory": "source-code and delivery platform" },
+          { "productName": "Jenkins", "recognitionCategory": "build and delivery automation" },
+          { "productName": "SonarQube", "recognitionCategory": "software analysis" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:cloud-keys-secrets-identity",
+      "order": 6,
+      "name": "Cloud, keys, secrets, identity, and workloads",
+      "plainLanguageScope": "Cloud inventories, key-management and hardware-security services, secret stores, identity federation, workload identity, service credentials, and cryptographic controls attached to hosted workloads.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "AWS Key Management Service", "recognitionCategory": "cloud key management" },
+          { "productName": "Azure Key Vault", "recognitionCategory": "cloud keys and secrets" },
+          { "productName": "HashiCorp Vault", "recognitionCategory": "secrets and key management" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:data-storage-backup",
+      "order": 7,
+      "name": "Data, storage, backup, and long-lived information",
+      "plainLanguageScope": "Databases, file and object storage, archives, backups, recovery copies, data encryption, retention periods, and information that must remain confidential for long periods.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "Microsoft SQL Server", "recognitionCategory": "relational database" },
+          { "productName": "Oracle Database", "recognitionCategory": "relational database" },
+          { "productName": "Veritas NetBackup", "recognitionCategory": "backup and recovery" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:dns-email-documents-endpoints",
+      "order": 8,
+      "name": "DNS, email, documents, endpoints, and devices",
+      "plainLanguageScope": "Domain-name security, secure email, document signing, endpoint identity, device certificates, firmware verification, secure boot, and other user or device trust mechanisms.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "Infoblox", "recognitionCategory": "domain-name and network services" },
+          { "productName": "Microsoft Exchange", "recognitionCategory": "email and message protection" },
+          { "productName": "Microsoft Intune", "recognitionCategory": "endpoint and device management" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:specialized-regulated-cryptography",
+      "order": 9,
+      "name": "Specialized and regulated cryptography",
+      "plainLanguageScope": "Payment and PIN cryptography, regulated signing, hardware-backed key ceremonies, financial transaction controls, custody systems, and other specialized cryptographic services.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "Thales payShield", "recognitionCategory": "payment hardware security module" },
+          { "productName": "IBM Crypto Express", "recognitionCategory": "mainframe cryptographic hardware" },
+          { "productName": "Utimaco HSM", "recognitionCategory": "hardware security module" }
+        ]
+      }
+    },
+    {
+      "domainId": "domain:detection-governance-vendor-assurance",
+      "order": 10,
+      "name": "Detection, governance, vendors, and assurance",
+      "plainLanguageScope": "Security telemetry, vulnerability and configuration findings, cryptographic policy, data governance, third-party dependencies, vendor lifecycle information, exceptions, and assurance evidence.",
+      "recognitionAid": {
+        "status": "examples_only_not_asserted",
+        "disclaimer": "Recognition aids only; these examples do not assert enterprise use, approval, ownership, availability, or scope.",
+        "examples": [
+          { "productName": "Splunk", "recognitionCategory": "security and operational telemetry" },
+          { "productName": "RSA Archer", "recognitionCategory": "governance, risk, and compliance" },
+          { "productName": "ServiceNow GRC", "recognitionCategory": "governance, risk, and compliance" }
+        ]
+      }
+    }
+  ],
+  "initialSourceTracks": [
+    {
+      "trackId": "source-track:application-cmdb",
+      "order": 1,
+      "name": "Application portfolio, business services, and configuration inventory",
+      "purpose": "Provide application, service, environment, region, ownership, and configuration context used to connect technical observations to enterprise services.",
+      "waveStatus": "initial_implementation_wave",
+      "completeEstateRepresentation": false,
+      "scopeStatement": "This is an initial source track and does not represent the complete enterprise estate.",
+      "estateDomainRefs": ["domain:enterprise-context-ownership"],
+      "contractPackRef": "contract:source-pack:application-cmdb:v1",
+      "contractPackManifestRef": "contract-packs/source-families/application-cmdb/manifest.v1.json",
+      "evidenceStatus": "synthetic_contract_tested",
+      "liveSourceConnected": false
+    },
+    {
+      "trackId": "source-track:pki-certificate-lifecycle",
+      "order": 2,
+      "name": "PKI and certificate lifecycle",
+      "purpose": "Provide certificate, issuing authority, lifecycle, status, trust, and association facts without collecting private-key material.",
+      "waveStatus": "initial_implementation_wave",
+      "completeEstateRepresentation": false,
+      "scopeStatement": "This is an initial source track and does not represent the complete enterprise estate.",
+      "estateDomainRefs": ["domain:certificates-trust-pki"],
+      "contractPackRef": "contract:source-pack:pki-certificate-lifecycle:v1",
+      "contractPackManifestRef": "contract-packs/source-families/pki-certificate-lifecycle/manifest.v1.json",
+      "evidenceStatus": "synthetic_contract_tested",
+      "liveSourceConnected": false
+    },
+    {
+      "trackId": "source-track:tls-traffic-management",
+      "order": 3,
+      "name": "TLS termination and traffic-management platforms",
+      "purpose": "Provide the locations, configurations, protocols, certificates, and application relationships associated with encrypted traffic termination.",
+      "waveStatus": "initial_implementation_wave",
+      "completeEstateRepresentation": false,
+      "scopeStatement": "This is an initial source track and does not represent the complete enterprise estate.",
+      "estateDomainRefs": ["domain:tls-application-traffic"],
+      "contractPackRef": "contract:source-pack:tls-traffic-management:v1",
+      "contractPackManifestRef": "contract-packs/source-families/tls-traffic-management/manifest.v1.json",
+      "evidenceStatus": "synthetic_contract_tested",
+      "liveSourceConnected": false
+    },
+    {
+      "trackId": "source-track:source-repositories",
+      "order": 4,
+      "name": "Source-code repositories",
+      "purpose": "Provide repository identity, application associations, default branches, revision references, and approved locations for controlled cryptographic-use analysis.",
+      "waveStatus": "initial_implementation_wave",
+      "completeEstateRepresentation": false,
+      "scopeStatement": "This is an initial source track and does not represent the complete enterprise estate.",
+      "estateDomainRefs": ["domain:software-repositories-delivery"],
+      "contractPackRef": "contract:source-pack:source-repositories:v1",
+      "contractPackManifestRef": "contract-packs/source-families/source-repositories/manifest.v1.json",
+      "evidenceStatus": "synthetic_contract_tested",
+      "liveSourceConnected": false
+    },
+    {
+      "trackId": "source-track:software-analysis",
+      "order": 5,
+      "name": "Software composition, code, and bill-of-materials analysis",
+      "purpose": "Provide evidence about cryptographic libraries, algorithms, protocols, versions, vulnerable components, and build artifacts discovered by approved software-analysis platforms.",
+      "waveStatus": "initial_implementation_wave",
+      "completeEstateRepresentation": false,
+      "scopeStatement": "This is an initial source track and does not represent the complete enterprise estate.",
+      "estateDomainRefs": ["domain:software-repositories-delivery"],
+      "contractPackRef": "contract:source-pack:software-analysis:v1",
+      "contractPackManifestRef": "contract-packs/source-families/software-analysis/manifest.v1.json",
+      "evidenceStatus": "synthetic_contract_tested",
+      "liveSourceConnected": false
+    }
+  ],
+  "mapFlow": {
+    "flowId": "flow:assessment-map:v1",
+    "title": "Evidence-backed assessment map flow",
+    "scopeStatement": "This flow explains how suitable enterprise source facts can become reviewable assessment evidence and report content. It does not imply that a source has been approved, connected, or shown to cover an enterprise.",
+    "nodes": [
+      {
+        "nodeId": "map-node:source",
+        "order": 1,
+        "name": "Enterprise source",
+        "plainLanguageMeaning": "A platform, repository, service, inventory, or approved export that may contain source-native facts relevant to the assessment."
+      },
+      {
+        "nodeId": "map-node:access-profile",
+        "order": 2,
+        "name": "Approved access and source profile",
+        "plainLanguageMeaning": "The operating function, scope, interface, authorization route, fields, identifiers, constraints, and fallback needed before collection begins."
+      },
+      {
+        "nodeId": "map-node:observation",
+        "order": 3,
+        "name": "Evidence observation",
+        "plainLanguageMeaning": "A dated fact with source provenance, collection context, and evidence status; it is not yet a broad claim about the estate."
+      },
+      {
+        "nodeId": "map-node:asset",
+        "order": 4,
+        "name": "Canonical asset",
+        "plainLanguageMeaning": "A normalized representation of a cryptographic object, deployment, application, repository, software component, data store, device, or other in-scope item."
+      },
+      {
+        "nodeId": "map-node:dependency-context",
+        "order": 5,
+        "name": "Dependency and business context",
+        "plainLanguageMeaning": "Evidence-backed relationships connecting assets to certificates, software, services, owners, data, regions, vendors, environments, and critical processes."
+      },
+      {
+        "nodeId": "map-node:finding-limitation",
+        "order": 6,
+        "name": "Finding or evidence limitation",
+        "plainLanguageMeaning": "A supported condition requiring attention or an explicit statement describing what the available evidence cannot establish."
+      },
+      {
+        "nodeId": "map-node:phase1-report",
+        "order": 7,
+        "name": "Phase 1 current-state assessment report",
+        "plainLanguageMeaning": "The reviewable account of scope, method, observed estate, dependencies, findings, evidence quality, and disclosed limitations."
+      },
+      {
+        "nodeId": "map-node:phase2-analysis",
+        "order": 8,
+        "name": "Phase 2 risk and business-impact analysis",
+        "plainLanguageMeaning": "Analysis that uses the accepted Phase 1 baseline to evaluate exposure, consequences, migration constraints, prioritization, and unresolved decisions."
+      }
+    ],
+    "edges": [
+      { "edgeId": "map-edge:01-source-to-profile", "order": 1, "fromRef": "map-node:source", "toRef": "map-node:access-profile", "label": "identify and authorize" },
+      { "edgeId": "map-edge:02-profile-to-observation", "order": 2, "fromRef": "map-node:access-profile", "toRef": "map-node:observation", "label": "collect read-only facts" },
+      { "edgeId": "map-edge:03-observation-to-asset", "order": 3, "fromRef": "map-node:observation", "toRef": "map-node:asset", "label": "normalize and preserve provenance" },
+      { "edgeId": "map-edge:04-asset-to-context", "order": 4, "fromRef": "map-node:asset", "toRef": "map-node:dependency-context", "label": "correlate relationships" },
+      { "edgeId": "map-edge:05-context-to-finding", "order": 5, "fromRef": "map-node:dependency-context", "toRef": "map-node:finding-limitation", "label": "evaluate supported conditions and gaps" },
+      { "edgeId": "map-edge:06-finding-to-phase1", "order": 6, "fromRef": "map-node:finding-limitation", "toRef": "map-node:phase1-report", "label": "assemble and review" },
+      { "edgeId": "map-edge:07-phase1-to-phase2", "order": 7, "fromRef": "map-node:phase1-report", "toRef": "map-node:phase2-analysis", "label": "accept baseline and analyze impact" }
+    ]
+  },
+  "stateSeparation": {
+    "rule": "Verified public-reference implementation state and synthetic estate state must remain in separately labeled panels and must not be represented as one progress measure.",
+    "actualReferenceImplementation": {
+      "stateId": "state:verified-public-reference",
+      "label": "Verified public-reference implementation state",
+      "dataNature": "verified_public_reference_implementation",
+      "scopeStatement": "This state reports only the existence and validation status of artifacts in the public reference repository. It does not report customer access, customer evidence, enterprise coverage, report acceptance, or production readiness.",
+      "enterpriseEstateStateRepresented": false,
+      "enterpriseProgressClaimed": false,
+      "statusFacts": [
+        {
+          "factId": "fact:five-synthetic-source-packs",
+          "statement": "Five independently authored synthetic source contract packs are available for deterministic component and presentation proof.",
+          "status": "verified_in_public_repository",
+          "evidenceRefs": [
+            "contract-packs/source-families/application-cmdb/manifest.v1.json",
+            "contract-packs/source-families/pki-certificate-lifecycle/manifest.v1.json",
+            "contract-packs/source-families/tls-traffic-management/manifest.v1.json",
+            "contract-packs/source-families/source-repositories/manifest.v1.json",
+            "contract-packs/source-families/software-analysis/manifest.v1.json"
+          ]
+        },
+        {
+          "factId": "fact:synthetic-phase1-flow",
+          "statement": "A checked-in synthetic Phase 1 fixture demonstrates source-to-observation-to-asset-to-dependency processing within a narrow two-region scenario.",
+          "status": "verified_in_public_repository",
+          "evidenceRefs": ["fixtures/synthetic-phase1/two-region/phase1-flow.v1.json"]
+        },
+        {
+          "factId": "fact:synthetic-dashboard-projection",
+          "statement": "A rebuildable synthetic dashboard projection carries explicit scope, denominator, freshness, confidence, limitation, and projection-lag semantics.",
+          "status": "verified_in_public_repository",
+          "evidenceRefs": ["fixtures/synthetic-phase1/two-region/dashboard-projection.v1.json"]
+        }
+      ]
+    },
+    "syntheticDemonstration": {
+      "stateId": "state:synthetic-estate-demonstration",
+      "label": "Synthetic estate demonstration state",
+      "dataNature": "synthetic_reference_scenario",
+      "scopeStatement": "The selected evidence-arriving state illustrates a narrow two-region scenario. Its measurements and relationships cannot be used to describe a customer estate, enterprise coverage, report acceptance, or production state.",
+      "scenarioState": "evidence_arriving",
+      "enterpriseEstateStateRepresented": false,
+      "metricsAreSynthetic": true,
+      "boundaryRef": "boundary:synthetic-reference:v1",
+      "fixtureRefs": [
+        "fixtures/synthetic-phase1/two-region/phase1-flow.v1.json",
+        "fixtures/synthetic-phase1/two-region/dashboard-projection.v1.json"
+      ]
+    },
+    "combinedProgressPercentageProhibited": true
+  },
+  "demonstration": {
+    "demonstrationId": "demonstration:synthetic-two-region-phase1",
+    "lineageId": "lineage:synthetic-edge-service",
+    "title": "Two-region synthetic Phase 1 evidence flow",
+    "explanation": "The demonstration uses five initial source contract packs to show how source records can become observations, eight canonical assets, eight evidence-backed dependencies, a bounded dashboard projection, and one visible evidence limitation.",
+    "stateRef": "state:synthetic-estate-demonstration",
+    "phase1FlowRef": "fixtures/synthetic-phase1/two-region/phase1-flow.v1.json",
+    "dashboardProjectionRef": "fixtures/synthetic-phase1/two-region/dashboard-projection.v1.json",
+    "sourceTrackRefs": [
+      "source-track:application-cmdb",
+      "source-track:pki-certificate-lifecycle",
+      "source-track:tls-traffic-management",
+      "source-track:source-repositories",
+      "source-track:software-analysis"
+    ],
+    "lineageExample": {
+      "explanation": "Synthetic application, TLS, certificate, repository, and software-analysis observations are connected to show how one service context can be assembled while retaining a visible ownership limitation.",
+      "sourceTrackRefs": [
+        "source-track:application-cmdb",
+        "source-track:pki-certificate-lifecycle",
+        "source-track:tls-traffic-management",
+        "source-track:source-repositories",
+        "source-track:software-analysis"
+      ],
+      "observationRefs": [
+        "observation:synthetic:application-cmdb:alpha",
+        "observation:synthetic:pki:alpha",
+        "observation:synthetic:tls:alpha",
+        "observation:synthetic:repository:edge",
+        "observation:synthetic:software-analysis:edge"
+      ],
+      "assetRefs": [
+        "asset:synthetic:application:edge-service",
+        "asset:synthetic:certificate:shared-edge",
+        "asset:synthetic:tls-deployment:alpha",
+        "asset:synthetic:repository:edge-service",
+        "asset:synthetic:component:edge-service"
+      ],
+      "dependencyRefs": [
+        "dependency:synthetic:tls-alpha-serves-application",
+        "dependency:synthetic:tls-alpha-uses-certificate",
+        "dependency:synthetic:application-implemented-by-edge-repo",
+        "dependency:synthetic:edge-repo-analyzed-component"
+      ],
+      "limitationRefs": ["limitation:synthetic:ownership-not-validated"]
+    },
+    "expectedCounts": {
+      "sourceContractPacks": 5,
+      "observations": 10,
+      "canonicalAssets": 8,
+      "dependencies": 8,
+      "evidenceLimitations": 1
+    }
+  },
+  "leadershipRoles": [
+    {
+      "roleId": "role:enterprise-coordination-lead",
+      "name": "Enterprise coordination lead",
+      "purpose": "Route each source track to the smallest responsible function and ensure that a named next action and date are returned."
+    },
+    {
+      "roleId": "role:enterprise-platform-enablement-lead",
+      "name": "Enterprise platform enablement lead",
+      "purpose": "Coordinate the approved non-production runtime, data, identity, security, tooling, and access paths needed for implementation."
+    },
+    {
+      "roleId": "role:project-governance-lead",
+      "name": "Project governance lead",
+      "purpose": "Confirm project-system administration, assessment authority, escalation, decision ownership, and acceptance routing."
+    }
+  ],
+  "leadershipActions": [
+    {
+      "actionId": "action:route-initial-sources",
+      "title": "Route the five initial source tracks",
+      "context": "Implementation can begin only after each starting track is associated with a responsible function, candidate source, approved access route, and dated next action.",
+      "requestedOutcome": "Assign a responsible function and next-action owner for every initial source track, with a route for resolving an unavailable or unsuitable source.",
+      "ownerRoleRef": "role:enterprise-coordination-lead",
+      "requiredByDate": "2030-01-11",
+      "dateNature": "synthetic_example",
+      "consequenceIfUnresolved": "Source profiling and access work cannot proceed, so the affected areas remain an unmeasurable evidence limitation and report readiness cannot advance.",
+      "sourceTrackRefs": [
+        "source-track:application-cmdb",
+        "source-track:pki-certificate-lifecycle",
+        "source-track:tls-traffic-management",
+        "source-track:source-repositories",
+        "source-track:software-analysis"
+      ],
+      "recordNature": "synthetic_example_action",
+      "decisionStatus": "requested_not_received"
+    },
+    {
+      "actionId": "action:confirm-platform-enablement",
+      "title": "Confirm the technical enablement route",
+      "context": "The assessment implementation needs approved paths for the application runtime, relational data service, identity, secrets, telemetry, repositories, and read-only source access.",
+      "requestedOutcome": "Name the enabling functions, required requests, responsible owners, and target dates for the non-production technical foundation.",
+      "ownerRoleRef": "role:enterprise-platform-enablement-lead",
+      "requiredByDate": "2030-01-11",
+      "dateNature": "synthetic_example",
+      "consequenceIfUnresolved": "The reference implementation can continue with contracts and synthetic tests, but no enterprise deployment, live capability claim, or source integration can be made.",
+      "sourceTrackRefs": [],
+      "recordNature": "synthetic_example_action",
+      "decisionStatus": "requested_not_received"
+    },
+    {
+      "actionId": "action:confirm-project-governance",
+      "title": "Confirm project execution and authority paths",
+      "context": "Backlog administration, decision routing, escalation, evidence review, and the Phase 1 read-only boundary require clear operating ownership.",
+      "requestedOutcome": "Confirm the project-system administration path, read-only assessment authority, escalation route, decision owners, and acceptance functions.",
+      "ownerRoleRef": "role:project-governance-lead",
+      "requiredByDate": "2030-01-11",
+      "dateNature": "synthetic_example",
+      "consequenceIfUnresolved": "Work may continue only as local preparation; execution state, approvals, and gate readiness cannot be represented as established.",
+      "sourceTrackRefs": [],
+      "recordNature": "synthetic_example_action",
+      "decisionStatus": "requested_not_received"
+    }
+  ],
+  "authorityBoundary": {
+    "assessmentMode": "read_only",
+    "productionMutationAllowed": false,
+    "remediationAuthorized": false,
+    "writeCapableControlDisplayed": false,
+    "dashboardIsAuthority": false,
+    "presentationCanRecordApproval": false,
+    "futureRemediationRequiresSeparateAuthorization": true
+  },
+  "safety": {
+    "publicSafe": true,
+    "containsEmployerIdentifiers": false,
+    "containsCustomerData": false,
+    "containsCredentials": false,
+    "containsKeyMaterial": false,
+    "containsRawPayloads": false,
+    "liveIntegrationClaimed": false,
+    "syntheticScenario": true,
+    "allDatesSynthetic": true,
+    "productNamesAreRecognitionHintsOnly": true,
+    "externalCommunicationPerformed": false
+  }
+}

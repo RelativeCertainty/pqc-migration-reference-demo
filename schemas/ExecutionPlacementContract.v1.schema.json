@@ -1,0 +1,144 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://pba.io/schemas/ExecutionPlacementContract.v1.schema.json",
+  "title": "ExecutionPlacementContract.v1",
+  "description": "DB-cataloged placement, concurrency, database, artifact, cost, and fallback boundaries for one Worker version.",
+  "type": "object",
+  "required": [
+    "contract_version",
+    "mode",
+    "eligible_lanes",
+    "trust_zones",
+    "resources",
+    "concurrency",
+    "database",
+    "artifact_io",
+    "cost",
+    "fallback",
+    "commit"
+  ],
+  "additionalProperties": false,
+  "allOf": [
+    {
+      "if": { "required": ["eligible_lanes"], "properties": { "eligible_lanes": { "contains": { "const": "dotnet" } } } },
+      "then": { "properties": { "mode": { "const": "local_required" }, "eligible_lanes": { "maxItems": 1 } } }
+    }
+  ],
+  "properties": {
+    "contract_version": { "const": "execution-placement.v1" },
+    "mode": {
+      "type": "string",
+      "enum": ["local_required", "local_preferred", "remote_allowed", "remote_preferred", "remote_required"]
+    },
+    "eligible_lanes": {
+      "type": "array",
+      "description": "Declared language lane, not runner qualification or activation. dotnet currently describes local-required candidates only; no remote dotnet runner is admitted by this contract.",
+      "items": { "type": "string", "enum": ["python", "go", "wasm", "dotnet"] },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "trust_zones": {
+      "type": "array",
+      "items": { "type": "string", "enum": ["controller_local", "on_prem_private", "cloud_private", "customer_private"] },
+      "minItems": 1,
+      "uniqueItems": true
+    },
+    "resources": {
+      "type": "object",
+      "required": ["cpu_millis", "memory_mb", "scratch_mb", "gpu_count", "max_duration_seconds"],
+      "additionalProperties": false,
+  "properties": {
+        "cpu_millis": { "type": "integer", "minimum": 1 },
+        "memory_mb": { "type": "integer", "minimum": 16 },
+        "scratch_mb": { "type": "integer", "minimum": 0 },
+        "gpu_count": { "type": "integer", "minimum": 0 },
+        "max_duration_seconds": { "type": "integer", "minimum": 1, "maximum": 86400 }
+      }
+    },
+    "concurrency": {
+      "type": "object",
+      "required": ["max_worker_inflight", "max_tenant_inflight", "max_runner_inflight"],
+      "additionalProperties": false,
+      "properties": {
+        "max_worker_inflight": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "max_tenant_inflight": { "type": "integer", "minimum": 1, "maximum": 10000 },
+        "max_runner_inflight": { "type": "integer", "minimum": 1, "maximum": 10000 }
+      }
+    },
+    "database": {
+      "type": "object",
+      "required": ["access_mode", "max_connections", "max_queries_per_run", "max_rows_per_query", "statement_timeout_ms"],
+      "additionalProperties": false,
+      "properties": {
+        "access_mode": { "type": "string", "enum": ["none", "read_only"] },
+        "max_connections": { "type": "integer", "minimum": 0, "maximum": 32 },
+        "max_queries_per_run": { "type": "integer", "minimum": 0, "maximum": 100000 },
+        "max_rows_per_query": { "type": "integer", "minimum": 0, "maximum": 1000000 },
+        "statement_timeout_ms": { "type": "integer", "minimum": 0, "maximum": 300000 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "access_mode": { "const": "none" } } },
+          "then": {
+            "properties": {
+              "max_connections": { "const": 0 },
+              "max_queries_per_run": { "const": 0 },
+              "max_rows_per_query": { "const": 0 },
+              "statement_timeout_ms": { "const": 0 }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "access_mode": { "const": "read_only" } } },
+          "then": {
+            "properties": {
+              "max_connections": { "minimum": 1 },
+              "max_queries_per_run": { "minimum": 1 },
+              "max_rows_per_query": { "minimum": 1 },
+              "statement_timeout_ms": { "minimum": 1 }
+            }
+          }
+        }
+      ]
+    },
+    "artifact_io": {
+      "type": "object",
+      "required": ["input_mode", "output_mode", "max_inline_input_bytes", "max_inline_output_bytes", "require_content_hash"],
+      "additionalProperties": false,
+      "properties": {
+        "input_mode": { "type": "string", "enum": ["inline_metadata", "artifact_refs", "either"] },
+        "output_mode": { "type": "string", "enum": ["inline_metadata", "artifact_refs", "either"] },
+        "max_inline_input_bytes": { "type": "integer", "minimum": 0, "maximum": 1048576 },
+        "max_inline_output_bytes": { "type": "integer", "minimum": 0, "maximum": 1048576 },
+        "require_content_hash": { "const": true }
+      }
+    },
+    "cost": {
+      "type": "object",
+      "required": ["max_microusd_per_run"],
+      "additionalProperties": false,
+      "properties": {
+        "max_microusd_per_run": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "fallback": {
+      "type": "object",
+      "required": ["mode", "max_placement_attempts"],
+      "additionalProperties": false,
+      "properties": {
+        "mode": { "type": "string", "enum": ["fail_closed", "local_queue", "alternate_runner"] },
+        "max_placement_attempts": { "type": "integer", "minimum": 1, "maximum": 10 }
+      }
+    },
+    "commit": {
+      "type": "object",
+      "required": ["authority", "verification_required", "worker_authoritative_write_allowed"],
+      "additionalProperties": false,
+      "properties": {
+        "authority": { "const": "entity.system.orchestrator" },
+        "verification_required": { "const": true },
+        "worker_authoritative_write_allowed": { "const": false }
+      }
+    }
+  }
+}

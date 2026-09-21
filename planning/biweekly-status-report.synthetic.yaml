@@ -1,0 +1,72 @@
+# SPDX-License-Identifier: CC-BY-4.0
+schemaVersion: pqc.biweekly-status-report.v1
+reportId: PQC-RPT-SYN-01
+classification: public_synthetic
+synthetic: true
+containsConfidentialData: false
+initiativeRef: PQC-INIT-01
+phaseRefs: [P1]
+cadenceRef: RC-BIWEEKLY
+iterationRef: C01
+reportingPeriod: {mode: relative, startWeek: 1, endWeek: 2}
+statusAsOf: {mode: relative, week: 2}
+backlogSnapshot:
+  schemaVersion: pqc.project-backlog.v2
+  sha256: b1c444583042c49b06a18146ae893d310c4437d8b5525a98a7b562acb0c75f00
+  sourceRef: planning/backlog.v2.yaml
+overallHealth: on_track
+executiveSummary: Synthetic cycle-one example showing how a two-week project report references a pinned public backlog without representing a real engagement, customer, system, finding, or delivery claim.
+epicProgress:
+  - epicRef: PQC-E00
+    status: ready
+    percentComplete: 0
+    forecast: Governance and reporting controls remain planned for the illustrative first cycle.
+    evidenceStatus: planned
+  - epicRef: PQC-P1-E01
+    status: ready
+    percentComplete: 0
+    forecast: Scope, method, and standards work remains planned for the illustrative first cycle.
+    evidenceStatus: planned
+  - epicRef: PQC-P1-E02
+    status: ready
+    percentComplete: 0
+    forecast: Source and evidence-handling readiness remains planned for the illustrative first cycle.
+    evidenceStatus: planned
+completedWork: []
+activeWork:
+  - storyRef: PQC-E00-S01
+    summary: Illustrative governance work item included solely to exercise the report contract.
+    evidenceStatus: planned
+  - storyRef: PQC-P1-E01-S01
+    summary: Illustrative scope work item included solely to exercise the report contract.
+    evidenceStatus: planned
+blockedWork: []
+nextPeriodWork:
+  - storyRef: PQC-P1-E01-S02
+    summary: Illustrative next-period method work item included solely to exercise the report contract.
+    evidenceStatus: planned
+  - storyRef: PQC-P1-E02-S01
+    summary: Illustrative next-period source-register work item included solely to exercise the report contract.
+    evidenceStatus: planned
+raidRefs: [RAID-SYN-01]
+decisionRefs: [DEC-SYN-01]
+scopeChangeRefs: []
+metrics:
+  - name: Planned epics
+    value: 15
+    unit: epics
+    evidenceStatus: planned
+    note: Count is derived from the pinned synthetic public backlog and is not delivery evidence.
+  - name: Planned stories
+    value: 45
+    unit: stories
+    evidenceStatus: planned
+    note: Count is derived from the pinned synthetic public backlog and is not delivery evidence.
+evidenceLimitations:
+  - id: EL-SYNTHETIC-ONLY
+    summary: This report is a synthetic contract fixture and contains no live-readback, closed-loop, customer, or delivery evidence.
+    ownerRole: Template maintainer
+    status: open
+preparedByRole: Template maintainer
+reviewerRoles: [Assessment method reviewer, Evidence reviewer]
+state: draft

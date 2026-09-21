@@ -1,0 +1,62 @@
+/* One selected palette for all authenticated workspaces and assignment links.
+   The intentional light/dark split login and printable report pages are separate. */
+html[data-workspace-theme='dark'] { color-scheme: dark; background: #071117; }
+html[data-workspace-theme='light'] { color-scheme: light; background: #f6f7f1; }
+.app-theme[data-theme='dark'] { color-scheme: dark; }
+.app-theme[data-theme='light'] { color-scheme: light; }
+.app-theme[data-theme] {
+  --canvas: light-dark(#f6f7f1, #071117);
+  --ink: light-dark(#17343d, #edf5f6);
+  --muted: light-dark(#536c68, #a0b7bf);
+  --teal: light-dark(#216359, #5eead4);
+  --navy: light-dark(#102735, #071117);
+  --line: light-dark(#d0dbd4, #243d48);
+  --line-strong: light-dark(#7d938d, #557982);
+  --surface: light-dark(#ffffff, #0b1820);
+  --surface-muted: light-dark(#f0f4f2, #10212a);
+  --control: light-dark(#ffffff, #07151c);
+  --accent-ink: light-dark(#ffffff, #071b1c);
+  --accent-soft: light-dark(#e8f3ef, #112c30);
+  --warning-ink: light-dark(#795b29, #f4c76b);
+  --warning-bg: light-dark(#f7f1e2, #302719);
+  --warning-line: light-dark(#bba574, #846a36);
+  --error-ink: light-dark(#873a2e, #ffc5bb);
+  --error-bg: light-dark(#fff0eb, #341d1c);
+  --error-line: light-dark(#b98375, #96594e);
+  --success-ink: light-dark(#205b4d, #b0f4d6);
+  --success-bg: light-dark(#e7f4ed, #143229);
+  --success-line: light-dark(#7caa90, #447d66);
+  color: var(--ink);
+  background-color: var(--canvas);
+}
+.app-theme .theme-control { display: flex; align-items: center; gap: 9px; font-size: 12px; color: var(--muted); }
+.app-theme .theme-control select { width: auto; min-width: 95px; min-height: 40px; font-size: 12px; background: var(--control); color: var(--ink); border-color: var(--line-strong); }
+.app-theme .sidebar .theme-control { display: block; margin: 0 12px 20px; color: var(--muted); }
+.app-theme .sidebar .theme-control > span { display: block; margin-bottom: 7px; }
+.app-theme .sidebar .theme-control select { width: 100%; }
+.app-theme .sidebar { overflow-y: auto; }
+.app-theme .brand, .app-theme .nav-item, .app-theme .user-card strong, .app-theme .sign-out { color: var(--ink); }
+.app-theme .nav-item:hover, .app-theme .sign-out:hover { color: var(--teal); }
+.app-theme .architecture-label, .app-theme .user-card span span { color: var(--muted); border-color: var(--line); }
+.app-theme .avatar { color: var(--ink); background: var(--surface-muted); }
+.app-theme .q-app-header { background: var(--surface); border-bottom: 1px solid var(--line); }
+.app-theme .q-header-link { color: var(--ink); }
+.app-theme .q-app-header > div { align-items: center; flex-wrap: wrap; }
+.app-theme .q-app-header .theme-control { color: var(--muted); }
+.app-theme :is(button, a, input, select, textarea, summary):focus-visible { outline: 3px solid var(--teal); outline-offset: 4px; }
+.app-theme input, .app-theme textarea, .app-theme select { color-scheme: inherit; }
+.app-theme :is(input, textarea, select) { border-color: var(--line-strong); }
+.app-theme textarea::placeholder { color: var(--muted); opacity: 1; }
+.app-theme .d-product-fields input::placeholder { color: var(--muted); opacity: 1; }
+.app-theme .d-tabs button[aria-pressed='true'] { background: var(--teal); color: var(--accent-ink); }
+.app-theme .q-error, .app-theme .q-error p, .app-theme .q-error-list { color: var(--error-ink); }
+.app-theme .q-follow-up > p { color: var(--warning-ink); }
+.app-theme .report-preview-meta, .app-theme .baseline-bar, .app-theme .metric-card { background: var(--surface-muted); color: var(--ink); }
+@media (max-width: 650px) {
+  .app-theme .sidebar > .theme-control { margin: 10px 0 0; grid-column: 1 / -1; display: flex; }
+  .app-theme .sidebar > .theme-control select { width: auto; }
+  .app-theme .sidebar > .theme-control > span { margin: 0; }
+  .app-theme .q-app-header { align-items: flex-start; padding: 12px 18px; }
+  .app-theme .q-app-header > div { justify-content: flex-end; gap: 5px 14px; }
+  .app-theme .q-app-header .theme-control { flex-basis: 100%; justify-content: flex-end; }
+}

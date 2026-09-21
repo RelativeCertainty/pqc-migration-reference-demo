@@ -1,0 +1,22 @@
+{
+  "schemaVersion": "pqc.response-to-report.reference.v1",
+  "synthetic": true,
+  "familyId": "traffic-termination",
+  "sourceInstanceId": "synthetic-tls-config",
+  "collectedAt": "2026-09-14T12:00:00Z",
+  "records": [
+    {
+      "nativeId": "east-endpoint-001",
+      "deployment": "gateway-east",
+      "hostname": "portal-east.example",
+      "applicationId": "portal-app-001",
+      "certificateId": "portal-cert-001",
+      "basis": "configured",
+      "keyExchange": "X25519MLKEM768",
+      "authentication": "ecdsa-with-SHA256",
+      "sourceUpdatedAt": "2026-09-13T12:00:00Z"
+    }
+  ],
+  "kind": "tls",
+  "sourceLabel": "Synthetic TLS configuration"
+}

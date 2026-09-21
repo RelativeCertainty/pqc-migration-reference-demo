@@ -1,0 +1,339 @@
+schemaVersion: pqc.assessment-map-room-build-plan.v1
+id: pqc-map-room-build-v1
+status: proposed
+classification: public
+publicSafe: true
+objective: >-
+  Build a presentation-safe, read-only PQC Assessment Map Room that keeps
+  program progress, estate-evidence progress, and report readiness separate
+  while proving a portable path from source contracts to reviewable reports.
+authorityBoundary:
+  projectionOnly: true
+  productionMutationAllowed: false
+  remediationAuthorized: false
+  dashboardIsAuthority: false
+  enterpriseSourcesRemainAuthoritative: true
+  acceptedReportsRemainImmutable: true
+backlogRefs:
+  - PQC-P1-E09
+  - PQC-P1-E09-S01
+  - PQC-P1-E09-S02
+  - PQC-P1-E09-S03
+invariants:
+  - id: MAP-INV-001
+    name: Separate progress axes
+    rule: Program progress, estate-mapping progress, and report readiness are never collapsed into one percentage.
+  - id: MAP-INV-002
+    name: Denominator-bound coverage
+    rule: Coverage is unavailable unless numerator, denominator, scope, as-of time, and denominator source are present.
+  - id: MAP-INV-003
+    name: Synthetic state is unmistakable
+    rule: Illustrative scenarios cannot be labeled actual, live, deployed, approved, or enterprise-wide.
+  - id: MAP-INV-004
+    name: Evidence remains traceable
+    rule: Every displayed asset and dependency retains one or more evidence references.
+  - id: MAP-INV-005
+    name: Unknown remains unknown
+    rule: Missing access or evidence becomes a limitation and never becomes a clean result.
+  - id: MAP-INV-006
+    name: Read-only assessment boundary
+    rule: The browser and its APIs cannot execute production, ticket, certificate, key, configuration, or remediation changes.
+contracts:
+  reused:
+    - ProviderIntegrationProfile.v1
+    - CapabilityProbe.v1
+    - CollectionRun.v1
+    - EvidenceObservation.v1
+    - CanonicalCryptoRecord.v1
+    - CryptoDependency.v1
+    - Phase1SyntheticFlow.v1
+    - DashboardProjection.v1
+  planned:
+    - id: PQCEstateOntology.v1
+      path: contracts/pqc-estate-ontology.v1.schema.json
+    - id: AssessmentMapProjection.v1
+      path: contracts/assessment-map-projection.v1.schema.json
+    - id: BriefingScenario.v1
+      path: contracts/briefing-scenario.v1.schema.json
+    - id: ReportReadinessProjection.v1
+      path: contracts/report-readiness-projection.v1.schema.json
+    - id: ProgramPositionProjection.v1
+      path: contracts/program-position-projection.v1.schema.json
+scenarioStates:
+  - outline_established
+  - sources_routed
+  - evidence_arriving
+  - phase1_assessment_ready
+releases:
+  - id: MAP-R0
+    name: Presentation-safe walking skeleton
+    purpose: Reuse verified repository behavior for an immediate six-step stakeholder briefing.
+    dependsOn: []
+    backlogRefs:
+      - PQC-P1-E09-S03
+    tasks:
+      - id: MAP-R0-T00
+        name: Stabilize existing contracts, fixtures, export coverage, and privacy validation
+        ownerRole: release_engineer
+        outputs:
+          - scripts/stage-standalone-export.mjs
+          - scripts/verify-public-export.mjs
+      - id: MAP-R0-T01
+        name: Define briefing narrative fixture
+        ownerRole: product_owner
+        dependsOn:
+          - MAP-R0-T00
+        outputs:
+          - fixtures/briefing/assessment-map-room-briefing.v1.json
+      - id: MAP-R0-T02
+        name: Add six-step briefing route
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R0-T01
+        outputs:
+          - src/components/BriefingMode.tsx
+          - src/domain/briefing.ts
+      - id: MAP-R0-T03
+        name: Preserve synthetic boundary in every briefing view
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R0-T02
+      - id: MAP-R0-T04
+        name: Add read-only leadership action view
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R0-T01
+        outputs:
+          - src/components/ProgramPosition.tsx
+      - id: MAP-R0-T05
+        name: Prepare offline visual fallback
+        ownerRole: product_owner
+        dependsOn:
+          - MAP-R0-T02
+      - id: MAP-R0-T06
+        name: Validate six-minute presentation path
+        ownerRole: reviewer
+        dependsOn:
+          - MAP-R0-T02
+          - MAP-R0-T03
+          - MAP-R0-T04
+          - MAP-R0-T05
+    exitCriteria:
+      - The six-step route completes in six minutes or less.
+      - Every displayed number identifies its synthetic scope and denominator.
+      - The standalone export contains the five public source contract packs.
+      - Public privacy validation covers authored YAML sources.
+      - Keyboard navigation and 200-percent browser zoom remain usable.
+      - The application works from a clean checkout.
+      - Existing validation remains green.
+  - id: MAP-R1
+    name: Contract-backed scenario playback
+    purpose: Demonstrate how evidence maturity changes the map and report position without imitating live progress.
+    dependsOn:
+      - MAP-R0
+    backlogRefs:
+      - PQC-P1-E09-S01
+      - PQC-P1-E09-S03
+    tasks:
+      - id: MAP-R1-T01
+        name: Add and validate Map Room contracts
+        ownerRole: contract_engineer
+        outputs:
+          - contracts/pqc-estate-ontology.v1.schema.json
+          - contracts/assessment-map-projection.v1.schema.json
+          - contracts/briefing-scenario.v1.schema.json
+          - contracts/report-readiness-projection.v1.schema.json
+          - contracts/program-position-projection.v1.schema.json
+      - id: MAP-R1-T02
+        name: Create four deterministic scenario fixtures
+        ownerRole: contract_engineer
+        dependsOn:
+          - MAP-R1-T01
+        outputs:
+          - fixtures/assessment-map/outline-established.v1.json
+          - fixtures/assessment-map/sources-routed.v1.json
+          - fixtures/assessment-map/evidence-arriving.v1.json
+          - fixtures/assessment-map/phase1-assessment-ready.v1.json
+      - id: MAP-R1-T03
+        name: Implement pure assessment-map projections
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R1-T01
+          - MAP-R1-T02
+        outputs:
+          - src/domain/assessmentMap.ts
+          - src/domain/reportReadiness.ts
+      - id: MAP-R1-T04
+        name: Add illustrative scenario selector
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R1-T03
+      - id: MAP-R1-T05
+        name: Add negative metric and state-label tests
+        ownerRole: test_engineer
+        dependsOn:
+          - MAP-R1-T03
+    exitCriteria:
+      - All scenarios validate against the same contracts.
+      - The ontology contains exactly ten domains, 22 migration patterns, and 27 source-system types with valid many-to-many references.
+      - Unknown denominators cannot produce coverage percentages.
+      - Scenario data cannot be labeled actual.
+      - Scenario playback is deterministic.
+  - id: MAP-R2
+    name: Program-control projection
+    purpose: Frame the live project using an audience-filtered, read-only Program Operations projection.
+    dependsOn:
+      - MAP-R1
+    backlogRefs:
+      - PQC-P1-E09-S02
+      - PQC-P1-E09-S03
+    tasks:
+      - id: MAP-R2-T01
+        name: Add read-only Program Operations adapter
+        ownerRole: integration_engineer
+      - id: MAP-R2-T02
+        name: Render cycle, gate, action, dependency, RFI, and decision position
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R2-T01
+      - id: MAP-R2-T03
+        name: Apply audience filtering before browser delivery
+        ownerRole: security_engineer
+        dependsOn:
+          - MAP-R2-T01
+      - id: MAP-R2-T04
+        name: Add version, digest, as-of, and stale-state indicators
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R2-T01
+    exitCriteria:
+      - The browser cannot mutate Program Operations records.
+      - The public hosted reference remains fixture-backed and performs no authenticated enterprise request.
+      - Private notes and time details are absent.
+      - Every action includes name, role, date, consequence, and source reference.
+      - Stale or unavailable data is visible.
+  - id: MAP-R3
+    name: Source readiness and evidence map
+    purpose: Replace illustrative source progress with authorized observations admitted through narrow adapters.
+    dependsOn:
+      - MAP-R2
+    backlogRefs:
+      - PQC-P1-E09-S02
+      - PQC-P1-E09-S03
+    tasks:
+      - id: MAP-R3-T01
+        name: Implement source-readiness projection
+        ownerRole: application_engineer
+      - id: MAP-R3-T02
+        name: Add evidence-backed estate and migration-pattern filters
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R3-T01
+      - id: MAP-R3-T03
+        name: Add asset and dependency explorer
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R1-T03
+      - id: MAP-R3-T04
+        name: Add conflict and unmatched-observation queues
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R3-T03
+      - id: MAP-R3-T05
+        name: Prove one authorized source adapter at a time
+        ownerRole: integration_engineer
+        dependsOn:
+          - MAP-R3-T01
+    exitCriteria:
+      - Every adapter passes the shared conformance suite.
+      - Provider-native records stop at the adapter boundary.
+      - Source outages cannot corrupt prior admitted evidence.
+      - Secrets, key material, source code, and raw payloads cannot enter dashboard or telemetry.
+  - id: MAP-R4
+    name: Report readiness
+    purpose: Show how evidence and limitations support Phase 1 and condition entry into Phase 2.
+    dependsOn:
+      - MAP-R3
+    backlogRefs:
+      - PQC-P1-E08
+      - PQC-P2-E01
+    tasks:
+      - id: MAP-R4-T01
+        name: Define evidence requirements by report section
+        ownerRole: assessment_lead
+      - id: MAP-R4-T01A
+        name: Map the full biweekly report contract to the runtime report snapshot
+        ownerRole: contract_engineer
+      - id: MAP-R4-T02
+        name: Bind assets, dependencies, findings, and limitations to report sections
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R4-T01
+          - MAP-R4-T01A
+      - id: MAP-R4-T03
+        name: Generate traceable report previews
+        ownerRole: application_engineer
+        dependsOn:
+          - MAP-R4-T02
+      - id: MAP-R4-T04
+        name: Enforce Phase 1 acceptance before Phase 2 risk claims
+        ownerRole: test_engineer
+        dependsOn:
+          - MAP-R4-T02
+    exitCriteria:
+      - Every report statement is traceable or labeled interpretation.
+      - Every material limitation appears in the readiness explanation.
+      - Accepted snapshots cannot be overwritten.
+      - Phase 2 readiness fails closed when required Phase 1 evidence is missing.
+  - id: MAP-R5
+    name: Enterprise deployment profile
+    purpose: Bind the product-neutral Map Room to selected enterprise services without rewriting the domain core.
+    dependsOn:
+      - MAP-R4
+    backlogRefs:
+      - PQC-P1-E09-S01
+      - PQC-P1-E09-S02
+      - PQC-P1-E09-S03
+    tasks:
+      - id: MAP-R5-T01
+        name: Bind approved runtime, database, identity, secret, telemetry, ingress, evidence, and analytics services
+        ownerRole: platform_engineer
+      - id: MAP-R5-T02
+        name: Add backup, restore, failover, rollback, accessibility, load, and security proof
+        ownerRole: platform_engineer
+        dependsOn:
+          - MAP-R5-T01
+      - id: MAP-R5-T03
+        name: Preserve clean-checkout synthetic operation
+        ownerRole: release_engineer
+        dependsOn:
+          - MAP-R5-T01
+    exitCriteria:
+      - Every selected binding has internal evidence and an authorized decision reference.
+      - Enterprise adapters pass the reference conformance suites.
+      - Production-readiness claims remain blocked until their evidence gates pass.
+validation:
+  currentCommands:
+    - npm run lint
+    - npm run typecheck
+    - npm test
+    - npm run contracts:test
+    - npm run synthetic:test
+    - npm run build
+    - npm run verify:public-export
+  plannedCommands:
+    - npm run map-room:test
+    - python3 scripts/validate-assessment-map.py
+proofRequirements:
+  - Contract and fixture digests.
+  - Source revision and dirty-state declaration.
+  - Named component or seam under test.
+  - Scenario or enterprise evidence status.
+  - Tests and faults exercised.
+  - Result and limitations.
+  - Explicit non-claims.
+documentation:
+  narrativePlan: docs/assessment-map-room-build-plan.md
+  readablePlan: docs/assessment-map-room-build-plan.readable.html
+  plannedProductGuide: docs/assessment-map-room.md
+  plannedPresenterGuide: docs/assessment-map-room-presenter-guide.md

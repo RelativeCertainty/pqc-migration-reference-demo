@@ -1,0 +1,229 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/phase1-synthetic-flow.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "Phase1SyntheticFlow.v1",
+  "description": "Deterministic public-safe proof of a read-only Phase 1 path from synthetic source pages through normalized observations and dependencies to a rebuildable dashboard projection.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "flowId",
+    "title",
+    "testClock",
+    "scope",
+    "contractPackRefs",
+    "sourcePageRefs",
+    "normalizedObservations",
+    "canonicalAssets",
+    "dependencies",
+    "evidenceLimitations",
+    "dashboardProjectionRef",
+    "expectedInvariants",
+    "authorityBoundary",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "Phase1SyntheticFlow.v1" },
+    "flowId": { "$ref": "#/$defs/identifier" },
+    "title": { "$ref": "#/$defs/plainText" },
+    "testClock": { "$ref": "#/$defs/timestamp" },
+    "scope": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["scopeRef", "regionRefs", "authorizedAssetTypes", "coverageDenominatorSourceRef"],
+      "properties": {
+        "scopeRef": { "$ref": "#/$defs/identifier" },
+        "regionRefs": {
+          "type": "array",
+          "minItems": 2,
+          "maxItems": 2,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/identifier" }
+        },
+        "authorizedAssetTypes": {
+          "type": "array",
+          "minItems": 1,
+          "maxItems": 20,
+          "uniqueItems": true,
+          "items": { "$ref": "#/$defs/plainText" }
+        },
+        "coverageDenominatorSourceRef": { "$ref": "#/$defs/identifier" }
+      }
+    },
+    "contractPackRefs": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 5,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "sourcePageRefs": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 10,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/relativeJsonPath" }
+    },
+    "normalizedObservations": {
+      "type": "array",
+      "minItems": 10,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["observationId", "sourceRecordRef", "sourceFamily", "assetRef", "regionRef", "observedAt", "factType", "confidence", "evidenceStatus"],
+        "properties": {
+          "observationId": { "$ref": "#/$defs/identifier" },
+          "sourceRecordRef": { "$ref": "#/$defs/identifier" },
+          "sourceFamily": { "$ref": "#/$defs/sourceFamily" },
+          "assetRef": { "$ref": "#/$defs/identifier" },
+          "regionRef": {
+            "oneOf": [{ "$ref": "#/$defs/identifier" }, { "type": "null" }]
+          },
+          "observedAt": { "$ref": "#/$defs/timestamp" },
+          "factType": { "$ref": "#/$defs/plainText" },
+          "confidence": { "enum": ["high", "moderate", "low", "unresolved"] },
+          "evidenceStatus": { "const": "synthetic_contract_tested" }
+        }
+      }
+    },
+    "canonicalAssets": {
+      "type": "array",
+      "minItems": 5,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["assetId", "assetType", "regionRef", "observationRefs"],
+        "properties": {
+          "assetId": { "$ref": "#/$defs/identifier" },
+          "assetType": { "$ref": "#/$defs/plainText" },
+          "regionRef": {
+            "oneOf": [{ "$ref": "#/$defs/identifier" }, { "type": "null" }]
+          },
+          "observationRefs": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 30,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/identifier" }
+          }
+        }
+      }
+    },
+    "dependencies": {
+      "type": "array",
+      "minItems": 4,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["dependencyId", "sourceAssetRef", "targetAssetRef", "relationshipType", "observationRefs", "confidence"],
+        "properties": {
+          "dependencyId": { "$ref": "#/$defs/identifier" },
+          "sourceAssetRef": { "$ref": "#/$defs/identifier" },
+          "targetAssetRef": { "$ref": "#/$defs/identifier" },
+          "relationshipType": { "enum": ["deployed_at", "uses_certificate", "implemented_by", "analyzed_by", "serves_application"] },
+          "observationRefs": {
+            "type": "array",
+            "minItems": 1,
+            "maxItems": 20,
+            "uniqueItems": true,
+            "items": { "$ref": "#/$defs/identifier" }
+          },
+          "confidence": { "enum": ["high", "moderate", "low", "unresolved"] }
+        }
+      }
+    },
+    "evidenceLimitations": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["limitationId", "severity", "description", "blocking", "scopeRef"],
+        "properties": {
+          "limitationId": { "$ref": "#/$defs/identifier" },
+          "severity": { "enum": ["informational", "material", "blocking"] },
+          "description": { "$ref": "#/$defs/plainText" },
+          "blocking": { "type": "boolean" },
+          "scopeRef": { "$ref": "#/$defs/identifier" }
+        }
+      }
+    },
+    "dashboardProjectionRef": { "$ref": "#/$defs/relativeJsonPath" },
+    "expectedInvariants": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["regionCount", "contractPackCount", "sourcePageCount", "authorizedDeploymentDenominator", "observedDeploymentNumerator", "projectionLagSeconds"],
+      "properties": {
+        "regionCount": { "const": 2 },
+        "contractPackCount": { "const": 5 },
+        "sourcePageCount": { "const": 10 },
+        "authorizedDeploymentDenominator": { "const": 2 },
+        "observedDeploymentNumerator": { "const": 2 },
+        "projectionLagSeconds": { "type": "integer", "minimum": 0, "maximum": 86400 }
+      }
+    },
+    "authorityBoundary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["readOnlyAssessment", "productionMutationAllowed", "remediationAuthorized", "dashboardIsAuthority"],
+      "properties": {
+        "readOnlyAssessment": { "const": true },
+        "productionMutationAllowed": { "const": false },
+        "remediationAuthorized": { "const": false },
+        "dashboardIsAuthority": { "const": false }
+      }
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "containsCredentials", "containsKeyMaterial", "containsEnterpriseIdentifiers", "claimsLiveReadback"],
+      "properties": {
+        "synthetic": { "const": true },
+        "containsCredentials": { "const": false },
+        "containsKeyMaterial": { "const": false },
+        "containsEnterpriseIdentifiers": { "const": false },
+        "claimsLiveReadback": { "const": false }
+      }
+    }
+  },
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 180,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "sourceFamily": {
+      "enum": [
+        "application_cmdb",
+        "pki_certificate_lifecycle",
+        "tls_traffic_management",
+        "source_repositories",
+        "software_analysis"
+      ]
+    },
+    "plainText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 500,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "relativeJsonPath": {
+      "type": "string",
+      "minLength": 5,
+      "maxLength": 240,
+      "pattern": "^(?!/)(?!.*\\.\\.)[a-zA-Z0-9_./-]+\\.json$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 30,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    }
+  }
+}

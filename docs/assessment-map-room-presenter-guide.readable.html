@@ -1,0 +1,813 @@
+<!doctype html>
+<html lang="en" data-classification="public">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="index,follow">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <meta name="generator" content="PBA readable document renderer v1">
+  <title>PQC Assessment Map Room Presenter and Operator Guide</title>
+  <style>
+    :root {
+      --page: #edf1f5;
+      --paper: #ffffff;
+      --text: #20252d;
+      --muted: #647080;
+      --line: #d9e0e8;
+      --accent: #285f86;
+      --accent-soft: #e9f2f8;
+      --notice: #7c4b13;
+      --notice-bg: #fff3dc;
+      --code: #f4f6f8;
+      --shadow: 0 18px 55px rgba(31, 43, 58, 0.11);
+      --measure: 76ch;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #11161d;
+        --paper: #1a212b;
+        --text: #e8edf3;
+        --muted: #a8b3c0;
+        --line: #35404e;
+        --accent: #8fc8ed;
+        --accent-soft: #203848;
+        --notice: #f0c47b;
+        --notice-bg: #3a2b19;
+        --code: #111821;
+        --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-underline-offset: 0.16em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--paper);
+      border: 2px solid var(--accent);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: none; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.83rem;
+    }
+    .classification {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--notice);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .classification::before {
+      content: "";
+      width: 0.62rem;
+      height: 0.62rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .reader-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .reader-actions a,
+    .reader-actions button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      padding: 0.42rem 0.75rem;
+      text-decoration: none;
+    }
+    .reader-actions a:hover,
+    .reader-actions button:hover { border-color: var(--accent); }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: clamp(1.1rem, 3vw, 2.6rem);
+      display: grid;
+      grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+      gap: clamp(1.1rem, 3vw, 2.8rem);
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 1.3rem;
+      max-height: calc(100vh - 2.6rem);
+      overflow: auto;
+      padding: 1rem 0.9rem 1rem 0;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .toc-title {
+      margin: 0 0 0.7rem;
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .toc-list { margin: 0; padding: 0; list-style: none; }
+    .toc-list li { margin: 0.22rem 0; }
+    .toc-list a {
+      display: block;
+      padding: 0.28rem 0.4rem;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a:focus {
+      border-left-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .toc-level-3 { padding-left: 0.75rem; }
+    .paper {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 5vw, 4.5rem);
+    }
+    .document-meta {
+      max-width: var(--measure);
+      margin: 0 auto 2.5rem;
+      padding: 0 0 1.15rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .document-meta strong { color: var(--text); }
+    .document-meta code { overflow-wrap: anywhere; word-break: break-all; }
+    .notice {
+      max-width: var(--measure);
+      margin: 0 auto 2rem;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--notice);
+      border-radius: 6px;
+      background: var(--notice-bg);
+      color: var(--notice);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+    article > * { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+    article h1,
+    article h2,
+    article h3,
+    article h4 {
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      scroll-margin-top: 1.5rem;
+    }
+    article h1 {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+      font-size: clamp(2.1rem, 5vw, 3.5rem);
+      font-weight: 760;
+    }
+    article h2 {
+      margin-top: 3.4rem;
+      margin-bottom: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    article h3 { margin-top: 2.4rem; font-size: 1.25rem; }
+    article h4 { margin-top: 2rem; font-size: 1.05rem; }
+    article p { margin-top: 0.85rem; margin-bottom: 0.85rem; }
+    article ul,
+    article ol { padding-left: 1.45rem; }
+    article li { margin: 0.42rem 0; padding-left: 0.15rem; }
+    article li::marker { color: var(--accent); font-weight: 700; }
+    article blockquote {
+      padding: 0.2rem 0 0.2rem 1.2rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-style: italic;
+    }
+    article code {
+      padding: 0.12em 0.32em;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 0.84em;
+      overflow-wrap: anywhere;
+    }
+    article pre {
+      max-width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--code);
+      overflow: auto;
+      line-height: 1.45;
+    }
+    article pre code { padding: 0; background: transparent; overflow-wrap: normal; }
+    article hr { margin-top: 2.8rem; margin-bottom: 2.8rem; border: 0; border-top: 1px solid var(--line); }
+    article img { max-width: 100%; height: auto; }
+    .image-placeholder {
+      display: inline-block;
+      padding: 0.3rem 0.5rem;
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.86rem;
+    }
+    .unsafe-link { color: var(--muted); text-decoration: line-through; }
+    article table {
+      display: block;
+      max-width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.88rem;
+    }
+    article th,
+    article td { padding: 0.58rem 0.7rem; border: 1px solid var(--line); text-align: left; }
+    .footer {
+      max-width: var(--measure);
+      margin: 3.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.76rem;
+    }
+    @media (max-width: 900px) {
+      body { font-size: 17px; }
+      .shell { display: block; padding: 0; }
+      .toc {
+        position: static;
+        max-height: 20rem;
+        overflow: auto;
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .toc-list { columns: 2; column-gap: 1.4rem; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; }
+    }
+    @media (max-width: 560px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .toc-list { columns: 1; }
+      .paper { padding: 1.2rem 1rem 2.5rem; }
+      article h1 { font-size: 2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    @media print {
+      :root { --paper: #fff; --text: #111; --muted: #444; --line: #ccc; }
+      @page { size: auto; margin: 0.7in; }
+      body { background: #fff; color: #111; font-size: 11pt; }
+      .topbar,
+      .toc,
+      .notice,
+      .skip-link,
+      .reader-actions { display: none !important; }
+      .shell { display: block; max-width: none; padding: 0; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+      article > * { max-width: none; }
+      article h1 { font-size: 24pt; }
+      article h2 { break-after: avoid; font-size: 16pt; }
+      article h3,
+      article h4 { break-after: avoid; }
+      article pre,
+      article blockquote { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.75em; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#document">Skip to document</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="classification">Public reading copy</div>
+      <div class="reader-actions" aria-label="Reader actions">
+        <a href="assessment-map-room-presenter-guide.md">Open source</a>
+        <button type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+  <main class="shell" id="document">
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol class="toc-list"><li class="toc-level-2"><a href="#document-status">Document status</a></li>
+<li class="toc-level-2"><a href="#purpose">Purpose</a></li>
+<li class="toc-level-2"><a href="#presenter-promise">Presenter promise</a></li>
+<li class="toc-level-2"><a href="#exact-opening">Exact opening</a></li>
+<li class="toc-level-2"><a href="#six-minute-sequence">Six-minute sequence</a></li>
+<li class="toc-level-3"><a href="#1-mission-0-00-to-0-45">1. Mission — 0:00 to 0:45</a></li>
+<li class="toc-level-3"><a href="#2-estate-0-45-to-1-35">2. Estate — 0:45 to 1:35</a></li>
+<li class="toc-level-3"><a href="#3-method-1-35-to-2-25">3. Method — 1:35 to 2:25</a></li>
+<li class="toc-level-3"><a href="#4-position-2-25-to-3-10">4. Position — 2:25 to 3:10</a></li>
+<li class="toc-level-3"><a href="#5-demonstration-3-10-to-5-00">5. Demonstration — 3:10 to 5:00</a></li>
+<li class="toc-level-3"><a href="#6-action-5-00-to-6-00">6. Action — 5:00 to 6:00</a></li>
+<li class="toc-level-2"><a href="#exact-close">Exact close</a></li>
+<li class="toc-level-2"><a href="#keyboard-and-visible-controls">Keyboard and visible controls</a></li>
+<li class="toc-level-2"><a href="#preflight">Preflight</a></li>
+<li class="toc-level-3"><a href="#before-the-meeting">Before the meeting</a></li>
+<li class="toc-level-3"><a href="#immediately-before-presenting">Immediately before presenting</a></li>
+<li class="toc-level-2"><a href="#two-hundred-percent-zoom-check">Two-hundred-percent zoom check</a></li>
+<li class="toc-level-2"><a href="#offline-fallback">Offline fallback</a></li>
+<li class="toc-level-2"><a href="#thirty-second-failure-pivot">Thirty-second failure pivot</a></li>
+<li class="toc-level-2"><a href="#rehearsal-acceptance">Rehearsal acceptance</a></li>
+<li class="toc-level-2"><a href="#evidence-and-non-claim-record">Evidence and non-claim record</a></li></ol>
+    </nav>
+    <div class="paper">
+      <div class="document-meta">
+        <strong>assessment-map-room-presenter-guide.md</strong><br>
+        2,405 words · about 11 minutes · source updated September 3, 2026 at 1:59 PM MDT<br>
+        Source SHA-256: <code>1506646983562f4d114e420296f9bd1cbf27623d1c5db212373416173e83934c</code> · renderer v1
+      </div>
+      <aside class="notice"><strong>Public reading copy.</strong> Approved presentation copy.</aside>
+      <article>
+        <h1 id="pqc-assessment-map-room-presenter-and-operator-guide">PQC Assessment Map Room Presenter and Operator Guide</h1>
+<h2 id="document-status">Document status</h2>
+<ul>
+<li>Status: Release 0 presentation protocol</li>
+<li>Intended audience: presenter, backup presenter, and meeting facilitator</li>
+<li>Public boundary: employer-neutral; synthetic examples only</li>
+<li>Route: <code>#briefing</code></li>
+<li>Intended duration: six minutes</li>
+<li>Authority boundary: read-only explanation and projection; no external system
+action</li>
+<li>Demonstration source:
+<code>fixtures/synthetic-phase1/two-region/phase1-flow.v1.json</code></li>
+</ul>
+<h2 id="purpose">Purpose</h2>
+<p>Use the Map Room to keep a stakeholder conversation centered on six questions:</p>
+<ol>
+<li>Mission — why an evidence-backed map is needed.</li>
+<li>Estate — what kinds of enterprise territory must be represented.</li>
+<li>Method — how source facts become assets, relationships, and report content.</li>
+<li>Position — how program movement, estate evidence, and report readiness differ.</li>
+<li>Demonstration — what the current synthetic evidence flow actually proves.</li>
+<li>Action — which role must take which action by what date, and why it matters.</li>
+</ol>
+<p>The application is the map room, not the territory. Enterprise source systems
+remain authoritative for source-native facts. The application presents a
+bounded view of evidence, resulting assets and dependencies, limitations, and
+readiness.</p>
+<h2 id="presenter-promise">Presenter promise</h2>
+<p>Keep these statements true throughout the briefing:</p>
+<ul>
+<li>Every displayed record is synthetic.</li>
+<li>The demonstration uses only the checked-in two-region Phase 1 fixture.</li>
+<li>A source count is not an asset count.</li>
+<li>An observation count is not a risk count.</li>
+<li>Source readiness is not estate coverage.</li>
+<li>Report readiness is not report acceptance.</li>
+<li>An unknown denominator is reported as not measurable, never as zero.</li>
+<li>The demonstration does not claim a live connection, organization-wide
+completeness, product selection, deployed control, or accepted result.</li>
+<li>Decisions and commitments are captured in the authorized project-control
+process, not in the presentation application.</li>
+</ul>
+<h2 id="exact-opening">Exact opening</h2>
+<p>Say this before advancing from Mission:</p>
+<blockquote>
+<p>The simplest way to understand this project is as enterprise map making. We
+know the kinds of territory that must be represented, but the map is only
+trustworthy when authoritative systems provide the measurements. Today I
+will show what we are mapping, how source information becomes an
+evidence-backed asset and dependency model, what the current demonstration
+proves, and which actions will move the assessment forward.</p>
+</blockquote>
+<h2 id="six-minute-sequence">Six-minute sequence</h2>
+<h3 id="1-mission-0-00-to-0-45">1. Mission — 0:00 to 0:45</h3>
+<p>Primary message:</p>
+<blockquote>
+<p>Phase 1 builds the evidence-backed current-state map. Phase 2 uses an
+accepted Phase 1 baseline to evaluate exposure, business impact, migration
+constraints, and priorities.</p>
+</blockquote>
+<p>Operator action:</p>
+<ul>
+<li>Open <code>#briefing</code> before screen sharing.</li>
+<li>Select step 1, <strong>Mission</strong>, or press <code>Home</code>.</li>
+<li>Deliver the exact opening.</li>
+<li>Point to the two outputs: current-state assessment and risk priorities.</li>
+</ul>
+<p>This screen should prove:</p>
+<ul>
+<li>The audience can state why the map is being built.</li>
+<li>The two assessment phases have distinct purposes.</li>
+<li>Later analysis depends on an evidence-backed current-state baseline.</li>
+</ul>
+<p>This screen does not prove:</p>
+<ul>
+<li>That an enterprise inventory has been collected.</li>
+<li>That Phase 1 is complete or accepted.</li>
+<li>That any particular technology or delivery platform has been selected.</li>
+</ul>
+<h3 id="2-estate-0-45-to-1-35">2. Estate — 0:45 to 1:35</h3>
+<p>Primary message:</p>
+<blockquote>
+<p>The enterprise cryptographic estate is broader than certificates or one
+application stack. The reference map recognizes ten domains so that material
+areas are not silently omitted.</p>
+</blockquote>
+<p>Operator action:</p>
+<ul>
+<li>Advance to <strong>Estate</strong>.</li>
+<li>Describe the ten domains as map layers; do not read every example.</li>
+<li>Explain that the current fixture samples five source types and is not the
+complete estate model.</li>
+</ul>
+<p>The ten map layers are:</p>
+<ol>
+<li>Enterprise context and ownership.</li>
+<li>Certificates, trust, and public-key infrastructure.</li>
+<li>TLS termination and application traffic.</li>
+<li>Network, remote access, and machine access.</li>
+<li>Software, repositories, and delivery pipelines.</li>
+<li>Cloud, keys, secrets, identity, and workloads.</li>
+<li>Data, storage, backup, and long-lived information.</li>
+<li>DNS, email, documents, endpoints, and devices.</li>
+<li>Specialized regulated cryptography.</li>
+<li>Detection, governance, vendors, and assurance.</li>
+</ol>
+<p>This screen should prove:</p>
+<ul>
+<li>The assessment has a coherent enterprise scope model.</li>
+<li>A domain is an area to investigate, not a claim that evidence is available.</li>
+<li>Initial source work is a deliberate starting slice rather than the complete
+source landscape.</li>
+</ul>
+<p>This screen does not prove:</p>
+<ul>
+<li>That all ten domains are in an authorized scope.</li>
+<li>That a source exists or is accessible for every domain.</li>
+<li>That the displayed domain structure measures enterprise coverage.</li>
+</ul>
+<h3 id="3-method-1-35-to-2-25">3. Method — 1:35 to 2:25</h3>
+<p>Primary message:</p>
+<pre><code class="language-text">source profile and authorized access
+  -&gt; dated evidence observation
+  -&gt; canonical asset
+  -&gt; evidence-backed dependency and context
+  -&gt; finding or disclosed limitation
+  -&gt; Phase 1 report
+  -&gt; Phase 2 analysis after baseline acceptance
+</code></pre>
+<p>Operator action:</p>
+<ul>
+<li>Advance to <strong>Method</strong>.</li>
+<li>Trace the flow from left to right once.</li>
+<li>Define an observation as a dated fact that retains its source reference.</li>
+<li>Define a canonical asset as a reviewable object assembled without discarding
+the observations that support it.</li>
+<li>State the exact transition:</li>
+</ul>
+<blockquote>
+<p>The workbook defines what must be learned. The application demonstrates what
+admitted answers become.</p>
+</blockquote>
+<p>This screen should prove:</p>
+<ul>
+<li>The method preserves traceability from source to report.</li>
+<li>Several observations may contribute to one asset or dependency.</li>
+<li>Missing, conflicting, or uncorrelated evidence remains visible as a
+limitation or review item.</li>
+</ul>
+<p>This screen does not prove:</p>
+<ul>
+<li>That every question requires a person-to-person survey.</li>
+<li>That one source is automatically authoritative for every fact.</li>
+<li>That correlation confidence is a probability of truth.</li>
+</ul>
+<h3 id="4-position-2-25-to-3-10">4. Position — 2:25 to 3:10</h3>
+<p>Primary message:</p>
+<blockquote>
+<p>Program progress, estate-mapping progress, and report readiness answer three
+different questions. They must never be collapsed into one completion
+percentage.</p>
+</blockquote>
+<p>Operator action:</p>
+<ul>
+<li>Advance to <strong>Position</strong>.</li>
+<li>Name the three axes and the question each answers.</li>
+<li>Point to the scope, denominator, as-of time, and qualification attached to
+any displayed measure.</li>
+<li>If the screen says <strong>not measurable</strong>, leave it that way; do not estimate.</li>
+</ul>
+<p>The three axes are:</p>
+<ul>
+<li>Program progress: are actions, dependencies, questions, decisions, and gates
+moving?</li>
+<li>Estate-mapping progress: which admitted sources produced observations, and
+which assets and dependencies can be supported?</li>
+<li>Report readiness: which required report statements have adequate evidence
+and review?</li>
+</ul>
+<p>This screen should prove:</p>
+<ul>
+<li>The model can represent the three states independently.</li>
+<li>Measurements are bounded by a disclosed numerator, denominator, scope, and
+as-of time.</li>
+<li>An evidence limitation can block a report claim without erasing work already
+completed.</li>
+</ul>
+<p>This screen does not prove:</p>
+<ul>
+<li>The current state of any organization or live program.</li>
+<li>Organization-wide estate coverage.</li>
+<li>Acceptance of a report or gate.</li>
+</ul>
+<h3 id="5-demonstration-3-10-to-5-00">5. Demonstration — 3:10 to 5:00</h3>
+<p>Before interacting with the fixture, say the exact demonstration boundary:</p>
+<blockquote>
+<p>What you are about to see is a synthetic example, not enterprise inventory.
+Its purpose is to demonstrate how records from several enterprise sources
+become reviewable assets, dependencies, evidence limitations, dashboards,
+and ultimately report content.</p>
+</blockquote>
+<p>Operator action:</p>
+<ul>
+<li>Advance to <strong>Demonstration</strong>.</li>
+<li>Confirm the persistent <strong>Synthetic reference</strong> label is visible.</li>
+<li>Show only the checked-in two-region fixture.</li>
+<li>Trace one relationship from a source observation to an asset, then from that
+asset to one dependency.</li>
+<li>Show the informational limitation before leaving the screen.</li>
+<li>Do not open source code, a terminal, raw logs, unrelated fixtures, or
+future-state views while sharing the screen.</li>
+</ul>
+<p>The fixture contains:</p>
+<ul>
+<li>Scope: two fictional regions and the authorized synthetic asset type
+<strong>TLS deployment</strong>.</li>
+<li>Source contract packs: five.</li>
+<li>Source pages: ten.</li>
+<li>Normalized observations: ten.</li>
+<li>Canonical assets: eight.</li>
+<li>Evidence-backed dependencies: eight.</li>
+<li>Disclosed evidence limitations: one informational limitation concerning
+unvalidated ownership.</li>
+<li>Coverage denominator: a fixture-defined population of authorized synthetic
+TLS deployments; it is not an enterprise denominator.</li>
+</ul>
+<p>The five source types are:</p>
+<ul>
+<li>Application and service context.</li>
+<li>Certificate lifecycle.</li>
+<li>TLS traffic management.</li>
+<li>Source repositories.</li>
+<li>Software analysis.</li>
+</ul>
+<p>This screen should prove:</p>
+<ul>
+<li>Contract-shaped source pages can become provenance-bearing observations.</li>
+<li>Observations can be correlated into assets without losing their references.</li>
+<li>Evidence-backed relationships can connect TLS deployments, an application,
+certificate metadata, repositories, and software components.</li>
+<li>A dashboard or report view can be rebuilt from the same retained fixture.</li>
+<li>Limitations can remain visible beside otherwise successful processing.</li>
+</ul>
+<p>This screen does not prove:</p>
+<ul>
+<li>A live API, repository, or enterprise-system connection.</li>
+<li>The existence, configuration, ownership, or posture of any real asset.</li>
+<li>Comprehensive discovery, organization-wide coverage, or production scale.</li>
+<li>A vulnerability, risk rating, migration recommendation, or accepted report.</li>
+<li>That the five demonstrated source types are the entire source landscape.</li>
+</ul>
+<h3 id="6-action-5-00-to-6-00">6. Action — 5:00 to 6:00</h3>
+<p>Primary message:</p>
+<blockquote>
+<p>The meeting succeeds when each blocking dependency has a responsible role,
+a concrete next action, a required date, and a stated consequence.</p>
+</blockquote>
+<p>Operator action:</p>
+<ul>
+<li>Advance to <strong>Action</strong> or press <code>End</code>.</li>
+<li>Read back only the highest-priority open actions.</li>
+<li>For every action, confirm all five displayed fields: responsible role,
+action, required date, consequence, and status.</li>
+<li>Correct ambiguity aloud before leaving the item.</li>
+<li>Record confirmed commitments after the demonstration in the authorized
+project-control process.</li>
+</ul>
+<p>This screen should prove:</p>
+<ul>
+<li>The conversation can end in explicit, reviewable next actions.</li>
+<li>An unanswered information need can be connected to a delivery consequence.</li>
+<li>The projection carries enough context to route an action without requiring
+the recipient to decode an identifier elsewhere.</li>
+</ul>
+<p>This screen does not prove:</p>
+<ul>
+<li>That the application assigned work or recorded acceptance.</li>
+<li>That a displayed candidate role has accepted ownership.</li>
+<li>That a proposed date is an approved commitment until it is confirmed and
+recorded by the authorized process.</li>
+</ul>
+<h2 id="exact-close">Exact close</h2>
+<p>Say this while the Action screen remains visible:</p>
+<blockquote>
+<p>We do not need this group to answer hundreds of technical questions today.
+We need the group to help identify the smallest responsible functions,
+access routes, and next actions that will allow the evidence to be collected
+systematically. If every blocking dependency leaves this meeting with an
+owner, action, and date, the project moves from map planning into actual
+surveying.</p>
+</blockquote>
+<p>Before leaving the screen, perform one final readback:</p>
+<pre><code class="language-text">Action:
+Owner or responsible role:
+Required date:
+Delivery consequence if unresolved:
+Status:
+</code></pre>
+<p>Do not end on the demonstration. End on the action, owner, date, and
+consequence.</p>
+<h2 id="keyboard-and-visible-controls">Keyboard and visible controls</h2>
+<p>The <code>#briefing</code> route supports:</p>
+<ul>
+<li><code>ArrowRight</code>, <code>ArrowDown</code>, or <code>PageDown</code>: next step.</li>
+<li><code>ArrowLeft</code>, <code>ArrowUp</code>, or <code>PageUp</code>: previous step.</li>
+<li><code>Home</code>: Mission, the first step.</li>
+<li><code>End</code>: Action, the final step.</li>
+<li><code>Escape</code>: exit Briefing Mode and return to Overview.</li>
+<li><code>Tab</code> and <code>Shift+Tab</code>: move between visible interactive controls.</li>
+<li><code>Enter</code> or <code>Space</code>: activate the focused control.</li>
+</ul>
+<p>Visible controls provide the same route through <strong>Previous</strong>, <strong>Next</strong>, six
+numbered step buttons, and <strong>Exit briefing</strong>.</p>
+<p>Operator cautions:</p>
+<ul>
+<li>Do not use the browser Back button to advance the sequence.</li>
+<li>If the browser is full-screen, the first <code>Escape</code> may exit full-screen before
+the application receives it. Use <strong>Exit briefing</strong> when the result is
+uncertain.</li>
+<li>Keep the pointer still unless a detail must be identified. Keyboard movement
+is less visually distracting.</li>
+</ul>
+<h2 id="preflight">Preflight</h2>
+<h3 id="before-the-meeting">Before the meeting</h3>
+<ul>
+<li>Validate the repository from a clean, reviewable state with <code>npm run check</code>.</li>
+<li>Confirm the synthetic proof separately with <code>npm run synthetic:test</code>.</li>
+<li>Start the local application with <code>npm run dev</code> and use the loopback address
+reported by the development server.</li>
+<li>Open the application directly at <code>#briefing</code>.</li>
+<li>Complete the full six-step path twice using only the keyboard.</li>
+<li>Complete the path once using only the visible controls.</li>
+<li>Set browser zoom to 200 percent and confirm that every primary message,
+synthetic label, metric qualification, and action field remains usable.</li>
+<li>Return to the preferred presentation zoom after the 200-percent check.</li>
+<li>Confirm the source digest and validation status shown for the fixture are
+current.</li>
+<li>Open the offline fallback in a separate local window and navigate it to
+Mission.</li>
+<li>Disconnect external networking briefly and confirm that the local briefing
+and fallback remain available.</li>
+<li>Close unrelated tabs and applications.</li>
+<li>Disable operating-system, browser, mail, chat, and calendar notifications.</li>
+<li>Share the application window, not the entire desktop.</li>
+<li>Confirm that no private notes, customer material, credentials, terminals, or
+notification previews can enter the shared view.</li>
+<li>Assign a facilitator to capture actions, owners, dates, and consequences
+outside the presentation application.</li>
+</ul>
+<h3 id="immediately-before-presenting">Immediately before presenting</h3>
+<ul>
+<li>Return to Mission with <code>Home</code>.</li>
+<li>Confirm the route says <code>#briefing</code>.</li>
+<li>Confirm the <strong>Synthetic reference</strong> boundary is visible.</li>
+<li>Confirm browser zoom and window size.</li>
+<li>Confirm the local application and fallback are both open.</li>
+<li>Start a six-minute timer that is not visible in the shared window.</li>
+<li>Deliver the exact opening before interacting with the screen.</li>
+</ul>
+<h2 id="two-hundred-percent-zoom-check">Two-hundred-percent zoom check</h2>
+<p>The 200-percent check is an acceptance test, not the required speaking zoom.
+At 200 percent, verify:</p>
+<ul>
+<li>No text, badge, card, connector, control, or focus outline collides with
+another object.</li>
+<li>No primary message or qualification is truncated.</li>
+<li>The current step, step count, and synthetic boundary remain visible.</li>
+<li>The Previous, Next, numbered-step, and Exit controls remain reachable by
+keyboard.</li>
+<li>Focus order follows Mission through Action.</li>
+<li>Each action retains its role, action, date, consequence, and status.</li>
+</ul>
+<p>If any of these fail, use the offline fallback and record the defect. Do not
+hide a qualification or synthetic label to make the view fit.</p>
+<h2 id="offline-fallback">Offline fallback</h2>
+<p>Keep a local PDF or screenshot sequence with one captured view for each of the
+six steps. Each capture must retain:</p>
+<ul>
+<li>Step name and primary message.</li>
+<li>Synthetic-reference boundary.</li>
+<li>Metric scope and denominator qualification where a number appears.</li>
+<li>Source-fixture identity or digest on the Demonstration view.</li>
+<li>Role, action, required date, consequence, and status on the Action view.</li>
+</ul>
+<p>The fallback is a presentation copy, not new evidence. It must be regenerated
+when the briefing fixture or rendered view changes.</p>
+<h2 id="thirty-second-failure-pivot">Thirty-second failure pivot</h2>
+<p>If the interactive route stalls, renders incorrectly, or becomes unavailable:</p>
+<ol>
+<li>First 10 seconds: press no more than one safe navigation key or reload the
+local route once. Do not open developer tools.</li>
+<li>By 20 seconds: switch to the already-open local fallback at the same step.</li>
+<li>By 30 seconds: say, “The interactive view is unavailable, so I will continue
+with the captured synthetic walkthrough.” Resume the script immediately.</li>
+</ol>
+<p>Do not troubleshoot code, networking, credentials, or presentation equipment
+while the audience waits. If the fallback also fails, return to the static map
+flow, state the demonstration boundary verbally, and proceed directly to
+Action. Preserve the action-owner-date close even when the demonstration is
+omitted.</p>
+<h2 id="rehearsal-acceptance">Rehearsal acceptance</h2>
+<p>The briefing is ready only when:</p>
+<ul>
+<li>Mission through Action completes in six minutes or less.</li>
+<li>The exact opening, transition, demonstration boundary, and close can be
+delivered without searching notes.</li>
+<li>A reviewer can explain the map, its inputs, and its report outputs afterward.</li>
+<li>The reviewer does not confuse program progress, estate-mapping progress, and
+report readiness.</li>
+<li>All displayed counts match the checked-in two-region fixture.</li>
+<li>Every displayed number carries its synthetic scope and denominator.</li>
+<li>Keyboard-only navigation works at normal zoom and 200-percent zoom.</li>
+<li>Every captured fallback view is current and locally available.</li>
+<li>No screen claims a live connection, enterprise completeness, technology
+selection, deployed control, or accepted result.</li>
+<li>The final screen preserves a specific action, responsible role, required
+date, consequence, and status.</li>
+</ul>
+<h2 id="evidence-and-non-claim-record">Evidence and non-claim record</h2>
+<p>After rehearsal, record:</p>
+<pre><code class="language-text">Source revision:
+Fixture path:
+Fixture digest:
+Validation command and result:
+Briefing duration:
+Keyboard result:
+200-percent zoom result:
+Offline fallback result:
+Reviewer:
+Observed issues:
+</code></pre>
+<p>A successful rehearsal proves only that this public, synthetic walkthrough is
+presentation-safe and reproducible for the recorded source revision. It does
+not prove an enterprise deployment, live source access, comprehensive estate
+coverage, report acceptance, or operational readiness.</p>
+
+      </article>
+      <footer class="footer">
+        Generated locally from assessment-map-room-presenter-guide.md. The Markdown source remains the durable record.
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

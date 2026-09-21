@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "SyntheticSourcePage.v1",
+  "pageId": "page:synthetic:source-repositories:001",
+  "contractPackRef": "contract:source-pack:source-repositories:v1",
+  "sourceFamily": "source_repositories",
+  "pageNumber": 1,
+  "totalPageCount": 2,
+  "currentCursorRef": "cursor:synthetic:source-repositories:start",
+  "nextCursorRef": "cursor:synthetic:source-repositories:after-page-1",
+  "records": [
+    {
+      "sourceRecordId": "record:synthetic:source-repositories:edge",
+      "recordType": "source_repository",
+      "observedAt": "2030-01-07T12:03:00Z",
+      "attributes": {
+        "repositoryRef": "repo:synthetic:edge-service",
+        "applicationRef": "asset:synthetic:application:edge-service",
+        "componentRef": "asset:synthetic:component:edge-service",
+        "defaultBranchRef": "branch:synthetic:main",
+        "repositoryVisibility": "private_synthetic",
+        "archived": false
+      }
+    }
+  ],
+  "safety": {
+    "synthetic": true,
+    "independentlyAuthored": true,
+    "rawProviderPayload": false,
+    "containsCredentials": false,
+    "containsPersonalData": false,
+    "containsKeyMaterial": false
+  }
+}

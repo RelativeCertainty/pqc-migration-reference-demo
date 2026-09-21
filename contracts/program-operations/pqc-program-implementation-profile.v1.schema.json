@@ -1,0 +1,51 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/pqc-program-implementation-profile.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "PQCProgramImplementationProfile.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "profileId", "programId", "recordStatus", "standardRef", "calendar", "adapterBindings", "dataRules"],
+  "properties": {
+    "schemaVersion": {"const": "PQCProgramImplementationProfile.v1"},
+    "profileId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"},
+    "standardRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "calendar": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["timezone", "programStart", "programEnd", "protectedDates"],
+      "properties": {
+        "timezone": {"type": "string", "minLength": 3},
+        "programStart": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+        "programEnd": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+        "protectedDates": {"type": "array", "items": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"}, "uniqueItems": true}
+      }
+    },
+    "adapterBindings": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["capability", "adapter", "status", "configurationRef"],
+        "properties": {
+          "capability": {"type": "string", "minLength": 3},
+          "adapter": {"type": "string", "minLength": 3},
+          "status": {"type": "string", "enum": ["candidate", "configured", "validated", "disabled"]},
+          "configurationRef": {"type": "string", "minLength": 3}
+        }
+      }
+    },
+    "dataRules": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["classification", "credentialHandling", "externalDispatch"],
+      "properties": {
+        "classification": {"type": "string", "enum": ["public", "internal", "confidential", "restricted"]},
+        "credentialHandling": {"type": "string", "minLength": 10},
+        "externalDispatch": {"type": "string", "enum": ["disabled", "human_confirmed_only"]}
+      }
+    }
+  }
+}

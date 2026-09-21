@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "CollectionRun.v1",
+  "collectionRunId": "run:synthetic-collection-001",
+  "tenantId": "tenant:synthetic-reference",
+  "integrationProfileRef": "profile:synthetic-pki",
+  "scopeRef": "scope:synthetic-global",
+  "mode": "full",
+  "trigger": "scheduled",
+  "authoritativeScope": true,
+  "status": "succeeded",
+  "requestedAt": "2030-01-07T12:00:00Z",
+  "startedAt": "2030-01-07T12:01:00Z",
+  "finishedAt": "2030-01-07T12:05:00Z",
+  "cursorStartRef": null,
+  "cursorEndRef": "cursor:synthetic-pki-global-r1",
+  "sourceEventRefs": ["event:synthetic-page-001"],
+  "observationBatchRefs": ["batch:synthetic-observations-001"],
+  "workerRunRefs": ["worker-run:synthetic-collection-attempt-001"],
+  "metrics": {
+    "pagesRead": 1,
+    "providerRecordsRead": 3,
+    "sourceEventsCommitted": 1,
+    "observationsAccepted": 3,
+    "observationsQuarantined": 0
+  },
+  "retrySummary": {
+    "attemptCount": 1,
+    "retryCount": 0,
+    "lastClassification": "none"
+  },
+  "tombstoneDecision": "eligible",
+  "limitations": [],
+  "safety": {
+    "synthetic": true,
+    "rawPayloadEmbedded": false,
+    "credentialValueEmbedded": false,
+    "privateKeyEmbedded": false
+  }
+}

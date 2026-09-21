@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "DashboardMetricDefinition.v1",
+  "metricDefinitionId": "metric:authorized-estate-coverage:v1",
+  "name": "Authorized-scope estate coverage",
+  "questionAnswered": "What fraction of the independently enumerated asset units in the named authorized scope has at least one admitted current observation?",
+  "valueKind": "ratio",
+  "unit": "fraction",
+  "calculation": {
+    "formula": "observed in-scope asset units divided by independently enumerated in-scope asset units",
+    "numeratorDefinition": "Distinct denominator asset units linked to at least one admitted, non-stale observation within the named assessment scope.",
+    "denominatorDefinition": "Distinct in-scope asset units enumerated by the referenced authoritative denominator source and frozen at the stated as-of time.",
+    "missingDenominatorResult": "unavailable",
+    "zeroDenominatorResult": "unavailable",
+    "rounding": "Retain six decimal places in machine output; display percentages may round to one decimal place."
+  },
+  "scopeSemantics": {
+    "scopeReferenceRequired": true,
+    "denominatorSourceRequired": true,
+    "asOfTimestampRequired": true,
+    "unknownsExcludedFromSuccess": true,
+    "qualification": "The denominator must name its asset unit, authority, exclusions, and freeze time; no denominator means no percentage."
+  },
+  "interpretation": {
+    "doesMean": "The stated fraction of independently enumerated units in the named scope has admitted evidence meeting the stated freshness rule.",
+    "doesNotMean": [
+      "The complete enterprise estate has been discovered.",
+      "Unenumerated assets do not exist.",
+      "Observed assets are correctly configured or quantum safe.",
+      "Risk has been accepted or remediation completed."
+    ],
+    "whenUnavailable": "Show unavailable with the missing denominator as an evidence limitation; do not infer a denominator from observed records."
+  },
+  "safety": {
+    "syntheticDefinition": true,
+    "enterpriseCompletenessClaimAllowed": false,
+    "riskConclusionAllowed": false,
+    "migrationCompletionClaimAllowed": false
+  }
+}

@@ -1,0 +1,10 @@
+{
+  "schema_version": "pba.pqc.reference-source-page.v1",
+  "kind": "pki", "synthetic": true,
+  "records": [{
+    "id": "cert-001", "evidence_basis": "observed", "application_id": "app-001",
+    "application_source": "synthetic-cmdb", "common_name": "records.example",
+    "signature_algorithm": "sha256WithRSAEncryption", "public_key_algorithm": "RSA",
+    "public_key_bits": 2048, "valid_until": "2027-09-05T00:00:00Z"
+  }]
+}

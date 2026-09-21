@@ -1,103 +1,59 @@
-# PQC Migration Reference Demo
+# PQC Assessment and Migration Reference
+One C# backend, one React application, one maintained repository.
 
-An independent, synthetic reference implementation for planning an enterprise
-post-quantum cryptography (PQC) migration. It demonstrates how cryptographic
-inventory evidence can be normalized, correlated, prioritized, reviewed, and
-carried through governed migration decisions without overstating what the
-evidence proves.
+This is the maintained public source for the original reference demo and the assessment workspace. The C# host replaces the former Go and Worker servers; it serves the React build, owns durable synthetic assessment state, and exposes the original posture and health capabilities. There is no second capacity app or separate reference-demo service.
 
-This public repository is a **source-only portfolio snapshot**. It is not a
-live service, customer deployment, cryptographic implementation, completed
-migration, or NIST/FIPS validation.
+## Start here
+Read the [maintainer and Copilot guide](docs/MAINTAINER_GUIDE.readable.html), then the [capability migration record](docs/UNIFIED_APPLICATION.readable.html). Coding agents must follow [AGENTS.md](AGENTS.md).
 
-## What is included
+Included in the same authenticated application:
 
-- A React and TypeScript interface for a ten-system synthetic inventory,
-  prioritization, evidence review, migration patterns, and assurance posture.
-- Closed JSON Schema contracts for evidence observations, canonical inventory
-  records, fusion results, and the bounded read-only posture API.
-- Deterministic evidence-fusion logic that preserves provenance, conflicts,
-  unmatched records, replay counts, and human-review requirements.
-- A Cloudflare Worker adapter that serves static assets and a read-only
-  `/api/posture` endpoint without application storage or request-payload echo.
-- A standard-library-only Go server for portable, loopback-first execution.
-- Synthetic SBOM/CBOM tooling and a scoped cryptographic inventory.
-- NIST source-status and claim-boundary documentation.
-- Unit, integration, packaging, parity, contract, and security-oriented tests.
+- Assessment work: receipt, reviewed identity relationships, supporting records, conclusions and report consequences.
+- Five-question discovery forms, full specialist questionnaires, Excel exchange, software recognition examples and multiple products/deployments.
+- Scope, roles, independent gate decisions, exact Phase 1 selection, Phase 2 business context and immutable reports.
+- Asset search, estate graph, coverage, findings, standards, run history and migration lookahead.
+- Original reference inventory, evidence fusion, prioritization, architecture, migration patterns, scenarios, decisions, assurance posture and guided explanations.
+- Formula-based capacity planning, scenario comparison, sensitivity analysis and downloadable review packages. These estimates are assumptions, not benchmarks; Terraform output does not provision infrastructure.
 
-## What this demonstrates
+## Prepare and run
+Prerequisites: .NET SDK 10.0.400, Node 22.12+, Python 3.11+. The bounded local launcher currently requires Linux user-systemd/cgroup support. Do not install a second backend or expose the Vite development server as the product.
 
-- Evidence boundaries that distinguish source inspection, runtime observation,
-  exact-host capability, algorithm standards, and module validation.
-- Ports-and-adapters design for combining heterogeneous security evidence
-  without silently discarding disagreement or provenance.
-- Fail-closed contracts, deterministic processing, bounded telemetry, and
-  operator review before sensitive conclusions or actions.
-- Portable delivery across a Worker-oriented runtime and an embedded Go
-  executable while keeping their posture semantics aligned.
-
-## What this does not claim
-
-- No customer, employer, production, or private-environment data is included.
-- No live connector, public hostname, identity policy, DNS configuration, or
-  cloud-provider deployment is asserted.
-- No inventory completeness, migration completion, business outcome, or
-  production adoption is asserted.
-- No exact browser-session key exchange, hybrid-PQ endpoint capability,
-  post-quantum visitor signature, CAVP certificate, CMVP certificate, or
-  FIPS-validated runtime is asserted.
-- The repository does not implement cryptographic algorithms; it models
-  migration governance, evidence handling, and assurance boundaries.
-
-## Run locally
-
-Prerequisites:
-
-- Node.js 22.12 or newer and npm 10
-- Go 1.25 or newer (the module selects Go 1.26.6 for validation)
-- Python 3.11 or newer for the BOM tests
-
+Dependency acquisition is explicit:
 ```sh
-npm ci
-npm run check
-python3 -m pip install -r requirements-dev.txt
-python3 -m pytest -q scripts/test_pqc_bom.py
+python3 -m venv .venv
+.venv/bin/python -m pip install -r requirements-handoff.txt
+npm --prefix apps/pqc-enterprise-demo/frontend ci
+dotnet restore apps/pqc-enterprise-demo/PqcEnterpriseDemo.csproj --locked-mode --disable-parallel
+npm run build
+.venv/bin/python scripts/start_reference.py
 ```
 
-For local development:
+Open http://127.0.0.1:18479/ on the same host. Keep that foreground command running; Ctrl+C stops only this instance. It creates owner-only synthetic state under ignored artifacts, checks resource headroom, and enforces one CPU, 1 GiB RAM, no additional swap and a two-hour runtime limit. Restart the same command to resume the same state. Never delete it to solve a migration error.
 
+The login lists fixed fictional demo personas. Its intentionally public demonstration password is `synthetic-demo-only`; it is not an enterprise credential. Use Assessment lead for coordination, Technical review lead for independent record review, and the designated sponsor/risk/business roles at their respective gates. Choosing a demo persona is simulation, not identity proof.
+
+The original reference screens are now **Reference explanations** in the shared navigation. The calculator is **Capacity planning**. Supporting explanations do not overwrite assessment facts or authorize migration.
+
+## Validate committed source
+After reviewing and committing changes, run the sequential suite once:
 ```sh
-npm run dev
+.venv/bin/python scripts/validate_reference.py
 ```
+It records the exact commit and per-check results under ignored `artifacts/reference-validation/`. It runs the publication boundary, C# build, React build/typecheck, Python domain/API suites, React tests and recorder tests. Optional historical/browser-dependent proofs are explicitly skipped when their prerequisites are unavailable. Tests do not establish owner acceptance.
 
-For the portable Go build:
+## Public/private boundary
+Only employer-neutral code, contracts, explanatory material and synthetic fixtures belong here. No employer contacts, project reports, SOWs, real returned forms, state databases, credentials, recordings or private Git history belong in this repository.
 
-```sh
-npm run portable:build
-./portable/bin/pqc-reference-demo
-```
+The blank operational fixtures are neutral reference reissues, with new content hashes and an inert example.invalid return address. They are not historical distributed enterprise forms and must not be mistaken for a live return channel.
 
-Native execution listens on `127.0.0.1:8080` by default. The checked-in
-Worker configuration intentionally has no public route and disables
-`workers.dev` and preview URLs. Publishing this source does not deploy it.
+The baseline mapping contains 27 questionnaire profiles and 27 runtime families with an explicit many-to-many crosswalk, not numerical identity. A separate versioned extension adds virtualization as the 28th software class without relabeling historical forms.
 
-## Evidence and design notes
+## Boundaries
+This is a synthetic development application, not a deployed enterprise product. Enterprise SSO, approved HTTPS, SQL Server, live source qualification, production backup/restore and security review remain qualification work. SQLite persistence and fixed personas are deliberately demo-only. No live ticket submission or Phase 3/4 migration execution is enabled.
 
-- [Evidence-fusion architecture](docs/evidence-fusion-architecture.md)
-- [NIST traceability](docs/nist-traceability.md)
-- [NIST source-status registry](docs/source-status-registry.md)
-- [Inventory speaker dictionary](docs/inventory-speaker-dictionary.md)
-- [Contract boundaries](contracts/README.md)
-- [Portable runtime](portable/README.md)
+Python modules are offline fixture producers, normalizers and validation/reference tools, not an alternative runtime backend. Illustrative TypeScript calculations are reference models, not authoritative Phase 2 assessments.
 
-The included data and examples are deterministic synthetic fixtures. Any
-production use would require its own identity, authorization, data
-classification, retention, connector, deployment, observability, recovery,
-cost, and accountable-owner review.
+The preserved public history contains the retired implementation for traceability. No private source history was merged.
 
-## License posture
-
-This repository is publicly visible for portfolio and evaluation purposes but
-is not offered under an open-source license. See [LICENSE](LICENSE) and
-[THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Third-party dependencies
-remain subject to their own licenses.
+## Licensing
+See [LICENSE](LICENSE), [NOTICE](NOTICE), [LICENSE-DOCS](LICENSE-DOCS) and [THIRD_PARTY_NOTICES.md](THIRD_PARTY_NOTICES.md). Public visibility is not permission to ignore the applicable source and third-party licenses.

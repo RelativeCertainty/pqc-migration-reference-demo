@@ -1,0 +1,76 @@
+{
+  "schemaVersion": "SourceContractPackManifest.v1",
+  "contractPackId": "contract:source-pack:source-repositories:v1",
+  "packVersion": "1.0.0",
+  "sourceFamily": "source_repositories",
+  "title": "Source-code repository catalog synthetic contract pack",
+  "purpose": "Prove product-neutral pagination and mapping for repository, application, component, and branch references without source content or real repository paths.",
+  "provenance": {
+    "origin": "independently_authored_synthetic",
+    "contractEvidenceStatus": "synthetic_contract_tested",
+    "retrievalRequired": false,
+    "redistributionStatus": "independently_authored_public_fixture"
+  },
+  "access": {
+    "classification": "synthetic_local",
+    "authenticationMode": "simulated_reference",
+    "credentialReferenceOnly": true,
+    "readOnly": true
+  },
+  "pagination": {
+    "mode": "opaque_cursor",
+    "pageSizeLimit": 100,
+    "cursorIsOpaqueReference": true,
+    "rawCursorStored": false,
+    "terminalCondition": "next_cursor_ref_is_null"
+  },
+  "responseContractRef": "contract:synthetic-source-page.v1",
+  "fixturePageRefs": ["fixtures/page-001.v1.json", "fixtures/page-002.v1.json"],
+  "canonicalMappings": [
+    {
+      "sourceField": "attributes.repositoryRef",
+      "canonicalTarget": "asset.repositoryRef",
+      "required": true,
+      "semanticNote": "Opaque synthetic repository identity; no organization, URL, or filesystem path is exposed."
+    },
+    {
+      "sourceField": "attributes.applicationRef",
+      "canonicalTarget": "dependency.applicationRef",
+      "required": true,
+      "semanticNote": "Correlates repository metadata to the synthetic application identity."
+    },
+    {
+      "sourceField": "attributes.componentRef",
+      "canonicalTarget": "asset.componentRef",
+      "required": true,
+      "semanticNote": "Identifies a synthetic software component for analysis correlation."
+    },
+    {
+      "sourceField": "attributes.defaultBranchRef",
+      "canonicalTarget": "observation.branchRef",
+      "required": true,
+      "semanticNote": "Carries only an opaque branch reference, never source content."
+    }
+  ],
+  "conformanceBehaviors": [
+    "pagination",
+    "rate_limit_retry",
+    "timeout_retry",
+    "duplicate_delivery",
+    "authorization_failure",
+    "malformed_record_quarantine",
+    "schema_drift_quarantine",
+    "cursor_resume"
+  ],
+  "limitations": [
+    "The fixture does not model a hosting product, repository permission graph, source tree, commit message, contributor, or source excerpt.",
+    "Repository presence does not prove that all deployed software is represented."
+  ],
+  "safety": {
+    "synthetic": true,
+    "vendorClaimed": false,
+    "liveIntegrationClaimed": false,
+    "containsCredentials": false,
+    "containsRawEnterprisePayload": false
+  }
+}

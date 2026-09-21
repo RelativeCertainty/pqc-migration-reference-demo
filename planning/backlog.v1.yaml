@@ -1,0 +1,422 @@
+# SPDX-License-Identifier: CC-BY-4.0
+schemaVersion: pqc.project-backlog.v1
+program: Employer-neutral PQC migration consulting program
+sourceOfTruth: yaml
+rollingWaveWeeks: 2
+epics:
+  - id: E1
+    name: Program mobilization and governance
+    weeks: W1-2
+    gateAcceptance: Sponsor and accountable security stakeholders approve the charter, governance model, and first 90-day definition of done.
+    features:
+      - id: F1.1
+        name: Charter and authority
+        stories:
+          - id: S1.1.1
+            outcome: Confirm sponsor, outcomes, scope, exclusions, success measures, decision rights, escalation paths, and cadence.
+            acceptanceCriteria: ["Named owners approve a versioned charter with measurable outcomes and exclusions."]
+            dependencies: []
+            evidence: contract-tested
+            risk: high
+            gate: G1
+            ownerRole: Program sponsor
+            status: ready
+            targetIteration: W1
+          - id: S1.1.2
+            outcome: Establish stakeholder map, RACI, RAID register, decision log, evidence gates, and architecture and risk forums.
+            acceptanceCriteria: ["Every material decision and risk has an accountable role, forum, and escalation path."]
+            dependencies: [S1.1.1]
+            evidence: contract-tested
+            risk: high
+            gate: G1
+            ownerRole: Program manager
+            status: ready
+            targetIteration: W1-2
+      - id: F1.2
+        name: Standards and policy baseline
+        stories:
+          - id: S1.2.1
+            outcome: Establish an authoritative standards register separating final standards, drafts, sector guidance, and vendor claims.
+            acceptanceCriteria: ["Each entry records authority, version, publication state, owner, and review date."]
+            dependencies: [S1.1.1]
+            evidence: contract-tested
+            risk: moderate
+            gate: G1
+            ownerRole: Security architect
+            status: ready
+            targetIteration: W1
+          - id: S1.2.2
+            outcome: Draft interim policy for approved algorithms, hybrid approaches, exceptions, evidence, and crypto-agility.
+            acceptanceCriteria: ["The draft defines decision authority, exception expiry, evidence requirements, and unresolved questions."]
+            dependencies: [S1.2.1]
+            evidence: contract-tested
+            risk: high
+            gate: G1
+            ownerRole: Cryptography policy owner
+            status: ready
+            targetIteration: W2
+  - id: E2
+    name: Cryptographic assessment and inventory
+    weeks: W1-4
+    gateAcceptance: The pilot cohort has a measurable inventory baseline with documented confidence and unknowns; completeness is not assumed.
+    features:
+      - id: F2.1
+        name: Canonical inventory contract
+        stories:
+          - id: S2.1.1
+            outcome: Define asset, service, owner, data lifetime, algorithm, protocol, metadata, dependency, environment, exposure, vendor, confidence, source, and freshness fields without key material.
+            acceptanceCriteria: ["The versioned contract rejects key material and preserves source provenance and confidence."]
+            dependencies: [S1.1.1]
+            evidence: contract-tested
+            risk: high
+            gate: G2
+            ownerRole: Domain architect
+            status: ready
+            targetIteration: W1-2
+          - id: S2.1.2
+            outcome: Establish source authority, provenance, deduplication, conflict, staleness, and human-review rules.
+            acceptanceCriteria: ["Conflicting or stale observations remain visible and route to an accountable review queue."]
+            dependencies: [S2.1.1]
+            evidence: contract-tested
+            risk: high
+            gate: G2
+            ownerRole: Inventory product owner
+            status: ready
+            targetIteration: W2
+      - id: F2.2
+        name: Discovery-source mobilization
+        stories:
+          - id: S2.2.1
+            outcome: Inventory existing PKI, code, network, CMDB, cloud, vulnerability, KMS/HSM, and vendor sources.
+            acceptanceCriteria: ["Each source has an authority class, owner, access path, freshness, known gaps, and handling classification."]
+            dependencies: [S1.1.2]
+            evidence: live-readback
+            risk: moderate
+            gate: G2
+            ownerRole: Discovery lead
+            status: ready
+            targetIteration: W1-2
+          - id: S2.2.2
+            outcome: Select an authorized read-only pilot cohort and document access, classification, retention, and source-owner responsibilities.
+            acceptanceCriteria: ["Written authority and data-handling boundaries exist before collection begins."]
+            dependencies: [S2.1.1, S2.2.1]
+            evidence: contract-tested
+            risk: critical
+            gate: G2
+            ownerRole: Security data owner
+            status: ready
+            targetIteration: W2
+      - id: F2.3
+        name: Baseline assessment
+        stories:
+          - id: S2.3.1
+            outcome: Collect the first authorized cohort and normalize observations through source-specific adapters.
+            acceptanceCriteria: ["Every normalized observation retains source reference, collection time, confidence, and classification."]
+            dependencies: [S2.1.2, S2.2.2]
+            evidence: live-readback
+            risk: high
+            gate: G2
+            ownerRole: Assessment lead
+            status: proposed
+            targetIteration: W3
+          - id: S2.3.2
+            outcome: Measure coverage, unmatched records, conflicts, duplicates, stale evidence, and unresolved ownership.
+            acceptanceCriteria: ["The baseline reports denominators and unknowns without asserting completeness."]
+            dependencies: [S2.3.1]
+            evidence: live-readback
+            risk: high
+            gate: G2
+            ownerRole: Inventory product owner
+            status: proposed
+            targetIteration: W3-4
+  - id: E3
+    name: Risk, dependencies, and enterprise roadmap
+    weeks: W2-5
+    gateAcceptance: Risk, architecture, and business owners approve the first migration wave and its ordering rationale.
+    features:
+      - id: F3.1
+        name: Context and prioritization
+        stories:
+          - id: S3.1.1
+            outcome: Map cryptographic assets to services, sensitive data, retention, exposure, criticality, change control, and vendor dependencies.
+            acceptanceCriteria: ["Pilot records expose unresolved service, owner, data-lifetime, and dependency context."]
+            dependencies: [S2.1.1]
+            evidence: live-readback
+            risk: high
+            gate: G3
+            ownerRole: Business service owner
+            status: ready
+            targetIteration: W2-4
+          - id: S3.1.2
+            outcome: Approve a transparent priority model covering harvest-now risk, vulnerable public-key use, lifetime, exposure, criticality, readiness, agility, and controls.
+            acceptanceCriteria: ["Factor definitions, weights or decision rules, exceptions, and approvers are versioned and explainable."]
+            dependencies: [S1.2.2, S3.1.1]
+            evidence: contract-tested
+            risk: high
+            gate: G3
+            ownerRole: Risk owner
+            status: proposed
+            targetIteration: W3-4
+      - id: F3.2
+        name: Migration waves
+        stories:
+          - id: S3.2.1
+            outcome: Identify urgent cohorts, pilots, vendor-blocked assets, unsupported technology, and exception candidates.
+            acceptanceCriteria: ["Every cohort has rationale, dependency state, accountable owner, and next decision."]
+            dependencies: [S2.3.2, S3.1.2]
+            evidence: live-readback
+            risk: high
+            gate: G3
+            ownerRole: Migration lead
+            status: proposed
+            targetIteration: W4
+          - id: S3.2.2
+            outcome: Produce 90-day, 12-month, 24-month, and 36-month waves with dependencies, capacity, and measurable exits.
+            acceptanceCriteria: ["The roadmap distinguishes commitments, assumptions, vendor dependencies, and recalibration triggers."]
+            dependencies: [S3.2.1]
+            evidence: contract-tested
+            risk: high
+            gate: G3
+            ownerRole: Program manager
+            status: proposed
+            targetIteration: W4-5
+  - id: E4
+    name: Crypto-agile reference architecture and sourcing
+    weeks: W2-6
+    gateAcceptance: Architecture governance approves pilot patterns, ownership boundaries, and build, buy, and integrate recommendations.
+    features:
+      - id: F4.1
+        name: Target architecture
+        stories:
+          - id: S4.1.1
+            outcome: Define domain-owned policy, replaceable profiles, provider-neutral ports, anti-corruption adapters, evidence, and independent verification.
+            acceptanceCriteria: ["The architecture names domain authority, adapter boundaries, evidence states, and prohibited shortcuts."]
+            dependencies: [S1.2.2, S2.1.1]
+            evidence: contract-tested
+            risk: high
+            gate: G4
+            ownerRole: Enterprise architect
+            status: ready
+            targetIteration: W2-4
+          - id: S4.1.2
+            outcome: Define TLS, PKI, KMS/HSM, SSH, API, VPN, signing, hybrid, rollback, and compatibility patterns.
+            acceptanceCriteria: ["Each pattern identifies authority, dependencies, test/readback method, rollback, and evidence limits."]
+            dependencies: [S4.1.1]
+            evidence: contract-tested
+            risk: high
+            gate: G4
+            ownerRole: Security architect
+            status: proposed
+            targetIteration: W3-5
+      - id: F4.2
+        name: Build, buy, and integrate
+        stories:
+          - id: S4.2.1
+            outcome: Score tools, vendors, open-source components, and internal build options on coverage, authority, integration, evidence, support, cost, and lock-in.
+            acceptanceCriteria: ["Scoring criteria and source evidence are visible; vendor claims remain identified as claims."]
+            dependencies: [S2.2.1, S4.1.1]
+            evidence: contract-tested
+            risk: moderate
+            gate: G4
+            ownerRole: Sourcing lead
+            status: proposed
+            targetIteration: W4-5
+          - id: S4.2.2
+            outcome: Record architecture decisions naming systems of record and deliberately small custom-engineering areas.
+            acceptanceCriteria: ["Approved decisions include alternatives, consequences, ownership, expiry triggers, and reversibility."]
+            dependencies: [S4.2.1]
+            evidence: contract-tested
+            risk: high
+            gate: G4
+            ownerRole: Architecture review board
+            status: proposed
+            targetIteration: W5-6
+  - id: E5
+    name: Vertical proof slices
+    weeks: W3-10
+    gateAcceptance: Each slice closes only with authorized change, independent readback, benchmarks, and demonstrated rollback; otherwise it remains partial evidence.
+    features:
+      - id: F5.1
+        name: Repository and software-supply-chain slice
+        stories:
+          - id: S5.1.1
+            outcome: Scan an authorized source cohort, normalize findings, reconcile dependencies, and establish measured coverage.
+            acceptanceCriteria: ["The result records authorized scope, ruleset, false-positive review, coverage, skipped files, and unknowns."]
+            dependencies: [S2.3.1, S4.1.1]
+            evidence: live-readback
+            risk: moderate
+            gate: G5
+            ownerRole: Application security lead
+            status: proposed
+            targetIteration: W3-4
+          - id: S5.1.2
+            outcome: Generate remediation proposals and approved pull requests while preserving human-only merge authority.
+            acceptanceCriteria: ["Every proposal is reversible, linked to evidence and tests, and cannot merge without an authorized human."]
+            dependencies: [S5.1.1, S3.1.2]
+            evidence: closed-loop
+            risk: high
+            gate: G5
+            ownerRole: Software owner
+            status: proposed
+            targetIteration: W4-5
+      - id: F5.2
+        name: TLS and PKI slice
+        stories:
+          - id: S5.2.1
+            outcome: Inventory an authorized endpoint cohort and lab-test classical, hybrid, and target configurations.
+            acceptanceCriteria: ["The matrix records endpoint authority, chain, negotiated profile, compatibility, performance, and unresolved dependencies."]
+            dependencies: [S2.3.2, S4.1.2]
+            evidence: live-readback
+            risk: high
+            gate: G5
+            ownerRole: PKI and network lead
+            status: proposed
+            targetIteration: W5-6
+          - id: S5.2.2
+            outcome: Pilot an approved TLS/PKI configuration with rollback, interoperability, performance, chain, and independent readback evidence.
+            acceptanceCriteria: ["Authorized execution and independent negotiation readback meet approved thresholds and rollback is demonstrated."]
+            dependencies: [S5.2.1, S3.2.1]
+            evidence: closed-loop
+            risk: critical
+            gate: G5
+            ownerRole: Change owner
+            status: proposed
+            targetIteration: W7-8
+      - id: F5.3
+        name: SSH slice
+        stories:
+          - id: S5.3.1
+            outcome: Inventory SSH clients, servers, key-exchange support, administrative dependencies, and fallback requirements.
+            acceptanceCriteria: ["The cohort reports negotiated support, ownership, automation dependencies, fallback, and unknowns."]
+            dependencies: [S2.3.2, S4.1.2]
+            evidence: live-readback
+            risk: high
+            gate: G5
+            ownerRole: Platform security lead
+            status: proposed
+            targetIteration: W7-8
+          - id: S5.3.2
+            outcome: Pilot an approved hybrid PQC key exchange where supported and verify negotiation and rollback.
+            acceptanceCriteria: ["Authorized execution, independent handshake readback, performance, compatibility, and rollback evidence are accepted."]
+            dependencies: [S5.3.1, S3.2.1]
+            evidence: closed-loop
+            risk: critical
+            gate: G5
+            ownerRole: SSH service owner
+            status: proposed
+            targetIteration: W9-10
+  - id: E6
+    name: Validation, compliance, and operations
+    weeks: W4-11
+    gateAcceptance: Risk, audit, operations, and architecture accept the evidence model and operating procedures.
+    features:
+      - id: F6.1
+        name: Test and benchmark framework
+        stories:
+          - id: S6.1.1
+            outcome: Define functional, interoperability, performance, negative, failure-injection, rollback, and regression suites.
+            acceptanceCriteria: ["Each pilot pattern has versioned thresholds, environment controls, failure cases, and accountable acceptance."]
+            dependencies: [S4.1.2]
+            evidence: contract-tested
+            risk: high
+            gate: G6
+            ownerRole: Test lead
+            status: proposed
+            targetIteration: W4-6
+          - id: S6.1.2
+            outcome: Capture versioned evidence envelopes containing request, decision, execution, result, readback, timestamps, and owner.
+            acceptanceCriteria: ["Missing stages remain explicit and historical envelopes are immutable."]
+            dependencies: [S4.1.1, S6.1.1]
+            evidence: contract-tested
+            risk: high
+            gate: G6
+            ownerRole: Evidence owner
+            status: proposed
+            targetIteration: W5-7
+      - id: F6.2
+        name: Operational controls
+        stories:
+          - id: S6.2.1
+            outcome: Define tickets, approvals, exception expiry, retry/idempotency, incident, rollback, and retention procedures.
+            acceptanceCriteria: ["Procedures name authority, failure boundaries, escalation, retention, and recovery verification."]
+            dependencies: [S1.1.2, S6.1.2]
+            evidence: contract-tested
+            risk: critical
+            gate: G6
+            ownerRole: Operations lead
+            status: proposed
+            targetIteration: W6-9
+          - id: S6.2.2
+            outcome: Map practices to applicable risk and audit controls without claiming certification.
+            acceptanceCriteria: ["Every mapping identifies evidence, owner, gap, and scope limitation."]
+            dependencies: [S6.1.2, S6.2.1]
+            evidence: contract-tested
+            risk: high
+            gate: G6
+            ownerRole: Risk and audit liaison
+            status: proposed
+            targetIteration: W8-10
+      - id: F6.3
+        name: Program measures
+        stories:
+          - id: S6.3.1
+            outcome: Report coverage, unknown ownership, staleness, high-risk backlog, vendor readiness, pilot success, rollback success, and validated migration rate.
+            acceptanceCriteria: ["Metrics have definitions, denominators, source authority, freshness, targets, and anti-gaming guardrails."]
+            dependencies: [S2.3.2, S3.2.2, S6.1.2]
+            evidence: live-readback
+            risk: high
+            gate: G6
+            ownerRole: Program analytics owner
+            status: proposed
+            targetIteration: W8-11
+  - id: E7
+    name: Enablement and handoff
+    weeks: W7-12
+    gateAcceptance: Named internal owners can operate assessment, prioritize work, and run the next authorized pilot without consultant dependence.
+    features:
+      - id: F7.1
+        name: Training
+        stories:
+          - id: S7.1.1
+            outcome: Deliver audience-specific modules for executives, program managers, architects, engineers, risk, and operations.
+            acceptanceCriteria: ["Each audience can explain its decisions, evidence obligations, escalation, and next action."]
+            dependencies: [S4.1.2, S6.1.2]
+            evidence: live-readback
+            risk: moderate
+            gate: G7
+            ownerRole: Enablement lead
+            status: proposed
+            targetIteration: W7-10
+          - id: S7.1.2
+            outcome: Teach the architecture and project method through repository, TLS, and SSH labs.
+            acceptanceCriteria: ["Participants complete labs and distinguish synthetic, contract, readback, and closed-loop evidence."]
+            dependencies: [S5.1.1, S5.2.1, S5.3.1]
+            evidence: live-readback
+            risk: moderate
+            gate: G7
+            ownerRole: Technical training lead
+            status: proposed
+            targetIteration: W9-11
+      - id: F7.2
+        name: Sustainable operating model
+        stories:
+          - id: S7.2.1
+            outcome: Assign durable ownership for inventory, policy, architecture, pilots, exceptions, evidence, vendors, and metrics.
+            acceptanceCriteria: ["Named roles accept operating cadence, service levels, escalation, and succession coverage."]
+            dependencies: [S1.1.2, S6.2.1]
+            evidence: contract-tested
+            risk: high
+            gate: G7
+            ownerRole: Program sponsor
+            status: proposed
+            targetIteration: W9-11
+          - id: S7.2.2
+            outcome: Transfer backlog, patterns, playbooks, decisions, training, and next-wave roadmap.
+            acceptanceCriteria: ["Internal owners independently operate assessment, prioritization, and the next authorized pilot."]
+            dependencies: [S7.1.2, S7.2.1, S6.3.1]
+            evidence: closed-loop
+            risk: high
+            gate: G7
+            ownerRole: Program manager
+            status: proposed
+            targetIteration: W11-12

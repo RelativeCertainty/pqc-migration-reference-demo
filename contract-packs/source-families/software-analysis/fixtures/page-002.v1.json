@@ -1,0 +1,34 @@
+{
+  "schemaVersion": "SyntheticSourcePage.v1",
+  "pageId": "page:synthetic:software-analysis:002",
+  "contractPackRef": "contract:source-pack:software-analysis:v1",
+  "sourceFamily": "software_analysis",
+  "pageNumber": 2,
+  "totalPageCount": 2,
+  "currentCursorRef": "cursor:synthetic:software-analysis:after-page-1",
+  "nextCursorRef": null,
+  "records": [
+    {
+      "sourceRecordId": "record:synthetic:software-analysis:shared-crypto",
+      "recordType": "software_analysis_signal",
+      "observedAt": "2030-01-07T12:04:15Z",
+      "attributes": {
+        "analysisArtifactRef": "artifact:synthetic:analysis:shared-crypto-library",
+        "repositoryRef": "repo:synthetic:shared-crypto-library",
+        "componentRef": "asset:synthetic:component:shared-crypto-library",
+        "cryptoPrimitiveClass": "signature_verification",
+        "algorithmFamily": "rsa",
+        "findingDisposition": "review_required",
+        "toolRuleRef": "rule:synthetic:crypto-use"
+      }
+    }
+  ],
+  "safety": {
+    "synthetic": true,
+    "independentlyAuthored": true,
+    "rawProviderPayload": false,
+    "containsCredentials": false,
+    "containsPersonalData": false,
+    "containsKeyMaterial": false
+  }
+}

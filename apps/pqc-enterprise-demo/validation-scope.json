@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "pqc.enterprise.development-validation-scope.v1",
+  "status": "development_candidate_not_production_activation",
+  "m2EvidenceTier": "m2-R0-development",
+  "productionActivation": false,
+  "ownerObservation": "not_recorded_by_automation",
+  "releaseCandidate": "artifacts/pqc-enterprise-demo/analytical-release-20260905",
+  "analysisSchema": "pqc.enterprise.analysis.v1",
+  "reportSchema": "pqc.enterprise.report.v2",
+  "storageSchemaVersion": 2,
+  "validationStatus": {
+    "integratedTests": "passed_22_http_fixture_and_24_frontend_dom_checks_2026_09_05",
+    "recoveryCheck": "isolated_upgrade_historical_hash_preservation_and_paired_rollback_readback_passed",
+    "visualReview": "pending_browser_connection",
+    "ownerOutcome": "not_recorded_by_automation"
+  },
+  "behaviors": [
+    {
+      "scope": "pqc.enterprise.synthetic_session_authorization",
+      "riskTier": "R3",
+      "checkpoints": ["anonymous_data_denied", "viewer_cannot_generate_or_record_review", "logout_revokes_session", "loopback_only"],
+      "activationBoundary": "Enterprise identity, public access and production activation remain unapproved. Local synthetic role tests do not establish enterprise authentication."
+    },
+    {
+      "scope": "pqc.enterprise.evidence_to_report",
+      "riskTier": "R2",
+      "checkpoints": ["dashboard_asset_reconciliation", "search_evidence_dependency_walkthrough", "phase1_to_phase2_snapshot_binding", "v2_narrative_sections", "immutable_report_and_review_context", "restart_and_restore"],
+      "activationBoundary": "Owner must personally exercise the connected UI and record their own outcome before this journey is called owner-accepted."
+    },
+    {
+      "scope": "pqc.enterprise.analytical_investigation",
+      "riskTier": "R2",
+      "checkpoints": ["five_dimension_filter_consistency", "stable_finding_identifiers", "observation_implication_recommendation_traceability", "service_application_use_graph_provenance", "bounded_graph_context_and_truncation", "overlapping_coverage_membership_explanation", "exposure_readiness_separation"],
+      "activationBoundary": "The method and its interpretations remain illustrative and synthetic. Analytical projections do not establish enterprise coverage, independently verified product behavior or an accepted risk position."
+    },
+    {
+      "scope": "pqc.enterprise.local_review_actions",
+      "riskTier": "R2",
+      "checkpoints": ["analyst_only_local_actions", "immutable_action_revisions", "idempotent_replay", "changed_request_conflict", "stale_revision_rejection", "local_evidence_request_not_dispatched", "review_disposition_not_acceptance", "historical_report_preservation"],
+      "activationBoundary": "Local review records are development-only workflow evidence. No email, ticket, source-system change, risk acceptance or founder-owner validation outcome is authorized or submitted."
+    },
+    {
+      "scope": "pqc.enterprise.synthetic_schema_upgrade",
+      "riskTier": "R2",
+      "checkpoints": ["additive_schema1_to_schema2_upgrade", "historical_records_preserved", "schema2_backup_restore", "old_binary_schema2_rejection", "paired_release_and_schema1_backup_rollback"],
+      "activationBoundary": "Only labelled isolated synthetic state is in scope. Rollback requires both the previous application release and pre-analytical schema-1 state; never use the old binary on schema-2 state."
+    }
+  ],
+  "scopeLimitations": [
+    "synthetic-only single-tenant development adapter",
+    "no enterprise SSO, SQL Server runtime qualification or public HTTPS deployment",
+    "local review actions do not confer live source integration, migration, ticket write or human acceptance authority",
+    "current analytical visual review and owner observation are not yet recorded",
+    "C# controller-worker simulation is not production PBA catalog or OPA dispatch"
+  ]
+}

@@ -1,0 +1,41 @@
+{
+  "schemaVersion": "ObservationBatchManifest.v1",
+  "observationBatchId": "batch:synthetic-observations-001",
+  "tenantId": "tenant:synthetic-reference",
+  "integrationProfileRef": "profile:synthetic-pki",
+  "collectionRunRef": "run:synthetic-collection-001",
+  "sourceEventRefs": ["event:synthetic-page-001"],
+  "observationCount": 3,
+  "artifact": {
+    "artifactRef": "artifact:synthetic-observations-001",
+    "contentDigest": "sha256:bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "manifestDigest": "sha256:cccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccccc",
+    "format": "jsonl",
+    "byteCount": 3072,
+    "encryptedAtRest": true
+  },
+  "timestamps": {
+    "collectionStartedAt": "2030-01-07T12:01:00Z",
+    "collectionCompletedAt": "2030-01-07T12:02:00Z",
+    "normalizedAt": "2030-01-07T12:03:00Z",
+    "packagedAt": "2030-01-07T12:04:00Z",
+    "importedAt": "2030-01-07T12:05:00Z"
+  },
+  "scanAuthority": {
+    "authoritativeFullScan": true,
+    "completedWithoutGap": true,
+    "tombstoneCandidate": true
+  },
+  "admission": {
+    "status": "accepted",
+    "acceptedObservationCount": 3,
+    "quarantinedObservationCount": 0,
+    "reasonCodes": []
+  },
+  "safety": {
+    "synthetic": true,
+    "rawPayloadEmbedded": false,
+    "credentialValueEmbedded": false,
+    "privateKeyEmbedded": false
+  }
+}

@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/external-reference-binding.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "ExternalReferenceBinding.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "bindingId", "programId", "capability", "externalSystemType", "localRecordRef", "externalReference", "syncDirection", "status", "lastVerifiedAt"],
+  "properties": {
+    "schemaVersion": {"const": "ExternalReferenceBinding.v1"},
+    "bindingId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "capability": {"type": "string", "minLength": 3, "maxLength": 160},
+    "externalSystemType": {"type": "string", "enum": ["calendar", "backlog", "document_repository", "ticketing", "identity", "relational_store", "other"]},
+    "localRecordRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "externalReference": {"type": "string", "minLength": 3, "maxLength": 500},
+    "syncDirection": {"type": "string", "enum": ["read_only_import", "export_after_approval", "manual_reconciliation"]},
+    "status": {"type": "string", "enum": ["candidate", "configured", "validated", "disabled", "error"]},
+    "lastVerifiedAt": {"$ref": "program-operations-common.v1.schema.json#/$defs/timestamp"}
+  }
+}

@@ -1,0 +1,562 @@
+<!doctype html>
+<html lang="en" data-classification="private">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <meta name="generator" content="PBA readable document renderer v1">
+  <title>Guided PQC Assessment Workspace — Operator Guide</title>
+  <style>
+    :root {
+      --page: #edf1f5;
+      --paper: #ffffff;
+      --text: #20252d;
+      --muted: #647080;
+      --line: #d9e0e8;
+      --accent: #285f86;
+      --accent-soft: #e9f2f8;
+      --notice: #7c4b13;
+      --notice-bg: #fff3dc;
+      --code: #f4f6f8;
+      --shadow: 0 18px 55px rgba(31, 43, 58, 0.11);
+      --measure: 76ch;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #11161d;
+        --paper: #1a212b;
+        --text: #e8edf3;
+        --muted: #a8b3c0;
+        --line: #35404e;
+        --accent: #8fc8ed;
+        --accent-soft: #203848;
+        --notice: #f0c47b;
+        --notice-bg: #3a2b19;
+        --code: #111821;
+        --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-underline-offset: 0.16em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--paper);
+      border: 2px solid var(--accent);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: none; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.83rem;
+    }
+    .classification {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--notice);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .classification::before {
+      content: "";
+      width: 0.62rem;
+      height: 0.62rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .reader-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .reader-actions a,
+    .reader-actions button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      padding: 0.42rem 0.75rem;
+      text-decoration: none;
+    }
+    .reader-actions a:hover,
+    .reader-actions button:hover { border-color: var(--accent); }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: clamp(1.1rem, 3vw, 2.6rem);
+      display: grid;
+      grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+      gap: clamp(1.1rem, 3vw, 2.8rem);
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 1.3rem;
+      max-height: calc(100vh - 2.6rem);
+      overflow: auto;
+      padding: 1rem 0.9rem 1rem 0;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .toc-title {
+      margin: 0 0 0.7rem;
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .toc-list { margin: 0; padding: 0; list-style: none; }
+    .toc-list li { margin: 0.22rem 0; }
+    .toc-list a {
+      display: block;
+      padding: 0.28rem 0.4rem;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a:focus {
+      border-left-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .toc-level-3 { padding-left: 0.75rem; }
+    .paper {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 5vw, 4.5rem);
+    }
+    .document-meta {
+      max-width: var(--measure);
+      margin: 0 auto 2.5rem;
+      padding: 0 0 1.15rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .document-meta strong { color: var(--text); }
+    .document-meta code { overflow-wrap: anywhere; word-break: break-all; }
+    .notice {
+      max-width: var(--measure);
+      margin: 0 auto 2rem;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--notice);
+      border-radius: 6px;
+      background: var(--notice-bg);
+      color: var(--notice);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+    article > * { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+    article h1,
+    article h2,
+    article h3,
+    article h4 {
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      scroll-margin-top: 1.5rem;
+    }
+    article h1 {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+      font-size: clamp(2.1rem, 5vw, 3.5rem);
+      font-weight: 760;
+    }
+    article h2 {
+      margin-top: 3.4rem;
+      margin-bottom: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    article h3 { margin-top: 2.4rem; font-size: 1.25rem; }
+    article h4 { margin-top: 2rem; font-size: 1.05rem; }
+    article p { margin-top: 0.85rem; margin-bottom: 0.85rem; }
+    article ul,
+    article ol { padding-left: 1.45rem; }
+    article li { margin: 0.42rem 0; padding-left: 0.15rem; }
+    article li::marker { color: var(--accent); font-weight: 700; }
+    article blockquote {
+      padding: 0.2rem 0 0.2rem 1.2rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-style: italic;
+    }
+    article code {
+      padding: 0.12em 0.32em;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 0.84em;
+      overflow-wrap: anywhere;
+    }
+    article pre {
+      max-width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--code);
+      overflow: auto;
+      line-height: 1.45;
+    }
+    article pre code { padding: 0; background: transparent; overflow-wrap: normal; }
+    article hr { margin-top: 2.8rem; margin-bottom: 2.8rem; border: 0; border-top: 1px solid var(--line); }
+    article img { max-width: 100%; height: auto; }
+    .image-placeholder {
+      display: inline-block;
+      padding: 0.3rem 0.5rem;
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.86rem;
+    }
+    .unsafe-link { color: var(--muted); text-decoration: line-through; }
+    article table {
+      display: block;
+      max-width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.88rem;
+    }
+    article th,
+    article td { padding: 0.58rem 0.7rem; border: 1px solid var(--line); text-align: left; }
+    .footer {
+      max-width: var(--measure);
+      margin: 3.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.76rem;
+    }
+    @media (max-width: 900px) {
+      body { font-size: 17px; }
+      .shell { display: block; padding: 0; }
+      .toc {
+        position: static;
+        max-height: 20rem;
+        overflow: auto;
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .toc-list { columns: 2; column-gap: 1.4rem; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; }
+    }
+    @media (max-width: 560px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .toc-list { columns: 1; }
+      .paper { padding: 1.2rem 1rem 2.5rem; }
+      article h1 { font-size: 2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    @media print {
+      :root { --paper: #fff; --text: #111; --muted: #444; --line: #ccc; }
+      @page { size: auto; margin: 0.7in; }
+      body { background: #fff; color: #111; font-size: 11pt; }
+      .topbar,
+      .toc,
+      .notice,
+      .skip-link,
+      .reader-actions { display: none !important; }
+      .shell { display: block; max-width: none; padding: 0; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+      article > * { max-width: none; }
+      article h1 { font-size: 24pt; }
+      article h2 { break-after: avoid; font-size: 16pt; }
+      article h3,
+      article h4 { break-after: avoid; }
+      article pre,
+      article blockquote { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.75em; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#document">Skip to document</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="classification">Private local reader</div>
+      <div class="reader-actions" aria-label="Reader actions">
+        <a href="GUIDED_WORKSPACE_OPERATOR.md">Open source</a>
+        <button type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+  <main class="shell" id="document">
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol class="toc-list"><li class="toc-level-2"><a href="#what-the-application-is-for">What the application is for</a></li>
+<li class="toc-level-2"><a href="#open-the-right-candidate">Open the right candidate</a></li>
+<li class="toc-level-2"><a href="#choose-the-right-starting-point">Choose the right starting point</a></li>
+<li class="toc-level-3"><a href="#first-orientation-create-a-separate-worked-example">First orientation: create a separate worked example</a></li>
+<li class="toc-level-3"><a href="#a-real-test-of-the-guidance-start-a-fresh-assessment">A real test of the guidance: start a fresh assessment</a></li>
+<li class="toc-level-2"><a href="#the-eight-synthetic-personas">The eight synthetic personas</a></li>
+<li class="toc-level-2"><a href="#stage-1-establish-the-assessment">Stage 1 — Establish the assessment</a></li>
+<li class="toc-level-2"><a href="#stage-2-establish-sources-and-obtain-evidence">Stage 2 — Establish sources and obtain evidence</a></li>
+<li class="toc-level-2"><a href="#stage-3-validate-the-enterprise-map">Stage 3 — Validate the enterprise map</a></li>
+<li class="toc-level-2"><a href="#stage-4-deliver-phase-1">Stage 4 — Deliver Phase 1</a></li>
+<li class="toc-level-2"><a href="#stage-5-establish-the-phase-2-analysis-basis">Stage 5 — Establish the Phase 2 analysis basis</a></li>
+<li class="toc-level-2"><a href="#stage-6-assess-consequences-and-recommend-action">Stage 6 — Assess consequences and recommend action</a></li>
+<li class="toc-level-2"><a href="#stage-7-deliver-phase-2">Stage 7 — Deliver Phase 2</a></li>
+<li class="toc-level-2"><a href="#read-save-and-print-a-report">Read, save and print a report</a></li>
+<li class="toc-level-2"><a href="#when-the-app-says-not-yet">When the app says “not yet”</a></li>
+<li class="toc-level-2"><a href="#read-the-operating-indicators-correctly">Read the operating indicators correctly</a></li>
+<li class="toc-level-2"><a href="#founder-owner-review-queue-no-outcomes-recorded-here">Founder-owner review queue — no outcomes recorded here</a></li>
+<li class="toc-level-2"><a href="#what-remains-beyond-this-candidate">What remains beyond this candidate</a></li></ol>
+    </nav>
+    <div class="paper">
+      <div class="document-meta">
+        <strong>GUIDED_WORKSPACE_OPERATOR.md</strong><br>
+        2,748 words · about 13 minutes · source updated September 8, 2026 at 2:51 PM MDT<br>
+        Source SHA-256: <code>339043fd12e5ed46a84d3e400e033e7dd2d2ef1ea4a451d9cdd158d97b9a82e6</code> · renderer v1
+      </div>
+      <aside class="notice"><strong>Private local reader.</strong> Keep this copy local unless sharing is explicitly approved.</aside>
+      <article>
+        <h1 id="guided-pqc-assessment-workspace-operator-guide">Guided PQC Assessment Workspace — Operator Guide</h1>
+<p>For the newer intake candidate on port 18475, start with the
+<a href="INTAKE_WORKSPACE_OPERATOR.readable.html">Discovery and Evidence Intake operator guide</a>.
+Its contributor personas use assignment-scoped <strong>My requests</strong>. The contributor
+instructions below describe the earlier guided candidate on port 18474 and do
+not authorize access to legacy assessment commands in the intake build.</p>
+<p>Date: 8 September 2026</p>
+<p>Status: local synthetic development candidate. This guide describes the implemented workflow; it does not announce a running deployment, successful owner acceptance, or an enterprise-ready product. Use the final engineering handoff for the verified candidate address and outstanding checks.</p>
+<h2 id="what-the-application-is-for">What the application is for</h2>
+<p>The assessment is the main workflow. The dashboard, asset explorer and reports support it.</p>
+<p>The application helps an assessment lead establish a bounded question and scope, identify accountable source functions, obtain attributable evidence, review a current-state map, and turn that map into explainable Phase 2 conclusions and next decisions. It also records where organizational routes and evidence are missing.</p>
+<p>An unknown is a useful assessment result when it has a stated consequence, accountable next step and review date. It is not evidence that exposure is low or that a team is unwilling to cooperate.</p>
+<p>The sequence is:</p>
+<pre><code class="language-text">Define the assessment
+→ establish source routes and evidence
+→ review the current-state map
+→ deliver an exact Phase 1 snapshot
+→ establish the Phase 2 input and method
+→ review consequences and recommendations
+→ deliver an exact Phase 2 snapshot
+</code></pre>
+<p>You may look ahead at any stage. Looking ahead is not permission to bypass a prerequisite. The C# application evaluates permissions and gates; a screen being visible does not grant authority.</p>
+<h2 id="open-the-right-candidate">Open the right candidate</h2>
+<ol>
+<li>Wait for the final handoff to confirm the candidate is running. The intended review address is <code>http://127.0.0.1:18474/#assessments</code>.</li>
+<li>Open that address in a browser on this Linux host. <code>127.0.0.1</code> means the computer running the browser; this is not a company-wide or remotely accessible address.</li>
+<li>Do not treat the existing application on port <code>18473</code> as this candidate. That service is to remain untouched during candidate review.</li>
+<li>Choose the Analyst role and enter the published synthetic demonstration password, <code>synthetic-demo-only</code>. Never enter an enterprise password or actual company data.</li>
+<li>Select <strong>Open workspace</strong>. Start from <strong>Guided assessment</strong>, not a legacy report or an old bookmarked action filter.</li>
+</ol>
+<p>If the candidate is unavailable, stop and ask for its current status. Do not change host services, open firewall ports, bind the app publicly, or replace the existing application to make the demonstration work.</p>
+<p>The local candidate uses synthetic identities and an isolated application database. It does not implement enterprise SSO, SQL Server persistence, live enterprise connectors or Phase 3/4 migration execution.</p>
+<h2 id="choose-the-right-starting-point">Choose the right starting point</h2>
+<h3 id="first-orientation-create-a-separate-worked-example">First orientation: create a separate worked example</h3>
+<p>As Analyst, select <strong>Create a separate worked example</strong>.</p>
+<p>Each example has its own assessment identifier, persisted answers and history. It uses three selected source profiles from three areas, with a bounded synthetic evidence cohort. The other 24 families remain outside that worked-example cohort. This is not a declaration that those families are absent from, or out of scope for, an actual enterprise.</p>
+<p>The example's initial source responses and qualified decisions are scenario-generated. They are visible in <strong>Participants and immutable workflow history</strong>. They are not decisions made by you, an enterprise approver or the founder-owner.</p>
+<p>The worked example prepares the first three stages and lets you continue with the Phase 1 draft. It does not pre-accept the Phase 1 or Phase 2 deliverables on your behalf.</p>
+<h3 id="a-real-test-of-the-guidance-start-a-fresh-assessment">A real test of the guidance: start a fresh assessment</h3>
+<p>As Analyst, enter a synthetic assessment name and select <strong>Start assessment →</strong>.</p>
+<p>A fresh assessment does not begin with approved gates or admitted evidence. Use it to test whether the questions, task guidance, source examples, blocked states and review process are understandable without a prepared scenario.</p>
+<p>Creating another assessment never resets the earlier one. Use <strong>All assessments</strong> and reopen the appropriate identifier to resume existing work.</p>
+<h2 id="the-eight-synthetic-personas">The eight synthetic personas</h2>
+<p>Use <strong>Sign out</strong>, then choose the required persona at the login screen. Reopen the same assessment, using its saved address or the assessment list. The identifier in the address distinguishes it from other examples.</p>
+<p>These roles demonstrate separate responsibilities; they are not employee assignments or enterprise identity proof.</p>
+<ul>
+<li><strong>Analyst / assessment lead:</strong> creates an assessment; sets scope; records source responses; admits the fixed sample; submits current-state packages and Phase 1 gates; generates report drafts. Participates in the lead's assigned gate decisions.</li>
+<li><strong>Source contributor:</strong> records source-route information and submits an evidence-package conclusion. Records who supplied information separately from the authenticated recorder.</li>
+<li><strong>Technical reviewer:</strong> independently reviews current-state packages and the baseline-validation gate. A submitter cannot independently review their own package.</li>
+<li><strong>Assessment sponsor:</strong> reviews the designated governance, scope, deliverable and method gates from the sponsor's role.</li>
+<li><strong>Information owner:</strong> reviews governance and permitted information handling.</li>
+<li><strong>Risk lead:</strong> supplies the versioned Phase 2 method, submits analysis and Phase 2 gates, and generates report drafts.</li>
+<li><strong>Business reviewer:</strong> independently reviews the analysis and its business-consequence validation gate.</li>
+<li><strong>Viewer:</strong> reads assessments and reports; cannot record workflow decisions or generate new records.</li>
+</ul>
+<p>Multiple tabs in one browser normally share the same session. For a simple walkthrough, switch personas sequentially. Do not assume a tab retains its former role after another tab signs in differently.</p>
+<h2 id="stage-1-establish-the-assessment">Stage 1 — Establish the assessment</h2>
+<p>Question: what are we assessing, and under whose authority?</p>
+<p>As Analyst:</p>
+<ol>
+<li>State the decision the assessment supports, permitted information handling, collection method, cycle goal and review date.</li>
+<li>Choose the source families included in this bounded cycle. Supply a reason for each family not selected.</li>
+<li>Set one of three depth profiles for each selected family:
+<ul>
+<li>Source routing: identify the product, owner and permitted evidence route.</li>
+<li>Inventory: examine a bounded body of source evidence.</li>
+<li>Dependency cohort: relate selected uses to their application, service, information and relying-party dependencies.</li>
+</ul>
+</li>
+<li>Save the scope. Read the displayed remaining requirements.</li>
+<li>Submit governance gate <code>PQC-G00</code> for review.</li>
+<li>As Information owner and then Sponsor, inspect the submitted revision and record the corresponding decisions.</li>
+</ol>
+<p>A routing answer is not an inventory. A bounded inventory is not a comprehensive enterprise map. A reviewed dependency cohort is not assurance about unexamined environments.</p>
+<p>These are planning profiles, not proof-of-completion switches. The candidate admits a fixed family-level synthetic sample. It does not yet provide a service/application/environment cohort selector or prove dependency-cohort completeness. Read planned depth and achieved depth separately; planned dependency-cohort work must remain marked unvalidated.</p>
+<h2 id="stage-2-establish-sources-and-obtain-evidence">Stage 2 — Establish sources and obtain evidence</h2>
+<p>Question: which systems and functions can supply the facts?</p>
+<p>For each selected family, use the product-recognition examples to ask: “What is the authoritative system of record for this class of software here, and which function owns its evidence?” The examples are recognition aids, not approved enterprise product selections.</p>
+<p>As Contributor or Analyst, record:</p>
+<ul>
+<li>The response: route identified, unknown, another team needed, or blocked.</li>
+<li>System of record and product context.</li>
+<li>Accountable owner function and permitted read-only evidence route.</li>
+<li>Who supplied the answer, distinct from the signed-in person recording it.</li>
+<li>A concise constraint or response note and next date.</li>
+</ul>
+<p>As Analyst, submit scope/source gate <code>PQC-P1-G01</code>; the Assessment lead and Sponsor provide its required decisions. Once the displayed prerequisites and route requirements are met, use the sample-admission action to bring that family's bounded fixture evidence into this assessment.</p>
+<p>Sample admission reads prepared synthetic records. It does not call a vendor, send an RFI, scan an endpoint, exercise an enterprise credential or establish permission to perform those actions.</p>
+<p>Keep two indicators separate: a route can be recorded without usable evidence, and fixture evidence can exist without a live route ever having been exercised. A missing response does not establish unwillingness.</p>
+<h2 id="stage-3-validate-the-enterprise-map">Stage 3 — Validate the enterprise map</h2>
+<p>Question: which observations and conclusions can we rely upon?</p>
+<ol>
+<li>Inspect the selected package and its supporting assets, uses, observations and limitations.</li>
+<li>As Analyst or Contributor, write a bounded current-state conclusion. Say what the evidence supports and what it does not support.</li>
+<li>If technical evidence is missing, state that limitation and its consequence instead of inventing a conclusion.</li>
+<li>Submit the package for technical review.</li>
+<li>As Technical reviewer, accept its stated position, qualify it with limitations, or request changes. Preserve the rationale and review date.</li>
+<li>As Analyst, submit baseline gate <code>PQC-P1-G02</code>. Assessment lead and Technical reviewer provide the required gate decisions.</li>
+</ol>
+<p>Source-reported capability, configured state, observed behavior and independently verified behavior are different evidence claims. For example, a product's support for a hybrid group does not prove that a particular application negotiated it.</p>
+<h2 id="stage-4-deliver-phase-1">Stage 4 — Deliver Phase 1</h2>
+<p>Question: is this exact current-state report suitable for the next phase?</p>
+<ol>
+<li>As Analyst, choose <strong>Generate Phase 1 draft</strong>.</li>
+<li>Select <strong>Read report →</strong> and inspect the executive position, scope, source enablement, coverage limitations, current-state conclusions and next decisions.</li>
+<li>Verify that the report contains only this assessment's admitted evidence. A fresh selection must not silently acquire the full fixture inventory.</li>
+<li>In gate <code>PQC-P1-G03</code>, choose the <strong>Exact report to submit for this gate</strong>, then submit it.</li>
+<li>Assessment lead and Sponsor review that exact report. Use a qualified decision when limitations must remain attached, and identify their consequence, follow-up owner and date.</li>
+</ol>
+<p>Report generation and acceptance are separate actions. A report remains an immutable snapshot. Its current review/reliance status is projected from separate decisions; accepting it does not rewrite its original bytes or authorize a source-system change.</p>
+<h2 id="stage-5-establish-the-phase-2-analysis-basis">Stage 5 — Establish the Phase 2 analysis basis</h2>
+<p>Question: which accepted input and method govern the analysis?</p>
+<p>As Risk lead, record the method name, approach to business impact, confidence/uncertainty rules and prioritization rules. Read the Phase 1 input identified by the assessment, and confirm it is the intended exact snapshot with its qualifications.</p>
+<p>Submit method/input gate <code>PQC-P2-G01</code>. Risk lead and Sponsor provide its required decisions. The method remains a synthetic demonstration method, not an enterprise-approved risk methodology.</p>
+<p>Keep exposure, business consequence, evidence confidence, technical migration readiness and organizational enablement distinct. A missing source route does not make the cryptographic exposure smaller. An easily upgraded product is not already migrated.</p>
+<h2 id="stage-6-assess-consequences-and-recommend-action">Stage 6 — Assess consequences and recommend action</h2>
+<p>Question: why does the observed condition matter, and what should happen next?</p>
+<p>As Analyst or Risk lead, prepare each package's analysis:</p>
+<ol>
+<li>State a conditional scenario, including the relevant cryptographic purpose and failure or threat event.</li>
+<li>Describe the affected business service, information or operation and the consequence requiring confirmation.</li>
+<li>Record a recommendation or next investigation, proposed review priority and evidence confidence.</li>
+<li>Explain the rationale against the declared method. Carry forward the package's limitations.</li>
+<li>Submit the analysis for Business reviewer disposition.</li>
+<li>As Risk lead, submit analysis-validation gate <code>PQC-P2-G02</code>; Risk lead and Business reviewer provide the required decisions.</li>
+</ol>
+<p>Where lifetime, exact-product support, relying-party compatibility or recovery is not established, say so. The report does not fabricate those missing facts or convert an algorithm name into an approved risk score.</p>
+<h2 id="stage-7-deliver-phase-2">Stage 7 — Deliver Phase 2</h2>
+<p>Question: is this exact risk review justified and actionable?</p>
+<ol>
+<li>As Risk lead, explicitly select the intended Phase 1 input report. Do not substitute a newly generated report merely because it is newer.</li>
+<li>Choose <strong>Generate Phase 2 draft</strong>.</li>
+<li>Read each scenario, business impact, evidence-confidence basis, vendor/implementation uncertainty, recommendation, accountable function and next decision.</li>
+<li>Submit the exact Phase 2 report to gate <code>PQC-P2-G03</code>.</li>
+<li>Risk lead and Sponsor record its required decisions.</li>
+</ol>
+<p>Phase 2 produces an assessment position and prioritized next work. It does not create an approved change, close an enterprise ticket, rotate a key, upgrade a workload or execute a migration. Phase 3/4 remains a future control-system direction.</p>
+<h2 id="read-save-and-print-a-report">Read, save and print a report</h2>
+<ol>
+<li>From Stage 4 or Stage 7, choose <strong>Read report →</strong>. You can also use <strong>Reporting workspace</strong> and select the report in history.</li>
+<li>Use the narrative preview to inspect the executive position and next actions. Raw identifiers and supporting records belong in traceability details, not the executive message.</li>
+<li>Download the <strong>HTML</strong> reading copy. Open the saved file in a browser; it uses no remote assets or live connector.</li>
+<li>For PDF, use the browser's <strong>Print</strong> command, select <strong>Save as PDF</strong>, and inspect landscape print preview before saving. Verify table headers, line wrapping, page breaks and the report identifier in the footer. Expand and separately retain traceability details if the complete technical appendix is needed; the default printed reading copy omits the collapsible appendix.</li>
+<li>Retain the original HTML and report identifier with the PDF. JSON is available for engineering traceability; it is not the primary leadership reading copy.</li>
+</ol>
+<p>No email or external distribution is performed by this workflow. Approval of an assessment position is not permission to send its contents elsewhere.</p>
+<h2 id="when-the-app-says-not-yet">When the app says “not yet”</h2>
+<ul>
+<li><strong>No findings or no assets:</strong> inspect the selected assessment, admitted source packages and active filters. Empty selections stay empty; the catalog is not substituted as evidence.</li>
+<li><strong>No immediate action assigned:</strong> inspect the gate requirements and signed-in role. Another participant may have the next task. This message does not mean the assessment is complete.</li>
+<li><strong>Disabled review:</strong> confirm the package or gate was submitted, that the signed-in role is required, and that independent review is permitted for this actor.</li>
+<li><strong>Needs re-review:</strong> a relevant scope, source, package, method or report input changed. Review the current submission; do not overwrite historical decisions to make them appear current.</li>
+<li><strong>Save result uncertain:</strong> use <strong>Retry identical request</strong>. Do not create a different request merely because the first response was lost.</li>
+<li><strong>Revision changed:</strong> keep the entered answers, inspect the refreshed state and requirements, then resubmit intentionally. The server does not use blind last-write-wins.</li>
+<li><strong>Blocked source:</strong> record the known constraint, owner/route next step and date. Use an explicit qualified assessment conclusion when appropriate; do not simulate live evidence to clear the blocker.</li>
+</ul>
+<h2 id="read-the-operating-indicators-correctly">Read the operating indicators correctly</h2>
+<ul>
+<li>Question answerability counts supported, qualified and unanswered questions in this assessment's current question set. The starter set distinguishes source routing from evidence availability; it is not yet a complete registry of every material business, cryptographic-use, dependency and acceptance question.</li>
+<li>Source enablement distinguishes documented routes from admitted synthetic samples. No live route is exercised in this candidate. Counts are not enterprise coverage or employee performance ratings.</li>
+<li>Decision backlog counts unfilled required-role slots on current submitted gates and their elapsed calendar-day age. It does not count every unsubmitted prerequisite or imply an approved response-time target. Zero pending slots is not proof that the assessment is finished.</li>
+</ul>
+<p>Package qualifications currently use reviewer-authored text and retained limitation codes. This increment does not yet provide a full structured issue/disposition and factual-review-comment task system. Reviewers must not describe a bulk qualified package as resolution of each material dispute; unresolved facts remain unresolved.</p>
+<h2 id="founder-owner-review-queue-no-outcomes-recorded-here">Founder-owner review queue — no outcomes recorded here</h2>
+<p>This candidate needs targeted owner observations before the corresponding readiness or activation claim. These are proposed review scopes, not claims that the owner has accepted anything.</p>
+<p>R2 — guided workflow and report usability:</p>
+<ul>
+<li>Start a fresh assessment and explain its next useful action without coaching.</li>
+<li>Recognize the difference between three worked-example families and the full 27-family catalog.</li>
+<li>Record a blocked route and trace its limitation into the Phase 1 report.</li>
+<li>Review an exact report and explain what the separate gate decision changes.</li>
+<li>Follow the Phase 1-to-Phase 2 handoff and identify the selected input and method.</li>
+<li>Read a Phase 2 scenario and identify its accountable next action and remaining uncertainty.</li>
+<li>Check desktop/narrow-screen use and the printable report reading copy.</li>
+</ul>
+<p>R3 — authorization and consequential transition boundaries:</p>
+<ul>
+<li>Confirm a Viewer cannot write or record decisions.</li>
+<li>Confirm the wrong reviewer or a package submitter cannot masquerade as an independent reviewer.</li>
+<li>Confirm a changed input requires the appropriate re-review, preserving historical records.</li>
+<li>Confirm Phase 2 cannot silently bind an unrelated or merely newest Phase 1 report.</li>
+<li>Confirm synthetic persona decisions and scenario-generated history cannot be presented as founder-owner outcomes or enterprise approvals.</li>
+</ul>
+<p>Only the founder-owner may record the targeted <code>works</code>, <code>issue_found</code> or <code>blocked</code> observations through the designated owner-validation process. Automation and this guide cannot infer, submit or rewrite those outcomes. Missing observations block the affected claim, not unrelated development.</p>
+<h2 id="what-remains-beyond-this-candidate">What remains beyond this candidate</h2>
+<p>Enterprise identity and access integration; SQL Server persistence and operating proof; qualified read-only product connectors; custody of real enterprise evidence; enterprise deployment and supported remote access; calibrated and approved assessment methods; migration-ticket mediation; live execution and independently verified closure all require their own implementation and authorization gates.</p>
+<p>The local assessment workflow is a development proof path for those capabilities, not a claim that they already exist.</p>
+
+      </article>
+      <footer class="footer">
+        Generated locally from GUIDED_WORKSPACE_OPERATOR.md. The Markdown source remains the durable record.
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

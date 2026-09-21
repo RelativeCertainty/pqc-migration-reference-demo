@@ -1,0 +1,731 @@
+<!doctype html>
+<html lang="en" data-classification="private">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <meta name="generator" content="PBA readable document renderer v1">
+  <title>PQC Discovery Domains — software recognition reference</title>
+  <style>
+    :root {
+      --page: #edf1f5;
+      --paper: #ffffff;
+      --text: #20252d;
+      --muted: #647080;
+      --line: #d9e0e8;
+      --accent: #285f86;
+      --accent-soft: #e9f2f8;
+      --notice: #7c4b13;
+      --notice-bg: #fff3dc;
+      --code: #f4f6f8;
+      --shadow: 0 18px 55px rgba(31, 43, 58, 0.11);
+      --measure: 76ch;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #11161d;
+        --paper: #1a212b;
+        --text: #e8edf3;
+        --muted: #a8b3c0;
+        --line: #35404e;
+        --accent: #8fc8ed;
+        --accent-soft: #203848;
+        --notice: #f0c47b;
+        --notice-bg: #3a2b19;
+        --code: #111821;
+        --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-underline-offset: 0.16em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--paper);
+      border: 2px solid var(--accent);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: none; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.83rem;
+    }
+    .classification {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--notice);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .classification::before {
+      content: "";
+      width: 0.62rem;
+      height: 0.62rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .reader-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .reader-actions a,
+    .reader-actions button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      padding: 0.42rem 0.75rem;
+      text-decoration: none;
+    }
+    .reader-actions a:hover,
+    .reader-actions button:hover { border-color: var(--accent); }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: clamp(1.1rem, 3vw, 2.6rem);
+      display: grid;
+      grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+      gap: clamp(1.1rem, 3vw, 2.8rem);
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 1.3rem;
+      max-height: calc(100vh - 2.6rem);
+      overflow: auto;
+      padding: 1rem 0.9rem 1rem 0;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .toc-title {
+      margin: 0 0 0.7rem;
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .toc-list { margin: 0; padding: 0; list-style: none; }
+    .toc-list li { margin: 0.22rem 0; }
+    .toc-list a {
+      display: block;
+      padding: 0.28rem 0.4rem;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a:focus {
+      border-left-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .toc-level-3 { padding-left: 0.75rem; }
+    .paper {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 5vw, 4.5rem);
+    }
+    .document-meta {
+      max-width: var(--measure);
+      margin: 0 auto 2.5rem;
+      padding: 0 0 1.15rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .document-meta strong { color: var(--text); }
+    .document-meta code { overflow-wrap: anywhere; word-break: break-all; }
+    .notice {
+      max-width: var(--measure);
+      margin: 0 auto 2rem;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--notice);
+      border-radius: 6px;
+      background: var(--notice-bg);
+      color: var(--notice);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+    article > * { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+    article h1,
+    article h2,
+    article h3,
+    article h4 {
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      scroll-margin-top: 1.5rem;
+    }
+    article h1 {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+      font-size: clamp(2.1rem, 5vw, 3.5rem);
+      font-weight: 760;
+    }
+    article h2 {
+      margin-top: 3.4rem;
+      margin-bottom: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    article h3 { margin-top: 2.4rem; font-size: 1.25rem; }
+    article h4 { margin-top: 2rem; font-size: 1.05rem; }
+    article p { margin-top: 0.85rem; margin-bottom: 0.85rem; }
+    article ul,
+    article ol { padding-left: 1.45rem; }
+    article li { margin: 0.42rem 0; padding-left: 0.15rem; }
+    article li::marker { color: var(--accent); font-weight: 700; }
+    article blockquote {
+      padding: 0.2rem 0 0.2rem 1.2rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-style: italic;
+    }
+    article code {
+      padding: 0.12em 0.32em;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 0.84em;
+      overflow-wrap: anywhere;
+    }
+    article pre {
+      max-width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--code);
+      overflow: auto;
+      line-height: 1.45;
+    }
+    article pre code { padding: 0; background: transparent; overflow-wrap: normal; }
+    article hr { margin-top: 2.8rem; margin-bottom: 2.8rem; border: 0; border-top: 1px solid var(--line); }
+    article img { max-width: 100%; height: auto; }
+    .image-placeholder {
+      display: inline-block;
+      padding: 0.3rem 0.5rem;
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.86rem;
+    }
+    .unsafe-link { color: var(--muted); text-decoration: line-through; }
+    article table {
+      display: block;
+      max-width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.88rem;
+    }
+    article th,
+    article td { padding: 0.58rem 0.7rem; border: 1px solid var(--line); text-align: left; }
+    .footer {
+      max-width: var(--measure);
+      margin: 3.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.76rem;
+    }
+    @media (max-width: 900px) {
+      body { font-size: 17px; }
+      .shell { display: block; padding: 0; }
+      .toc {
+        position: static;
+        max-height: 20rem;
+        overflow: auto;
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .toc-list { columns: 2; column-gap: 1.4rem; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; }
+    }
+    @media (max-width: 560px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .toc-list { columns: 1; }
+      .paper { padding: 1.2rem 1rem 2.5rem; }
+      article h1 { font-size: 2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    @media print {
+      :root { --paper: #fff; --text: #111; --muted: #444; --line: #ccc; }
+      @page { size: auto; margin: 0.7in; }
+      body { background: #fff; color: #111; font-size: 11pt; }
+      .topbar,
+      .toc,
+      .notice,
+      .skip-link,
+      .reader-actions { display: none !important; }
+      .shell { display: block; max-width: none; padding: 0; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+      article > * { max-width: none; }
+      article h1 { font-size: 24pt; }
+      article h2 { break-after: avoid; font-size: 16pt; }
+      article h3,
+      article h4 { break-after: avoid; }
+      article pre,
+      article blockquote { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.75em; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#document">Skip to document</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="classification">Private local reader</div>
+      <div class="reader-actions" aria-label="Reader actions">
+        <a href="SOFTWARE_RECOGNITION_REFERENCE.md">Open source</a>
+        <button type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+  <main class="shell" id="document">
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol class="toc-list"><li class="toc-level-2"><a href="#1-enterprise-context">1. Enterprise context</a></li>
+<li class="toc-level-3"><a href="#application-portfolio">Application portfolio</a></li>
+<li class="toc-level-3"><a href="#cmdb-and-asset-inventory">CMDB and asset inventory</a></li>
+<li class="toc-level-2"><a href="#2-pki-and-trust">2. PKI and trust</a></li>
+<li class="toc-level-3"><a href="#certificate-authorities">Certificate authorities</a></li>
+<li class="toc-level-3"><a href="#certificate-lifecycle-management">Certificate lifecycle management</a></li>
+<li class="toc-level-3"><a href="#hardware-security-modules-and-services">Hardware security modules and services</a></li>
+<li class="toc-level-2"><a href="#3-encrypted-traffic">3. Encrypted traffic</a></li>
+<li class="toc-level-3"><a href="#api-gateways-and-service-mesh">API gateways and service mesh</a></li>
+<li class="toc-level-3"><a href="#network-telemetry-and-analysis">Network telemetry and analysis</a></li>
+<li class="toc-level-3"><a href="#traffic-termination-and-reverse-proxies">Traffic termination and reverse proxies</a></li>
+<li class="toc-level-2"><a href="#4-machine-access">4. Machine access</a></li>
+<li class="toc-level-3"><a href="#ssh-and-secure-machine-access">SSH and secure machine access</a></li>
+<li class="toc-level-3"><a href="#vpn-and-remote-network-access">VPN and remote network access</a></li>
+<li class="toc-level-2"><a href="#5-software-delivery">5. Software delivery</a></li>
+<li class="toc-level-3"><a href="#dependency-and-component-analysis">Dependency and component analysis</a></li>
+<li class="toc-level-3"><a href="#software-and-artifact-signing">Software and artifact signing</a></li>
+<li class="toc-level-3"><a href="#source-control-and-build-systems">Source control and build systems</a></li>
+<li class="toc-level-2"><a href="#6-cloud-keys-and-identity">6. Cloud, keys and identity</a></li>
+<li class="toc-level-3"><a href="#cloud-workloads-and-runtime-inventory">Cloud workloads and runtime inventory</a></li>
+<li class="toc-level-3"><a href="#identity-and-access-management">Identity and access management</a></li>
+<li class="toc-level-3"><a href="#key-management-systems">Key management systems</a></li>
+<li class="toc-level-3"><a href="#secrets-and-privileged-credential-management">Secrets and privileged credential management</a></li>
+<li class="toc-level-2"><a href="#7-protected-data">7. Protected data</a></li>
+<li class="toc-level-3"><a href="#data-governance-discovery-and-classification">Data governance, discovery and classification</a></li>
+<li class="toc-level-3"><a href="#databases-and-analytical-data-platforms">Databases and analytical data platforms</a></li>
+<li class="toc-level-3"><a href="#storage-archives-and-backup">Storage, archives and backup</a></li>
+<li class="toc-level-2"><a href="#8-distributed-endpoints">8. Distributed endpoints</a></li>
+<li class="toc-level-3"><a href="#dns-email-and-document-communications">DNS, email and document communications</a></li>
+<li class="toc-level-3"><a href="#embedded-software-and-operational-technology">Embedded software and operational technology</a></li>
+<li class="toc-level-3"><a href="#endpoint-management-and-device-encryption">Endpoint management and device encryption</a></li>
+<li class="toc-level-2"><a href="#9-specialized-and-regulated-cryptography">9. Specialized and regulated cryptography</a></li>
+<li class="toc-level-3"><a href="#mainframe-platforms-and-security-software">Mainframe platforms and security software</a></li>
+<li class="toc-level-3"><a href="#payment-financial-messaging-and-specialized-transaction-systems">Payment, financial messaging and specialized transaction systems</a></li>
+<li class="toc-level-2"><a href="#10-governance-and-assurance">10. Governance and assurance</a></li>
+<li class="toc-level-3"><a href="#policy-risk-and-exception-management">Policy, risk and exception management</a></li>
+<li class="toc-level-3"><a href="#vendor-and-third-party-assurance">Vendor and third-party assurance</a></li></ol>
+    </nav>
+    <div class="paper">
+      <div class="document-meta">
+        <strong>SOFTWARE_RECOGNITION_REFERENCE.md</strong><br>
+        4,200 words · about 20 minutes · source updated September 10, 2026 at 10:31 AM MDT<br>
+        Source SHA-256: <code>31e44b7b50cad35ace0ad472b1eef75850349e982fcc43c85b34aa66a9b7606f</code> · renderer v1
+      </div>
+      <aside class="notice"><strong>Private local reader.</strong> Keep this copy local unless sharing is explicitly approved.</aside>
+      <article>
+        <h1 id="pqc-discovery-domains-software-recognition-reference">PQC Discovery Domains — software recognition reference</h1>
+<p>242 examples across 10 discovery domains and 27 software classes. Reference version: pqc.software-recognition.v1. Reviewed: September 10, 2026.</p>
+<p>Use these names to recognize a software class and identify the right products or teams. They are not a complete market inventory, a confirmed enterprise stack, purchasing recommendations, PQC-readiness claims or qualified connectors. An unlisted product or a referral is equally useful. Several products and deployments may serve the same function.</p>
+<p>COTS means commercial off-the-shelf; OTS means off-the-shelf; SaaS means software as a service. Open-source and relevant hardware/platform examples are included. Offering labels are broad recognition categories, not exact licensing or deployment profiles. Follow the official product references; installed versions and permitted interfaces still require confirmation.</p>
+<h2 id="1-enterprise-context">1. Enterprise context</h2>
+<h3 id="application-portfolio">Application portfolio</h3>
+<ul>
+<li><a href="https://www.leanix.net/en/products/application-portfolio-management" rel="noopener noreferrer" referrerpolicy="no-referrer">SAP LeanIX Application Portfolio Management</a> (SaaS) — Application inventory and portfolio analysis.</li>
+<li><a href="https://www.servicenow.com/products/enterprise-architecture.html" rel="noopener noreferrer" referrerpolicy="no-referrer">ServiceNow Enterprise Architecture</a> (SaaS) — Enterprise architecture and application portfolio context.</li>
+<li><a href="https://bizzdesign.com/transformation-suite/alfabet" rel="noopener noreferrer" referrerpolicy="no-referrer">Bizzdesign Alfabet</a> (SaaS) — IT portfolio planning and application relationships.</li>
+<li><a href="https://bizzdesign.com/transformation-suite/horizzon" rel="noopener noreferrer" referrerpolicy="no-referrer">Bizzdesign Horizzon</a> (SaaS) — Enterprise architecture models and relationships.</li>
+<li><a href="https://bizzdesign.com/transformation-suite/hopex" rel="noopener noreferrer" referrerpolicy="no-referrer">Bizzdesign Hopex</a> (SaaS) — Architecture and application portfolio context.</li>
+<li><a href="https://www.orbussoftware.com/product/orbusinfinity" rel="noopener noreferrer" referrerpolicy="no-referrer">OrbusInfinity</a> (SaaS) — Orbus Software enterprise architecture platform.</li>
+<li><a href="https://www.ardoq.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">Ardoq</a> (SaaS) — Application portfolios and architecture relationships.</li>
+<li><a href="https://enterprise-architecture.org/products/essential-open-source/" rel="noopener noreferrer" referrerpolicy="no-referrer">Essential Open Source</a> (Open source) — The Essential Project; application and architecture repository.</li>
+</ul>
+<h3 id="cmdb-and-asset-inventory">CMDB and asset inventory</h3>
+<ul>
+<li><a href="https://www.servicenow.com/products/servicenow-platform/configuration-management-database.html" rel="noopener noreferrer" referrerpolicy="no-referrer">ServiceNow Configuration Management Database</a> (SaaS) — ServiceNow CMDB; configuration items and relationships.</li>
+<li><a href="https://www.helixops.ai/products/bmc-helix-cmdb.html" rel="noopener noreferrer" referrerpolicy="no-referrer">BMC Helix CMDB</a> (COTS) — Configuration data and service relationships.</li>
+<li><a href="https://www.atlassian.com/software/jira/service-management/features/asset-and-configuration-management" rel="noopener noreferrer" referrerpolicy="no-referrer">Jira Service Management Assets</a> (SaaS) — Atlassian asset and configuration management.</li>
+<li><a href="https://www.device42.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">Device42</a> (COTS) — Discovery, asset inventory, and dependency mapping.</li>
+<li><a href="https://www.opentext.com/products/universal-discovery-and-cmdb" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenText Universal Discovery and CMDB</a> (COTS) — Universal CMDB / UCMDB recognition context.</li>
+<li><a href="https://combodo.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">iTop</a> (Open source) — Combodo service management and CMDB.</li>
+<li><a href="https://www.cmdbuild.org/en" rel="noopener noreferrer" referrerpolicy="no-referrer">CMDBuild</a> (Open source) — Configurable asset and configuration database.</li>
+<li><a href="https://www.glpi-project.org/en/" rel="noopener noreferrer" referrerpolicy="no-referrer">GLPI</a> (Open source) — IT inventory, assets, and service management.</li>
+</ul>
+<h2 id="2-pki-and-trust">2. PKI and trust</h2>
+<h3 id="certificate-authorities">Certificate authorities</h3>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-cs/active-directory-certificate-services-overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft Active Directory Certificate Services</a> (COTS) — AD CS; Windows Server certificate authority roles.</li>
+<li><a href="https://www.ejbca.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">EJBCA Community</a> (Open source) — Certificate authority software; EJBCA Enterprise is a separate edition.</li>
+<li><a href="https://www.dogtagpki.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Dogtag Certificate System</a> (Open source) — Dogtag PKI; certificate authority software.</li>
+<li><a href="https://smallstep.com/docs/step-ca/" rel="noopener noreferrer" referrerpolicy="no-referrer">Smallstep step-ca</a> (Open source) — Step CA; private certificate authority server.</li>
+<li><a href="https://www.openxpki.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenXPKI</a> (Open source) — PKI and trust-center software.</li>
+<li><a href="https://aws.amazon.com/private-ca/" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS Private Certificate Authority</a> (SaaS) — AWS Private CA; managed private certificate issuance.</li>
+<li><a href="https://cloud.google.com/security/products/certificate-authority-service" rel="noopener noreferrer" referrerpolicy="no-referrer">Google Cloud Certificate Authority Service</a> (SaaS) — Managed private certificate authority service.</li>
+<li><a href="https://developer.hashicorp.com/vault/docs/secrets/pki" rel="noopener noreferrer" referrerpolicy="no-referrer">HashiCorp Vault PKI secrets engine</a> (COTS) — Vault component for issuing and managing certificates.</li>
+</ul>
+<h3 id="certificate-lifecycle-management">Certificate lifecycle management</h3>
+<ul>
+<li><a href="https://www.keyfactor.com/products/command/" rel="noopener noreferrer" referrerpolicy="no-referrer">Keyfactor Command</a> (COTS) — Certificate inventory and lifecycle automation.</li>
+<li><a href="https://www.cyberark.com/resources/product-datasheets/cyberark-certificate-manager-self-hosted" rel="noopener noreferrer" referrerpolicy="no-referrer">CyberArk Certificate Manager, Self-Hosted</a> (COTS) — Recognition alias: Venafi TLS Protect.</li>
+<li><a href="https://www.digicert.com/trust-lifecycle-manager" rel="noopener noreferrer" referrerpolicy="no-referrer">DigiCert Trust Lifecycle Manager</a> (SaaS) — Certificate discovery, inventory, and lifecycle management.</li>
+<li><a href="https://www.appviewx.com/solutions/certificate-lifecycle-management/" rel="noopener noreferrer" referrerpolicy="no-referrer">AppViewX CERT+</a> (COTS) — Certificate lifecycle management; also labeled CLM.</li>
+<li><a href="https://www.sectigo.com/enterprise-solutions/certificate-manager" rel="noopener noreferrer" referrerpolicy="no-referrer">Sectigo Certificate Manager</a> (SaaS) — SCM; certificate lifecycle management.</li>
+<li><a href="https://cert-manager.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">cert-manager</a> (Open source) — Kubernetes certificate issuance and renewal controller.</li>
+<li><a href="https://certbot.eff.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Certbot</a> (Open source) — ACME client for certificate issuance and renewal.</li>
+<li><a href="https://aws.amazon.com/certificate-manager/" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS Certificate Manager</a> (SaaS) — ACM; managed certificate provisioning and renewal.</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/key-vault/certificates/about-certificates" rel="noopener noreferrer" referrerpolicy="no-referrer">Azure Key Vault certificates</a> (SaaS) — Certificate objects, policies, and lifecycle management.</li>
+</ul>
+<h3 id="hardware-security-modules-and-services">Hardware security modules and services</h3>
+<ul>
+<li><a href="https://cpl.thalesgroup.com/encryption/hardware-security-modules/network-hsms" rel="noopener noreferrer" referrerpolicy="no-referrer">Thales Luna Network HSM</a> (Hardware/platform) — Physical network HSM appliance; not application software.</li>
+<li><a href="https://www.entrust.com/products/hsm/nshield-connect" rel="noopener noreferrer" referrerpolicy="no-referrer">Entrust nShield Connect</a> (Hardware/platform) — Physical network HSM appliance; not application software.</li>
+<li><a href="https://utimaco.com/products/categories/hsms-general-purpose-use-cases/securityserver" rel="noopener noreferrer" referrerpolicy="no-referrer">Utimaco u.trust General Purpose HSM Se-Series</a> (Hardware/platform) — Hardware HSM family; SecurityServer / CryptoServer recognition context.</li>
+<li><a href="https://www.ibm.com/docs/en/cryptocards?topic=4769-overview" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM 4769 Cryptographic Coprocessor</a> (Hardware/platform) — PCIe hardware HSM; CEX7S / 4769.</li>
+<li><a href="https://www.marvell.com/products/security-solutions/liquidsecurity2.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Marvell LiquidSecurity 2 HSM Adapter</a> (Hardware/platform) — LS2; hardware HSM adapter card.</li>
+<li><a href="https://www.yubico.com/products/hardware-security-module/" rel="noopener noreferrer" referrerpolicy="no-referrer">Yubico YubiHSM 2</a> (Hardware/platform) — USB hardware HSM; distinct from YubiKey authenticators.</li>
+<li><a href="https://aws.amazon.com/cloudhsm/" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS CloudHSM</a> (Hardware/platform) — Managed cloud HSM service backed by hardware.</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/key-vault/managed-hsm/overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Azure Key Vault Managed HSM</a> (Hardware/platform) — Managed cloud HSM service backed by hardware.</li>
+</ul>
+<h2 id="3-encrypted-traffic">3. Encrypted traffic</h2>
+<h3 id="api-gateways-and-service-mesh">API gateways and service mesh</h3>
+<ul>
+<li><a href="https://istio.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">Istio</a> (Open source) — Service mesh for service-to-service communication.</li>
+<li><a href="https://linkerd.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">Linkerd</a> (Open source) — Kubernetes service mesh.</li>
+<li><a href="https://developer.hashicorp.com/consul/docs" rel="noopener noreferrer" referrerpolicy="no-referrer">HashiCorp Consul</a> (COTS) — Service discovery and service mesh.</li>
+<li><a href="https://www.envoyproxy.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">Envoy Proxy</a> (Open source) — Edge and service proxy.</li>
+<li><a href="https://developer.konghq.com/gateway/" rel="noopener noreferrer" referrerpolicy="no-referrer">Kong Gateway</a> (COTS) — API gateway; open-source edition also exists.</li>
+<li><a href="https://apisix.apache.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Apache APISIX</a> (Open source) — API gateway.</li>
+<li><a href="https://tyk.io/docs/tyk-oss-gateway" rel="noopener noreferrer" referrerpolicy="no-referrer">Tyk Gateway OSS</a> (Open source) — Open-source API gateway edition.</li>
+<li><a href="https://apim.docs.wso2.com/en/latest/" rel="noopener noreferrer" referrerpolicy="no-referrer">WSO2 API Manager</a> (Open source) — API management and gateway software.</li>
+</ul>
+<h3 id="network-telemetry-and-analysis">Network telemetry and analysis</h3>
+<ul>
+<li><a href="https://www.wireshark.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Wireshark</a> (Open source) — Packet capture and protocol analysis.</li>
+<li><a href="https://zeek.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Zeek</a> (Open source) — Network security monitor; recognition alias: Bro.</li>
+<li><a href="https://suricata.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">Suricata</a> (Open source) — Network traffic analysis and threat detection.</li>
+<li><a href="https://www.ntop.org/products/traffic-analysis/ntopng/" rel="noopener noreferrer" referrerpolicy="no-referrer">ntopng</a> (Open source) — Community traffic-analysis software; commercial editions also exist.</li>
+<li><a href="https://arkime.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">Arkime</a> (Open source) — Packet capture indexing and session analysis.</li>
+<li><a href="https://corelight.com/platform/sensors" rel="noopener noreferrer" referrerpolicy="no-referrer">Corelight Software Sensor</a> (COTS) — Software sensor for Linux and Kubernetes environments.</li>
+<li><a href="https://www.extrahop.com/platform" rel="noopener noreferrer" referrerpolicy="no-referrer">ExtraHop RevealX</a> (COTS) — Network detection and response platform.</li>
+<li><a href="https://www.cisco.com/c/en/us/products/collateral/security/stealthwatch/datasheet-c78-739398.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Cisco Secure Network Analytics</a> (COTS) — Stealthwatch; virtual software deployment is one form.</li>
+</ul>
+<h3 id="traffic-termination-and-reverse-proxies">Traffic termination and reverse proxies</h3>
+<ul>
+<li><a href="https://nginx.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">NGINX Open Source</a> (Open source) — Web server and reverse proxy.</li>
+<li><a href="https://www.haproxy.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">HAProxy</a> (Open source) — TCP/HTTP load balancer and proxy.</li>
+<li><a href="https://httpd.apache.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Apache HTTP Server</a> (Open source) — httpd; web server with TLS modules.</li>
+<li><a href="https://caddyserver.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">Caddy</a> (Open source) — Web server and reverse proxy with automatic HTTPS.</li>
+<li><a href="https://traefik.io/traefik" rel="noopener noreferrer" referrerpolicy="no-referrer">Traefik Proxy</a> (Open source) — Application proxy and ingress routing.</li>
+<li><a href="https://www.f5.com/trials/big-ip-virtual-edition" rel="noopener noreferrer" referrerpolicy="no-referrer">F5 BIG-IP Local Traffic Manager Virtual Edition</a> (COTS) — BIG-IP LTM VE; virtual traffic-management software.</li>
+<li><a href="https://www.netscaler.com/platform/vpx-virtual-machine" rel="noopener noreferrer" referrerpolicy="no-referrer">NetScaler VPX</a> (COTS) — Virtual application delivery controller software.</li>
+<li><a href="https://aws.amazon.com/elasticloadbalancing/application-load-balancer/" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS Application Load Balancer</a> (SaaS) — ALB; managed application traffic termination.</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/application-gateway/overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Azure Application Gateway</a> (SaaS) — Managed application load balancing and TLS termination.</li>
+<li><a href="https://docs.cloud.google.com/load-balancing/docs/load-balancing-overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Google Cloud Load Balancing</a> (SaaS) — Managed load balancer family; termination depends on type.</li>
+</ul>
+<h2 id="4-machine-access">4. Machine access</h2>
+<h3 id="ssh-and-secure-machine-access">SSH and secure machine access</h3>
+<ul>
+<li><a href="https://www.openssh.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenSSH</a> (Open source) — SSH clients and servers; ssh, sshd, scp, and sftp.</li>
+<li><a href="https://www.chiark.greenend.org.uk/~sgtatham/putty/" rel="noopener noreferrer" referrerpolicy="no-referrer">PuTTY</a> (Open source) — SSH client suite for Windows and other systems.</li>
+<li><a href="https://matt.ucc.asn.au/dropbear/dropbear.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Dropbear SSH</a> (Open source) — Small SSH server and client, including embedded systems.</li>
+<li><a href="https://bitvise.com/ssh-server" rel="noopener noreferrer" referrerpolicy="no-referrer">Bitvise SSH Server</a> (COTS) — SSH and SFTP server for Windows.</li>
+<li><a href="https://www.vandyke.com/products/vshell/" rel="noopener noreferrer" referrerpolicy="no-referrer">VanDyke VShell</a> (COTS) — SSH-based secure file-transfer server.</li>
+<li><a href="https://www.vandyke.com/products/securecrt/" rel="noopener noreferrer" referrerpolicy="no-referrer">VanDyke SecureCRT</a> (COTS) — SSH terminal client.</li>
+<li><a href="https://goteleport.com/docs/enroll-resources/server-access/" rel="noopener noreferrer" referrerpolicy="no-referrer">Teleport</a> (COTS) — Server access through SSH and certificate-based identity.</li>
+<li><a href="https://winscp.net/eng/index.php" rel="noopener noreferrer" referrerpolicy="no-referrer">WinSCP</a> (Open source) — Windows SFTP/SCP client using SSH.</li>
+<li><a href="https://www.ssh.com/products/tectia-ssh/" rel="noopener noreferrer" referrerpolicy="no-referrer">Tectia SSH</a> (COTS) — SSH Communications Security client/server software.</li>
+<li><a href="https://docs.venafi.com/Docs/current/TopNav/Content/Release-Documents/important_considerations.php?TocPath=Platform%7CRelease+Documents%7C_____2" rel="noopener noreferrer" referrerpolicy="no-referrer">CyberArk SSH Manager for Machines</a> (COTS) — Recognition alias: Venafi SSH Protect.</li>
+</ul>
+<h3 id="vpn-and-remote-network-access">VPN and remote network access</h3>
+<ul>
+<li><a href="https://openvpn.net/community/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenVPN Community Edition</a> (Open source) — OpenVPN open-source VPN software.</li>
+<li><a href="https://www.wireguard.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">WireGuard</a> (Open source) — VPN tunnel software.</li>
+<li><a href="https://www.strongswan.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">strongSwan</a> (Open source) — IPsec and IKE VPN implementation.</li>
+<li><a href="https://www.softether.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">SoftEther VPN</a> (Open source) — Multi-protocol VPN client and server.</li>
+<li><a href="https://www.infradead.org/openconnect/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenConnect</a> (Open source) — Multi-protocol VPN client.</li>
+<li><a href="https://www.cisco.com/site/us/en/products/security/secure-client/index.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Cisco Secure Client</a> (COTS) — Includes the AnyConnect VPN client.</li>
+<li><a href="https://www.paloaltonetworks.com/sase/globalprotect" rel="noopener noreferrer" referrerpolicy="no-referrer">Palo Alto Networks GlobalProtect</a> (COTS) — Remote access client and gateway ecosystem.</li>
+<li><a href="https://www.fortinet.com/products/endpoint-security/forticlient" rel="noopener noreferrer" referrerpolicy="no-referrer">Fortinet FortiClient</a> (COTS) — Endpoint agent including VPN and remote-access functions.</li>
+<li><a href="https://www.ivanti.com/products/secure-access-client" rel="noopener noreferrer" referrerpolicy="no-referrer">Ivanti Secure Access Client</a> (COTS) — Endpoint client for secure remote access.</li>
+<li><a href="https://tailscale.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">Tailscale</a> (SaaS) — Managed connectivity service with device clients.</li>
+</ul>
+<h2 id="5-software-delivery">5. Software delivery</h2>
+<h3 id="dependency-and-component-analysis">Dependency and component analysis</h3>
+<ul>
+<li><a href="https://github.com/anchore/syft" rel="noopener noreferrer" referrerpolicy="no-referrer">Syft</a> (Open source) — Anchore tool for software bill of materials generation.</li>
+<li><a href="https://trivy.dev/" rel="noopener noreferrer" referrerpolicy="no-referrer">Trivy</a> (Open source) — Artifact, dependency, and container security scanner.</li>
+<li><a href="https://dependency-check.github.io/DependencyCheck/" rel="noopener noreferrer" referrerpolicy="no-referrer">OWASP Dependency-Check</a> (Open source) — Dependency analysis for known vulnerable components.</li>
+<li><a href="https://dependencytrack.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">OWASP Dependency-Track</a> (Open source) — SBOM-based component inventory and analysis.</li>
+<li><a href="https://snyk.io/product/open-source-security-management/" rel="noopener noreferrer" referrerpolicy="no-referrer">Snyk Open Source</a> (SaaS) — Commercial software composition analysis service.</li>
+<li><a href="https://www.mend.io/sca/" rel="noopener noreferrer" referrerpolicy="no-referrer">Mend SCA</a> (SaaS) — Software composition analysis.</li>
+<li><a href="https://www.sonatype.com/products/open-source-security-dependency-management" rel="noopener noreferrer" referrerpolicy="no-referrer">Sonatype Lifecycle</a> (COTS) — Dependency and software composition analysis.</li>
+<li><a href="https://www.blackduck.com/software-composition-analysis-tools.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Black Duck SCA</a> (COTS) — Software composition analysis and component identification.</li>
+</ul>
+<h3 id="software-and-artifact-signing">Software and artifact signing</h3>
+<ul>
+<li><a href="https://docs.sigstore.dev/cosign/signing/overview/" rel="noopener noreferrer" referrerpolicy="no-referrer">Sigstore Cosign</a> (Open source) — Artifact signing and signature verification.</li>
+<li><a href="https://www.signserver.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">SignServer Community</a> (Open source) — Server-side code and artifact signing.</li>
+<li><a href="https://gnupg.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">GnuPG</a> (Open source) — GNU Privacy Guard; OpenPGP signatures.</li>
+<li><a href="https://learn.microsoft.com/en-us/windows/win32/seccrypto/signtool" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft SignTool</a> (COTS) — Windows SDK command-line signing and verification tool.</li>
+<li><a href="https://www.digicert.com/software-trust-manager" rel="noopener noreferrer" referrerpolicy="no-referrer">DigiCert Software Trust Manager</a> (SaaS) — Software signing and signing-key management.</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/artifact-signing/overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft Artifact Signing</a> (SaaS) — Managed code-signing service in Azure.</li>
+<li><a href="https://docs.aws.amazon.com/signer/" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS Signer</a> (SaaS) — Managed code-signing service.</li>
+<li><a href="https://ebourg.github.io/jsign/" rel="noopener noreferrer" referrerpolicy="no-referrer">Jsign</a> (Open source) — Authenticode signing tool for Windows artifacts.</li>
+<li><a href="https://github.com/mtrojnar/osslsigncode" rel="noopener noreferrer" referrerpolicy="no-referrer">osslsigncode</a> (Open source) — OpenSSL-based Authenticode signing utility.</li>
+<li><a href="https://docs.venafi.com/Docs/current/TopNav/Content/Release-Documents/important_considerations.php?TocPath=Platform%7CRelease+Documents%7C_____2" rel="noopener noreferrer" referrerpolicy="no-referrer">CyberArk Code Sign Manager</a> (COTS) — Recognition alias: Venafi CodeSign Protect.</li>
+</ul>
+<h3 id="source-control-and-build-systems">Source control and build systems</h3>
+<ul>
+<li><a href="https://docs.github.com/en/enterprise-cloud@latest/admin/overview/about-github-enterprise-cloud" rel="noopener noreferrer" referrerpolicy="no-referrer">GitHub Enterprise Cloud</a> (SaaS) — Hosted source control and developer platform.</li>
+<li><a href="https://docs.gitlab.com/user/project/repository/" rel="noopener noreferrer" referrerpolicy="no-referrer">GitLab Self-Managed</a> (COTS) — Source repositories and CI/CD; self-managed distribution.</li>
+<li><a href="https://www.jenkins.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">Jenkins</a> (Open source) — Automation server for build and delivery jobs.</li>
+<li><a href="https://www.jetbrains.com/teamcity/" rel="noopener noreferrer" referrerpolicy="no-referrer">JetBrains TeamCity</a> (COTS) — Continuous integration and delivery server.</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/devops/user-guide/what-is-azure-devops?view=azure-devops" rel="noopener noreferrer" referrerpolicy="no-referrer">Azure DevOps Services</a> (SaaS) — Includes Azure Repos and Azure Pipelines.</li>
+<li><a href="https://www.atlassian.com/software/bamboo" rel="noopener noreferrer" referrerpolicy="no-referrer">Atlassian Bamboo</a> (COTS) — Continuous integration and deployment server.</li>
+<li><a href="https://circleci.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">CircleCI</a> (SaaS) — Continuous integration and delivery service.</li>
+<li><a href="https://buildkite.com/home/" rel="noopener noreferrer" referrerpolicy="no-referrer">Buildkite Pipelines</a> (SaaS) — Pipeline orchestration with hosted or self-hosted agents.</li>
+</ul>
+<h2 id="6-cloud-keys-and-identity">6. Cloud, keys and identity</h2>
+<h3 id="cloud-workloads-and-runtime-inventory">Cloud workloads and runtime inventory</h3>
+<ul>
+<li><a href="https://docs.aws.amazon.com/config/latest/developerguide/WhatIsConfig.html" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS Config</a> (SaaS) — AWS resource configuration inventory and history.</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/governance/resource-graph/overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Azure Resource Graph</a> (SaaS) — Queries resource metadata across Azure subscriptions.</li>
+<li><a href="https://docs.cloud.google.com/asset-inventory/docs/asset-inventory-overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Google Cloud Asset Inventory</a> (SaaS) — Google Cloud resource and policy metadata inventory.</li>
+<li><a href="https://docs.oracle.com/en-us/iaas/Content/Search/Concepts/queryoverview.htm" rel="noopener noreferrer" referrerpolicy="no-referrer">Oracle Cloud Infrastructure Search</a> (SaaS) — OCI Search; locates cloud resources by their attributes.</li>
+<li><a href="https://kubernetes.io/docs/concepts/overview/" rel="noopener noreferrer" referrerpolicy="no-referrer">Kubernetes</a> (Open source) — Container orchestration platform; cluster objects describe workloads.</li>
+<li><a href="https://www.redhat.com/en/technologies/cloud-computing/openshift" rel="noopener noreferrer" referrerpolicy="no-referrer">Red Hat OpenShift</a> (COTS) — Enterprise application and Kubernetes platform.</li>
+<li><a href="https://www.nutanix.com/products/prism" rel="noopener noreferrer" referrerpolicy="no-referrer">Nutanix Prism</a> (COTS) — Management software for Nutanix infrastructure and workloads.</li>
+<li><a href="https://www.openstack.org/software/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenStack</a> (Open source) — Cloud infrastructure software; deployments include multiple services.</li>
+<li><a href="https://www.cloudquery.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">CloudQuery</a> (SaaS) — Cloud asset inventory and configuration data platform.</li>
+</ul>
+<h3 id="identity-and-access-management">Identity and access management</h3>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/entra/fundamentals/new-name" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft Entra ID</a> (SaaS) — Cloud identity service; Azure Active Directory and Azure AD are earlier names.</li>
+<li><a href="https://learn.microsoft.com/en-us/windows-server/identity/ad-ds/get-started/virtual-dc/active-directory-domain-services-overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft Active Directory Domain Services</a> (COTS) — AD DS; Windows Server directory service, distinct from Entra ID.</li>
+<li><a href="https://www.okta.com/products/workforce-identity/" rel="noopener noreferrer" referrerpolicy="no-referrer">Okta Workforce Identity</a> (SaaS) — Workforce authentication, access, and identity management.</li>
+<li><a href="https://www.pingidentity.com/en/product/pingfederate.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Ping Identity PingFederate</a> (COTS) — Federation server and single sign-on software.</li>
+<li><a href="https://www.keycloak.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Keycloak</a> (Open source) — Identity provider with authentication and federation services.</li>
+<li><a href="https://www.onelogin.com/product" rel="noopener noreferrer" referrerpolicy="no-referrer">OneLogin</a> (SaaS) — Workforce identity and single sign-on service.</li>
+<li><a href="https://www.ibm.com/products/verify" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM Verify</a> (SaaS) — Identity and access management product portfolio.</li>
+<li><a href="https://www.freeipa.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">FreeIPA</a> (Open source) — Linux identity, authentication, and policy management.</li>
+<li><a href="https://goauthentik.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">authentik</a> (Open source) — Identity provider and application access software.</li>
+</ul>
+<h3 id="key-management-systems">Key management systems</h3>
+<ul>
+<li><a href="https://aws.amazon.com/kms/" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS Key Management Service</a> (SaaS) — AWS KMS; managed cryptographic key service.</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/key-vault/general/overview" rel="noopener noreferrer" referrerpolicy="no-referrer">Azure Key Vault</a> (SaaS) — Manages keys, secrets, and certificates; identify the actual object type.</li>
+<li><a href="https://cloud.google.com/security/products/security-key-management" rel="noopener noreferrer" referrerpolicy="no-referrer">Google Cloud Key Management Service</a> (SaaS) — Cloud KMS; managed cryptographic key service.</li>
+<li><a href="https://docs.oracle.com/en-us/iaas/Content/KeyManagement/Concepts/keyoverview.htm" rel="noopener noreferrer" referrerpolicy="no-referrer">Oracle Cloud Infrastructure Vault</a> (SaaS) — OCI Vault and Key Management; identify the key and vault service in use.</li>
+<li><a href="https://www.ibm.com/products/key-protect" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM Key Protect for IBM Cloud</a> (SaaS) — Managed encryption key service for IBM Cloud.</li>
+<li><a href="https://cpl.thalesgroup.com/encryption/ciphertrust-manager" rel="noopener noreferrer" referrerpolicy="no-referrer">Thales CipherTrust Manager</a> (COTS) — Enterprise key management within the CipherTrust platform.</li>
+<li><a href="https://www.entrust.com/products/key-management/keycontrol" rel="noopener noreferrer" referrerpolicy="no-referrer">Entrust KeyControl</a> (COTS) — Enterprise encryption key management software.</li>
+<li><a href="https://www.fortanix.com/platform/data-security-manager" rel="noopener noreferrer" referrerpolicy="no-referrer">Fortanix Data Security Manager</a> (COTS) — DSM; key management and cryptographic services platform.</li>
+<li><a href="https://docs.openstack.org/barbican/latest/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenStack Barbican</a> (Open source) — OpenStack Key Manager service.</li>
+<li><a href="https://openbao.org/docs/secrets/transit/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenBao Transit secrets engine</a> (Open source) — OpenBao component providing cryptographic operations through managed keys.</li>
+</ul>
+<h3 id="secrets-and-privileged-credential-management">Secrets and privileged credential management</h3>
+<ul>
+<li><a href="https://aws.amazon.com/secrets-manager/" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS Secrets Manager</a> (SaaS) — Managed storage and access for application secrets.</li>
+<li><a href="https://cloud.google.com/security/products/secret-manager" rel="noopener noreferrer" referrerpolicy="no-referrer">Google Cloud Secret Manager</a> (SaaS) — Managed secret storage and versioning.</li>
+<li><a href="https://developer.hashicorp.com/vault/docs" rel="noopener noreferrer" referrerpolicy="no-referrer">HashiCorp Vault</a> (COTS) — Secrets management software; identify the deployed edition and engines.</li>
+<li><a href="https://github.com/cyberark/conjur" rel="noopener noreferrer" referrerpolicy="no-referrer">CyberArk Conjur</a> (Open source) — The Conjur open-source project for machine and application secrets.</li>
+<li><a href="https://delinea.com/products/secret-server" rel="noopener noreferrer" referrerpolicy="no-referrer">Delinea Secret Server</a> (COTS) — Privileged account credential vault and management software.</li>
+<li><a href="https://www.beyondtrust.com/products/password-safe" rel="noopener noreferrer" referrerpolicy="no-referrer">BeyondTrust Password Safe</a> (COTS) — Privileged password, secrets, and session management.</li>
+<li><a href="https://www.akeyless.io/" rel="noopener noreferrer" referrerpolicy="no-referrer">Akeyless</a> (SaaS) — Identity and secrets management platform.</li>
+<li><a href="https://www.doppler.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">Doppler</a> (SaaS) — Application secrets management and configuration delivery.</li>
+<li><a href="https://infisical.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">Infisical</a> (SaaS) — Secrets management platform; identify hosted or self-hosted deployment.</li>
+<li><a href="https://www.1password.dev/secrets-automation" rel="noopener noreferrer" referrerpolicy="no-referrer">1Password Secrets Automation</a> (SaaS) — Developer and workload access to secrets stored in 1Password.</li>
+</ul>
+<h2 id="7-protected-data">7. Protected data</h2>
+<h3 id="data-governance-discovery-and-classification">Data governance, discovery and classification</h3>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/purview/purview" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft Purview</a> (SaaS) — Data governance, security, and compliance portfolio; identify the component.</li>
+<li><a href="https://www.collibra.com/products/data-governance" rel="noopener noreferrer" referrerpolicy="no-referrer">Collibra Data Governance</a> (SaaS) — Business data definitions, ownership, policies, and governance workflows.</li>
+<li><a href="https://www.alation.com/product/data-catalog/" rel="noopener noreferrer" referrerpolicy="no-referrer">Alation Data Catalog</a> (COTS) — Data discovery and metadata catalog software.</li>
+<li><a href="https://bigid.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">BigID</a> (COTS) — Data discovery, classification, and security platform.</li>
+<li><a href="https://www.ibm.com/products/guardium" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM Guardium</a> (COTS) — Data security portfolio; identify the exact Guardium component.</li>
+<li><a href="https://open-metadata.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenMetadata</a> (Open source) — Metadata catalog, discovery, and data governance software.</li>
+<li><a href="https://github.com/apache/atlas" rel="noopener noreferrer" referrerpolicy="no-referrer">Apache Atlas</a> (Open source) — Metadata management and data governance framework.</li>
+<li><a href="https://github.com/datahub-project/datahub" rel="noopener noreferrer" referrerpolicy="no-referrer">DataHub</a> (Open source) — The DataHub open-source metadata and data discovery project.</li>
+</ul>
+<h3 id="databases-and-analytical-data-platforms">Databases and analytical data platforms</h3>
+<ul>
+<li><a href="https://www.postgresql.org/about/" rel="noopener noreferrer" referrerpolicy="no-referrer">PostgreSQL</a> (Open source) — Postgres; relational database software.</li>
+<li><a href="https://www.mysql.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">MySQL Community Server</a> (Open source) — Community edition of MySQL; editions and managed services differ.</li>
+<li><a href="https://mariadb.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">MariaDB Server</a> (Open source) — MariaDB relational database server.</li>
+<li><a href="https://www.oracle.com/database/" rel="noopener noreferrer" referrerpolicy="no-referrer">Oracle AI Database</a> (COTS) — Oracle database portfolio; record the exact database release in use.</li>
+<li><a href="https://www.microsoft.com/en-us/sql-server/" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft SQL Server</a> (COTS) — Relational database software; distinguish it from managed Azure services.</li>
+<li><a href="https://www.ibm.com/products/db2" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM Db2</a> (COTS) — Db2 database portfolio; distinguish distributed and z/OS editions.</li>
+<li><a href="https://www.mongodb.com/products/platform/atlas-database" rel="noopener noreferrer" referrerpolicy="no-referrer">MongoDB Atlas</a> (SaaS) — Managed MongoDB database service.</li>
+<li><a href="https://cassandra.apache.org/_/index.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Apache Cassandra</a> (Open source) — Distributed wide-column database software.</li>
+<li><a href="https://redis.io/open-source/" rel="noopener noreferrer" referrerpolicy="no-referrer">Redis Open Source</a> (Open source) — In-memory data store; identify the exact release and distribution.</li>
+<li><a href="https://docs.snowflake.com/en/user-guide/intro-key-concepts" rel="noopener noreferrer" referrerpolicy="no-referrer">Snowflake</a> (SaaS) — Managed cloud data and analytics platform.</li>
+</ul>
+<h3 id="storage-archives-and-backup">Storage, archives and backup</h3>
+<ul>
+<li><a href="https://aws.amazon.com/s3/" rel="noopener noreferrer" referrerpolicy="no-referrer">Amazon S3</a> (SaaS) — Amazon Simple Storage Service; cloud object storage.</li>
+<li><a href="https://learn.microsoft.com/en-us/azure/storage/blobs/storage-blobs-introduction" rel="noopener noreferrer" referrerpolicy="no-referrer">Azure Blob Storage</a> (SaaS) — Azure object storage for unstructured data.</li>
+<li><a href="https://cloud.google.com/storage" rel="noopener noreferrer" referrerpolicy="no-referrer">Google Cloud Storage</a> (SaaS) — Google Cloud object storage service.</li>
+<li><a href="https://www.netapp.com/ontap-data-management-software/" rel="noopener noreferrer" referrerpolicy="no-referrer">NetApp ONTAP</a> (COTS) — Storage operating and data management software.</li>
+<li><a href="https://www.veeam.com/products/veeam-data-platform/backup-recovery.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Veeam Backup &amp; Replication</a> (COTS) — Backup and recovery software within Veeam Data Platform.</li>
+<li><a href="https://www.commvault.com/platform" rel="noopener noreferrer" referrerpolicy="no-referrer">Commvault Cloud</a> (COTS) — Backup and cyber recovery portfolio; identify the deployment and component.</li>
+<li><a href="https://www.rubrik.com/products" rel="noopener noreferrer" referrerpolicy="no-referrer">Rubrik Security Cloud</a> (SaaS) — Data protection and cyber recovery platform.</li>
+<li><a href="https://ceph.io/en/" rel="noopener noreferrer" referrerpolicy="no-referrer">Ceph</a> (Open source) — Distributed object, block, and file storage software.</li>
+<li><a href="https://restic.net/" rel="noopener noreferrer" referrerpolicy="no-referrer">restic</a> (Open source) — Backup software with repository-based storage.</li>
+</ul>
+<h2 id="8-distributed-endpoints">8. Distributed endpoints</h2>
+<h3 id="dns-email-and-document-communications">DNS, email and document communications</h3>
+<ul>
+<li><a href="https://www.isc.org/bind/" rel="noopener noreferrer" referrerpolicy="no-referrer">ISC BIND 9</a> (Open source) — DNS name server software; DNSSEC configuration is a separate evidence question.</li>
+<li><a href="https://docs.powerdns.com/authoritative/index.html" rel="noopener noreferrer" referrerpolicy="no-referrer">PowerDNS Authoritative Server</a> (Open source) — Authoritative DNS server; distinguish it from PowerDNS Recursor.</li>
+<li><a href="https://learn.microsoft.com/en-us/exchange/exchange-online" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft Exchange Online</a> (SaaS) — Hosted Exchange email service.</li>
+<li><a href="https://learn.microsoft.com/en-us/exchange/exchange-server" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft Exchange Server</a> (COTS) — Exchange server software; identify the actual release and deployment.</li>
+<li><a href="https://workspace.google.com/products/gmail/" rel="noopener noreferrer" referrerpolicy="no-referrer">Gmail for Google Workspace</a> (SaaS) — Organizational email service within Google Workspace.</li>
+<li><a href="https://proton.me/mail" rel="noopener noreferrer" referrerpolicy="no-referrer">Proton Mail</a> (SaaS) — Hosted email service.</li>
+<li><a href="https://dovecot.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Dovecot</a> (Open source) — IMAP server software; identify the edition and configured mail services.</li>
+<li><a href="https://www.libreoffice.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">LibreOffice</a> (Open source) — Office document software; locate document protection and signing workflows.</li>
+<li><a href="https://www.adobe.com/acrobat.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Adobe Acrobat</a> (COTS) — PDF document software; distinguish desktop and online workflows.</li>
+</ul>
+<h3 id="embedded-software-and-operational-technology">Embedded software and operational technology</h3>
+<ul>
+<li><a href="https://www.siemens.com/en-us/products/tia-portal/step7/" rel="noopener noreferrer" referrerpolicy="no-referrer">Siemens STEP 7 in TIA Portal</a> (COTS) — PLC engineering software within TIA Portal.</li>
+<li><a href="https://www.siemens.com/en-gb/products/simatic/s7-1500/" rel="noopener noreferrer" referrerpolicy="no-referrer">Siemens SIMATIC S7-1500</a> (Hardware/platform) — PLC hardware platform; identify CPU, firmware, and engineering software separately.</li>
+<li><a href="https://www.rockwellautomation.com/en-us/products/software/factorytalk/designsuite/studio-5000.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Rockwell Automation Studio 5000 Logix Designer</a> (COTS) — Industrial controller programming and engineering software.</li>
+<li><a href="https://www.rockwellautomation.com/en-us/products/software/factorytalk/optix.html" rel="noopener noreferrer" referrerpolicy="no-referrer">Rockwell Automation FactoryTalk Optix</a> (COTS) — Industrial HMI and visualization software platform.</li>
+<li><a href="https://www.codesys.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">CODESYS</a> (COTS) — Industrial automation engineering and runtime software ecosystem.</li>
+<li><a href="https://inductiveautomation.com/ignition/" rel="noopener noreferrer" referrerpolicy="no-referrer">Inductive Automation Ignition</a> (COTS) — SCADA and industrial application software platform.</li>
+<li><a href="https://www.ptc.com/en/products/kepware/kepserverex" rel="noopener noreferrer" referrerpolicy="no-referrer">PTC Kepware Server</a> (COTS) — Industrial connectivity software; KEPServerEX is a recognition name in earlier records.</li>
+<li><a href="https://www.zephyrproject.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Zephyr</a> (Open source) — Embedded real-time operating system software.</li>
+<li><a href="https://www.freertos.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">FreeRTOS</a> (Open source) — Embedded real-time operating system and libraries.</li>
+<li><a href="https://mosquitto.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">Eclipse Mosquitto</a> (Open source) — MQTT message broker software used in device and other messaging systems.</li>
+</ul>
+<h3 id="endpoint-management-and-device-encryption">Endpoint management and device encryption</h3>
+<ul>
+<li><a href="https://learn.microsoft.com/en-us/intune/fundamentals/what-is-intune" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft Intune</a> (SaaS) — Endpoint, mobile device, and application management service.</li>
+<li><a href="https://www.jamf.com/products/jamf-pro/" rel="noopener noreferrer" referrerpolicy="no-referrer">Jamf Pro</a> (COTS) — Apple device management software.</li>
+<li><a href="https://www.omnissa.com/products/workspace-one-unified-endpoint-management/" rel="noopener noreferrer" referrerpolicy="no-referrer">Omnissa Workspace ONE UEM</a> (COTS) — Unified endpoint management software.</li>
+<li><a href="https://www.ibm.com/products/maas360" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM MaaS360</a> (SaaS) — Unified endpoint and mobile device management service.</li>
+<li><a href="https://www.manageengine.com/products/desktop-central/" rel="noopener noreferrer" referrerpolicy="no-referrer">ManageEngine Endpoint Central</a> (COTS) — Endpoint management and security software.</li>
+<li><a href="https://www.tanium.com/autonomous-it-platform" rel="noopener noreferrer" referrerpolicy="no-referrer">Tanium Autonomous IT Platform</a> (COTS) — Endpoint visibility and management platform; identify the licensed modules.</li>
+<li><a href="https://learn.microsoft.com/en-us/windows/security/operating-system-security/data-protection/bitlocker/" rel="noopener noreferrer" referrerpolicy="no-referrer">Microsoft BitLocker</a> (COTS) — Windows volume encryption component.</li>
+<li><a href="https://support.apple.com/guide/mac-help/how-does-filevault-work-on-a-mac-flvlt001/mac" rel="noopener noreferrer" referrerpolicy="no-referrer">Apple FileVault</a> (COTS) — macOS volume encryption capability; distinguish configuration from device hardware.</li>
+<li><a href="https://gitlab.com/cryptsetup/cryptsetup" rel="noopener noreferrer" referrerpolicy="no-referrer">cryptsetup</a> (Open source) — Linux disk encryption tooling; LUKS is a related format name.</li>
+<li><a href="https://github.com/osquery/osquery" rel="noopener noreferrer" referrerpolicy="no-referrer">osquery</a> (Open source) — Operating system instrumentation and inventory software.</li>
+</ul>
+<h2 id="9-specialized-and-regulated-cryptography">9. Specialized and regulated cryptography</h2>
+<h3 id="mainframe-platforms-and-security-software">Mainframe platforms and security software</h3>
+<ul>
+<li><a href="https://www.ibm.com/products/zos" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM z/OS</a> (COTS) — Operating system software for IBM Z mainframes.</li>
+<li><a href="https://www.ibm.com/docs/en/SSLTBW_3.2.0/pdf/csfb500_icsf_overview_hcr77f0.pdf" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM Integrated Cryptographic Service Facility</a> (COTS) — ICSF; z/OS cryptographic services software component.</li>
+<li><a href="https://www.ibm.com/products/resource-access-control-facility" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM Resource Access Control Facility</a> (COTS) — RACF; z/OS security and access control component.</li>
+<li><a href="https://www.ibm.com/products/zsecure" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM zSecure</a> (COTS) — Mainframe security administration and audit software portfolio.</li>
+<li><a href="https://www.ibm.com/products/cics-transaction-server" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM CICS Transaction Server for z/OS</a> (COTS) — Mainframe transaction processing software.</li>
+<li><a href="https://www.ibm.com/products/mq/zos" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM MQ for z/OS</a> (COTS) — Mainframe messaging middleware.</li>
+<li><a href="https://www.ibm.com/products/db2-for-zos" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM Db2 for z/OS</a> (COTS) — Mainframe relational database edition.</li>
+<li><a href="https://www.broadcom.com/products/mainframe/security/acf2" rel="noopener noreferrer" referrerpolicy="no-referrer">Broadcom ACF2</a> (COTS) — ACF2 mainframe security software.</li>
+<li><a href="https://www.broadcom.com/products/mainframe/security/top-secret" rel="noopener noreferrer" referrerpolicy="no-referrer">Broadcom Top Secret</a> (COTS) — Top Secret z/OS mainframe security software.</li>
+</ul>
+<h3 id="payment-financial-messaging-and-specialized-transaction-systems">Payment, financial messaging and specialized transaction systems</h3>
+<ul>
+<li><a href="https://cpl.thalesgroup.com/encryption/hardware-security-modules/payment-hsms/payshield-10k" rel="noopener noreferrer" referrerpolicy="no-referrer">Thales payShield 10K</a> (Hardware/platform) — Payment HSM appliance; identify firmware and host software separately.</li>
+<li><a href="https://www.futurex.com/products/hardware-security-modules/excrypt-plus-payment-hsm" rel="noopener noreferrer" referrerpolicy="no-referrer">Futurex Excrypt Plus</a> (Hardware/platform) — Payment and general-purpose HSM appliance.</li>
+<li><a href="https://aws.amazon.com/payment-cryptography/" rel="noopener noreferrer" referrerpolicy="no-referrer">AWS Payment Cryptography</a> (SaaS) — Managed payment cryptographic operations and key service.</li>
+<li><a href="https://www.swift.com/products/alliance-access" rel="noopener noreferrer" referrerpolicy="no-referrer">Swift Alliance Access</a> (COTS) — Financial messaging interface software.</li>
+<li><a href="https://www.ibm.com/products/b2b-integrator" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM Sterling B2B Integrator</a> (COTS) — Business-to-business transaction and partner integration software.</li>
+<li><a href="https://www.axway.com/en/products/b2b-integration" rel="noopener noreferrer" referrerpolicy="no-referrer">Axway B2Bi</a> (COTS) — B2B and EDI transaction integration software.</li>
+<li><a href="https://www.opentext.com/products/trading-grid" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenText Trading Grid</a> (SaaS) — Managed B2B integration and trading-partner transaction platform.</li>
+<li><a href="https://www.lfdecentralizedtrust.org/projects/fabric" rel="noopener noreferrer" referrerpolicy="no-referrer">Hyperledger Fabric</a> (Open source) — Permissioned distributed-ledger software; identify the specific network and components.</li>
+</ul>
+<h2 id="10-governance-and-assurance">10. Governance and assurance</h2>
+<h3 id="policy-risk-and-exception-management">Policy, risk and exception management</h3>
+<ul>
+<li><a href="https://www.servicenow.com/products/policy-compliance-management.html" rel="noopener noreferrer" referrerpolicy="no-referrer">ServiceNow Policy and Compliance Management</a> (SaaS) — Policy, controls, compliance, and exception workflows.</li>
+<li><a href="https://community.archerirm.com/hc/en-us/articles/52147321515155-Archer-Policy-Program-Management" rel="noopener noreferrer" referrerpolicy="no-referrer">Archer Policy Program Management</a> (COTS) — Policy ownership, standards, and exception management.</li>
+<li><a href="https://www.ibm.com/products/openpages" rel="noopener noreferrer" referrerpolicy="no-referrer">IBM OpenPages</a> (COTS) — Governance, risk, and compliance software; identify the module.</li>
+<li><a href="https://www.logicgate.ai/platform/" rel="noopener noreferrer" referrerpolicy="no-referrer">LogicGate Risk Cloud</a> (SaaS) — Risk and compliance workflow platform.</li>
+<li><a href="https://optro.ai/auditboard-to-optro" rel="noopener noreferrer" referrerpolicy="no-referrer">Optro</a> (SaaS) — Audit, risk, and compliance platform; AuditBoard is the earlier brand name.</li>
+<li><a href="https://www.metricstream.com/products/policy-and-document-management.htm" rel="noopener noreferrer" referrerpolicy="no-referrer">MetricStream Policy and Document Management</a> (COTS) — Policy, attestation, and exception management software.</li>
+<li><a href="https://www.onetrust.com/products/compliance-automation/" rel="noopener noreferrer" referrerpolicy="no-referrer">OneTrust Compliance Automation</a> (SaaS) — Controls, policy, and compliance evidence management.</li>
+<li><a href="https://www.eramba.org/" rel="noopener noreferrer" referrerpolicy="no-referrer">eramba Community</a> (Open source) — Community edition of the eramba GRC software.</li>
+<li><a href="https://www.simplerisk.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">SimpleRisk Core</a> (Open source) — Core governance, risk, and compliance software.</li>
+<li><a href="https://github.com/intuitem/ciso-assistant-community" rel="noopener noreferrer" referrerpolicy="no-referrer">CISO Assistant Community</a> (Open source) — Risk, controls, compliance, and audit management software.</li>
+</ul>
+<h3 id="vendor-and-third-party-assurance">Vendor and third-party assurance</h3>
+<ul>
+<li><a href="https://www.servicenow.com/products/third-party-risk-management.html" rel="noopener noreferrer" referrerpolicy="no-referrer">ServiceNow Third-party Risk Management</a> (SaaS) — Vendor risk assessment and review workflows.</li>
+<li><a href="https://www.onetrust.com/products/third-party-risk-management/" rel="noopener noreferrer" referrerpolicy="no-referrer">OneTrust Third-Party Risk Management</a> (SaaS) — Third-party assessment and risk management.</li>
+<li><a href="https://www.processunity.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">ProcessUnity</a> (SaaS) — Third-party risk management and vendor assessment platform.</li>
+<li><a href="https://www.vanta.com/products/third-party-risk-management" rel="noopener noreferrer" referrerpolicy="no-referrer">Vanta Third Party Risk Management</a> (SaaS) — Vendor assessment and third-party risk workflows.</li>
+<li><a href="https://drata.com/products/third-party-risk-management" rel="noopener noreferrer" referrerpolicy="no-referrer">Drata Third-Party Risk Management</a> (SaaS) — Third-party inventory, assessments, and risk review.</li>
+<li><a href="https://www.bitsight.com/products/vendor-risk-management" rel="noopener noreferrer" referrerpolicy="no-referrer">Bitsight Vendor Risk Management</a> (SaaS) — Vendor assessments and risk management; ratings do not prove cryptographic behavior.</li>
+<li><a href="https://www.upguard.com/product/vendor-risk" rel="noopener noreferrer" referrerpolicy="no-referrer">UpGuard Vendor Risk</a> (SaaS) — Third-party assessment and vendor security monitoring.</li>
+<li><a href="https://www.whistic.com/" rel="noopener noreferrer" referrerpolicy="no-referrer">Whistic</a> (SaaS) — Vendor risk assessment and security evidence exchange platform.</li>
+</ul>
+
+      </article>
+      <footer class="footer">
+        Generated locally from SOFTWARE_RECOGNITION_REFERENCE.md. The Markdown source remains the durable record.
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

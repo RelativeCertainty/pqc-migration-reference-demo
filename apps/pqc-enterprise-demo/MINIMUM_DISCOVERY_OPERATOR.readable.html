@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="en" data-classification="private">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="robots" content="noindex,nofollow,noarchive">
+  <meta name="referrer" content="no-referrer">
+  <meta http-equiv="Content-Security-Policy" content="default-src 'none'; style-src 'unsafe-inline'; script-src 'unsafe-inline'; img-src data:; object-src 'none'; base-uri 'none'; form-action 'none'">
+  <meta name="color-scheme" content="light dark">
+  <meta name="generator" content="PBA readable document renderer v1">
+  <title>Minimum effective PQC discovery — candidate operator guide</title>
+  <style>
+    :root {
+      --page: #edf1f5;
+      --paper: #ffffff;
+      --text: #20252d;
+      --muted: #647080;
+      --line: #d9e0e8;
+      --accent: #285f86;
+      --accent-soft: #e9f2f8;
+      --notice: #7c4b13;
+      --notice-bg: #fff3dc;
+      --code: #f4f6f8;
+      --shadow: 0 18px 55px rgba(31, 43, 58, 0.11);
+      --measure: 76ch;
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --page: #11161d;
+        --paper: #1a212b;
+        --text: #e8edf3;
+        --muted: #a8b3c0;
+        --line: #35404e;
+        --accent: #8fc8ed;
+        --accent-soft: #203848;
+        --notice: #f0c47b;
+        --notice-bg: #3a2b19;
+        --code: #111821;
+        --shadow: 0 18px 55px rgba(0, 0, 0, 0.32);
+      }
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body {
+      margin: 0;
+      background: var(--page);
+      color: var(--text);
+      font-family: ui-serif, Georgia, Cambria, "Times New Roman", serif;
+      font-size: 18px;
+      line-height: 1.72;
+      text-rendering: optimizeLegibility;
+    }
+    a { color: var(--accent); text-underline-offset: 0.16em; }
+    a:hover { text-decoration-thickness: 2px; }
+    :focus-visible { outline: 3px solid var(--accent); outline-offset: 3px; }
+    .skip-link {
+      position: fixed;
+      z-index: 10;
+      top: 0.5rem;
+      left: 0.5rem;
+      padding: 0.65rem 0.9rem;
+      background: var(--paper);
+      border: 2px solid var(--accent);
+      transform: translateY(-160%);
+    }
+    .skip-link:focus { transform: none; }
+    .topbar {
+      border-bottom: 1px solid var(--line);
+      background: color-mix(in srgb, var(--paper) 92%, transparent);
+      backdrop-filter: blur(10px);
+    }
+    .topbar-inner {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0.85rem clamp(1rem, 3vw, 2.5rem);
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 1rem;
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.83rem;
+    }
+    .classification {
+      display: inline-flex;
+      align-items: center;
+      gap: 0.5rem;
+      color: var(--notice);
+      font-weight: 700;
+      letter-spacing: 0.02em;
+    }
+    .classification::before {
+      content: "";
+      width: 0.62rem;
+      height: 0.62rem;
+      border-radius: 50%;
+      background: currentColor;
+    }
+    .reader-actions { display: flex; flex-wrap: wrap; gap: 0.55rem; }
+    .reader-actions a,
+    .reader-actions button {
+      appearance: none;
+      border: 1px solid var(--line);
+      border-radius: 999px;
+      background: var(--paper);
+      color: var(--text);
+      cursor: pointer;
+      font: inherit;
+      padding: 0.42rem 0.75rem;
+      text-decoration: none;
+    }
+    .reader-actions a:hover,
+    .reader-actions button:hover { border-color: var(--accent); }
+    .shell {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: clamp(1.1rem, 3vw, 2.6rem);
+      display: grid;
+      grid-template-columns: minmax(210px, 270px) minmax(0, 1fr);
+      gap: clamp(1.1rem, 3vw, 2.8rem);
+      align-items: start;
+    }
+    .toc {
+      position: sticky;
+      top: 1.3rem;
+      max-height: calc(100vh - 2.6rem);
+      overflow: auto;
+      padding: 1rem 0.9rem 1rem 0;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.8rem;
+      line-height: 1.35;
+    }
+    .toc-title {
+      margin: 0 0 0.7rem;
+      color: var(--text);
+      font-size: 0.76rem;
+      font-weight: 800;
+      letter-spacing: 0.11em;
+      text-transform: uppercase;
+    }
+    .toc-list { margin: 0; padding: 0; list-style: none; }
+    .toc-list li { margin: 0.22rem 0; }
+    .toc-list a {
+      display: block;
+      padding: 0.28rem 0.4rem;
+      border-left: 2px solid transparent;
+      color: var(--muted);
+      text-decoration: none;
+    }
+    .toc-list a:hover,
+    .toc-list a:focus {
+      border-left-color: var(--accent);
+      color: var(--accent);
+      background: var(--accent-soft);
+    }
+    .toc-level-3 { padding-left: 0.75rem; }
+    .paper {
+      min-width: 0;
+      background: var(--paper);
+      border: 1px solid var(--line);
+      border-radius: 18px;
+      box-shadow: var(--shadow);
+      padding: clamp(1.25rem, 5vw, 4.5rem);
+    }
+    .document-meta {
+      max-width: var(--measure);
+      margin: 0 auto 2.5rem;
+      padding: 0 0 1.15rem;
+      border-bottom: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.78rem;
+      line-height: 1.5;
+    }
+    .document-meta strong { color: var(--text); }
+    .document-meta code { overflow-wrap: anywhere; word-break: break-all; }
+    .notice {
+      max-width: var(--measure);
+      margin: 0 auto 2rem;
+      padding: 0.85rem 1rem;
+      border-left: 4px solid var(--notice);
+      border-radius: 6px;
+      background: var(--notice-bg);
+      color: var(--notice);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      font-size: 0.86rem;
+      line-height: 1.5;
+    }
+    article > * { max-width: var(--measure); margin-left: auto; margin-right: auto; }
+    article h1,
+    article h2,
+    article h3,
+    article h4 {
+      color: var(--text);
+      font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont,
+        "Segoe UI", sans-serif;
+      line-height: 1.2;
+      letter-spacing: -0.025em;
+      scroll-margin-top: 1.5rem;
+    }
+    article h1 {
+      margin-top: 0;
+      margin-bottom: 1.4rem;
+      font-size: clamp(2.1rem, 5vw, 3.5rem);
+      font-weight: 760;
+    }
+    article h2 {
+      margin-top: 3.4rem;
+      margin-bottom: 1rem;
+      padding-top: 0.5rem;
+      border-top: 1px solid var(--line);
+      font-size: clamp(1.5rem, 3vw, 2rem);
+    }
+    article h3 { margin-top: 2.4rem; font-size: 1.25rem; }
+    article h4 { margin-top: 2rem; font-size: 1.05rem; }
+    article p { margin-top: 0.85rem; margin-bottom: 0.85rem; }
+    article ul,
+    article ol { padding-left: 1.45rem; }
+    article li { margin: 0.42rem 0; padding-left: 0.15rem; }
+    article li::marker { color: var(--accent); font-weight: 700; }
+    article blockquote {
+      padding: 0.2rem 0 0.2rem 1.2rem;
+      border-left: 4px solid var(--accent);
+      color: var(--muted);
+      font-style: italic;
+    }
+    article code {
+      padding: 0.12em 0.32em;
+      border-radius: 5px;
+      background: var(--code);
+      font-family: ui-monospace, SFMono-Regular, Consolas, "Liberation Mono", monospace;
+      font-size: 0.84em;
+      overflow-wrap: anywhere;
+    }
+    article pre {
+      max-width: 100%;
+      padding: 1rem;
+      border: 1px solid var(--line);
+      border-radius: 9px;
+      background: var(--code);
+      overflow: auto;
+      line-height: 1.45;
+    }
+    article pre code { padding: 0; background: transparent; overflow-wrap: normal; }
+    article hr { margin-top: 2.8rem; margin-bottom: 2.8rem; border: 0; border-top: 1px solid var(--line); }
+    article img { max-width: 100%; height: auto; }
+    .image-placeholder {
+      display: inline-block;
+      padding: 0.3rem 0.5rem;
+      border: 1px dashed var(--line);
+      border-radius: 6px;
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.86rem;
+    }
+    .unsafe-link { color: var(--muted); text-decoration: line-through; }
+    article table {
+      display: block;
+      max-width: 100%;
+      border-collapse: collapse;
+      overflow-x: auto;
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.88rem;
+    }
+    article th,
+    article td { padding: 0.58rem 0.7rem; border: 1px solid var(--line); text-align: left; }
+    .footer {
+      max-width: var(--measure);
+      margin: 3.5rem auto 0;
+      padding-top: 1rem;
+      border-top: 1px solid var(--line);
+      color: var(--muted);
+      font-family: ui-sans-serif, system-ui, sans-serif;
+      font-size: 0.76rem;
+    }
+    @media (max-width: 900px) {
+      body { font-size: 17px; }
+      .shell { display: block; padding: 0; }
+      .toc {
+        position: static;
+        max-height: 20rem;
+        overflow: auto;
+        padding: 1rem 1.1rem;
+        border-bottom: 1px solid var(--line);
+        background: var(--paper);
+      }
+      .toc-list { columns: 2; column-gap: 1.4rem; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; }
+    }
+    @media (max-width: 560px) {
+      .topbar-inner { align-items: flex-start; flex-direction: column; }
+      .toc-list { columns: 1; }
+      .paper { padding: 1.2rem 1rem 2.5rem; }
+      article h1 { font-size: 2rem; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      html { scroll-behavior: auto; }
+    }
+    @media print {
+      :root { --paper: #fff; --text: #111; --muted: #444; --line: #ccc; }
+      @page { size: auto; margin: 0.7in; }
+      body { background: #fff; color: #111; font-size: 11pt; }
+      .topbar,
+      .toc,
+      .notice,
+      .skip-link,
+      .reader-actions { display: none !important; }
+      .shell { display: block; max-width: none; padding: 0; }
+      .paper { border: 0; border-radius: 0; box-shadow: none; padding: 0; }
+      article > * { max-width: none; }
+      article h1 { font-size: 24pt; }
+      article h2 { break-after: avoid; font-size: 16pt; }
+      article h3,
+      article h4 { break-after: avoid; }
+      article pre,
+      article blockquote { break-inside: avoid; }
+      a { color: inherit; text-decoration: none; }
+      a[href^="http"]::after { content: " (" attr(href) ")"; font-size: 0.75em; overflow-wrap: anywhere; }
+    }
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#document">Skip to document</a>
+  <header class="topbar">
+    <div class="topbar-inner">
+      <div class="classification">Private local reader</div>
+      <div class="reader-actions" aria-label="Reader actions">
+        <a href="MINIMUM_DISCOVERY_OPERATOR.md">Open source</a>
+        <button type="button" onclick="window.print()">Print / Save PDF</button>
+      </div>
+    </div>
+  </header>
+  <main class="shell" id="document">
+    <nav class="toc" aria-label="Table of contents">
+      <p class="toc-title">Contents</p>
+      <ol class="toc-list"><li class="toc-level-2"><a href="#what-this-candidate-does">What this candidate does</a></li>
+<li class="toc-level-2"><a href="#respond-to-a-request">Respond to a request</a></li>
+<li class="toc-level-2"><a href="#recognize-the-software-class">Recognize the software class</a></li>
+<li class="toc-level-2"><a href="#choose-the-display-theme">Choose the display theme</a></li>
+<li class="toc-level-2"><a href="#ask-for-existing-information-not-proof">Ask for existing information, not proof</a></li>
+<li class="toc-level-2"><a href="#work-offline-in-excel">Work offline in Excel</a></li>
+<li class="toc-level-3"><a href="#open-the-complete-collection">Open the complete collection</a></li>
+<li class="toc-level-3"><a href="#return-one-form">Return one form</a></li>
+<li class="toc-level-2"><a href="#follow-through-as-the-assessment-team">Follow through as the assessment team</a></li>
+<li class="toc-level-2"><a href="#how-to-read-the-reports">How to read the reports</a></li>
+<li class="toc-level-2"><a href="#boundaries-and-validation-still-owed">Boundaries and validation still owed</a></li>
+<li class="toc-level-2"><a href="#research-basis">Research basis</a></li></ol>
+    </nav>
+    <div class="paper">
+      <div class="document-meta">
+        <strong>MINIMUM_DISCOVERY_OPERATOR.md</strong><br>
+        2,464 words · about 12 minutes · source updated September 10, 2026 at 10:50 AM MDT<br>
+        Source SHA-256: <code>7a4eef9640b78d5961a87b26f6b6a64503760e1a9709a775332d6e95cd313fa3</code> · renderer v1
+      </div>
+      <aside class="notice"><strong>Private local reader.</strong> Keep this copy local unless sharing is explicitly approved.</aside>
+      <article>
+        <h1 id="minimum-effective-pqc-discovery-candidate-operator-guide">Minimum effective PQC discovery — candidate operator guide</h1>
+<h2 id="what-this-candidate-does">What this candidate does</h2>
+<p>The contributor answers five questions about known products, helpful teams,
+existing records, scope and restrictions. A referral, useful partial answer or
+explicit unknown can finish that person's task. The assessment team then owns
+investigation, evidence review and report preparation.</p>
+<p>This is a synthetic, host-only development candidate. It is not enterprise SSO,
+an adopted enterprise standard, a live connector or a migration tool. Never enter
+an enterprise password, private key, customer record or other restricted data.</p>
+<h2 id="respond-to-a-request">Respond to a request</h2>
+<ol>
+<li>Open the exact request link supplied with the candidate handoff on this Linux
+host. Sign in with its assigned synthetic contributor identity and the
+displayed demo-only password. The link opens the request directly.</li>
+<li>Read the request title and software examples. Examples identify a software
+class; they do not claim that a product is installed or approved.</li>
+<li>Check the prominent <strong>Software class</strong> heading. In question 1, use <strong>Add
+software or deployment</strong> and <strong>Add another software or deployment</strong> to list
+several products in that class. A product name alone is enough; deployment
+and environment details are optional. Use separate entries for different
+deployments of the same product. You may instead name several products in
+the answer box, give a referral, or choose &quot;I do not know&quot; or &quot;Not my team&quot;.
+There is no separate questionnaire for each product.</li>
+<li>Select <strong>Save draft</strong>. The saved confirmation is the indication that the
+server retained the answer. Return through the same link to resume.</li>
+<li>Select <strong>Review and submit</strong>, check your saved answers, then submit the
+response to the coordinator. The receipt explicitly says no further response
+is required now. It does not say that the source or assessment is complete.</li>
+</ol>
+<p>No API pagination, six-person ownership roster, new policy document or promised
+resolution date is required from the contributor.</p>
+<h2 id="recognize-the-software-class">Recognize the software class</h2>
+<p>The web request names the <strong>PQC Discovery Domain</strong> and <strong>Software class</strong> before
+the questions. <strong>Products you may recognize</strong> shows the full selected-class
+list, with offering labels and official product links. Expand the other classes
+in that domain, or <strong>Browse all 10 PQC discovery domains</strong>, without changing
+your assignment or answers.</p>
+<p>The separately versioned recognition reference contains 242 examples across
+27 software classes: 16 for enterprise context, 25 for PKI and trust, 26 for
+encrypted traffic, 20 for machine access, 26 for software delivery, 38 for
+cloud/keys/identity, 27 for protected data, 29 for distributed endpoints, 17 for
+specialized/regulated cryptography, and 18 for governance/assurance.</p>
+<p>These are recognition examples, not a complete market inventory, a purchasing
+recommendation, a confirmed enterprise stack, PQC-readiness proof or qualified
+connector list. COTS means commercial off-the-shelf; OTS means off-the-shelf;
+SaaS means software as a service. Open-source and relevant hardware/platform
+examples are labelled too. Offering labels are broad; exact edition, version
+and deployment require confirmation. A missing product is not excluded from
+discovery. Several products or deployments may fulfill the same function.</p>
+<p>The reference does not rewrite the five questions or their original examples.
+Earlier saved question examples remain available separately. Browsing a product
+never adds it as a discovered asset, answer, evidence record or approval.</p>
+<h2 id="choose-the-display-theme">Choose the display theme</h2>
+<p>After signing in, use <strong>Theme</strong> in the questionnaire header or workspace sidebar
+to choose <strong>Dark</strong> or <strong>Light</strong>.
+The questionnaire and coordinator workspace use that same preference; changing
+it does not save, submit, reset or otherwise change your response. The preference
+is remembered by this browser when local preference storage is available. The
+default is Dark, matching the technical workspace. The login design and fixed
+printable report pages retain their intentional presentation.</p>
+<p>This reversible presentation change is R1. Check labels, response controls,
+optional help, warnings and keyboard focus in both themes through normal use.
+Technical checks do not record an owner verdict or establish WCAG conformance.</p>
+<h2 id="ask-for-existing-information-not-proof">Ask for existing information, not proof</h2>
+<p>The initial request helps locate products, teams and existing information. It
+does not ask the respondent to demonstrate compliance, create documents,
+establish policy or resolve a restriction. A product name, document reference,
+referral or &quot;not sure&quot; is useful. Do not submit credentials or sensitive files.
+Any later collection or system access must be agreed separately with the
+appropriate owner.</p>
+<p>New requests use the versioned <code>pqc.discovery.v2</code> wording. The fifth question
+asks about access restrictions, information-sharing considerations and known
+gaps. Previously saved requests retain their original questions and answers;
+the interface explains their older terminology. The same version-pinned
+questions appear in the Excel counterpart. Existing exports, attributed
+responses, submissions and reports are not rewritten.</p>
+<p>Within technical review and reports, <strong>evidence</strong> means information supporting
+a conclusion, with its source, date, scope and limitations recorded. Identifying
+a reference is not the same as obtaining permission to examine it, examining it,
+or verifying a technical claim. Those distinctions and their controls remain.</p>
+<p>The wording-only change is R1: review the request, its optional help, Excel
+instructions and submission receipt through normal use. This does not waive
+the R2/R3 observations owed for the underlying workflow and authorization.
+The legacy intake form also has a targeted draft-retention safeguard (R2): its
+initial synchronization must not clear a first edit. Verify immediate entry,
+save and readback separately from the wording review. No owner outcome is
+inferred from automated tests.</p>
+<h2 id="work-offline-in-excel">Work offline in Excel</h2>
+<h3 id="open-the-complete-collection">Open the complete collection</h3>
+<p>On <strong>Discovery</strong>, use <strong>All 27 software-class forms, together</strong>. It presents
+the five core questions once, followed by a browseable catalog of all 27 classes
+in the ten PQC Discovery Domains. Browsing does not create assignments. These
+are the new short forms, not the older detailed specialist questionnaires.</p>
+<p>As assessment lead:</p>
+<ol>
+<li>Choose the intended synthetic <strong>Collection recipient</strong> and select <strong>Review
+collection creation</strong>. Confirm the assessment and recipient, then select
+<strong>Create the 27 draft web forms</strong>. This creates one new draft per class in a
+single transaction. It does not copy or change existing answers, send email,
+submit responses, or establish source readiness. One collection per recipient
+is permitted in this bounded candidate.</li>
+<li>Under the saved collection, select <strong>Prepare complete Excel collection</strong>.
+This records an immutable snapshot of all 27 individually returnable forms
+and a consolidated reference workbook. Preparation is separate from download.</li>
+<li>Select <strong>Download all 27 Excel forms + consolidated guide (ZIP)</strong>. Extract
+the ZIP; it contains <code>00_Consolidated_Questions.xlsx</code> plus ten domain folders
+containing 27 class-named Excel files. Individual download links are also
+available if an approved browser route does not permit ZIP downloads.</li>
+<li>Read <strong>Start here</strong> in the consolidated workbook for the file/request index.
+<strong>All questions</strong> contains 135 question instances: the same five questions
+repeated across 27 classes, not 135 different questions. <strong>Software examples</strong>
+contains the complete 242-entry recognition reference. The consolidated
+workbook is read-only reference material, not an answer-return format.</li>
+<li>Use <strong>Open individual web forms and response status</strong> to open the appropriate
+assigned request. Return its individual Excel file there using the normal
+preview, conflict resolution and apply-as-draft steps. Review and submit
+separately. Do not upload the ZIP or consolidated overview as a response.</li>
+</ol>
+<p>Contributors see only their own collections and assignments. They do not create
+collections or export packages for others. Having all forms available does not
+mean one person must answer them all. Partial responses, referrals and unknowns
+remain useful. Multiple products and deployments can be named within a class's
+response; no extra questionnaire is required for each product.</p>
+<p>Web edits do not alter an older downloaded package. Prepare a new snapshot when
+needed, up to three retained packages per collection and the existing bounded
+assessment/per-request export limits. A submitted request may appear in an
+archival package, but remains submitted: returning it cannot bypass the explicit
+reopen step. Old forms, submissions, exports and immutable assessment history
+remain intact. Ordinary downloads do not authorize access or evidence admission.</p>
+<p>Collection behavior is R2; recipient-specific collection access is an R3
+checkpoint. Owner walkthrough is still required for the affected behavior:
+recognize the five questions and 27 classes, create a collection, download it,
+resume one form, reconcile an offline change, and verify another contributor
+cannot see its private collection. Automated checks and synthetic test responses
+are not owner outcomes or evidence of enterprise acceptance. This is a loopback
+development candidate, not a production or public-ready release.</p>
+<h3 id="return-one-form">Return one form</h3>
+<p>Open <strong>Use the same five questions in Excel</strong> after saving web edits. Prepare
+and download the workbook. Its five definitions are the same version pinned to
+the web request. Return the file through the same request, preview the proposed
+changes and resolve competing whole-question edits before applying a draft.</p>
+<p>Newly prepared workbooks show the selected domain's software examples on the
+first <strong>Discovery form</strong> sheet. The <strong>Software examples</strong> sheet contains the
+complete ten-domain reference, product types, recognition notes and official
+source URLs as text. This third sheet is reference material, not extra homework;
+editing it does not supply or change an answer. Keep its header and structure.
+Use the blue answer cells on the first sheet for responses.</p>
+<p>Already downloaded files cannot acquire these examples automatically. Prepare
+a new Excel form to receive the reference. Keep any existing offline edits:
+earlier two-sheet discovery workbooks still import through the same request,
+and their stored export bytes and question definitions remain unchanged.
+The detailed specialist questionnaires also remain unchanged.</p>
+<p>Preparing a workbook does not confirm that the browser downloaded it. If Chrome
+reports <strong>Blocked by your organization</strong>, retain the exact message for diagnosis;
+that message alone does not identify the blocking policy or component. Do not disable protections, use
+an alternate transfer route to evade the policy, or make the export public. You
+can continue answering in the web form without downloading a file. Keep the
+exact error message for the administrator; a browser download denial is not an
+Excel file-corruption diagnosis. Chrome describes its managed download controls
+in its <a href="https://support.google.com/chrome/a/answer/7579271?hl=en" rel="noopener noreferrer" referrerpolicy="no-referrer">administrator download-restriction guidance</a>.</p>
+<p>Blank Excel cells retain the export value; use the web form to clear a saved
+answer explicitly. Importing does not submit a response. Workbook author text
+is unverified attribution, not an authenticated approval or access grant.</p>
+<p>The original detailed questionnaires and their exports remain under specialist
+questionnaires. New five-question workbooks are a distinct format; they do not
+replace or rewrite old 27-question or earlier intake files.</p>
+<p>Recognition browsing is an R1 presentation change. The revised offline format
+and old-file compatibility are an R2 checkpoint: the owner should prepare a
+new form, recognize its examples, and verify an old edited form still previews
+correctly before relying on the revised workflow. Automated checks do not
+record that owner outcome. The candidate remains a development demonstration.</p>
+<h2 id="follow-through-as-the-assessment-team">Follow through as the assessment team</h2>
+<p>Use <strong>Discovery</strong> with the synthetic assessment-lead identity. Respondents do
+not need this screen, an assessment-creation step or a change of persona.</p>
+<ol>
+<li>Select a returned request and create an engineering investigation explaining
+the conclusion it needs to support.</li>
+<li>Assign the investigation and add products or deployments identified during
+research. Staff can do this after a partial answer without reopening or
+rewriting the contributor's submission. Keep evidence-producing sources
+distinct from the systems they describe.</li>
+<li>Record official documentation, a proposed investigation method and known
+limitations. Documentation research does not establish installed-product
+compatibility or permission to collect information.</li>
+<li>Review the three draft standards packages: assessment/evidence, crypto
+agility and migration assurance. Record observed practice, reported existing
+requirements, possible conflicts and the proposed review authority separately.
+Use <strong>Revise draft proposal</strong> to edit the proposed text. Saving records a new
+revision; it does not adopt a company standard or rewrite an earlier report.</li>
+<li>Controlled evidence staging requires the existing G00 and P1-G01 boundaries.
+The new evidence path accepts only the bounded synthetic TLS reference
+format, not arbitrary vendor exports. Other families can be researched but
+are not qualified by this one parser.</li>
+<li>A different technical-reviewer identity records a factual qualification for
+the staged evidence bundle. The assessment lead can then admit qualified
+evidence. These are simulated development decisions, not owner validation
+outcomes or enterprise approval.</li>
+<li>Open the assessment's map, assets and reports. Admitted TLS observations
+contribute actual endpoint records and separate key-establishment and
+certificate-signature uses. Staged records and questionnaire testimony do not.</li>
+<li>Review the evidence package, then generate the Phase 1 report. A qualified
+Phase 1 handoff explicitly identifies the package Phase 2 may rely on. Phase 2
+adds the reviewed scenario, business consequence, uncertainty and next action;
+it does not pick a newer Phase 1 report automatically.</li>
+</ol>
+<h2 id="how-to-read-the-reports">How to read the reports</h2>
+<p>The discovery section separates submitted testimony, engineering work, admitted
+evidence and proposed standards. A hybrid key-exchange setting does not erase a
+classical certificate-signature dependency. Missing population, service
+relationships, information lifetime and independent runtime verification remain
+limitations. Proposed standards support recommendations, not retrospective
+noncompliance findings.</p>
+<p>Report bytes and their input fingerprints are immutable. Later answers,
+standards revisions or evidence generate new review work; they do not rewrite
+historical reports. Merely creating an empty request or exporting a workbook is
+not technical progress.</p>
+<h2 id="boundaries-and-validation-still-owed">Boundaries and validation still owed</h2>
+<ul>
+<li>Ten estate areas and 27 runtime source families are coverage classifications,
+not 27 compulsory assignments. The separate 27-template specialist catalog
+retains its own IDs and crosswalk.</li>
+<li>Only synthetic TLS evidence admission is exercised in this increment. No live
+ServiceNow, F5, GitHub, Vault or Azure integration is enabled.</li>
+<li>Findings are illustrative, evidence-linked interpretations, not approved risk
+scores or compliance determinations.</li>
+<li>Questionnaire and evidence files are bounded; unexpected active content is
+rejected. Synthetic state remains in the candidate's owner-only directory.</li>
+<li>Workflow changes are R2; authorization/evidence-admission changes are R3.
+Automated checks and our walkthrough are engineering evidence only. The owner
+must personally record the targeted usability and authorization observations
+before activation/readiness claims.</li>
+<li>Enterprise authentication, SQL Server qualification, external communication,
+formal standards adoption and Phase 3/4 execution remain separate work.</li>
+</ul>
+<p>The candidate launcher binds only loopback, allows one CPU and 1 GiB memory,
+disallows additional swap, and stops after two hours. It is not an always-on
+deployment. Preserve the matching application release and state backup together
+for rollback; never point an older release at new writable state.</p>
+<h2 id="research-basis">Research basis</h2>
+<p>The five-question set is a design choice to validate with users, not a NIST
+minimum. Its division of responsibility follows the principle of asking only
+questions with a clear purpose and suitable respondent in the
+<a href="https://www.gov.uk/service-manual/design/form-structure" rel="noopener noreferrer" referrerpolicy="no-referrer">GOV.UK question-protocol guidance</a>.</p>
+<p>The standards proposals draw on NIST risk-assessment and crypto-agility guidance,
+including <a href="https://csrc.nist.gov/pubs/sp/800/30/r1/final" rel="noopener noreferrer" referrerpolicy="no-referrer">SP 800-30 Rev. 1</a> and
+<a href="https://csrc.nist.gov/pubs/cswp/39/upd1/considerations-for-achieving-crypto-agility/final" rel="noopener noreferrer" referrerpolicy="no-referrer">CSWP 39upd1, final guidance</a>.
+<a href="https://csrc.nist.gov/pubs/ir/8547/ipd" rel="noopener noreferrer" referrerpolicy="no-referrer">IR 8547</a> remains an Initial Public Draft,
+not a binding company requirement. The bounded hybrid-group interpretation uses
+the <a href="https://docs.openssl.org/3.5/man3/SSL_CTX_set1_curves/" rel="noopener noreferrer" referrerpolicy="no-referrer">OpenSSL 3.5 group documentation</a>.
+These references establish neither NIST certification nor enterprise adoption.</p>
+
+      </article>
+      <footer class="footer">
+        Generated locally from MINIMUM_DISCOVERY_OPERATOR.md. The Markdown source remains the durable record.
+      </footer>
+    </div>
+  </main>
+</body>
+</html>

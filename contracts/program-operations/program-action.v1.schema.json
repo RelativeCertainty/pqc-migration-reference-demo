@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/program-action.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "ProgramAction.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "actionId", "programId", "name", "description", "accountableRole", "dueDate", "status", "unresolvedConsequence", "references"],
+  "properties": {
+    "schemaVersion": {"const": "ProgramAction.v1"},
+    "actionId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "name": {"$ref": "program-operations-common.v1.schema.json#/$defs/plainLanguageName"},
+    "description": {"type": "string", "minLength": 10, "maxLength": 2000},
+    "accountableRole": {"type": "string", "minLength": 3, "maxLength": 160},
+    "dueDate": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+    "status": {"type": "string", "enum": ["open", "accepted", "in_progress", "completed", "blocked", "cancelled"]},
+    "unresolvedConsequence": {"type": "string", "minLength": 3, "maxLength": 1000},
+    "references": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "completedAt": {"$ref": "program-operations-common.v1.schema.json#/$defs/timestamp"}
+  }
+}

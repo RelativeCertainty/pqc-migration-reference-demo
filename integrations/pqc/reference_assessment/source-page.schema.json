@@ -1,0 +1,61 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://example.invalid/pqc/reference-source-page.v1.schema.json",
+  "title": "Closed synthetic reference page; not a commercial product API",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schema_version", "kind", "synthetic", "records"],
+  "properties": {
+    "schema_version": {"const": "pba.pqc.reference-source-page.v1"},
+    "kind": {"enum": ["cmdb", "pki", "tls"]},
+    "synthetic": {"const": true},
+    "records": {"type": "array", "maxItems": 1000}
+  },
+  "allOf": [
+    {"if": {"properties": {"kind": {"const": "cmdb"}}}, "then": {"properties": {"records": {"items": {"$ref": "#/$defs/cmdb"}}}}},
+    {"if": {"properties": {"kind": {"const": "pki"}}}, "then": {"properties": {"records": {"items": {"$ref": "#/$defs/pki"}}}}},
+    {"if": {"properties": {"kind": {"const": "tls"}}}, "then": {"properties": {"records": {"items": {"$ref": "#/$defs/tls"}}}}}
+  ],
+  "$defs": {
+    "id": {"type": "string", "pattern": "^[a-zA-Z0-9][a-zA-Z0-9_.:-]{0,127}$"},
+    "nullable_id": {"anyOf": [{"$ref": "#/$defs/id"}, {"type": "null"}]},
+    "algorithm": {"anyOf": [{"type": "string", "minLength": 1, "maxLength": 80, "pattern": "^[A-Za-z0-9][A-Za-z0-9_.+/-]*$"}, {"type": "null"}]},
+    "basis": {"enum": ["observed", "configured", "vendor_reported"]},
+    "hostname": {"type": "string", "maxLength": 253, "pattern": "^[a-z0-9](?:[a-z0-9.-]*[a-z0-9])?\\.(?:example|test|invalid)$"},
+    "cmdb": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "evidence_basis", "name", "business_service_id", "owner_id", "criticality", "environment", "confidentiality_until"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "evidence_basis": {"$ref": "#/$defs/basis"},
+        "name": {"type": "string", "pattern": "^Synthetic [A-Za-z0-9 -]{1,100}$"},
+        "business_service_id": {"$ref": "#/$defs/nullable_id"}, "owner_id": {"$ref": "#/$defs/nullable_id"},
+        "criticality": {"enum": ["low", "medium", "high", "critical", "unknown"]},
+        "environment": {"enum": ["synthetic_lab", "synthetic_development"]},
+        "confidentiality_until": {"anyOf": [{"type": "string", "format": "date"}, {"type": "null"}]}
+      }
+    },
+    "pki": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "evidence_basis", "application_id", "application_source", "common_name", "signature_algorithm", "public_key_algorithm", "public_key_bits", "valid_until"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "evidence_basis": {"$ref": "#/$defs/basis"},
+        "application_id": {"$ref": "#/$defs/nullable_id"}, "application_source": {"$ref": "#/$defs/nullable_id"},
+        "common_name": {"$ref": "#/$defs/hostname"}, "signature_algorithm": {"$ref": "#/$defs/algorithm"},
+        "public_key_algorithm": {"$ref": "#/$defs/algorithm"}, "public_key_bits": {"type": ["integer", "null"], "minimum": 1, "maximum": 65536},
+        "valid_until": {"anyOf": [{"type": "string", "format": "date-time"}, {"type": "null"}]}
+      }
+    },
+    "tls": {
+      "type": "object", "additionalProperties": false,
+      "required": ["id", "evidence_basis", "application_id", "application_source", "certificate_id", "certificate_source", "hostname", "port", "protocol", "key_exchange_group", "certificate_signature_algorithm"],
+      "properties": {
+        "id": {"$ref": "#/$defs/id"}, "evidence_basis": {"$ref": "#/$defs/basis"},
+        "application_id": {"$ref": "#/$defs/nullable_id"}, "application_source": {"$ref": "#/$defs/nullable_id"},
+        "certificate_id": {"$ref": "#/$defs/nullable_id"}, "certificate_source": {"$ref": "#/$defs/nullable_id"},
+        "hostname": {"$ref": "#/$defs/hostname"}, "port": {"type": "integer", "minimum": 1, "maximum": 65535},
+        "protocol": {"enum": ["TLSv1.2", "TLSv1.3", "unknown"]}, "key_exchange_group": {"$ref": "#/$defs/algorithm"},
+        "certificate_signature_algorithm": {"$ref": "#/$defs/algorithm"}
+      }
+    }
+  }
+}

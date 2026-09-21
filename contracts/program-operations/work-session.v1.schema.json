@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/work-session.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "WorkSession.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "sessionId", "programId", "projectDayRef", "startedAt", "endedAt", "timeCategory", "summary", "references", "recordStatus"],
+  "properties": {
+    "schemaVersion": {"const": "WorkSession.v1"},
+    "sessionId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "projectDayRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "startedAt": {"$ref": "program-operations-common.v1.schema.json#/$defs/timestamp"},
+    "endedAt": {"$ref": "program-operations-common.v1.schema.json#/$defs/timestamp"},
+    "timeCategory": {"type": "string", "enum": ["technical_execution", "stakeholder_enablement", "quality_and_evidence", "project_control", "reporting_and_documentation", "meetings_and_administration"]},
+    "summary": {"type": "string", "minLength": 3, "maxLength": 1000},
+    "references": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"}
+  }
+}

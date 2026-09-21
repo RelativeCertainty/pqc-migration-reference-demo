@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/program-dependency.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "ProgramDependency.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "dependencyId", "programId", "name", "dependencyType", "providerRole", "neededBy", "status", "deliveryConsequence", "fallback", "references"],
+  "properties": {
+    "schemaVersion": {"const": "ProgramDependency.v1"},
+    "dependencyId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "name": {"$ref": "program-operations-common.v1.schema.json#/$defs/plainLanguageName"},
+    "dependencyType": {"type": "string", "enum": ["access", "decision", "data", "tooling", "environment", "capacity", "external_service"]},
+    "providerRole": {"type": "string", "minLength": 3, "maxLength": 160},
+    "neededBy": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+    "status": {"type": "string", "enum": ["identified", "requested", "accepted", "available", "validated", "blocked", "unavailable"]},
+    "deliveryConsequence": {"type": "string", "minLength": 3, "maxLength": 1000},
+    "fallback": {"type": "string", "minLength": 3, "maxLength": 1000},
+    "references": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"}
+  }
+}

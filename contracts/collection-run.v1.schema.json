@@ -1,0 +1,164 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/collection-run.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "CollectionRun.v1",
+  "description": "Durable ledger summary for one bounded collection workflow. It preserves attempts, artifacts, cursor references, limitations, and tombstone eligibility without rewriting prior runs.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schemaVersion",
+    "collectionRunId",
+    "tenantId",
+    "integrationProfileRef",
+    "scopeRef",
+    "mode",
+    "trigger",
+    "authoritativeScope",
+    "status",
+    "requestedAt",
+    "startedAt",
+    "finishedAt",
+    "cursorStartRef",
+    "cursorEndRef",
+    "sourceEventRefs",
+    "observationBatchRefs",
+    "workerRunRefs",
+    "metrics",
+    "retrySummary",
+    "tombstoneDecision",
+    "limitations",
+    "safety"
+  ],
+  "properties": {
+    "schemaVersion": { "const": "CollectionRun.v1" },
+    "collectionRunId": { "$ref": "#/$defs/identifier" },
+    "tenantId": { "$ref": "#/$defs/identifier" },
+    "integrationProfileRef": { "$ref": "#/$defs/identifier" },
+    "scopeRef": { "$ref": "#/$defs/identifier" },
+    "mode": { "enum": ["full", "incremental", "reconciliation", "readback"] },
+    "trigger": { "enum": ["scheduled", "operator_requested", "provider_event", "recovery"] },
+    "authoritativeScope": { "type": "boolean" },
+    "status": { "enum": ["requested", "running", "succeeded", "partial", "quarantined", "failed", "cancelled"] },
+    "requestedAt": { "$ref": "#/$defs/timestamp" },
+    "startedAt": {
+      "oneOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }]
+    },
+    "finishedAt": {
+      "oneOf": [{ "$ref": "#/$defs/timestamp" }, { "type": "null" }]
+    },
+    "cursorStartRef": {
+      "oneOf": [{ "$ref": "#/$defs/identifier" }, { "type": "null" }]
+    },
+    "cursorEndRef": {
+      "oneOf": [{ "$ref": "#/$defs/identifier" }, { "type": "null" }]
+    },
+    "sourceEventRefs": {
+      "type": "array",
+      "maxItems": 1000000,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "observationBatchRefs": {
+      "type": "array",
+      "maxItems": 100000,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "workerRunRefs": {
+      "type": "array",
+      "minItems": 1,
+      "maxItems": 100000,
+      "uniqueItems": true,
+      "items": { "$ref": "#/$defs/identifier" }
+    },
+    "metrics": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["pagesRead", "providerRecordsRead", "sourceEventsCommitted", "observationsAccepted", "observationsQuarantined"],
+      "properties": {
+        "pagesRead": { "type": "integer", "minimum": 0 },
+        "providerRecordsRead": { "type": "integer", "minimum": 0 },
+        "sourceEventsCommitted": { "type": "integer", "minimum": 0 },
+        "observationsAccepted": { "type": "integer", "minimum": 0 },
+        "observationsQuarantined": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "retrySummary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["attemptCount", "retryCount", "lastClassification"],
+      "properties": {
+        "attemptCount": { "type": "integer", "minimum": 1, "maximum": 1000 },
+        "retryCount": { "type": "integer", "minimum": 0, "maximum": 999 },
+        "lastClassification": {
+          "enum": ["none", "rate_limited", "timeout", "transient_provider_error", "authentication", "authorization", "configuration", "schema_drift", "unknown_outcome"]
+        }
+      }
+    },
+    "tombstoneDecision": {
+      "enum": ["not_requested", "eligible", "not_eligible"]
+    },
+    "limitations": {
+      "type": "array",
+      "maxItems": 100,
+      "uniqueItems": true,
+      "items": {
+        "type": "string",
+        "minLength": 1,
+        "maxLength": 300,
+        "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+      }
+    },
+    "safety": { "$ref": "#/$defs/safety" }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "status": { "enum": ["succeeded", "partial", "quarantined", "failed", "cancelled"] } },
+        "required": ["status"]
+      },
+      "then": {
+        "properties": { "finishedAt": { "$ref": "#/$defs/timestamp" } }
+      }
+    },
+    {
+      "if": {
+        "properties": { "tombstoneDecision": { "const": "eligible" } },
+        "required": ["tombstoneDecision"]
+      },
+      "then": {
+        "properties": {
+          "mode": { "const": "full" },
+          "authoritativeScope": { "const": true },
+          "status": { "const": "succeeded" }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "identifier": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 160,
+      "pattern": "^[a-z0-9][a-z0-9._:-]+$"
+    },
+    "timestamp": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 30,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["synthetic", "rawPayloadEmbedded", "credentialValueEmbedded", "privateKeyEmbedded"],
+      "properties": {
+        "synthetic": { "type": "boolean" },
+        "rawPayloadEmbedded": { "const": false },
+        "credentialValueEmbedded": { "const": false },
+        "privateKeyEmbedded": { "const": false }
+      }
+    }
+  }
+}

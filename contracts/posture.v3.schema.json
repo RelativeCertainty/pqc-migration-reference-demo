@@ -1,0 +1,233 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://github.com/RelativeCertainty/pqc-migration-reference-demo/contracts/posture.v3.schema.json",
+  "title": "PQC unified application request posture v3",
+  "description": "Bounded request-transport observations. The handler cannot infer external Access policy, exact-host PQ capability, or deployment-label eligibility.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema_version",
+    "evidence_tier",
+    "observed_at",
+    "hostname",
+    "request_transport",
+    "hostname_capability",
+    "visitor_edge_post_quantum_signatures",
+    "access_control",
+    "evidence_separation",
+    "data_posture",
+    "approved_deployment_label"
+  ],
+  "properties": {
+    "schema_version": {
+      "const": "pqc-posture.v3"
+    },
+    "evidence_tier": {
+      "const": "request_transport_observation"
+    },
+    "observed_at": {
+      "type": "string",
+      "format": "date-time",
+      "maxLength": 30,
+      "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"
+    },
+    "hostname": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 253,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "request_transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "tls_version",
+        "tls_cipher",
+        "http_protocol",
+        "exact_session_key_exchange"
+      ],
+      "properties": {
+        "tls_version": {
+          "$ref": "#/$defs/boundedObservation"
+        },
+        "tls_cipher": {
+          "$ref": "#/$defs/boundedObservation"
+        },
+        "http_protocol": {
+          "$ref": "#/$defs/boundedObservation"
+        },
+        "exact_session_key_exchange": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "explanation"
+          ],
+          "properties": {
+            "state": {
+              "const": "not_observable"
+            },
+            "explanation": {
+              "$ref": "#/$defs/boundedText"
+            }
+          }
+        }
+      }
+    },
+    "hostname_capability": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "explanation"
+      ],
+      "properties": {
+        "state": {
+          "const": "not_observable_by_handler"
+        },
+        "explanation": {
+          "$ref": "#/$defs/boundedText"
+        }
+      }
+    },
+    "visitor_edge_post_quantum_signatures": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "explanation"
+      ],
+      "properties": {
+        "state": {
+          "const": "not_deployed"
+        },
+        "explanation": {
+          "$ref": "#/$defs/boundedText"
+        }
+      }
+    },
+    "access_control": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "state",
+        "target"
+      ],
+      "properties": {
+        "state": {
+          "const": "synthetic_session_only"
+        },
+        "target": {
+          "const": "C# assessment-scoped demo authorization"
+        }
+      }
+    },
+    "evidence_separation": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "algorithm_standards",
+        "cryptographic_module"
+      ],
+      "properties": {
+        "algorithm_standards": {
+          "$ref": "#/$defs/boundedText"
+        },
+        "cryptographic_module": {
+          "$ref": "#/$defs/boundedText"
+        }
+      }
+    },
+    "data_posture": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "storage",
+        "upstream_origin_dependency",
+        "dataset",
+        "request_logging"
+      ],
+      "properties": {
+        "storage": {
+          "const": "isolated_sqlite"
+        },
+        "upstream_origin_dependency": {
+          "const": "none"
+        },
+        "dataset": {
+          "const": "synthetic_only"
+        },
+        "request_logging": {
+          "const": "not_implemented_by_application"
+        }
+      }
+    },
+    "approved_deployment_label": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "eligible",
+        "reason"
+      ],
+      "properties": {
+        "label": {
+          "const": "PQC migration reference package"
+        },
+        "eligible": {
+          "const": false
+        },
+        "reason": {
+          "$ref": "#/$defs/boundedText"
+        }
+      }
+    }
+  },
+  "$defs": {
+    "boundedText": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 512,
+      "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+    },
+    "boundedObservation": {
+      "oneOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "value"
+          ],
+          "properties": {
+            "state": {
+              "const": "observed"
+            },
+            "value": {
+              "type": "string",
+              "minLength": 1,
+              "maxLength": 128,
+              "pattern": "^(?=.*\\S)[^\\r\\n\\t]+$"
+            }
+          }
+        },
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "required": [
+            "state",
+            "value"
+          ],
+          "properties": {
+            "state": {
+              "const": "unavailable"
+            },
+            "value": {
+              "type": "null"
+            }
+          }
+        }
+      ]
+    }
+  }
+}

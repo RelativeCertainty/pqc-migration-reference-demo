@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "SyntheticSourcePage.v1",
+  "pageId": "page:synthetic:pki-certificate-lifecycle:002",
+  "contractPackRef": "contract:source-pack:pki-certificate-lifecycle:v1",
+  "sourceFamily": "pki_certificate_lifecycle",
+  "pageNumber": 2,
+  "totalPageCount": 2,
+  "currentCursorRef": "cursor:synthetic:pki-certificate-lifecycle:after-page-1",
+  "nextCursorRef": null,
+  "records": [
+    {
+      "sourceRecordId": "record:synthetic:pki-certificate-lifecycle:beta",
+      "recordType": "certificate_deployment",
+      "observedAt": "2030-01-07T12:01:15Z",
+      "attributes": {
+        "certificateRef": "certificate:synthetic:shared-edge",
+        "deploymentRef": "deployment:synthetic:tls:beta",
+        "regionRef": "region:synthetic:beta",
+        "publicKeyAlgorithm": "rsa",
+        "publicKeyBits": 2048,
+        "lifecycleStatus": "issued"
+      }
+    }
+  ],
+  "safety": {
+    "synthetic": true,
+    "independentlyAuthored": true,
+    "rawProviderPayload": false,
+    "containsCredentials": false,
+    "containsPersonalData": false,
+    "containsKeyMaterial": false
+  }
+}

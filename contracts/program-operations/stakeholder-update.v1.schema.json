@@ -1,0 +1,38 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/stakeholder-update.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "StakeholderUpdate.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "updateId", "programId", "projectDayRef", "audience", "recordStatus", "subject", "completedFacts", "plannedWork", "asks", "dispatchAllowed"],
+  "properties": {
+    "schemaVersion": {"const": "StakeholderUpdate.v1"},
+    "updateId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "projectDayRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "audience": {"$ref": "program-operations-common.v1.schema.json#/$defs/audience"},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"},
+    "subject": {"type": "string", "minLength": 3, "maxLength": 200},
+    "completedFacts": {"type": "array", "items": {"type": "string", "maxLength": 500}},
+    "plannedWork": {"type": "array", "maxItems": 3, "items": {"type": "string", "maxLength": 500}},
+    "asks": {
+      "type": "array",
+      "maxItems": 3,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["action", "accountableRole", "requiredBy", "unresolvedConsequence"],
+        "properties": {
+          "action": {"type": "string", "minLength": 3, "maxLength": 500},
+          "accountableRole": {"type": "string", "minLength": 3, "maxLength": 160},
+          "requiredBy": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+          "unresolvedConsequence": {"type": "string", "minLength": 3, "maxLength": 500}
+        }
+      }
+    },
+    "dispatchAllowed": {"const": false},
+    "wordCount": {"type": "integer", "minimum": 0, "maximum": 250},
+    "supersedesRecordId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"}
+  }
+}

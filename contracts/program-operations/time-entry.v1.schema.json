@@ -1,0 +1,21 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/time-entry.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "TimeEntry.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "timeEntryId", "programId", "projectDayRef", "sessionRef", "actualMinutes", "timeCategory", "recordStatus", "billingDetermination"],
+  "properties": {
+    "schemaVersion": {"const": "TimeEntry.v1"},
+    "timeEntryId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "projectDayRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "sessionRef": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "actualMinutes": {"type": "integer", "minimum": 1, "maximum": 1440},
+    "timeCategory": {"type": "string", "enum": ["technical_execution", "stakeholder_enablement", "quality_and_evidence", "project_control", "reporting_and_documentation", "meetings_and_administration"]},
+    "recordStatus": {"$ref": "program-operations-common.v1.schema.json#/$defs/recordStatus"},
+    "billingDetermination": {"type": "string", "enum": ["not_determined", "billable", "non_billable", "contract_rule_required"]},
+    "note": {"type": "string", "maxLength": 500}
+  }
+}

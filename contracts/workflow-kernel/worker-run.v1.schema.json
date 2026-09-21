@@ -1,0 +1,47 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/workflow-kernel/worker-run.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "WorkerRun.v1",
+  "description": "Append-only receipt for one bounded worker attempt. A retry creates another WorkerRun instead of rewriting this record.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "workerRunId", "tenantId", "workflowInstanceRef", "stepExecutionRef", "attemptNumber", "status", "startedAt", "finishedAt", "retryClassification", "inputArtifactRefs", "outputArtifactRefs", "resultDigest", "safety"],
+  "properties": {
+    "schemaVersion": {"const": "WorkerRun.v1"},
+    "workerRunId": {"$ref": "#/$defs/identifier"},
+    "tenantId": {"$ref": "#/$defs/identifier"},
+    "workflowInstanceRef": {"$ref": "#/$defs/identifier"},
+    "stepExecutionRef": {"$ref": "#/$defs/identifier"},
+    "attemptNumber": {"type": "integer", "minimum": 1, "maximum": 1000},
+    "status": {"enum": ["started", "succeeded", "failed", "quarantined", "unknown_outcome"]},
+    "startedAt": {"$ref": "#/$defs/timestamp"},
+    "finishedAt": {"oneOf": [{"$ref": "#/$defs/timestamp"}, {"type": "null"}]},
+    "retryClassification": {"enum": ["none", "rate_limited", "timeout", "transient_provider_error", "authentication", "authorization", "configuration", "schema_drift", "unknown_outcome"]},
+    "inputArtifactRefs": {"type": "array", "maxItems": 100, "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+    "outputArtifactRefs": {"type": "array", "maxItems": 100, "uniqueItems": true, "items": {"$ref": "#/$defs/identifier"}},
+    "resultDigest": {"oneOf": [{"$ref": "#/$defs/digest"}, {"type": "null"}]},
+    "safety": {"$ref": "#/$defs/safety"}
+  },
+  "allOf": [
+    {
+      "if": {"properties": {"status": {"const": "started"}}, "required": ["status"]},
+      "then": {"properties": {"finishedAt": {"type": "null"}, "resultDigest": {"type": "null"}}},
+      "else": {"properties": {"finishedAt": {"$ref": "#/$defs/timestamp"}}}
+    },
+    {
+      "if": {"properties": {"status": {"const": "unknown_outcome"}}, "required": ["status"]},
+      "then": {"properties": {"retryClassification": {"const": "unknown_outcome"}}}
+    }
+  ],
+  "$defs": {
+    "identifier": {"type": "string", "minLength": 3, "maxLength": 160, "pattern": "^[a-z0-9][a-z0-9._:-]+$"},
+    "digest": {"type": "string", "pattern": "^sha256:[a-f0-9]{64}$"},
+    "timestamp": {"type": "string", "format": "date-time", "maxLength": 30, "pattern": "^[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}(?:\\.[0-9]{1,9})?Z$"},
+    "safety": {
+      "type": "object", "additionalProperties": false,
+      "required": ["synthetic", "payloadEmbedded", "credentialValueEmbedded", "privateKeyEmbedded"],
+      "properties": {"synthetic": {"type": "boolean"}, "payloadEmbedded": {"const": false}, "credentialValueEmbedded": {"const": false}, "privateKeyEmbedded": {"const": false}}
+    }
+  }
+}

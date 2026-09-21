@@ -1,0 +1,39 @@
+{
+  "schemaVersion": "DashboardMetricDefinition.v1",
+  "metricDefinitionId": "metric:evidence-limitations:v1",
+  "name": "Open evidence limitations",
+  "questionAnswered": "How many declared evidence limitations remain open in the named assessment scope, and how many currently block a conclusion?",
+  "valueKind": "count",
+  "unit": "items",
+  "calculation": {
+    "formula": "count open limitation records and the blocking subset at the projection as-of time",
+    "numeratorDefinition": null,
+    "denominatorDefinition": null,
+    "missingDenominatorResult": "unavailable",
+    "zeroDenominatorResult": "unavailable",
+    "rounding": "Counts remain integers and are never converted into a success percentage."
+  },
+  "scopeSemantics": {
+    "scopeReferenceRequired": true,
+    "denominatorSourceRequired": false,
+    "asOfTimestampRequired": true,
+    "unknownsExcludedFromSuccess": true,
+    "qualification": "A zero count is meaningful only when the limitation register was evaluated for the named scope; absence of a register is unavailable."
+  },
+  "interpretation": {
+    "doesMean": "The stated number of explicit evidence constraints remains unresolved in the named scope.",
+    "doesNotMean": [
+      "Zero declared limitations proves complete evidence.",
+      "A nonblocking limitation is irrelevant.",
+      "The count measures technical risk severity.",
+      "A limitation has been accepted as an exception."
+    ],
+    "whenUnavailable": "Show unavailable when the limitation register has not been evaluated for the named scope."
+  },
+  "safety": {
+    "syntheticDefinition": true,
+    "enterpriseCompletenessClaimAllowed": false,
+    "riskConclusionAllowed": false,
+    "migrationCompletionClaimAllowed": false
+  }
+}

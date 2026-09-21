@@ -34,3 +34,17 @@ __pycache__/
 *.db
 *.dump
 .DS_Store
+**/bin/
+**/obj/
+apps/pqc-enterprise-demo/wwwroot/
+.venv/
+.qa/
+**/*.db-*
+**/*.sqlite*
+**/private-runtime/
+**/private-backup/
+**/fixture-custody/
+project/
+handoff/
+case_workspace/
+*private-markers*

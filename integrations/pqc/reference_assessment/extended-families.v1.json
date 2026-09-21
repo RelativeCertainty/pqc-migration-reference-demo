@@ -1,0 +1,244 @@
+{
+  "schema_version": "pba.pqc.extended-family-models.v1",
+  "model_status": "synthetic_reference_dialects_not_vendor_wire_contracts",
+  "product_binding": {"product": null, "edition": null, "version": null, "instance": null},
+  "qualification_gates": ["owner_confirmed_product_profile", "official_api_and_permission_research", "versioned_mapping_and_fixture_contract", "isolated_product_validation", "authorized_read_only_collection", "separately_authorized_migration_action"],
+  "restrictions": ["No network client, credentials, source scanning or mutation capability.", "Source-shaped reference fields are not assertions about a vendor API.", "Synthetic collection completeness never establishes enterprise coverage.", "Neither synthetic policy status nor a ticket state authorizes execution.", "Capabilities, package presence and version numbers do not establish cryptographic use."],
+  "profiles": {
+    "application-portfolio": {
+      "area_ref": "area-01", "name": "Application portfolio", "fact_type": "application_portfolio",
+      "fields": {"lifecycle_stage": {"type": "text", "samples": ["active", "retirement_candidate", null]}, "owner_route": {"type": "identifier", "samples": ["synthetic-team-01", "synthetic-team-02", null]}, "business_criticality": {"type": "text", "samples": ["high", "medium", null]}},
+      "relations": {"service_id": {"relationship": "supports_service", "target_family": "cmdb", "namespace": "business-service"}}, "uses": [],
+      "candidate_automation": ["Reconcile portfolio identities and accountable owner routes with CMDB records."],
+      "manual_boundary": ["A business owner determines criticality and approves the assessment boundary."],
+      "information_loss": ["An owner route identifier does not prove a current accountable individual."],
+      "unsupported_capabilities": ["No native portfolio API, application creation or owner acceptance."]
+    },
+    "certificate-authorities": {
+      "area_ref": "area-02", "name": "Certificate authorities and trust stores", "fact_type": "certificate_authorities",
+      "fields": {"authority_role": {"type": "text", "samples": ["issuing_authority", "trust_store", null]}, "trust_distribution_state": {"type": "text", "samples": ["synthetic_snapshot", "consumer_review_needed", null]}, "relying_party_count": {"type": "integer", "samples": [8, 3, null]}},
+      "relations": {"custody_id": {"relationship": "uses_key_custody", "target_family": "hsm", "namespace": "record"}},
+      "uses": [{"prefix": "issuer_signature", "purpose": "digital_signature", "role": "certificate_issuer", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["sha256WithRSAEncryption", "ecdsa-with-SHA384", null], "basis": ["observed", "configured", "observed"], "key_bits": [2048, 384, null], "protocol_version": ["X.509", "X.509", null], "trust_until": ["2033-09-05", "2030-09-05", null]}}],
+      "candidate_automation": ["Build issuer-to-trust-consumer compatibility cohorts and prepare staged trust distribution."],
+      "manual_boundary": ["CA policy owners authorize issuance policy and relying-party trust changes."],
+      "information_loss": ["A trust-store snapshot does not prove every relying party accepted an anchor."],
+      "unsupported_capabilities": ["No issuance, trust-store write or post-quantum certificate interoperability proof."]
+    },
+    "hsm": {
+      "area_ref": "area-02", "name": "Hardware cryptographic modules", "fact_type": "hsm",
+      "fields": {"module_version": {"type": "text", "samples": ["synthetic-1.0", "synthetic-2.0", null]}, "supported_mechanisms": {"type": "tokens", "samples": [["RSA-PSS", "AES-GCM"], ["ECDSA", "AES-GCM"], ["ML-DSA-65"]]}, "custody_mode": {"type": "text", "samples": ["non_exportable", "non_exportable", null]}},
+      "relations": {"consumer_id": {"relationship": "serves_consumer", "target_family": "software-signing", "namespace": "record"}},
+      "uses": [{"prefix": "recorded_operation", "purpose": "digital_signature", "role": "key_custodian", "protected_data_field": null, "samples": {"present": [true, true, false], "algorithm": ["RSA-PSS", "ECDSA", null], "basis": ["observed", "configured", null], "key_bits": [3072, 384, null], "protocol_version": [null, null, null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Compare recorded consumer operations with module capability and firmware constraints."],
+      "manual_boundary": ["Custodians authorize ceremonies, firmware changes and non-exportability policy."],
+      "information_loss": ["Supported mechanisms do not identify active consumers or prove validated module status."],
+      "unsupported_capabilities": ["No private key extraction, HSM login, ceremony execution or certification claim."]
+    },
+    "api-and-mesh": {
+      "area_ref": "area-03", "name": "API gateways and service meshes", "fact_type": "api_and_mesh",
+      "fields": {"route_name": {"type": "identifier", "samples": ["synthetic-service-route-01", "synthetic-service-route-02", null]}, "workload_identity_mode": {"type": "text", "samples": ["mutual_tls", "mutual_tls", null]}, "listener_hostname": {"type": "hostname", "samples": ["mesh-001.example", "mesh-002.example", null]}},
+      "relations": {"certificate_id": {"relationship": "presents_certificate", "target_family": "certificate-lifecycle", "namespace": "record"}, "runtime_id": {"relationship": "runs_on", "target_family": "cloud-inventory", "namespace": "record"}},
+      "uses": [{"prefix": "transport", "purpose": "key_establishment", "role": "transport_key_exchange", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["X25519", "X25519MLKEM768", null], "basis": ["observed", "configured", "observed"], "key_bits": [null, null, null], "protocol_version": ["TLSv1.3", "TLSv1.3", null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Prepare route-specific TLS canaries and independently compare configured and negotiated behavior."],
+      "manual_boundary": ["Platform owners approve route scope, canaries and recovery windows."],
+      "information_loss": ["A gateway route does not enumerate every client or downstream hop."],
+      "unsupported_capabilities": ["No mesh control-plane connection, route write or negotiated PQC proof."]
+    },
+    "network-telemetry": {
+      "area_ref": "area-03", "name": "Network observation platforms", "fact_type": "network_telemetry",
+      "fields": {"sensor_boundary": {"type": "identifier", "samples": ["synthetic-segment-01", "synthetic-segment-02", null]}, "observation_count": {"type": "integer", "samples": [12, 6, null]}, "capture_mode": {"type": "text", "samples": ["handshake_metadata_only", "configured_observation_policy", null]}},
+      "relations": {"endpoint_id": {"relationship": "observes_endpoint", "target_family": "traffic-termination", "namespace": "record"}},
+      "uses": [{"prefix": "handshake", "purpose": "key_establishment", "role": "transport_key_exchange", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["X25519MLKEM768", "X25519", null], "basis": ["observed", "configured", "observed"], "key_bits": [null, null, null], "protocol_version": ["TLSv1.3", "TLSv1.3", null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Correlate handshake observations with endpoint declarations and record blind spots."],
+      "manual_boundary": ["Network and privacy owners approve observation boundaries and retained metadata."],
+      "information_loss": ["A sensor sample cannot establish all traffic or client coverage."],
+      "unsupported_capabilities": ["No packet capture, active scanning, payload retention or production sensor integration."]
+    },
+    "ssh": {
+      "area_ref": "area-04", "name": "SSH and machine administration", "fact_type": "ssh",
+      "fields": {"hostname": {"type": "hostname", "samples": ["ssh-001.example", "ssh-002.example", null]}, "implementation_version": {"type": "text", "samples": ["OpenSSH-10.0-synthetic", "OpenSSH-10.0-synthetic", null]}, "client_cohort": {"type": "identifier", "samples": ["synthetic-admin-cohort-01", "synthetic-admin-cohort-02", null]}},
+      "relations": {"credential_id": {"relationship": "uses_credential_reference", "target_family": "secrets", "namespace": "record"}},
+      "uses": [{"prefix": "key_exchange", "purpose": "key_establishment", "role": "transport_key_exchange", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["curve25519-sha256", "mlkem768x25519-sha256", null], "basis": ["observed", "configured", "observed"], "key_bits": [null, null, null], "protocol_version": ["SSH-2.0", "SSH-2.0", null], "trust_until": [null, null, null]}}, {"prefix": "host_signature", "purpose": "digital_signature", "role": "peer_authentication", "protected_data_field": null, "samples": {"present": [true, true, false], "algorithm": ["ssh-ed25519", "rsa-sha2-512", null], "basis": ["observed", "observed", null], "key_bits": [256, 3072, null], "protocol_version": ["SSH-2.0", "SSH-2.0", null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Build client/server compatibility cohorts and test approved hybrid key-exchange canaries."],
+      "manual_boundary": ["Access owners approve host-key trust and recovery access before any change."],
+      "information_loss": ["Hybrid key exchange does not establish post-quantum host or user signatures."],
+      "unsupported_capabilities": ["No host SSH access, account edits, daemon configuration or remote execution."]
+    },
+    "vpn": {
+      "area_ref": "area-04", "name": "VPN and encrypted network access", "fact_type": "vpn",
+      "fields": {"gateway_hostname": {"type": "hostname", "samples": ["vpn-001.example", "vpn-002.example", null]}, "peer_cohort": {"type": "identifier", "samples": ["synthetic-partner-cohort-01", "synthetic-client-cohort-02", null]}, "tunnel_protocol": {"type": "text", "samples": ["IKEv2", "TLS", null]}},
+      "relations": {"certificate_id": {"relationship": "authenticates_with", "target_family": "certificate-lifecycle", "namespace": "record"}},
+      "uses": [{"prefix": "tunnel_exchange", "purpose": "key_establishment", "role": "transport_key_exchange", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["MODP-2048", "X25519", null], "basis": ["observed", "configured", "observed"], "key_bits": [2048, null, null], "protocol_version": ["IKEv2", "TLSv1.3", null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Compare peer compatibility and propose bounded tunnel upgrade cohorts."],
+      "manual_boundary": ["Remote access owners approve outage tolerance and alternative access routes."],
+      "information_loss": ["Gateway metadata does not prove every peer negotiation or tunnel health."],
+      "unsupported_capabilities": ["No tunnel reconfiguration, vendor hybrid capability assertion or live peer test."]
+    },
+    "source-build": {
+      "area_ref": "area-05", "name": "Source repositories and build pipelines", "fact_type": "source_build",
+      "fields": {"repository_name": {"type": "identifier", "samples": ["synthetic-signer-01", "synthetic-signer-02", null]}, "revision": {"type": "identifier", "samples": ["synthetic-rev-001", "synthetic-rev-002", null]}, "runtime_version": {"type": "text", "samples": ["reference-runtime-1", "reference-runtime-2", null]}, "build_result": {"type": "text", "samples": ["synthetic_build_pass", "synthetic_build_not_run", null]}},
+      "relations": {"dependency_id": {"relationship": "builds_with", "target_family": "dependency-analysis", "namespace": "record"}},
+      "uses": [{"prefix": "application_signature", "purpose": "digital_signature", "role": "application_signer", "protected_data_field": null, "samples": {"present": [true, true, false], "algorithm": ["ECDSA", "ML-DSA-65", null], "basis": ["observed", "configured", null], "key_bits": [256, null, null], "protocol_version": [null, null, null], "trust_until": ["2028-09-05", "2033-09-05", null]}}],
+      "candidate_automation": ["Prepare reviewed dependency and call-site changes with before/after application tests."],
+      "manual_boundary": ["Maintainers approve source changes, compatibility policy and deployment."],
+      "information_loss": ["A build result or runtime version does not prove deployed cryptographic behavior."],
+      "unsupported_capabilities": ["No repository cloning, hosted pull request, build execution or deployment."]
+    },
+    "dependency-analysis": {
+      "area_ref": "area-05", "name": "Software component and code analysis", "fact_type": "dependency_analysis",
+      "fields": {"package_name": {"type": "identifier", "samples": ["synthetic-crypto-library", "synthetic-crypto-library", "synthetic-pqc-capable-library"]}, "package_version": {"type": "text", "samples": ["1.0.0", "2.0.0", "3.5.4"]}, "call_site": {"type": "text", "samples": ["src/signer:42", "src/signer:57", null]}, "declared_capabilities": {"type": "tokens", "samples": [["ECDSA"], ["ML-DSA-65"], ["ML-DSA-65", "ML-KEM-768"]]}},
+      "relations": {"build_id": {"relationship": "component_of_build", "target_family": "source-build", "namespace": "record"}},
+      "uses": [{"prefix": "call_site_signature", "purpose": "digital_signature", "role": "application_signer", "protected_data_field": null, "samples": {"present": [true, true, false], "algorithm": ["ECDSA", "ML-DSA-65", null], "basis": ["observed", "configured", null], "key_bits": [256, null, null], "protocol_version": [null, null, null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Join dependency provenance and actual cryptographic call sites to migration candidates."],
+      "manual_boundary": ["Maintainers resolve static-analysis ambiguity and approve library/API changes."],
+      "information_loss": ["Package presence and declared capability never establish active cryptographic use."],
+      "unsupported_capabilities": ["No SAST/SCA tool API, SBOM completeness proof, repository scan or automatic patch."]
+    },
+    "software-signing": {
+      "area_ref": "area-05", "name": "Artifact signing and distribution", "fact_type": "software_signing",
+      "fields": {"artifact_name": {"type": "identifier", "samples": ["synthetic-package-001", "synthetic-package-002", null]}, "signature_format": {"type": "text", "samples": ["CMS", "synthetic-detached-signature", null]}, "verifier_cohort": {"type": "identifier", "samples": ["synthetic-verifiers-01", "synthetic-verifiers-02", null]}},
+      "relations": {"custody_id": {"relationship": "uses_key_custody", "target_family": "hsm", "namespace": "record"}},
+      "uses": [{"prefix": "artifact_signature", "purpose": "digital_signature", "role": "code_signer", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["RSA-PSS", "ML-DSA-65", null], "basis": ["observed", "configured", "observed"], "key_bits": [3072, null, null], "protocol_version": [null, null, null], "trust_until": ["2033-09-05", "2033-09-05", null]}}],
+      "candidate_automation": ["Stage signer/verifier compatibility policies and test legacy artifact verification."],
+      "manual_boundary": ["Release owners approve verifier rollout, trust changes and release signing."],
+      "information_loss": ["A signature record does not prove every distribution consumer can verify it."],
+      "unsupported_capabilities": ["No artifact signing, distribution write, trust enrollment or private key retrieval."]
+    },
+    "cloud-inventory": {
+      "area_ref": "area-06", "name": "Cloud workloads and runtime inventory", "fact_type": "cloud_inventory",
+      "fields": {"resource_class": {"type": "text", "samples": ["managed_runtime", "virtual_machine", null]}, "deployment_version": {"type": "text", "samples": ["synthetic-deployment-1", "synthetic-deployment-2", null]}, "runtime_platform": {"type": "text", "samples": ["synthetic-runtime-a", "synthetic-runtime-b", null]}, "region_label": {"type": "identifier", "samples": ["synthetic-region-01", "synthetic-region-02", null]}},
+      "relations": {"key_service_id": {"relationship": "consumes_key_service", "target_family": "kms", "namespace": "record"}}, "uses": [],
+      "candidate_automation": ["Reconcile deployed versions and managed-service dependencies into application cohorts."],
+      "manual_boundary": ["Platform owners authorize cloud tenancy, deployment route and managed-service choices."],
+      "information_loss": ["Resource presence does not establish encryption use or customer control over algorithms."],
+      "unsupported_capabilities": ["No cloud account API, workload enumeration, managed-service update or deployment."]
+    },
+    "kms": {
+      "area_ref": "area-06", "name": "Key management services", "fact_type": "kms",
+      "fields": {"key_reference": {"type": "identifier", "samples": ["synthetic-key-metadata-001", "synthetic-key-metadata-002", null]}, "supported_algorithms": {"type": "tokens", "samples": [["AES-256-GCM", "RSA-OAEP"], ["AES-256-GCM"], ["ML-DSA-65"]]}, "custody_mode": {"type": "text", "samples": ["service_managed_non_exportable", "service_managed_non_exportable", null]}, "rotation_policy_state": {"type": "text", "samples": ["synthetic_configured", "unknown", null]}},
+      "relations": {"data_id": {"relationship": "wraps_key_for_data", "target_family": "data-governance", "namespace": "record"}},
+      "uses": [{"prefix": "consumer_wrapping", "purpose": "key_wrapping", "role": "key_wrapper", "protected_data_field": "data_id", "samples": {"present": [true, true, false], "algorithm": ["RSA-OAEP", "AES-256-KW", null], "basis": ["observed", "configured", null], "key_bits": [2048, 256, null], "protocol_version": [null, null, null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Model envelope key consumers and assess rewrapping versus data re-encryption."],
+      "manual_boundary": ["Key and data owners approve key policy, rotation and recovery requirements."],
+      "information_loss": ["A key identifier and capability list do not prove a consumer operation or recoverability."],
+      "unsupported_capabilities": ["No key retrieval, generation, wrapping operation, deletion or policy mutation."]
+    },
+    "secrets": {
+      "area_ref": "area-06", "name": "Secrets and credential management", "fact_type": "secrets",
+      "fields": {"credential_reference": {"type": "identifier", "samples": ["synthetic-credential-metadata-001", "synthetic-credential-metadata-002", null]}, "credential_class": {"type": "text", "samples": ["ssh_certificate", "workload_certificate", null]}, "rotation_interval_days": {"type": "integer", "samples": [30, 7, null]}, "consumer_route": {"type": "identifier", "samples": ["synthetic-consumer-01", "synthetic-consumer-02", null]}},
+      "relations": {"issuer_id": {"relationship": "issued_by", "target_family": "iam", "namespace": "record"}},
+      "uses": [{"prefix": "credential_signature", "purpose": "digital_signature", "role": "credential_issuer", "protected_data_field": null, "samples": {"present": [true, true, false], "algorithm": ["ssh-ed25519", "ECDSA", null], "basis": ["observed", "configured", null], "key_bits": [256, 256, null], "protocol_version": ["SSH-2.0", "X.509", null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Map credential metadata and consumers into staged rotation/issuer compatibility plans."],
+      "manual_boundary": ["Identity owners authorize credential lifecycle and outage/recovery policy."],
+      "information_loss": ["A credential reference contains no secret value and does not prove actual consumer use."],
+      "unsupported_capabilities": ["No secret, password, token or private key read; no issuance or rotation."]
+    },
+    "iam": {
+      "area_ref": "area-06", "name": "Identity and federation", "fact_type": "iam",
+      "fields": {"issuer_name": {"type": "identifier", "samples": ["synthetic-issuer-001", "synthetic-issuer-002", null]}, "token_format": {"type": "text", "samples": ["JWT", "SAML", null]}, "relying_party_cohort": {"type": "identifier", "samples": ["synthetic-relying-parties-01", "synthetic-relying-parties-02", null]}},
+      "relations": {"custody_id": {"relationship": "uses_key_custody", "target_family": "kms", "namespace": "record"}},
+      "uses": [{"prefix": "token_signature", "purpose": "digital_signature", "role": "token_issuer", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["RS256", "ES256", null], "basis": ["observed", "configured", "observed"], "key_bits": [2048, 256, null], "protocol_version": ["JWT", "SAML-2.0", null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Map issuer and relying-party verification compatibility before token-signing changes."],
+      "manual_boundary": ["Identity authorities approve trust, token policy and fallback behavior."],
+      "information_loss": ["Issuer configuration does not prove all relying parties or acceptance policies."],
+      "unsupported_capabilities": ["No token acquisition, account access, federation change or sign-in attempt."]
+    },
+    "databases": {
+      "area_ref": "area-07", "name": "Databases and data platforms", "fact_type": "databases",
+      "fields": {"engine_name": {"type": "text", "samples": ["synthetic-relational-engine", "synthetic-data-platform", null]}, "engine_version": {"type": "text", "samples": ["1.0", "2.0", null]}, "encryption_scope": {"type": "text", "samples": ["database_at_rest", "column_data", null]}, "client_cohort": {"type": "identifier", "samples": ["synthetic-db-clients-01", "synthetic-db-clients-02", null]}},
+      "relations": {"key_service_id": {"relationship": "consumes_key_service", "target_family": "kms", "namespace": "record"}, "data_id": {"relationship": "stores_data", "target_family": "data-governance", "namespace": "record"}},
+      "uses": [{"prefix": "at_rest", "purpose": "data_encryption", "role": "data_encryptor", "protected_data_field": "data_id", "samples": {"present": [true, true, true], "algorithm": ["AES-256-GCM", "AES-256-CBC", null], "basis": ["observed", "configured", "observed"], "key_bits": [256, 256, null], "protocol_version": [null, null, null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Join storage encryption, wrapping key, client and confidentiality-lifetime dependencies."],
+      "manual_boundary": ["Database and data owners approve change windows and recovery testing."],
+      "information_loss": ["Symmetric data encryption must not be equated with classical public-key exposure."],
+      "unsupported_capabilities": ["No database connection, query execution, encryption change or production backup."]
+    },
+    "storage-backup": {
+      "area_ref": "area-07", "name": "Storage, archives and backup", "fact_type": "storage_backup",
+      "fields": {"storage_class": {"type": "text", "samples": ["backup_archive", "object_storage", null]}, "retention_until": {"type": "date", "samples": ["2041-09-05", "2033-09-05", null]}, "restore_test_state": {"type": "text", "samples": ["synthetic_reference_readback", "not_tested", null]}, "key_recovery_route": {"type": "identifier", "samples": ["synthetic-recovery-route-01", "synthetic-recovery-route-02", null]}},
+      "relations": {"key_service_id": {"relationship": "requires_key_for_restore", "target_family": "kms", "namespace": "record"}, "data_id": {"relationship": "retains_data", "target_family": "data-governance", "namespace": "record"}},
+      "uses": [{"prefix": "archive_encryption", "purpose": "data_encryption", "role": "data_encryptor", "protected_data_field": "data_id", "samples": {"present": [true, true, true], "algorithm": ["AES-256-GCM", "AES-256-GCM", null], "basis": ["observed", "configured", "observed"], "key_bits": [256, 256, null], "protocol_version": [null, null, null], "trust_until": ["2041-09-05", "2033-09-05", null]}}],
+      "candidate_automation": ["Model long-lived archives and generate restoration-dependent migration/recovery plans."],
+      "manual_boundary": ["Data owners approve retention, restoration acceptance and irreversible re-encryption."],
+      "information_loss": ["A backup record does not prove restore success or retained key availability."],
+      "unsupported_capabilities": ["No backup export, data read, key retrieval, deletion or restore execution."]
+    },
+    "data-governance": {
+      "area_ref": "area-07", "name": "Data classification and lifecycle", "fact_type": "data_governance",
+      "fields": {"information_class": {"type": "text", "samples": ["synthetic_long_lived_records", "synthetic_operational_records", null]}, "confidentiality_until": {"type": "date", "samples": ["2041-09-05", "2033-09-05", null]}, "integrity_until": {"type": "date", "samples": ["2046-09-05", "2036-09-05", null]}, "classification_state": {"type": "text", "choices": ["synthetic_proposed", "unknown"], "samples": ["synthetic_proposed", "synthetic_proposed", "unknown"]}},
+      "relations": {"policy_id": {"relationship": "subject_to_policy", "target_family": "policy-exceptions", "namespace": "record"}}, "uses": [],
+      "candidate_automation": ["Join information lifetimes to cryptographic uses and raise missing-owner/lifetime actions."],
+      "manual_boundary": ["Data owners determine classification and required confidentiality/integrity lifetime."],
+      "information_loss": ["Synthetic proposed classifications are not enterprise data-owner acceptance."],
+      "unsupported_capabilities": ["No data-content scan, sensitive sample retention or automatic classification acceptance."]
+    },
+    "communications": {
+      "area_ref": "area-08", "name": "DNS, email and document platforms", "fact_type": "communications",
+      "fields": {"communication_class": {"type": "text", "choices": ["dns", "signed_email", "document_exchange"], "samples": ["dns", "signed_email", "document_exchange"]}, "platform_version": {"type": "text", "samples": ["synthetic-platform-1", "synthetic-platform-2", null]}, "verifier_cohort": {"type": "identifier", "samples": ["synthetic-dns-consumers-01", "synthetic-mail-consumers-02", null]}},
+      "relations": {"data_id": {"relationship": "communicates_data", "target_family": "data-governance", "namespace": "record"}, "authority_id": {"relationship": "trusts_authority", "target_family": "certificate-authorities", "namespace": "record"}},
+      "uses": [{"prefix": "dns_signature", "purpose": "digital_signature", "role": "dnssec_signer", "protected_data_field": null, "samples": {"present": [true, false, false], "algorithm": ["RSASHA256", null, null], "basis": ["observed", null, null], "key_bits": [2048, null, null], "protocol_version": ["DNSSEC", null, null], "trust_until": [null, null, null]}}, {"prefix": "mail_signature", "purpose": "digital_signature", "role": "email_signer", "protected_data_field": "data_id", "samples": {"present": [false, true, false], "algorithm": [null, "ECDSA", null], "basis": [null, "configured", null], "key_bits": [null, 256, null], "protocol_version": [null, "S-MIME", null], "trust_until": [null, "2033-09-05", null]}}, {"prefix": "document_signature", "purpose": "digital_signature", "role": "document_signer", "protected_data_field": "data_id", "samples": {"present": [false, false, true], "algorithm": [null, null, null], "basis": [null, null, "observed"], "key_bits": [null, null, null], "protocol_version": [null, null, null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Build distinct DNS, mail and document verification cohorts and identify long-lived signed-content constraints."],
+      "manual_boundary": ["Communications and records owners approve trust/format migration and external interoperability."],
+      "information_loss": ["Distinct signature examples still do not model every DNSSEC algorithm, email encryption path or document validation format."],
+      "unsupported_capabilities": ["No mailbox/document content access, DNS change, sending or external delivery."]
+    },
+    "endpoints": {
+      "area_ref": "area-08", "name": "Endpoint and mobile fleet management", "fact_type": "endpoints",
+      "fields": {"device_class": {"type": "text", "samples": ["workstation", "mobile_device", null]}, "os_version": {"type": "text", "samples": ["synthetic-os-1", "synthetic-os-2", null]}, "update_channel": {"type": "identifier", "samples": ["synthetic-canary-channel", "synthetic-stable-channel", null]}, "trust_profile_state": {"type": "text", "samples": ["synthetic_snapshot", "consumer_review_needed", null]}},
+      "relations": {"authority_id": {"relationship": "trusts_authority", "target_family": "certificate-authorities", "namespace": "record"}, "artifact_id": {"relationship": "verifies_artifact", "target_family": "software-signing", "namespace": "record"}},
+      "uses": [{"prefix": "update_verification", "purpose": "digital_signature", "role": "firmware_verifier", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["RSA-PSS", "ECDSA", null], "basis": ["observed", "configured", "observed"], "key_bits": [3072, 256, null], "protocol_version": [null, null, null], "trust_until": ["2033-09-05", "2030-09-05", null]}}],
+      "candidate_automation": ["Build device compatibility cohorts and plan staged trust/verifier updates."],
+      "manual_boundary": ["Fleet owners authorize rollout, outage handling and user-impact acceptance."],
+      "information_loss": ["An endpoint inventory snapshot does not prove current online state or user access."],
+      "unsupported_capabilities": ["No device connection, MDM policy write, software push or remote wipe."]
+    },
+    "embedded-ot": {
+      "area_ref": "area-08", "name": "Embedded, firmware and operational systems", "fact_type": "embedded_ot",
+      "fields": {"firmware_version": {"type": "text", "samples": ["synthetic-firmware-1", "synthetic-firmware-2", null]}, "update_mechanism": {"type": "text", "samples": ["signed_offline_update", "vendor_managed_update", null]}, "update_constraint": {"type": "text", "samples": ["maintenance_window_required", "vendor_release_required", null]}},
+      "relations": {"vendor_id": {"relationship": "depends_on_vendor", "target_family": "vendor-assurance", "namespace": "record"}},
+      "uses": [{"prefix": "boot_verification", "purpose": "digital_signature", "role": "firmware_verifier", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["ECDSA", "RSA-PSS", null], "basis": ["observed", "vendor_reported", "observed"], "key_bits": [256, 3072, null], "protocol_version": [null, null, null], "trust_until": ["2041-09-05", "2041-09-05", null]}}],
+      "candidate_automation": ["Track firmware trust constraints and prepare vendor-dependent update qualification plans."],
+      "manual_boundary": ["Safety and specialist operators authorize maintenance and recovery procedures."],
+      "information_loss": ["Vendor-reported verification behavior has not been independently reproduced."],
+      "unsupported_capabilities": ["No device probe, firmware flash, control-system action or safety certification."]
+    },
+    "specialized-transactions": {
+      "area_ref": "area-09", "name": "Payment and transaction cryptography", "fact_type": "specialized_transactions",
+      "fields": {"transaction_class": {"type": "text", "samples": ["synthetic_payment_message", "synthetic_transaction_exchange", null]}, "ceremony_route": {"type": "identifier", "samples": ["synthetic-dual-control-route", "synthetic-specialist-route", null]}, "specialist_review_state": {"type": "text", "choices": ["not_authorized", "unknown"], "samples": ["not_authorized", "not_authorized", "unknown"]}},
+      "relations": {"custody_id": {"relationship": "requires_specialist_custody", "target_family": "hsm", "namespace": "record"}, "policy_id": {"relationship": "subject_to_policy", "target_family": "policy-exceptions", "namespace": "record"}},
+      "uses": [{"prefix": "transaction_signature", "purpose": "digital_signature", "role": "application_signer", "protected_data_field": null, "samples": {"present": [true, true, true], "algorithm": ["RSA-PSS", "ECDSA", null], "basis": ["observed", "vendor_reported", "observed"], "key_bits": [3072, 256, null], "protocol_version": ["synthetic-message-format", "synthetic-message-format", null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Assemble specialist dependency, vendor and ceremony review packets."],
+      "manual_boundary": ["Domain experts retain dual control, regulatory interpretation and ceremony authority."],
+      "information_loss": ["A reference transaction signature does not model all payment cryptography or mandates."],
+      "unsupported_capabilities": ["No payment messages, financial records, transaction execution or key ceremony."]
+    },
+    "mainframe": {
+      "area_ref": "area-09", "name": "Mainframe cryptographic services", "fact_type": "mainframe",
+      "fields": {"service_name": {"type": "identifier", "samples": ["synthetic-crypto-service-01", "synthetic-crypto-service-02", null]}, "module_version": {"type": "text", "samples": ["synthetic-module-1", "synthetic-module-2", null]}, "supported_mechanisms": {"type": "tokens", "samples": [["RSA-PSS", "AES-256-GCM"], ["ECDSA"], ["ML-DSA-65"]]}},
+      "relations": {"custody_id": {"relationship": "uses_key_custody", "target_family": "hsm", "namespace": "record"}},
+      "uses": [{"prefix": "service_signature", "purpose": "digital_signature", "role": "key_custodian", "protected_data_field": null, "samples": {"present": [true, true, false], "algorithm": ["RSA-PSS", "ECDSA", null], "basis": ["observed", "configured", null], "key_bits": [3072, 384, null], "protocol_version": [null, null, null], "trust_until": [null, null, null]}}],
+      "candidate_automation": ["Map cryptographic service consumers and module/vendor upgrade constraints."],
+      "manual_boundary": ["Mainframe security and platform specialists approve service and custody changes."],
+      "information_loss": ["Mechanism support alone does not identify consumer use or hardware qualification."],
+      "unsupported_capabilities": ["No mainframe connection, job submission, key retrieval or module upgrade."]
+    },
+    "policy-exceptions": {
+      "area_ref": "area-10", "name": "Policy, exceptions and work coordination", "fact_type": "policy_exceptions",
+      "fields": {"policy_revision": {"type": "identifier", "samples": ["synthetic-policy-rev-01", "synthetic-policy-rev-02", null]}, "review_state": {"type": "text", "choices": ["synthetic_proposed", "synthetic_review_needed", "approved", "unknown"], "samples": ["synthetic_proposed", "synthetic_review_needed", "unknown"]}, "exception_until": {"type": "date", "samples": ["2027-09-05", "2026-12-05", null]}, "external_work_item_reference": {"type": "identifier", "samples": ["synthetic-work-001", "synthetic-work-002", null]}},
+      "relations": {"vendor_id": {"relationship": "cites_vendor_statement", "target_family": "vendor-assurance", "namespace": "record"}}, "uses": [],
+      "candidate_automation": ["Prepare evidence-linked exception reviews and provider-neutral work item drafts."],
+      "manual_boundary": ["Designated humans decide policy authority, limitations and exact-plan approvals."],
+      "information_loss": ["A source-reported approved review state and external ticket closure never grant canonical exact-plan authorization."],
+      "unsupported_capabilities": ["No approval creation, acceptance assertion, ticket mutation or policy enforcement."]
+    },
+    "vendor-assurance": {
+      "area_ref": "area-10", "name": "Vendor assurance and detection", "fact_type": "vendor_assurance",
+      "fields": {"product_label": {"type": "text", "samples": ["Synthetic Product A", "Synthetic Product B", null]}, "statement_revision": {"type": "identifier", "samples": ["synthetic-statement-01", "synthetic-statement-02", null]}, "declared_capabilities": {"type": "tokens", "samples": [["ML-KEM-768"], ["ML-DSA-65"], []]}, "support_state": {"type": "text", "choices": ["synthetic_vendor_reported", "synthetic_roadmap_only", "unknown"], "samples": ["synthetic_vendor_reported", "synthetic_roadmap_only", "unknown"]}, "independent_validation_state": {"type": "text", "choices": ["not_tested", "verified", "unknown"], "samples": ["not_tested", "not_tested", "unknown"]}},
+      "relations": {"runtime_id": {"relationship": "statement_applies_to", "target_family": "cloud-inventory", "namespace": "record"}}, "uses": [],
+      "candidate_automation": ["Track version-bound vendor claims, qualification gaps and expiring support statements."],
+      "manual_boundary": ["Product owners and assurance functions accept vendor evidence and residual uncertainty."],
+      "information_loss": ["A vendor roadmap, capability statement or reported verified state is neither deployment nor independently established verification evidence."],
+      "unsupported_capabilities": ["No vendor portal login, assurance certification or claim of installed product support."]
+    }
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "Classification",
+  "description": "Common classification block for PBA UPM manifests.",
+  "type": "object",
+  "properties": {
+    "data_class": {
+      "type": "string",
+      "enum": ["public", "internal", "confidential", "secret"]
+    },
+    "data_sensitivity": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["none", "operational", "pii", "phi", "financial", "auth_secret", "other_sensitive"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["none", "operational", "pii", "phi", "financial", "auth_secret", "other_sensitive"]
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      ]
+    },
+    "regulatory_scope": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": ["none", "gdpr", "ccpa", "hipaa", "multiple"]
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string",
+            "enum": ["gdpr", "ccpa", "hipaa"]
+          },
+          "uniqueItems": true,
+          "minItems": 1
+        }
+      ]
+    },
+    "notes": {
+      "type": "string",
+      "description": "Optional freeform notes or justifications for this classification."
+    }
+  },
+  "required": ["data_class"],
+  "additionalProperties": false
+}

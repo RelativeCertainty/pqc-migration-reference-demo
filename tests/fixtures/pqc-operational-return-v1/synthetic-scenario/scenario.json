@@ -1,0 +1,56 @@
+{
+  "schemaVersion": "pqc.response-to-report.synthetic-scenario.v1",
+  "synthetic": true,
+  "expected": {
+    "products": 2,
+    "distinctDeployments": 3,
+    "reportedRows": 4,
+    "suspectedDuplicateRows": 1,
+    "blockedSources": 1,
+    "enterpriseConnections": 0,
+    "adoptedStandards": 0
+  },
+  "sourceTemplateSha256": "9c72dcd41534aea6e77ceb20ece29ff2f2d38b7f6db0cf2c99562f2b2bc06188",
+  "files": [
+    {
+      "name": "traffic-initial.xlsx",
+      "bytes": 23591,
+      "sha256": "af836190a23b9c244d1b10e57271552fdd05d4701d1c3b25ec344536af3f2f00"
+    },
+    {
+      "name": "traffic-duplicate.xlsx",
+      "bytes": 23591,
+      "sha256": "af836190a23b9c244d1b10e57271552fdd05d4701d1c3b25ec344536af3f2f00"
+    },
+    {
+      "name": "traffic-revised.xlsx",
+      "bytes": 23564,
+      "sha256": "5b61441f227750036d5e8951319b1ccb074076804e9acc3b7a75a39b6f700184"
+    },
+    {
+      "name": "context.json",
+      "bytes": 567,
+      "sha256": "c031ac1d014d89903687f0301e0a351f4a52686c5389bfaedfcc89f2ca3bd6b0"
+    },
+    {
+      "name": "certificate.json",
+      "bytes": 578,
+      "sha256": "cf78288947655e7008cefffcbc0af822b1378208234df7ef887c9ee5a5f8f802"
+    },
+    {
+      "name": "tls-configured.json",
+      "bytes": 663,
+      "sha256": "9bf588988a53fff434d4996bae97a489dde782b110bf519e7c8157145fc4941d"
+    },
+    {
+      "name": "tls-observed.json",
+      "bytes": 656,
+      "sha256": "06f38c07e349ea14a0be46ecc6f4e186d2a502b9d3695edd3a0f3ede86023308"
+    },
+    {
+      "name": "blocked-source.json",
+      "bytes": 417,
+      "sha256": "3edeee6b6d22ef2e72528e5df3426a3fb35c9094b230c7a249d89bbb6972c7af"
+    }
+  ]
+}

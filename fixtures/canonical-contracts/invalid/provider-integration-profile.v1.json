@@ -1,0 +1,33 @@
+{
+  "schemaVersion": "ProviderIntegrationProfile.v1",
+  "integrationProfileId": "profile:synthetic-pki",
+  "tenantId": "tenant:synthetic-reference",
+  "displayName": "Synthetic PKI inventory reference",
+  "sourceFamily": "pki_certificate_lifecycle",
+  "provider": { "productName": "Synthetic PKI catalog", "edition": "reference", "apiVersion": "v1" },
+  "adapter": { "adapterId": "adapter:synthetic-pki", "adapterVersion": "1.0.0", "contractDialect": "dialect:synthetic-pki.v1" },
+  "connection": {
+    "environment": "synthetic",
+    "accessMode": "read_only",
+    "endpointRef": "endpoint:synthetic-pki",
+    "authenticationMode": "none_synthetic",
+    "credentialSecretRef": "secret-ref:synthetic-not-allowed"
+  },
+  "authority": { "authorityClass": "synthetic_reference", "factDomains": ["certificate_metadata"], "coverageClaimAllowed": false },
+  "capabilities": [{ "name": "full_collection", "supportStatus": "declared" }],
+  "collectionPolicy": {
+    "allowedModes": ["full"],
+    "maximumPageSize": 100,
+    "maximumAttempts": 5,
+    "retryableClassifications": ["timeout"]
+  },
+  "dataHandling": {
+    "classification": "internal",
+    "rawEvidenceRetentionDays": 30,
+    "encryptedArtifactRequired": true,
+    "payloadLoggingAllowed": false
+  },
+  "status": "admitted",
+  "evidenceStatus": "synthetic",
+  "safety": { "synthetic": true, "credentialValueEmbedded": false, "privateKeyEmbedded": false, "rawPayloadEmbedded": false }
+}

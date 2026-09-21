@@ -1,0 +1,34 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://relativecertainty.github.io/pqc-migration-reference-demo/contracts/program-operations/gate-assessment.v1.schema.json",
+  "$comment": "SPDX-License-Identifier: MIT",
+  "title": "GateAssessment.v1",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["schemaVersion", "gateAssessmentId", "programId", "gateId", "name", "assessmentDate", "status", "conditions", "evidenceRefs", "decisionOwnerRole", "limitations"],
+  "properties": {
+    "schemaVersion": {"const": "GateAssessment.v1"},
+    "gateAssessmentId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "programId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "gateId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+    "name": {"$ref": "program-operations-common.v1.schema.json#/$defs/plainLanguageName"},
+    "assessmentDate": {"$ref": "program-operations-common.v1.schema.json#/$defs/date"},
+    "status": {"type": "string", "enum": ["not_assessed", "ready", "conditionally_ready", "not_ready", "accepted", "deferred"]},
+    "conditions": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["conditionId", "description", "status"],
+        "properties": {
+          "conditionId": {"$ref": "program-operations-common.v1.schema.json#/$defs/identifier"},
+          "description": {"type": "string", "minLength": 3, "maxLength": 1000},
+          "status": {"type": "string", "enum": ["not_started", "in_progress", "satisfied", "not_satisfied", "waived"]}
+        }
+      }
+    },
+    "evidenceRefs": {"$ref": "program-operations-common.v1.schema.json#/$defs/referenceList"},
+    "decisionOwnerRole": {"type": "string", "minLength": 3, "maxLength": 160},
+    "limitations": {"type": "array", "items": {"type": "string", "maxLength": 1000}}
+  }
+}

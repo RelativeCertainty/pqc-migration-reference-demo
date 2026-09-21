@@ -1,0 +1,20 @@
+{
+  "schemaVersion": "pqc.response-to-report.reference.v1",
+  "synthetic": true,
+  "familyId": "cmdb",
+  "sourceInstanceId": "synthetic-cmdb",
+  "collectedAt": "2026-09-14T12:00:00Z",
+  "records": [
+    {
+      "nativeId": "portal-app-001",
+      "name": "Synthetic portal application",
+      "serviceId": "portal-service-001",
+      "owner": "Synthetic application team",
+      "environment": "synthetic-test",
+      "sourceUpdatedAt": "2026-09-13T12:00:00Z",
+      "basis": "documentation"
+    }
+  ],
+  "kind": "context",
+  "sourceLabel": "Synthetic CMDB export"
+}
